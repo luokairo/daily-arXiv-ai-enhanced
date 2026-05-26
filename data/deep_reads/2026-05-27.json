@@ -1,0 +1,32 @@
+[
+  {
+    "id": "2605.25659",
+    "title": "StreamChar: Long-Horizon Streaming Character Audio-Video Generation with Decoupled Orchestration",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2605.24509",
+    "title": "Φ-Noise: Training-Free Temporal Video Conditioning via Phase-Based Noise Manipulation",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2605.25333",
+    "title": "Teaching Video Generators to Remember: Eliciting Dynamic Memory for Out-of-Sight State Evolution",
+    "rank": 3,
+    "status": "ok"
+  },
+  {
+    "id": "2605.25979",
+    "title": "LLaVA-OneVision-2: Towards Next-Generation Perceptual Intelligence",
+    "rank": 4,
+    "status": "ok"
+  },
+  {
+    "id": "2605.25343",
+    "title": "Toward Native Multimodal Modeling: A Roadmap",
+    "rank": 5,
+    "status": "ok"
+  }
+]

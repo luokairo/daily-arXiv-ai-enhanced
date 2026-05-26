@@ -1,4 +1,6 @@
 2026-05-27.jsonl
 2026-05-27.md
 2026-05-27_AI_enhanced_Chinese.jsonl
+deep_reads/2026-05-27.json
+deep_reads/2026-05-27.md
 taxonomy.json
