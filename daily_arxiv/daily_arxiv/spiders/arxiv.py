@@ -29,6 +29,15 @@ class ArxivSpider(scrapy.Spider):
     name = "arxiv"  # 爬虫名称
     allowed_domains = ["arxiv.org"]  # 允许爬取的域名
 
+    @staticmethod
+    def clean_text(text):
+        return re.sub(r"\s+", " ", text or "").strip()
+
+    @classmethod
+    def clean_labeled_text(cls, text, label):
+        text = cls.clean_text(text)
+        return re.sub(rf"^{re.escape(label)}:\s*", "", text, flags=re.IGNORECASE).strip()
+
     def parse(self, response):
         # 提取每篇论文的信息
         anchors = []
@@ -59,11 +68,12 @@ class ArxivSpider(scrapy.Spider):
             if not paper_dd:
                 continue
             
-            # 提取论文分类信息 - 在subjects部分
-            subjects_text = paper_dd.css(".list-subjects .primary-subject::text").get()
-            if not subjects_text:
-                # 如果找不到主分类，尝试其他方式获取分类
-                subjects_text = paper_dd.css(".list-subjects::text").get()
+            title_text = paper_dd.css(".list-title").xpath("string()").get() or ""
+            authors = paper_dd.css(".list-authors a::text").getall()
+            comment_text = paper_dd.css(".list-comments").xpath("string()").get() or ""
+            subjects_text = paper_dd.css(".list-subjects").xpath("string()").get() or ""
+            summary_parts = paper_dd.css("p.mathjax::text").getall()
+            summary = self.clean_text(" ".join(summary_parts))
             
             if subjects_text:
                 # 解析分类信息，通常格式如 "Computer Vision and Pattern Recognition (cs.CV)"
@@ -75,7 +85,13 @@ class ArxivSpider(scrapy.Spider):
                 if paper_categories.intersection(self.target_categories):
                     yield {
                         "id": arxiv_id,
-                        "categories": list(paper_categories),  # 添加分类信息用于调试
+                        "categories": list(paper_categories),
+                        "pdf": f"https://arxiv.org/pdf/{arxiv_id}",
+                        "abs": f"https://arxiv.org/abs/{arxiv_id}",
+                        "authors": [self.clean_text(author) for author in authors],
+                        "title": self.clean_labeled_text(title_text, "Title"),
+                        "comment": self.clean_labeled_text(comment_text, "Comments"),
+                        "summary": summary,
                     }
                     self.logger.info(f"Found paper {arxiv_id} with categories {paper_categories}")
                 else:
@@ -86,4 +102,10 @@ class ArxivSpider(scrapy.Spider):
                 yield {
                     "id": arxiv_id,
                     "categories": [],
+                    "pdf": f"https://arxiv.org/pdf/{arxiv_id}",
+                    "abs": f"https://arxiv.org/abs/{arxiv_id}",
+                    "authors": [self.clean_text(author) for author in authors],
+                    "title": self.clean_labeled_text(title_text, "Title"),
+                    "comment": self.clean_labeled_text(comment_text, "Comments"),
+                    "summary": summary,
                 }
