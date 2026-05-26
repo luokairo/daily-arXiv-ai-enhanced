@@ -174,6 +174,27 @@ def fallback_item(item: Dict, directions: List[Dict], reason: str) -> Dict:
     return item
 
 
+def prefilter_items(data: List[Dict], directions: List[Dict], max_items: int) -> List[Dict]:
+    candidates = []
+    for item in data:
+        matched_ids = keyword_matched_direction_ids(item, directions)
+        if not matched_ids:
+            continue
+        item["_prefilter_direction_ids"] = matched_ids
+        candidates.append(item)
+
+    candidates.sort(
+        key=lambda item: (
+            -len(item.get("_prefilter_direction_ids", [])),
+            item.get("id", ""),
+        )
+    )
+
+    if max_items > 0:
+        candidates = candidates[:max_items]
+    return candidates
+
+
 def normalize_ai_result(item: Dict, ai_fields: Dict, directions: List[Dict]) -> Dict:
     valid_directions = direction_map(directions)
     ai = {**default_ai_fields(), **ai_fields}
@@ -339,8 +360,16 @@ def main():
             seen_ids.add(item["id"])
             unique_data.append(item)
 
+    max_items = int(os.environ.get("MAX_AI_ITEMS", "120"))
+    prefiltered_data = prefilter_items(unique_data, directions, max_items)
     print("Open:", args.data, file=sys.stderr)
-    processed_data = process_all_items(unique_data, model_name, language, args.max_workers, directions, taxonomy)
+    print(
+        f"Prefiltered {len(prefiltered_data)} candidate papers from {len(unique_data)} crawled papers. "
+        f"MAX_AI_ITEMS={max_items}",
+        file=sys.stderr,
+    )
+
+    processed_data = process_all_items(prefiltered_data, model_name, language, args.max_workers, directions, taxonomy)
     taxonomy = update_taxonomy_from_items(taxonomy, processed_data, directions)
     save_taxonomy(taxonomy, args.taxonomy)
 

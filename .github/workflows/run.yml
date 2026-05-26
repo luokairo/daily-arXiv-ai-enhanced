@@ -143,6 +143,7 @@ jobs:
         export LANGUAGE="${{ vars.LANGUAGE }}"
         export MODEL_NAME="${{ vars.MODEL_NAME }}"
         export TARGET_DATE="$today"
+        export MAX_AI_ITEMS="${{ vars.MAX_AI_ITEMS }}"
         
         python enhance.py --data ../data/${today}.jsonl
         
