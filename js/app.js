@@ -393,7 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchGitHubStats() {
   try {
-    const response = await fetch('https://api.github.com/repos/dw-dengwei/daily-arXiv-ai-enhanced');
+    const repoOwner = typeof DATA_CONFIG !== 'undefined' ? DATA_CONFIG.repoOwner : 'dw-dengwei';
+    const repoName = typeof DATA_CONFIG !== 'undefined' ? DATA_CONFIG.repoName : 'daily-arXiv-ai-enhanced';
+    const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}`);
     const data = await response.json();
     const starCount = data.stargazers_count;
     const forkCount = data.forks_count;
@@ -909,19 +911,28 @@ function parseJsonlData(jsonlText, date) {
       
       let allCategories = Array.isArray(paper.categories) ? paper.categories : [paper.categories];
       
-      const primaryCategory = allCategories[0];
+      const primaryDirection = paper.primary_direction && paper.primary_direction.name
+        ? paper.primary_direction.name
+        : null;
+      const primaryCategory = primaryDirection || allCategories[0];
       
       if (!result[primaryCategory]) {
         result[primaryCategory] = [];
       }
       
       const summary = paper.AI && paper.AI.tldr ? paper.AI.tldr : paper.summary;
+      const subtopic = paper.AI && paper.AI.subtopic_name ? paper.AI.subtopic_name : '';
       
       result[primaryCategory].push({
         title: paper.title,
         url: paper.abs || paper.pdf || `https://arxiv.org/abs/${paper.id}`,
         authors: Array.isArray(paper.authors) ? paper.authors.join(', ') : paper.authors,
-        category: allCategories,
+        category: primaryCategory,
+        allCategories: allCategories,
+        direction: primaryCategory,
+        subtopic: subtopic,
+        subtopicDescription: paper.AI && paper.AI.subtopic_description ? paper.AI.subtopic_description : '',
+        classificationReason: paper.AI && paper.AI.classification_reason ? paper.AI.classification_reason : '',
         summary: summary,
         details: paper.summary || '',
         date: date,
@@ -1353,9 +1364,14 @@ function renderPapers() {
       paperCard.title = `匹配: ${paper.matchReason.join(' | ')}`;
     }
     
-    const categoryTags = paper.allCategories ? 
-      paper.allCategories.map(cat => `<span class="category-tag">${cat}</span>`).join('') : 
-      `<span class="category-tag">${paper.category}</span>`;
+    const arxivTags = paper.allCategories && paper.allCategories.length > 0
+      ? paper.allCategories.map(cat => `<span class="category-tag arxiv-tag">${cat}</span>`).join('')
+      : '';
+    const categoryTags = `
+      <span class="category-tag direction-tag">${paper.category}</span>
+      ${paper.subtopic ? `<span class="category-tag subtopic-tag">${paper.subtopic}</span>` : ''}
+      ${arxivTags}
+    `;
     
     // 组合需要高亮的词：关键词 + 文本搜索
     const titleSummaryTerms = [];
@@ -1502,8 +1518,11 @@ function showPaperDetails(paper, paperIndex) {
   const modalContent = `
     <div class="paper-details ${matchedPaperClass}">
       <p><strong>Authors: </strong>${highlightedAuthors}</p>
-      <p><strong>Categories: </strong>${categoryDisplay}</p>
+      <p><strong>Direction: </strong>${paper.direction || paper.category}</p>
+      ${paper.subtopic ? `<p><strong>Subtopic: </strong>${paper.subtopic}</p>` : ''}
+      <p><strong>arXiv Categories: </strong>${categoryDisplay}</p>
       <p><strong>Date: </strong>${formatDate(paper.date)}</p>
+      ${paper.classificationReason ? `<p><strong>Classification: </strong>${paper.classificationReason}</p>` : ''}
       
       
       <h3>TL;DR</h3>

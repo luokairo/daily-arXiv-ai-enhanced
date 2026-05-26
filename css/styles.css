@@ -682,6 +682,22 @@ main {
   border: 1px solid var(--border-accent);
 }
 
+.direction-tag {
+  background-color: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.28);
+  color: #1d4ed8;
+}
+
+.subtopic-tag {
+  background-color: rgba(16, 185, 129, 0.10);
+  border-color: rgba(16, 185, 129, 0.28);
+  color: #047857;
+}
+
+.arxiv-tag {
+  background-color: var(--background-hover);
+}
+
 .paper-card-body {
   padding: 20px;
   flex-grow: 1;

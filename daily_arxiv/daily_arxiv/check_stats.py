@@ -12,6 +12,7 @@ import json
 import sys
 import os
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 def load_papers_data(file_path):
     """
@@ -72,8 +73,9 @@ def perform_deduplication():
              - "no_data": 无数据 / No data
              - "error": 处理错误 / Processing error
     """
-
-    today = datetime.now().strftime("%Y-%m-%d")
+    timezone = os.environ.get("TIMEZONE", "Asia/Shanghai")
+    now = datetime.now(ZoneInfo(timezone))
+    today = os.environ.get("TARGET_DATE") or now.strftime("%Y-%m-%d")
     today_file = f"../data/{today}.jsonl"
     history_days = 7  # 向前追溯几天的数据进行对比
 
@@ -90,8 +92,9 @@ def perform_deduplication():
 
         # 收集历史多日 ID 集合
         history_ids = set()
+        today_dt = datetime.strptime(today, "%Y-%m-%d")
         for i in range(1, history_days + 1):
-            date_str = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
+            date_str = (today_dt - timedelta(days=i)).strftime("%Y-%m-%d")
             history_file = f"../data/{date_str}.jsonl"
             _, past_ids = load_papers_data(history_file)
             history_ids.update(past_ids)
@@ -162,4 +165,4 @@ def main():
         sys.exit(2)
 
 if __name__ == "__main__":
-    main() 
+    main()

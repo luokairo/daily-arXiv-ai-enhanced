@@ -1,13 +1,25 @@
 import scrapy
 import os
 import re
+import sys
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[3]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from semantic_arxiv import load_directions, recall_categories
 
 
 class ArxivSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        categories = os.environ.get("CATEGORIES", "cs.CV")
-        categories = categories.split(",")
+        directions = load_directions(os.environ.get("DIRECTIONS_CONFIG"))
+        if directions:
+            categories = recall_categories(directions)
+        else:
+            categories = os.environ.get("CATEGORIES", "cs.CV").split(",")
+
         # 保存目标分类列表，用于后续验证
         self.target_categories = set(map(str.strip, categories))
         self.start_urls = [

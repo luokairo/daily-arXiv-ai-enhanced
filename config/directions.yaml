@@ -1,0 +1,65 @@
+directions:
+  - id: multimodal_generation
+    name: 多模态生成
+    description: 关注文本、图像、视频、音频、3D 等多模态条件生成方法，包括扩散模型、自回归生成、统一生成模型与生成式评测。
+    arxiv_categories:
+      - cs.CV
+      - cs.CL
+      - cs.AI
+      - cs.MM
+    keywords:
+      - multimodal generation
+      - text-to-image
+      - text-to-video
+      - image generation
+      - video generation
+      - diffusion model
+      - autoregressive generation
+      - visual generation
+      - generative model
+      - 3d generation
+      - audio generation
+
+  - id: aigc
+    name: AIGC
+    description: 关注 AI 生成内容相关模型、系统、应用、安全、评测与内容创作工作流。
+    arxiv_categories:
+      - cs.CV
+      - cs.CL
+      - cs.AI
+      - cs.MM
+      - cs.HC
+    keywords:
+      - aigc
+      - ai-generated content
+      - generative ai
+      - content generation
+      - creative generation
+      - controllable generation
+      - editing
+      - synthetic data
+      - generative content
+      - watermark
+      - deepfake
+
+  - id: multimodal_understanding_generation
+    name: 多模态理解与生成
+    description: 关注视觉语言模型、统一多模态模型、理解与生成一体化、跨模态推理、指令跟随与交互式多模态系统。
+    arxiv_categories:
+      - cs.CV
+      - cs.CL
+      - cs.AI
+      - cs.MM
+      - cs.LG
+    keywords:
+      - vision-language model
+      - multimodal large language model
+      - multimodal understanding
+      - multimodal reasoning
+      - multimodal instruction
+      - unified multimodal
+      - visual question answering
+      - image captioning
+      - video understanding
+      - multimodal generation
+      - mllm

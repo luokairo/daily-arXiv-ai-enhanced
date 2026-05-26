@@ -9,8 +9,9 @@ echo "=== 本地调试环境检查 / Local Debug Environment Check ==="
 if [ -z "$TOKEN_GITHUB" ]; then
     echo "⚠️  提示：未设置 TOKEN_GITHUB / Warning: TOKEN_GITHUB not set"
     echo "可能导致 GitHub 相关功能受限 / May limit GitHub related functionalities"
-fi
+else
     echo "✅ TOKEN_GITHUB 已设置 / TOKEN_GITHUB is set"
+fi
 
 # 检查必需的环境变量 / Check required environment variables
 if [ -z "$OPENAI_API_KEY" ]; then
@@ -44,19 +45,24 @@ else
     export CATEGORIES="${CATEGORIES:-cs.CV, cs.CL}"
     export MODEL_NAME="${MODEL_NAME:-gpt-4o-mini}"
     export OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+    export TIMEZONE="${TIMEZONE:-Asia/Shanghai}"
     
     echo "🔧 当前配置 / Current configuration:"
     echo "   LANGUAGE: $LANGUAGE"
     echo "   CATEGORIES: $CATEGORIES"
     echo "   MODEL_NAME: $MODEL_NAME"
     echo "   OPENAI_BASE_URL: $OPENAI_BASE_URL"
+    echo "   TIMEZONE: $TIMEZONE"
 fi
 
 echo ""
 echo "=== 开始本地调试流程 / Starting Local Debug Workflow ==="
 
-# 获取当前日期 / Get current date
-today=`date -u "+%Y-%m-%d"`
+# 获取目标日期 / Get target date
+export TIMEZONE="${TIMEZONE:-Asia/Shanghai}"
+today="${TARGET_DATE:-$(TZ="$TIMEZONE" date "+%Y-%m-%d")}"
+export TARGET_DATE="$today"
+mkdir -p data assets
 
 echo "本地测试：爬取 $today 的arXiv论文... / Local test: Crawling $today arXiv papers..."
 
@@ -149,7 +155,7 @@ cd ..
 
 # 第五步：更新文件列表 / Step 5: Update file list
 echo "步骤5：更新文件列表... / Step 5: Updating file list..."
-ls data/*.jsonl | sed 's|data/||' > assets/file-list.txt
+find data -maxdepth 1 -type f | sed 's|data/||' | sort > assets/file-list.txt
 echo "✅ 文件列表更新完成 / File list updated"
 
 # 完成总结 / Completion summary

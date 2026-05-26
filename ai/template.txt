@@ -1,4 +1,22 @@
-Please analyze the following abstract of papers. 
+Please analyze this arXiv paper for a daily research briefing.
 
-Content:
+Target research directions:
+{directions}
+
+Existing persistent subtopic taxonomy:
+{taxonomy}
+
+Paper metadata:
+Title: {title}
+Authors: {authors}
+arXiv categories: {categories}
+
+Abstract:
 {content}
+
+Tasks:
+1. Decide whether the paper belongs to at least one target research direction.
+2. If it is relevant, choose the best primary_direction_id and all matched_direction_ids.
+3. Choose an existing subtopic when it fits. Create a new subtopic only when the paper represents a genuinely different theme.
+4. When creating a new subtopic, use a short stable name such as "自回归视频生成", "自回归图像生成", or "模型高效性", and give a concise definition.
+5. Produce the paper analysis fields in {language}.

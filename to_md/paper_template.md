@@ -3,6 +3,10 @@
 
 Main category: {cate}
 
+Direction: {direction}
+
+Subtopic: {subtopic}
+
 TL;DR: {tldr}
 
 
@@ -15,6 +19,8 @@ Method: {method}
 Result: {result}
 
 Conclusion: {conclusion}
+
+Classification reason: {classification_reason}
 
 Abstract: {summary}
 
