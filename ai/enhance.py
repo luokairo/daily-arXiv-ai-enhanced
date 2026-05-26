@@ -82,6 +82,9 @@ def default_ai_fields() -> Dict:
 
 
 def is_sensitive(content: str) -> bool:
+    if os.environ.get("ENABLE_SENSITIVE_CHECK", "").lower() not in {"1", "true", "yes"}:
+        return False
+
     try:
         resp = requests.post(
             "https://spam.dw-dengwei.workers.dev",
@@ -243,10 +246,14 @@ def process_single_item(chain, item: Dict, language: str, directions: List[Dict]
 
 
 def process_all_items(data: List[Dict], model_name: str, language: str, max_workers: int, directions: List[Dict], taxonomy: Dict) -> List[Dict]:
-    llm_kwargs = {"model": model_name}
+    llm_kwargs = {"model": model_name, "temperature": 0, "timeout": 120, "max_retries": 3}
     base_url = os.environ.get("OPENAI_BASE_URL")
     if base_url:
         llm_kwargs["base_url"] = base_url
+
+    if model_name.startswith("deepseek-v4") and os.environ.get("DEEPSEEK_THINKING", "").lower() not in {"1", "true", "yes"}:
+        llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+
     llm = ChatOpenAI(**llm_kwargs).with_structured_output(Structure, method="function_calling")
     print("Connect to:", model_name, file=sys.stderr)
 
