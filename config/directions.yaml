@@ -19,6 +19,130 @@ directions:
       - generative model
       - 3d generation
       - audio generation
+    canonical_subtopics:
+      - id: text_to_image_diffusion
+        name: 文生图与图像扩散
+        description: 文本到图像生成、图像扩散模型、DiT 等基础图像生成方法。
+        keywords:
+          - text-to-image
+          - image diffusion
+          - stable diffusion
+          - diffusion transformer
+          - dit
+      - id: text_to_video_diffusion
+        name: 文生视频与视频扩散
+        description: 文本到视频生成、视频扩散模型、视频 DiT 等视频生成方法（不含自回归与世界模型）。
+        keywords:
+          - text-to-video
+          - video diffusion
+          - video dit
+          - video generation
+          - svd
+      - id: autoregressive_visual_generation
+        name: 自回归视觉生成
+        description: 自回归图像与视频生成，包括 next-token、MaskGIT、VAR、MAR、LlamaGen 等范式。
+        keywords:
+          - autoregressive image
+          - autoregressive video
+          - next-token
+          - maskgit
+          - var
+          - mar
+          - llamagen
+      - id: video_world_model
+        name: 视频世界模型
+        description: 视频生成式世界模型、可交互模拟器、物理世界建模、动作条件视频。
+        keywords:
+          - world model
+          - video world model
+          - neural simulator
+          - generative world
+          - interactive world
+          - physical world
+      - id: three_d_generation
+        name: 3D 生成与重建
+        description: 3D 物体/场景生成、3DGS、NeRF、Mesh 生成、神经渲染与重光照。
+        keywords:
+          - 3d generation
+          - 3d gaussian
+          - 3dgs
+          - nerf
+          - mesh generation
+          - neural rendering
+      - id: dynamic_4d_generation
+        name: 4D 与动态场景生成
+        description: 动态 3D/4D 场景生成与重建、4D 高斯泼溅、动态神经场。
+        keywords:
+          - 4d
+          - dynamic scene
+          - dynamic 3d
+          - 4d gaussian
+      - id: visual_editing
+        name: 图像与视频编辑
+        description: 图像编辑、视频编辑、Inpainting、可控编辑、风格化等。
+        keywords:
+          - image editing
+          - video editing
+          - inpainting
+          - controllable editing
+          - style transfer
+      - id: customization_generation
+        name: 主体与概念驱动生成
+        description: 主体驱动、概念定制、个性化生成、ID 保持、参考图引导生成。
+        keywords:
+          - subject-driven
+          - concept-driven
+          - customization
+          - personalization
+          - id preservation
+          - reference image
+      - id: avatar_motion_generation
+        name: 数字人与动作生成
+        description: 虚拟人、说话头、人体动作、肖像动画、面部重演。
+        keywords:
+          - avatar
+          - talking head
+          - portrait animation
+          - human motion
+          - face reenactment
+      - id: audio_av_generation
+        name: 音频与多模态联合生成
+        description: 音乐/语音生成、TTS、音视频联合生成、跨模态条件音频生成。
+        keywords:
+          - audio generation
+          - music generation
+          - tts
+          - speech synthesis
+          - audio-visual generation
+      - id: efficient_generation
+        name: 生成模型加速与高效化
+        description: 扩散加速、少步采样、蒸馏、量化、稀疏化等生成模型效率优化。
+        keywords:
+          - acceleration
+          - distillation
+          - few-step
+          - efficient sampling
+          - quantization
+          - sparse
+      - id: generation_alignment
+        name: 生成模型对齐与奖励
+        description: 生成模型对齐、RLHF、奖励建模、偏好优化、guidance 与可控性。
+        keywords:
+          - alignment
+          - rlhf
+          - reward
+          - preference
+          - dpo
+          - guidance
+      - id: generation_benchmark
+        name: 生成模型评测与数据集
+        description: 生成模型评测基准、新数据集、自动评测指标、人类偏好评估。
+        keywords:
+          - benchmark
+          - evaluation
+          - metric
+          - dataset
+          - human preference
 
   - id: aigc
     name: AIGC
@@ -41,6 +165,111 @@ directions:
       - generative content
       - watermark
       - deepfake
+    canonical_subtopics:
+      - id: aigc_detection_attribution
+        name: AIGC 检测与溯源
+        description: AI 生成图像/视频/音频检测、深伪检测、生成模型溯源与归因。
+        keywords:
+          - deepfake detection
+          - synthetic detection
+          - aigc detection
+          - attribution
+          - provenance
+      - id: aigc_watermark_copyright
+        name: 水印与版权保护
+        description: 生成内容水印、指纹、版权保护、IP 防护。
+        keywords:
+          - watermark
+          - fingerprint
+          - copyright
+          - ip protection
+      - id: aigc_unlearning_erasure
+        name: 概念擦除与遗忘学习
+        description: 生成模型概念擦除、有害内容遗忘、安全生成、模型 unlearning。
+        keywords:
+          - concept erasure
+          - unlearning
+          - safe generation
+          - harmful concept
+      - id: aigc_evaluation_benchmark
+        name: AIGC 评测与基准
+        description: 生成内容质量评测、创意质量、AIGC benchmark、人类偏好对齐评估。
+        keywords:
+          - aigc evaluation
+          - quality assessment
+          - aigc benchmark
+          - creative evaluation
+      - id: aigc_creative_art
+        name: 创意与艺术生成
+        description: 艺术创作、设计、SVG/矢量、叙事生成、风格化创作。
+        keywords:
+          - art generation
+          - creative generation
+          - design
+          - svg
+          - storytelling
+      - id: aigc_agent_workflow
+        name: AI 智能体与生成工作流
+        description: LLM 智能体、生成工作流、工具使用、自动化创作流水线。
+        keywords:
+          - llm agent
+          - workflow
+          - tool use
+          - automation
+          - multi-agent
+      - id: aigc_safety_governance
+        name: 生成内容安全与治理
+        description: 内容审核、AIGC 治理、有害内容检测、合规与监管。
+        keywords:
+          - content safety
+          - aigc governance
+          - harmful content
+          - moderation
+          - jailbreak
+      - id: aigc_domain_application
+        name: 领域内容生成应用
+        description: 医疗/法律/科学/代码等垂直领域生成应用与文档生成。
+        keywords:
+          - medical generation
+          - legal document
+          - scientific writing
+          - clinical
+          - code generation
+      - id: aigc_robustness_privacy
+        name: 模型鲁棒性与隐私
+        description: 生成模型鲁棒性、公平性、记忆与数据提取、隐私保护。
+        keywords:
+          - robustness
+          - fairness
+          - bias
+          - memorization
+          - data extraction
+          - privacy
+      - id: aigc_synthetic_data
+        name: 合成数据与数据集蒸馏
+        description: 合成训练数据生成、数据集蒸馏、AI 生成标注与数据增强。
+        keywords:
+          - synthetic data
+          - dataset distillation
+          - data augmentation
+          - synthetic training
+      - id: aigc_video_audio_creation
+        name: 视频音频生成应用
+        description: 视频后期、音视频编辑、内容创作产品级生成应用。
+        keywords:
+          - video creation
+          - audio editing
+          - video post-production
+          - content creation
+      - id: aigc_personalization_persona
+        name: 个性化与对话生成
+        description: 个性化生成、角色扮演、persona 对话、个性化助手与角色生成。
+        keywords:
+          - personalization
+          - role-play
+          - persona
+          - personalized assistant
+          - dialogue generation
 
   - id: multimodal_understanding_generation
     name: 多模态理解与生成
@@ -63,3 +292,176 @@ directions:
       - video understanding
       - multimodal generation
       - mllm
+    canonical_subtopics:
+      - id: vlm_mllm_general
+        name: 视觉语言模型与 MLLM
+        description: 通用视觉语言模型、MLLM 架构、多模态指令微调与对话。
+        keywords:
+          - vision-language model
+          - mllm
+          - vlm
+          - multimodal instruction
+      - id: unified_multimodal_model
+        name: 统一多模态模型
+        description: 理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。
+        keywords:
+          - unified multimodal
+          - any-to-any
+          - understanding generation
+          - native multimodal
+      - id: multimodal_reasoning_cot
+        name: 多模态推理与思维链
+        description: 多模态 CoT、视觉推理、数学/代码/科学推理、推理时计算扩展。
+        keywords:
+          - multimodal reasoning
+          - chain of thought
+          - visual reasoning
+          - math reasoning
+          - inference scaling
+      - id: video_understanding_temporal
+        name: 视频理解与时序推理
+        description: 视频 LLM、视频问答、时序定位、长视频理解、第一视角视频。
+        keywords:
+          - video understanding
+          - video llm
+          - temporal grounding
+          - long video
+          - ego video
+      - id: multimodal_hallucination
+        name: 多模态幻觉与可靠性
+        description: 视觉幻觉缓解、事实性、可靠性、忠实性提升。
+        keywords:
+          - hallucination
+          - factuality
+          - reliability
+          - faithfulness
+      - id: multimodal_rl_alignment
+        name: 多模态强化学习与对齐
+        description: 多模态 RL、RLHF、DPO、偏好学习、多模态对齐。
+        keywords:
+          - multimodal rl
+          - multimodal rlhf
+          - multimodal dpo
+          - preference learning
+          - multimodal alignment
+      - id: efficient_multimodal
+        name: 多模态高效化与轻量化
+        description: 高效 MLLM、PEFT、蒸馏、量化、token 压缩、稀疏推理。
+        keywords:
+          - efficient mllm
+          - peft
+          - multimodal distillation
+          - token compression
+          - quantization
+      - id: multimodal_benchmark
+        name: 多模态评测与基准
+        description: 多模态评测、新基准、评测协议、自动评估。
+        keywords:
+          - multimodal benchmark
+          - mllm evaluation
+          - vlm benchmark
+          - evaluation suite
+      - id: spatial_3d_reasoning
+        name: 空间与 3D 多模态推理
+        description: 空间推理、3D 视觉定位、具身推理、几何推理。
+        keywords:
+          - spatial reasoning
+          - 3d grounding
+          - embodied reasoning
+          - geometric reasoning
+      - id: multimodal_retrieval
+        name: 多模态检索
+        description: 跨模态检索、组合检索、文档检索、多模态搜索。
+        keywords:
+          - multimodal retrieval
+          - composed retrieval
+          - cross-modal retrieval
+          - document retrieval
+      - id: multimodal_safety_attack
+        name: 多模态安全与攻防
+        description: 多模态越狱、对抗攻击、防御、安全评测。
+        keywords:
+          - multimodal safety
+          - jailbreak
+          - adversarial
+          - defense
+          - safety benchmark
+      - id: multimodal_vqa_doc
+        name: 视觉问答与文档理解
+        description: VQA、文档/图表/表格理解、OCR-free 文档智能。
+        keywords:
+          - visual question answering
+          - vqa
+          - document understanding
+          - chart
+          - ocr-free
+
+importance:
+  daily_deep_read_top_k: 5
+  direction_weights:
+    multimodal_generation: 1.3
+    aigc: 1.0
+    multimodal_understanding_generation: 1.2
+  priority_subtopics:
+    - name: 自回归视频生成
+      weight: 1.6
+      keywords:
+        - autoregressive video generation
+        - video generation
+        - text-to-video
+    - name: 自回归图像生成
+      weight: 1.5
+      keywords:
+        - autoregressive image generation
+        - image generation
+        - text-to-image
+    - name: 模型高效性
+      weight: 1.2
+      keywords:
+        - efficient inference
+        - model efficiency
+        - acceleration
+        - compression
+    - name: 统一多模态模型
+      weight: 1.4
+      keywords:
+        - unified multimodal
+        - multimodal large language model
+        - mllm
+    - name: 扩散模型视频生成
+      weight: 1.6
+      keywords:
+        - diffusion video generation
+        - video diffusion
+        - diffusion-based video
+        - text-to-video diffusion
+        - video diffusion transformer
+        - video dit
+    - name: 视频生成世界模型
+      weight: 1.6
+      keywords:
+        - world model
+        - video world model
+        - generative world model
+        - neural simulator
+        - physical world model
+        - interactive world model
+  boost_keywords:
+    - autoregressive
+    - video generation
+    - image generation
+    - unified multimodal
+    - efficient inference
+    - diffusion transformer
+    - mllm
+    - controllable generation
+    - subject-driven generation
+    - video diffusion
+    - world model
+    - neural simulator
+  negative_keywords:
+    - molecule
+    - medical diagnosis
+    - remote sensing
+    - graph neural network
+    - recommender system

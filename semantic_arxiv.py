@@ -12,6 +12,15 @@ DEFAULT_DIRECTIONS_PATH = REPO_ROOT / "config" / "directions.yaml"
 DEFAULT_TAXONOMY_PATH = REPO_ROOT / "data" / "taxonomy.json"
 
 
+DEFAULT_IMPORTANCE_CONFIG: Dict[str, Any] = {
+    "daily_deep_read_top_k": 5,
+    "direction_weights": {},
+    "priority_subtopics": [],
+    "boost_keywords": [],
+    "negative_keywords": [],
+}
+
+
 def _strip_inline_comment(value: str) -> str:
     in_single = False
     in_double = False
@@ -83,10 +92,10 @@ def _parse_simple_directions_yaml(text: str) -> Dict[str, Any]:
     return {"directions": directions}
 
 
-def load_directions(config_path: Optional[str] = None) -> List[Dict[str, Any]]:
+def load_semantic_config(config_path: Optional[str] = None) -> Dict[str, Any]:
     path = Path(config_path or DEFAULT_DIRECTIONS_PATH)
     if not path.exists():
-        return []
+        return {}
 
     text = path.read_text(encoding="utf-8")
     try:
@@ -99,6 +108,12 @@ def load_directions(config_path: Optional[str] = None) -> List[Dict[str, Any]]:
         except Exception:
             parsed = _parse_simple_directions_yaml(text)
 
+    return parsed if isinstance(parsed, dict) else {}
+
+
+def load_directions(config_path: Optional[str] = None) -> List[Dict[str, Any]]:
+    parsed = load_semantic_config(config_path)
+
     directions = parsed.get("directions", []) if isinstance(parsed, dict) else []
     normalized = []
     for item in directions:
@@ -107,8 +122,53 @@ def load_directions(config_path: Optional[str] = None) -> List[Dict[str, Any]]:
         direction = deepcopy(item)
         direction["arxiv_categories"] = list(dict.fromkeys(direction.get("arxiv_categories", [])))
         direction["keywords"] = list(dict.fromkeys(direction.get("keywords", [])))
+
+        canonical = []
+        for sub in direction.get("canonical_subtopics") or []:
+            if not isinstance(sub, dict) or not sub.get("id") or not sub.get("name"):
+                continue
+            canonical.append(
+                {
+                    "id": str(sub["id"]),
+                    "name": str(sub["name"]),
+                    "description": str(sub.get("description") or ""),
+                    "keywords": list(dict.fromkeys(sub.get("keywords") or [])),
+                }
+            )
+        direction["canonical_subtopics"] = canonical
         normalized.append(direction)
     return normalized
+
+
+def load_importance_config(config_path: Optional[str] = None) -> Dict[str, Any]:
+    parsed = load_semantic_config(config_path)
+    raw = parsed.get("importance", {}) if isinstance(parsed, dict) else {}
+    if not isinstance(raw, dict):
+        raw = {}
+
+    config = deepcopy(DEFAULT_IMPORTANCE_CONFIG)
+    config.update(raw)
+
+    config["daily_deep_read_top_k"] = int(config.get("daily_deep_read_top_k") or 5)
+    config["direction_weights"] = {
+        str(key): float(value)
+        for key, value in dict(config.get("direction_weights") or {}).items()
+    }
+
+    priority_subtopics = []
+    for item in config.get("priority_subtopics") or []:
+        if isinstance(item, str):
+            priority_subtopics.append({"name": item, "weight": 1.2, "keywords": []})
+        elif isinstance(item, dict) and item.get("name"):
+            normalized = deepcopy(item)
+            normalized["weight"] = float(normalized.get("weight") or 1.2)
+            normalized["keywords"] = list(dict.fromkeys(normalized.get("keywords") or []))
+            priority_subtopics.append(normalized)
+    config["priority_subtopics"] = priority_subtopics
+
+    config["boost_keywords"] = list(dict.fromkeys(config.get("boost_keywords") or []))
+    config["negative_keywords"] = list(dict.fromkeys(config.get("negative_keywords") or []))
+    return config
 
 
 def direction_map(directions: Iterable[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
@@ -130,19 +190,61 @@ def slugify(value: str, prefix: str = "topic") -> str:
     return f"{prefix}_{digest}"
 
 
+def _canonical_seed_subtopic(sub: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "id": sub["id"],
+        "name": sub["name"],
+        "description": sub.get("description", ""),
+        "keywords": list(sub.get("keywords", [])),
+        "examples": [],
+        "created_at": None,
+        "updated_at": None,
+        "paper_count": 0,
+        "is_canonical": True,
+    }
+
+
 def empty_taxonomy(directions: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
     return {
-        "version": 1,
+        "version": 2,
         "updated_at": None,
         "directions": {
             direction["id"]: {
                 "id": direction["id"],
                 "name": direction["name"],
-                "subtopics": [],
+                "subtopics": [
+                    _canonical_seed_subtopic(sub)
+                    for sub in direction.get("canonical_subtopics", [])
+                ],
             }
             for direction in directions
         },
     }
+
+
+def ensure_canonical_seeded(taxonomy: Dict[str, Any], directions: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
+    """Make sure each direction has its canonical subtopics present (idempotent)."""
+    for direction in directions:
+        entry = taxonomy["directions"].setdefault(
+            direction["id"],
+            {"id": direction["id"], "name": direction["name"], "subtopics": []},
+        )
+        existing_ids = {sub.get("id") for sub in entry.get("subtopics", [])}
+        existing_names = {(sub.get("name") or "").strip().lower() for sub in entry.get("subtopics", [])}
+        for canonical in direction.get("canonical_subtopics", []):
+            if canonical["id"] in existing_ids:
+                for sub in entry["subtopics"]:
+                    if sub.get("id") == canonical["id"]:
+                        sub["is_canonical"] = True
+                        sub["keywords"] = list(dict.fromkeys((sub.get("keywords") or []) + canonical.get("keywords", [])))
+                        if not sub.get("description"):
+                            sub["description"] = canonical.get("description", "")
+                        break
+                continue
+            if canonical["name"].strip().lower() in existing_names:
+                continue
+            entry["subtopics"].append(_canonical_seed_subtopic(canonical))
+    return taxonomy
 
 
 def load_taxonomy(path: Optional[str], directions: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -155,7 +257,7 @@ def load_taxonomy(path: Optional[str], directions: List[Dict[str, Any]]) -> Dict
     else:
         taxonomy = empty_taxonomy(directions)
 
-    taxonomy.setdefault("version", 1)
+    taxonomy.setdefault("version", 2)
     taxonomy.setdefault("updated_at", None)
     taxonomy.setdefault("directions", {})
     for direction in directions:
@@ -165,6 +267,7 @@ def load_taxonomy(path: Optional[str], directions: List[Dict[str, Any]]) -> Dict
         )
         entry["name"] = direction["name"]
         entry.setdefault("subtopics", [])
+    ensure_canonical_seeded(taxonomy, directions)
     return taxonomy
 
 
@@ -200,11 +303,24 @@ def compact_taxonomy_for_prompt(taxonomy: Dict[str, Any]) -> str:
         if not subtopics:
             lines.append("  subtopics: none yet")
             continue
-        for subtopic in subtopics[:40]:
+        sorted_subs = sorted(
+            subtopics,
+            key=lambda sub: (
+                0 if sub.get("is_canonical") else 1,
+                -int(sub.get("paper_count", 0) or 0),
+                sub.get("name", ""),
+            ),
+        )
+        for subtopic in sorted_subs:
+            tag = "[CANONICAL] " if subtopic.get("is_canonical") else ""
+            count = int(subtopic.get("paper_count", 0) or 0)
+            keywords = ", ".join(subtopic.get("keywords", [])[:8])
+            keyword_line = f"\n    keywords: {keywords}" if keywords else ""
             lines.append(
-                f"  - id: {subtopic.get('id')}\n"
+                f"  - {tag}id: {subtopic.get('id')} (papers: {count})\n"
                 f"    name: {subtopic.get('name')}\n"
                 f"    description: {subtopic.get('description', '')}"
+                f"{keyword_line}"
             )
     return "\n".join(lines)
 

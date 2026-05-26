@@ -29,13 +29,14 @@ from semantic_arxiv import (
     direction_display,
     direction_map,
     load_directions,
+    load_importance_config,
     load_taxonomy,
     normalize_matched_directions,
     save_taxonomy,
     slugify,
     upsert_subtopic,
 )
-from structure import FilterStructure, Structure
+from structure import FilterStructure, ImportanceStructure, Structure
 
 if os.path.exists(".env"):
     dotenv.load_dotenv()
@@ -78,6 +79,11 @@ def default_ai_fields() -> Dict:
         "method": "Method extraction failed",
         "result": "Result analysis unavailable",
         "conclusion": "Conclusion extraction failed",
+        "importance_score": 0.0,
+        "importance_level": "普通相关",
+        "importance_reason": "Importance scoring unavailable",
+        "deep_read_selected": False,
+        "deep_read_rank": None,
     }
 
 
@@ -375,6 +381,198 @@ def process_all_items(data: List[Dict], model_name: str, language: str, max_work
     return [item for item in processed_data if item]
 
 
+def clamp_score(value: float) -> float:
+    return max(0.0, min(100.0, float(value)))
+
+
+def item_text(item: Dict) -> str:
+    ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
+    return " ".join(
+        [
+            item.get("title", ""),
+            item.get("summary", ""),
+            item.get("comment", "") or "",
+            " ".join(item.get("categories", [])),
+            ai.get("subtopic_name", ""),
+            ai.get("classification_reason", ""),
+            ai.get("tldr", ""),
+        ]
+    ).lower()
+
+
+def heuristic_importance_score(item: Dict, importance_config: Dict) -> float:
+    ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
+    text = item_text(item)
+    score = 45.0
+
+    direction_id = ai.get("primary_direction_id", "")
+    direction_weight = importance_config.get("direction_weights", {}).get(direction_id, 1.0)
+    score += (float(direction_weight) - 1.0) * 35.0
+
+    for keyword in importance_config.get("boost_keywords", []):
+        if keyword and keyword.lower() in text:
+            score += 4.0
+
+    for keyword in importance_config.get("negative_keywords", []):
+        if keyword and keyword.lower() in text:
+            score -= 10.0
+
+    subtopic_name = ai.get("subtopic_name", "").lower()
+    for subtopic in importance_config.get("priority_subtopics", []):
+        name = str(subtopic.get("name", "")).lower()
+        keywords = [str(keyword).lower() for keyword in subtopic.get("keywords", [])]
+        if (name and name in subtopic_name) or any(keyword and keyword in text for keyword in keywords):
+            score += 12.0 + (float(subtopic.get("weight", 1.2)) - 1.0) * 30.0
+
+    if item.get("code_url"):
+        score += 5.0
+    if re.search(r"\b(first|novel|new|unified|state-of-the-art|sota|benchmark|dataset)\b", text):
+        score += 5.0
+
+    return clamp_score(score)
+
+
+def importance_level(score: float) -> str:
+    if score >= 80:
+        return "高优先级"
+    if score >= 65:
+        return "值得关注"
+    return "普通相关"
+
+
+def compact_importance_config_for_prompt(importance_config: Dict) -> str:
+    lines = [
+        f"daily_deep_read_top_k: {importance_config.get('daily_deep_read_top_k', 5)}",
+        "direction_weights:",
+    ]
+    for direction_id, weight in importance_config.get("direction_weights", {}).items():
+        lines.append(f"  - {direction_id}: {weight}")
+    lines.append("priority_subtopics:")
+    for subtopic in importance_config.get("priority_subtopics", []):
+        keywords = ", ".join(subtopic.get("keywords", []))
+        lines.append(f"  - {subtopic.get('name')} (weight: {subtopic.get('weight', 1.2)}; keywords: {keywords})")
+    lines.append("boost_keywords: " + ", ".join(importance_config.get("boost_keywords", [])))
+    lines.append("negative_keywords: " + ", ".join(importance_config.get("negative_keywords", [])))
+    return "\n".join(lines)
+
+
+def score_single_importance(chain, item: Dict, importance_config_text: str, heuristic_score: float) -> Dict:
+    ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
+    try:
+        response: ImportanceStructure = chain.invoke(
+            {
+                "importance_config": importance_config_text,
+                "title": item.get("title", ""),
+                "authors": ", ".join(item.get("authors", [])),
+                "categories": ", ".join(item.get("categories", [])),
+                "direction": ai.get("primary_direction_id", ""),
+                "subtopic": ai.get("subtopic_name", ""),
+                "tldr": ai.get("tldr", ""),
+                "abstract": item.get("summary", ""),
+            }
+        )
+        fields = response.model_dump()
+        model_score = (
+            clamp_score(fields.get("research_value_score", 0.0)) * 0.45
+            + clamp_score(fields.get("personal_relevance_score", 0.0)) * 0.55
+        )
+        final_score = clamp_score(heuristic_score * 0.65 + model_score * 0.35)
+        reason = fields.get("importance_reason") or "Importance scored by preference heuristic and model judgment."
+        signals = fields.get("key_signals") or []
+        if signals:
+            reason = f"{reason} Signals: {', '.join(signals[:5])}"
+    except Exception as e:
+        print(f"Importance scoring error for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
+        final_score = heuristic_score
+        reason = "Flash importance scoring failed; used configured preference heuristic fallback."
+
+    ai["importance_score"] = round(final_score, 2)
+    ai["importance_level"] = importance_level(final_score)
+    ai["importance_reason"] = reason
+    ai["deep_read_selected"] = False
+    ai["deep_read_rank"] = None
+    item["AI"] = ai
+    return item
+
+
+def score_importance_for_items(data: List[Dict], model_name: str, max_workers: int, importance_config: Dict) -> List[Dict]:
+    if not data:
+        return data
+
+    importance_system = (
+        "You are a fast research paper importance rater. Score the paper for a daily personal research briefing. "
+        "Respect the user's configured priorities more than generic popularity. Return only structured fields."
+    )
+    importance_template = (
+        "User importance configuration:\n{importance_config}\n\n"
+        "Paper metadata:\n"
+        "Title: {title}\n"
+        "Authors: {authors}\n"
+        "arXiv categories: {categories}\n"
+        "Primary direction: {direction}\n"
+        "Subtopic: {subtopic}\n\n"
+        "TL;DR:\n{tldr}\n\n"
+        "Abstract:\n{abstract}\n\n"
+        "Task: rate the paper's importance for the user's daily reading queue."
+    )
+    llm = build_llm(model_name, ImportanceStructure)
+    print("Importance model:", model_name, file=sys.stderr)
+    prompt_template = ChatPromptTemplate.from_messages(
+        [
+            SystemMessagePromptTemplate.from_template(importance_system),
+            HumanMessagePromptTemplate.from_template(template=importance_template),
+        ]
+    )
+    chain = prompt_template | llm
+    importance_config_text = compact_importance_config_for_prompt(importance_config)
+
+    scored_data = [{} for _ in data]
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_idx = {}
+        for idx, item in enumerate(data):
+            heuristic_score = heuristic_importance_score(item, importance_config)
+            future = executor.submit(score_single_importance, chain, item, importance_config_text, heuristic_score)
+            future_to_idx[future] = idx
+
+        for future in tqdm(as_completed(future_to_idx), total=len(data), desc="Scoring importance"):
+            idx = future_to_idx[future]
+            try:
+                scored_data[idx] = future.result()
+            except Exception as e:
+                print(f"Importance worker error at index {idx}: {e}", file=sys.stderr)
+                item = data[idx]
+                ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
+                fallback_score = heuristic_importance_score(item, importance_config)
+                ai["importance_score"] = round(fallback_score, 2)
+                ai["importance_level"] = importance_level(fallback_score)
+                ai["importance_reason"] = "Unhandled importance worker error; used configured preference heuristic fallback."
+                ai["deep_read_selected"] = False
+                ai["deep_read_rank"] = None
+                item["AI"] = ai
+                scored_data[idx] = item
+
+    return [item for item in scored_data if item]
+
+
+def mark_deep_read_selection(items: List[Dict], top_k: int) -> List[Dict]:
+    ranked = sorted(
+        items,
+        key=lambda item: (
+            float((item.get("AI") or {}).get("importance_score") or 0.0),
+            item.get("id", ""),
+        ),
+        reverse=True,
+    )
+    selected_ids = {item.get("id"): rank for rank, item in enumerate(ranked[:top_k], start=1)}
+    for item in items:
+        ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
+        rank = selected_ids.get(item.get("id"))
+        ai["deep_read_selected"] = rank is not None
+        ai["deep_read_rank"] = rank
+        item["AI"] = ai
+    return items
+
+
 def update_taxonomy_from_items(taxonomy: Dict, items: List[Dict], directions: List[Dict]) -> Dict:
     today = os.environ.get("TARGET_DATE") or datetime.utcnow().strftime("%Y-%m-%d")
     valid_directions = direction_map(directions)
@@ -405,12 +603,15 @@ def main():
     args = parse_args()
     detail_model_name = os.environ.get("DETAIL_MODEL_NAME") or os.environ.get("MODEL_NAME", "deepseek-chat")
     filter_model_name = os.environ.get("FILTER_MODEL_NAME") or "deepseek-v4-flash"
+    importance_model_name = os.environ.get("IMPORTANCE_MODEL_NAME") or filter_model_name
     filter_max_workers = int(os.environ.get("FILTER_MAX_WORKERS") or str(args.max_workers))
     detail_max_workers = int(os.environ.get("DETAIL_MAX_WORKERS") or str(args.max_workers))
+    importance_max_workers = int(os.environ.get("IMPORTANCE_MAX_WORKERS") or str(filter_max_workers))
     language = os.environ.get("LANGUAGE", "Chinese")
     directions = load_directions(args.directions)
     if not directions:
         raise RuntimeError(f"No semantic directions found in {args.directions}")
+    importance_config = load_importance_config(args.directions)
 
     taxonomy = load_taxonomy(args.taxonomy, directions)
 
@@ -442,6 +643,9 @@ def main():
     processed_data = process_all_items(filtered_data, detail_model_name, language, detail_max_workers, directions, taxonomy)
     taxonomy = update_taxonomy_from_items(taxonomy, processed_data, directions)
     save_taxonomy(taxonomy, args.taxonomy)
+    processed_data = score_importance_for_items(processed_data, importance_model_name, importance_max_workers, importance_config)
+    daily_top_k = int(os.environ.get("DAILY_DEEP_READ_TOP_K") or importance_config.get("daily_deep_read_top_k", 5) or 5)
+    processed_data = mark_deep_read_selection(processed_data, daily_top_k)
 
     with open(target_file, "w", encoding="utf-8") as f:
         for item in processed_data:

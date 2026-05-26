@@ -3,7 +3,7 @@ Please analyze this arXiv paper for a daily research briefing.
 Target research directions:
 {directions}
 
-Existing persistent subtopic taxonomy:
+Existing persistent subtopic taxonomy (entries marked [CANONICAL] are the curated reference list — prefer them):
 {taxonomy}
 
 Paper metadata:
@@ -16,7 +16,11 @@ Abstract:
 
 Tasks:
 1. Decide whether the paper belongs to at least one target research direction.
-2. If it is relevant, choose the best primary_direction_id and all matched_direction_ids.
-3. Choose an existing subtopic when it fits. Create a new subtopic only when the paper represents a genuinely different theme.
-4. When creating a new subtopic, use a short stable name such as "自回归视频生成", "自回归图像生成", or "模型高效性", and give a concise definition.
-5. Produce the paper analysis fields in {language}.
+2. If relevant, choose the best primary_direction_id and all matched_direction_ids.
+3. Subtopic selection — follow this priority order strictly:
+   a. If any [CANONICAL] subtopic is reasonably related (even imperfectly), reuse its id and name verbatim. Set is_new_subtopic=false.
+   b. Otherwise, if any non-canonical existing subtopic is reasonably related, reuse it. Set is_new_subtopic=false.
+   c. Only if NEITHER (a) nor (b) applies, create a new broad subtopic and set is_new_subtopic=true.
+4. When (rarely) creating a new subtopic, use a broad theme name that can cover many future papers. Examples of acceptable new names: "扩散模型对齐", "多模态检索". Examples of bad new names (too narrow — these should always reuse an existing canonical instead): "脑电视觉解码", "雷达到3D网格生成", "SAE引导的VLM幻觉缓解", "MLLM推理扩展", any name mentioning a specific dataset or model.
+5. classification_reason should briefly state which canonical/existing subtopic you mapped to and why.
+6. Produce the rest of the paper analysis fields in {language}.

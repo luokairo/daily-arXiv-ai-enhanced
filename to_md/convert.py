@@ -43,6 +43,8 @@ def render_paper(template, item, idx):
     ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
     direction_id, direction_name = direction_value(item)
     subtopic_id, subtopic_name, _ = subtopic_value(item)
+    deep_read_rank = ai.get("deep_read_rank")
+    deep_read_badge = f"Top {deep_read_rank} 精读候选" if ai.get("deep_read_selected") and deep_read_rank else "未入选精读"
     return template.format(
         title=item.get("title", "Untitled"),
         authors=safe_authors(item.get("authors")),
@@ -54,6 +56,10 @@ def render_paper(template, item, idx):
         result=ai.get("result", ""),
         conclusion=ai.get("conclusion", ""),
         classification_reason=ai.get("classification_reason", ""),
+        importance_score=ai.get("importance_score", ""),
+        importance_level=ai.get("importance_level", ""),
+        importance_reason=ai.get("importance_reason", ""),
+        deep_read_badge=deep_read_badge,
         direction=direction_name,
         direction_id=direction_id,
         subtopic=subtopic_name,

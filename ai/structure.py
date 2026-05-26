@@ -24,3 +24,10 @@ class Structure(BaseModel):
     method: str = Field(description="method of this paper")
     result: str = Field(description="result of this paper")
     conclusion: str = Field(description="conclusion of this paper")
+
+
+class ImportanceStructure(BaseModel):
+    research_value_score: float = Field(description="0-100 score for novelty, technical depth, and evidence quality")
+    personal_relevance_score: float = Field(description="0-100 score for fit to the configured user priorities")
+    importance_reason: str = Field(description="brief reason for the importance score")
+    key_signals: List[str] = Field(default_factory=list, description="short signals that affected the score")
