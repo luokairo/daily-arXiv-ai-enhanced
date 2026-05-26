@@ -142,8 +142,12 @@ jobs:
         export OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}
         export LANGUAGE="${{ vars.LANGUAGE }}"
         export MODEL_NAME="${{ vars.MODEL_NAME }}"
+        export FILTER_MODEL_NAME="${{ vars.FILTER_MODEL_NAME }}"
+        export DETAIL_MODEL_NAME="${{ vars.DETAIL_MODEL_NAME }}"
         export TARGET_DATE="$today"
-        export MAX_AI_ITEMS="${{ vars.MAX_AI_ITEMS }}"
+        export MAX_DETAIL_ITEMS="${{ vars.MAX_DETAIL_ITEMS }}"
+        export FILTER_MAX_WORKERS="${{ vars.FILTER_MAX_WORKERS }}"
+        export DETAIL_MAX_WORKERS="${{ vars.DETAIL_MAX_WORKERS }}"
         
         python enhance.py --data ../data/${today}.jsonl
         

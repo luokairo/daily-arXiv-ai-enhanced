@@ -35,7 +35,7 @@ from semantic_arxiv import (
     slugify,
     upsert_subtopic,
 )
-from structure import Structure
+from structure import FilterStructure, Structure
 
 if os.path.exists(".env"):
     dotenv.load_dotenv()
@@ -174,27 +174,6 @@ def fallback_item(item: Dict, directions: List[Dict], reason: str) -> Dict:
     return item
 
 
-def prefilter_items(data: List[Dict], directions: List[Dict], max_items: int) -> List[Dict]:
-    candidates = []
-    for item in data:
-        matched_ids = keyword_matched_direction_ids(item, directions)
-        if not matched_ids:
-            continue
-        item["_prefilter_direction_ids"] = matched_ids
-        candidates.append(item)
-
-    candidates.sort(
-        key=lambda item: (
-            -len(item.get("_prefilter_direction_ids", [])),
-            item.get("id", ""),
-        )
-    )
-
-    if max_items > 0:
-        candidates = candidates[:max_items]
-    return candidates
-
-
 def normalize_ai_result(item: Dict, ai_fields: Dict, directions: List[Dict]) -> Dict:
     valid_directions = direction_map(directions)
     ai = {**default_ai_fields(), **ai_fields}
@@ -229,6 +208,102 @@ def normalize_ai_result(item: Dict, ai_fields: Dict, directions: List[Dict]) -> 
     return item
 
 
+def build_llm(model_name: str, structure_model):
+    llm_kwargs = {"model": model_name, "temperature": 0, "timeout": 120, "max_retries": 3}
+    base_url = os.environ.get("OPENAI_BASE_URL")
+    if base_url:
+        llm_kwargs["base_url"] = base_url
+
+    if model_name.startswith("deepseek-v4") and os.environ.get("DEEPSEEK_THINKING", "").lower() not in {"1", "true", "yes"}:
+        llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+
+    return ChatOpenAI(**llm_kwargs).with_structured_output(structure_model, method="function_calling")
+
+
+def normalize_filter_result(item: Dict, filter_fields: Dict, directions: List[Dict]) -> Dict:
+    valid_directions = direction_map(directions)
+    matched_ids = [direction_id for direction_id in filter_fields.get("matched_direction_ids", []) if direction_id in valid_directions]
+    primary_id = filter_fields.get("primary_direction_id", "")
+    if primary_id not in valid_directions:
+        primary_id = matched_ids[0] if matched_ids else ""
+    if primary_id and primary_id not in matched_ids:
+        matched_ids.insert(0, primary_id)
+
+    if not filter_fields.get("is_relevant") or not primary_id:
+        return {}
+
+    item["_filter_primary_direction_id"] = primary_id
+    item["_filter_matched_direction_ids"] = matched_ids
+    item["_filter_relevance_reason"] = filter_fields.get("relevance_reason", "")
+    return item
+
+
+def filter_single_item(chain, item: Dict, directions: List[Dict], prompt_directions: str) -> Dict:
+    try:
+        response: FilterStructure = chain.invoke(
+            {
+                "directions": prompt_directions,
+                "title": item.get("title", ""),
+                "authors": ", ".join(item.get("authors", [])),
+                "categories": ", ".join(item.get("categories", [])),
+                "content": item.get("summary", ""),
+            }
+        )
+        item = normalize_filter_result(item, response.model_dump(), directions)
+    except Exception as e:
+        print(f"Filter error for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
+        item = fallback_item(item, directions, "Filter model failed; keyword fallback used.")
+        if item:
+            ai = item.pop("AI", {})
+            item["_filter_primary_direction_id"] = ai.get("primary_direction_id", "")
+            item["_filter_matched_direction_ids"] = ai.get("matched_direction_ids", [])
+            item["_filter_relevance_reason"] = ai.get("classification_reason", "")
+            item.pop("primary_direction", None)
+            item.pop("matched_directions", None)
+    return item
+
+
+def filter_all_items(data: List[Dict], filter_model_name: str, max_workers: int, directions: List[Dict]) -> List[Dict]:
+    filter_system = (
+        "You are a fast research paper router. Decide if the paper belongs to one or more target research directions. "
+        "Return only the structured fields. Do not summarize the paper."
+    )
+    filter_template = (
+        "Target research directions:\n{directions}\n\n"
+        "Paper metadata:\n"
+        "Title: {title}\n"
+        "Authors: {authors}\n"
+        "arXiv categories: {categories}\n\n"
+        "Abstract:\n{content}\n\n"
+        "Task: classify relevance to the target directions. Use exact direction ids."
+    )
+    llm = build_llm(filter_model_name, FilterStructure)
+    print("Filter model:", filter_model_name, file=sys.stderr)
+    prompt_template = ChatPromptTemplate.from_messages(
+        [
+            SystemMessagePromptTemplate.from_template(filter_system),
+            HumanMessagePromptTemplate.from_template(template=filter_template),
+        ]
+    )
+    chain = prompt_template | llm
+    prompt_directions = compact_directions_for_prompt(directions)
+
+    filtered_data = [{} for _ in data]
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_idx = {
+            executor.submit(filter_single_item, chain, item, directions, prompt_directions): idx
+            for idx, item in enumerate(data)
+        }
+        for future in tqdm(as_completed(future_to_idx), total=len(data), desc="Filtering items"):
+            idx = future_to_idx[future]
+            try:
+                filtered_data[idx] = future.result()
+            except Exception as e:
+                print(f"Filter worker error at index {idx}: {e}", file=sys.stderr)
+
+    return [item for item in filtered_data if item]
+
+
 def process_single_item(chain, item: Dict, language: str, directions: List[Dict], prompt_directions: str, prompt_taxonomy: str) -> Dict:
     if is_sensitive(item.get("summary", "")):
         return {}
@@ -250,6 +325,8 @@ def process_single_item(chain, item: Dict, language: str, directions: List[Dict]
             }
         )
         item = normalize_ai_result(item, response.model_dump(), directions)
+        if item and item.get("_filter_relevance_reason"):
+            item["AI"]["filter_reason"] = item["_filter_relevance_reason"]
     except langchain_core.exceptions.OutputParserException as e:
         print(f"Output parsing failed for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
         item = fallback_item(item, directions, "Structured output parsing failed; keyword fallback used.")
@@ -267,16 +344,8 @@ def process_single_item(chain, item: Dict, language: str, directions: List[Dict]
 
 
 def process_all_items(data: List[Dict], model_name: str, language: str, max_workers: int, directions: List[Dict], taxonomy: Dict) -> List[Dict]:
-    llm_kwargs = {"model": model_name, "temperature": 0, "timeout": 120, "max_retries": 3}
-    base_url = os.environ.get("OPENAI_BASE_URL")
-    if base_url:
-        llm_kwargs["base_url"] = base_url
-
-    if model_name.startswith("deepseek-v4") and os.environ.get("DEEPSEEK_THINKING", "").lower() not in {"1", "true", "yes"}:
-        llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
-
-    llm = ChatOpenAI(**llm_kwargs).with_structured_output(Structure, method="function_calling")
-    print("Connect to:", model_name, file=sys.stderr)
+    llm = build_llm(model_name, Structure)
+    print("Detail model:", model_name, file=sys.stderr)
 
     prompt_template = ChatPromptTemplate.from_messages(
         [
@@ -334,7 +403,10 @@ def update_taxonomy_from_items(taxonomy: Dict, items: List[Dict], directions: Li
 
 def main():
     args = parse_args()
-    model_name = os.environ.get("MODEL_NAME", "deepseek-chat")
+    detail_model_name = os.environ.get("DETAIL_MODEL_NAME") or os.environ.get("MODEL_NAME", "deepseek-chat")
+    filter_model_name = os.environ.get("FILTER_MODEL_NAME") or "deepseek-v4-flash"
+    filter_max_workers = int(os.environ.get("FILTER_MAX_WORKERS") or str(args.max_workers))
+    detail_max_workers = int(os.environ.get("DETAIL_MAX_WORKERS") or str(args.max_workers))
     language = os.environ.get("LANGUAGE", "Chinese")
     directions = load_directions(args.directions)
     if not directions:
@@ -360,16 +432,14 @@ def main():
             seen_ids.add(item["id"])
             unique_data.append(item)
 
-    max_items = int(os.environ.get("MAX_AI_ITEMS", "120"))
-    prefiltered_data = prefilter_items(unique_data, directions, max_items)
     print("Open:", args.data, file=sys.stderr)
-    print(
-        f"Prefiltered {len(prefiltered_data)} candidate papers from {len(unique_data)} crawled papers. "
-        f"MAX_AI_ITEMS={max_items}",
-        file=sys.stderr,
-    )
+    filtered_data = filter_all_items(unique_data, filter_model_name, filter_max_workers, directions)
+    max_detail_items = int(os.environ.get("MAX_DETAIL_ITEMS") or "0")
+    if max_detail_items > 0:
+        filtered_data = filtered_data[:max_detail_items]
+    print(f"Filtered {len(filtered_data)} relevant papers from {len(unique_data)} crawled papers.", file=sys.stderr)
 
-    processed_data = process_all_items(prefiltered_data, model_name, language, args.max_workers, directions, taxonomy)
+    processed_data = process_all_items(filtered_data, detail_model_name, language, detail_max_workers, directions, taxonomy)
     taxonomy = update_taxonomy_from_items(taxonomy, processed_data, directions)
     save_taxonomy(taxonomy, args.taxonomy)
 

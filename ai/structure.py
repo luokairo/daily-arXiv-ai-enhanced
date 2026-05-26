@@ -2,6 +2,14 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
+
+class FilterStructure(BaseModel):
+    is_relevant: bool = Field(description="whether the paper belongs to any target research direction")
+    primary_direction_id: str = Field(description="id of the best matching target direction, or empty if irrelevant")
+    matched_direction_ids: List[str] = Field(default_factory=list, description="ids of all matching target directions")
+    relevance_reason: str = Field(description="brief reason for relevance or irrelevance")
+
+
 class Structure(BaseModel):
     is_relevant: bool = Field(description="whether the paper belongs to any target research direction")
     primary_direction_id: str = Field(description="id of the best matching target direction, or empty if irrelevant")
