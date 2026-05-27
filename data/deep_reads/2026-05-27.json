@@ -1,31 +1,31 @@
 [
   {
-    "id": "2605.25659",
-    "title": "StreamChar: Long-Horizon Streaming Character Audio-Video Generation with Decoupled Orchestration",
+    "id": "2605.27336",
+    "title": "PARE: Pruning and Adaptive Routing for Efficient Video Generation",
     "rank": 1,
     "status": "ok"
   },
   {
-    "id": "2605.24509",
-    "title": "Φ-Noise: Training-Free Temporal Video Conditioning via Phase-Based Noise Manipulation",
+    "id": "2605.26266",
+    "title": "Quantized Keys Steal Attention: Bias Correction for KV-Cache Compression in Video Diffusion",
     "rank": 2,
     "status": "ok"
   },
   {
-    "id": "2605.25333",
-    "title": "Teaching Video Generators to Remember: Eliciting Dynamic Memory for Out-of-Sight State Evolution",
+    "id": "2605.27003",
+    "title": "Timestep-Aware SVDQuant-GPTQ for W4A4 Quantization of Wan2.2-I2V",
     "rank": 3,
     "status": "ok"
   },
   {
-    "id": "2605.25979",
-    "title": "LLaVA-OneVision-2: Towards Next-Generation Perceptual Intelligence",
+    "id": "2605.26316",
+    "title": "E$^3$C: Video Generation with 3D Environmental Memory and Ego-Exo Human Pose Control",
     "rank": 4,
     "status": "ok"
   },
   {
-    "id": "2605.25343",
-    "title": "Toward Native Multimodal Modeling: A Roadmap",
+    "id": "2605.26680",
+    "title": "DynFrame: Adaptive Reasoning-Driven Multimodal Framework with Dynamic Frame Augmentation for Complex Video Understanding",
     "rank": 5,
     "status": "ok"
   }
