@@ -16,17 +16,5 @@
     "title": "Timestep-Aware SVDQuant-GPTQ for W4A4 Quantization of Wan2.2-I2V",
     "rank": 3,
     "status": "ok"
-  },
-  {
-    "id": "2605.26316",
-    "title": "E$^3$C: Video Generation with 3D Environmental Memory and Ego-Exo Human Pose Control",
-    "rank": 4,
-    "status": "ok"
-  },
-  {
-    "id": "2605.26680",
-    "title": "DynFrame: Adaptive Reasoning-Driven Multimodal Framework with Dynamic Frame Augmentation for Complex Video Understanding",
-    "rank": 5,
-    "status": "ok"
   }
 ]
