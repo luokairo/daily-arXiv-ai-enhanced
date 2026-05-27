@@ -189,7 +189,8 @@ def build_chat_model(model_name: str):
     base_url = os.environ.get("OPENAI_BASE_URL")
     if base_url:
         llm_kwargs["base_url"] = base_url
-    if model_name.startswith("deepseek-v4") and os.environ.get("DEEPSEEK_THINKING", "").lower() not in {"1", "true", "yes"}:
+    deep_read_thinking = os.environ.get("DEEP_READ_THINKING", "").lower() in {"1", "true", "yes"}
+    if model_name.startswith("deepseek-v4") and not deep_read_thinking:
         llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
     return ChatOpenAI(**llm_kwargs)
 

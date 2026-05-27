@@ -36,13 +36,73 @@ from semantic_arxiv import (
     slugify,
     upsert_subtopic,
 )
-from structure import FilterStructure, ImportanceStructure, Structure
+from structure import FilterStructure, Structure
 
 if os.path.exists(".env"):
     dotenv.load_dotenv()
 
 template = open("template.txt", "r", encoding="utf-8").read()
 system = open("system.txt", "r", encoding="utf-8").read()
+
+
+STRONG_KEEP_KEYWORDS = [
+    "video generation",
+    "text-to-video",
+    "image generation",
+    "text-to-image",
+    "diffusion transformer",
+    "video diffusion",
+    "autoregressive",
+    "world model",
+    "mllm",
+    "multimodal large language model",
+    "unified multimodal",
+    "subject-driven",
+    "controllable generation",
+]
+
+WEAK_KEEP_KEYWORDS = [
+    "vision-language",
+    "visual reasoning",
+    "video understanding",
+    "multimodal reasoning",
+    "alignment",
+    "benchmark",
+    "evaluation",
+    "dataset",
+    "editing",
+    "personalization",
+    "3d generation",
+    "4d",
+]
+
+NEGATIVE_FILTER_KEYWORDS = [
+    "molecule",
+    "medical diagnosis",
+    "remote sensing",
+    "graph neural network",
+    "recommender system",
+    "clinical",
+    "protein",
+    "drug discovery",
+    "traffic prediction",
+    "financial",
+]
+
+HIGH_VALUE_CATEGORIES = {"cs.CV", "cs.AI", "cs.MM"}
+
+GENERIC_LOCAL_FILTER_KEYWORDS = {
+    "design",
+    "dataset",
+    "benchmark",
+    "evaluation",
+    "alignment",
+    "reward",
+    "preference",
+    "guidance",
+    "document",
+    "chart",
+}
 
 
 def parse_args():
@@ -226,6 +286,198 @@ def build_llm(model_name: str, structure_model):
     return ChatOpenAI(**llm_kwargs).with_structured_output(structure_model, method="function_calling")
 
 
+def build_plain_llm(model_name: str):
+    llm_kwargs = {"model": model_name, "temperature": 0, "timeout": 120, "max_retries": 3}
+    base_url = os.environ.get("OPENAI_BASE_URL")
+    if base_url:
+        llm_kwargs["base_url"] = base_url
+
+    if model_name.startswith("deepseek-v4") and os.environ.get("DEEPSEEK_THINKING", "").lower() not in {"1", "true", "yes"}:
+        llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+
+    return ChatOpenAI(**llm_kwargs)
+
+
+def normalize_keyword(keyword: str) -> str:
+    return re.sub(r"\s+", " ", (keyword or "").lower()).strip()
+
+
+def keyword_hits(text: str, keywords: Iterable[str]) -> List[str]:
+    hits = []
+    for keyword in keywords:
+        normalized = normalize_keyword(keyword)
+        if normalized and normalized in text:
+            hits.append(normalized)
+    return list(dict.fromkeys(hits))
+
+
+def is_local_filter_keyword(keyword: str) -> bool:
+    normalized = normalize_keyword(keyword)
+    return bool(normalized) and normalized not in GENERIC_LOCAL_FILTER_KEYWORDS
+
+
+def local_filter_text(item: Dict) -> str:
+    return normalize_keyword(
+        " ".join(
+            [
+                item.get("title", ""),
+                item.get("comment", "") or "",
+                " ".join(item.get("categories", [])),
+            ]
+        )
+    )
+
+
+def collect_filter_keywords(directions: List[Dict], importance_config: Dict) -> Dict:
+    strong = list(STRONG_KEEP_KEYWORDS) + list(importance_config.get("boost_keywords", []))
+    weak = list(WEAK_KEEP_KEYWORDS)
+    negative = list(NEGATIVE_FILTER_KEYWORDS) + list(importance_config.get("negative_keywords", []))
+    canonical = []
+    direction_keywords = []
+
+    for direction in directions:
+        for keyword in direction.get("keywords", []):
+            if not is_local_filter_keyword(keyword):
+                continue
+            direction_keywords.append(
+                {
+                    "keyword": keyword,
+                    "direction_id": direction["id"],
+                    "source": "direction",
+                }
+            )
+        for subtopic in direction.get("canonical_subtopics", []):
+            canonical.append(
+                {
+                    "keyword": subtopic.get("name", ""),
+                    "direction_id": direction["id"],
+                    "subtopic_id": subtopic.get("id", ""),
+                    "subtopic_name": subtopic.get("name", ""),
+                    "source": "canonical_name",
+                }
+            )
+            for keyword in subtopic.get("keywords", []):
+                if not is_local_filter_keyword(keyword):
+                    continue
+                canonical.append(
+                    {
+                        "keyword": keyword,
+                        "direction_id": direction["id"],
+                        "subtopic_id": subtopic.get("id", ""),
+                        "subtopic_name": subtopic.get("name", ""),
+                        "source": "canonical_keyword",
+                    }
+                )
+
+    return {
+        "strong": list(dict.fromkeys(normalize_keyword(keyword) for keyword in strong if normalize_keyword(keyword))),
+        "weak": list(dict.fromkeys(normalize_keyword(keyword) for keyword in weak if normalize_keyword(keyword))),
+        "negative": list(dict.fromkeys(normalize_keyword(keyword) for keyword in negative if normalize_keyword(keyword))),
+        "canonical": canonical,
+        "direction_keywords": direction_keywords,
+    }
+
+
+def match_keyword_entries(text: str, entries: Iterable[Dict]) -> List[Dict]:
+    matches = []
+    seen = set()
+    for entry in entries:
+        keyword = normalize_keyword(entry.get("keyword", ""))
+        if not keyword or keyword not in text:
+            continue
+        key = (entry.get("direction_id"), entry.get("subtopic_id", ""), keyword)
+        if key in seen:
+            continue
+        seen.add(key)
+        matched = dict(entry)
+        matched["keyword"] = keyword
+        matches.append(matched)
+    return matches
+
+
+def direction_ids_from_matches(matches: Iterable[Dict]) -> List[str]:
+    ids = []
+    for match in matches:
+        direction_id = match.get("direction_id")
+        if direction_id:
+            ids.append(direction_id)
+    return list(dict.fromkeys(ids))
+
+
+def local_keep_item(item: Dict, directions: List[Dict], matched_ids: List[str], reason: str) -> Dict:
+    valid_ids = {direction["id"] for direction in directions}
+    matched_ids = [direction_id for direction_id in matched_ids if direction_id in valid_ids]
+    if not matched_ids and directions:
+        matched_ids = [directions[0]["id"]]
+
+    item["_filter_primary_direction_id"] = matched_ids[0] if matched_ids else ""
+    item["_filter_matched_direction_ids"] = matched_ids
+    item["_filter_relevance_reason"] = reason
+    item["_local_filter_state"] = "keep"
+    return item
+
+
+def local_filter_item(item: Dict, directions: List[Dict], keyword_config: Dict) -> Dict:
+    text = local_filter_text(item)
+    categories = set(item.get("categories", []) or [])
+
+    canonical_matches = match_keyword_entries(text, keyword_config["canonical"])
+    direction_matches = match_keyword_entries(text, keyword_config["direction_keywords"])
+    strong_hits = keyword_hits(text, keyword_config["strong"])
+    weak_hits = keyword_hits(text, keyword_config["weak"])
+    negative_hits = keyword_hits(text, keyword_config["negative"])
+
+    matched_ids = direction_ids_from_matches(canonical_matches) or direction_ids_from_matches(direction_matches)
+
+    if canonical_matches:
+        canonical_label = canonical_matches[0].get("subtopic_name") or canonical_matches[0]["keyword"]
+        return {
+            "state": "keep",
+            "matched_direction_ids": matched_ids,
+            "reason": f"Local filter keep: matched canonical subtopic signal '{canonical_label}'.",
+        }
+
+    if strong_hits:
+        return {
+            "state": "keep",
+            "matched_direction_ids": matched_ids,
+            "reason": f"Local filter keep: matched strong keyword(s): {', '.join(strong_hits[:5])}.",
+        }
+
+    if negative_hits:
+        return {
+            "state": "drop",
+            "matched_direction_ids": [],
+            "reason": f"Local filter drop: matched negative keyword(s) without strong signal: {', '.join(negative_hits[:5])}.",
+        }
+
+    if weak_hits:
+        if categories.intersection(HIGH_VALUE_CATEGORIES):
+            return {
+                "state": "keep",
+                "matched_direction_ids": matched_ids,
+                "reason": f"Local filter keep: matched weak keyword(s) in high-value category: {', '.join(weak_hits[:5])}.",
+            }
+        return {
+            "state": "uncertain",
+            "matched_direction_ids": matched_ids,
+            "reason": f"Local filter uncertain: matched weak keyword(s): {', '.join(weak_hits[:5])}.",
+        }
+
+    if categories.intersection(HIGH_VALUE_CATEGORIES):
+        return {
+            "state": "uncertain",
+            "matched_direction_ids": matched_ids,
+            "reason": "Local filter uncertain: high-value arXiv category but no configured title signal.",
+        }
+
+    return {
+        "state": "drop",
+        "matched_direction_ids": [],
+        "reason": "Local filter drop: no configured title signal in lower-priority categories.",
+    }
+
+
 def normalize_filter_result(item: Dict, filter_fields: Dict, directions: List[Dict]) -> Dict:
     valid_directions = direction_map(directions)
     matched_ids = [direction_id for direction_id in filter_fields.get("matched_direction_ids", []) if direction_id in valid_directions]
@@ -269,7 +521,7 @@ def filter_single_item(chain, item: Dict, directions: List[Dict], prompt_directi
     return item
 
 
-def filter_all_items(data: List[Dict], filter_model_name: str, max_workers: int, directions: List[Dict]) -> List[Dict]:
+def filter_all_items(data: List[Dict], filter_model_name: str, max_workers: int, directions: List[Dict], importance_config: Dict) -> List[Dict]:
     filter_system = (
         "You are a fast research paper router. Decide if the paper belongs to one or more target research directions. "
         "Return only the structured fields. Do not summarize the paper."
@@ -283,8 +535,39 @@ def filter_all_items(data: List[Dict], filter_model_name: str, max_workers: int,
         "Abstract:\n{content}\n\n"
         "Task: classify relevance to the target directions. Use exact direction ids."
     )
-    llm = build_llm(filter_model_name, FilterStructure)
     print("Filter model:", filter_model_name, file=sys.stderr)
+    keyword_config = collect_filter_keywords(directions, importance_config)
+    prompt_directions = compact_directions_for_prompt(directions)
+
+    filtered_data = [{} for _ in data]
+    uncertain_items = []
+    stats = {"keep": 0, "drop": 0, "uncertain": 0}
+
+    for idx, item in enumerate(data):
+        local_result = local_filter_item(item, directions, keyword_config)
+        state = local_result["state"]
+        stats[state] += 1
+        if state == "keep":
+            filtered_data[idx] = local_keep_item(
+                item,
+                directions,
+                local_result.get("matched_direction_ids", []),
+                local_result.get("reason", "Local filter keep."),
+            )
+        elif state == "uncertain":
+            item["_local_filter_state"] = "uncertain"
+            item["_local_filter_reason"] = local_result.get("reason", "Local filter uncertain.")
+            uncertain_items.append((idx, item))
+
+    print(
+        "Local filter stats: "
+        f"keep={stats['keep']}, drop={stats['drop']}, uncertain={stats['uncertain']}",
+        file=sys.stderr,
+    )
+    if not uncertain_items:
+        return [item for item in filtered_data if item]
+
+    llm = build_llm(filter_model_name, FilterStructure)
     prompt_template = ChatPromptTemplate.from_messages(
         [
             SystemMessagePromptTemplate.from_template(filter_system),
@@ -292,18 +575,21 @@ def filter_all_items(data: List[Dict], filter_model_name: str, max_workers: int,
         ]
     )
     chain = prompt_template | llm
-    prompt_directions = compact_directions_for_prompt(directions)
 
-    filtered_data = [{} for _ in data]
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_idx = {
             executor.submit(filter_single_item, chain, item, directions, prompt_directions): idx
-            for idx, item in enumerate(data)
+            for idx, item in uncertain_items
         }
-        for future in tqdm(as_completed(future_to_idx), total=len(data), desc="Filtering items"):
+        for future in tqdm(as_completed(future_to_idx), total=len(uncertain_items), desc="Filtering uncertain items"):
             idx = future_to_idx[future]
             try:
-                filtered_data[idx] = future.result()
+                result = future.result()
+                if result and result.get("_local_filter_reason") and result.get("_filter_relevance_reason"):
+                    result["_filter_relevance_reason"] = (
+                        f"{result['_local_filter_reason']} Model filter: {result['_filter_relevance_reason']}"
+                    )
+                filtered_data[idx] = result
             except Exception as e:
                 print(f"Filter worker error at index {idx}: {e}", file=sys.stderr)
 
@@ -456,10 +742,42 @@ def compact_importance_config_for_prompt(importance_config: Dict) -> str:
     return "\n".join(lines)
 
 
+def parse_labeled_score(content: str, label: str, default: float = 0.0) -> float:
+    pattern = rf"(?im)^\s*{re.escape(label)}\s*:\s*([0-9]+(?:\.[0-9]+)?)\s*$"
+    match = re.search(pattern, content)
+    if not match:
+        return default
+    return clamp_score(float(match.group(1)))
+
+
+def parse_labeled_text(content: str, label: str, default: str = "") -> str:
+    pattern = rf"(?ims)^\s*{re.escape(label)}\s*:\s*(.*?)(?=^\s*[a-zA-Z_]+\s*:|\Z)"
+    match = re.search(pattern, content)
+    if not match:
+        return default
+    return match.group(1).strip()
+
+
+def parse_importance_response(content: str) -> Dict:
+    reason = parse_labeled_text(content, "importance_reason", "Importance scored by preference heuristic and model judgment.")
+    raw_signals = parse_labeled_text(content, "key_signals", "")
+    signals = [
+        signal.strip(" -\t")
+        for signal in re.split(r"[;\n]", raw_signals)
+        if signal.strip(" -\t")
+    ]
+    return {
+        "research_value_score": parse_labeled_score(content, "research_value_score"),
+        "personal_relevance_score": parse_labeled_score(content, "personal_relevance_score"),
+        "importance_reason": reason,
+        "key_signals": signals,
+    }
+
+
 def score_single_importance(chain, item: Dict, importance_config_text: str, heuristic_score: float) -> Dict:
     ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
     try:
-        response: ImportanceStructure = chain.invoke(
+        response = chain.invoke(
             {
                 "importance_config": importance_config_text,
                 "title": item.get("title", ""),
@@ -471,7 +789,8 @@ def score_single_importance(chain, item: Dict, importance_config_text: str, heur
                 "abstract": item.get("summary", ""),
             }
         )
-        fields = response.model_dump()
+        content = response.content if hasattr(response, "content") else str(response)
+        fields = parse_importance_response(content)
         model_score = (
             clamp_score(fields.get("research_value_score", 0.0)) * 0.45
             + clamp_score(fields.get("personal_relevance_score", 0.0)) * 0.55
@@ -501,7 +820,8 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
 
     importance_system = (
         "You are a fast research paper importance rater. Score the paper for a daily personal research briefing. "
-        "Respect the user's configured priorities more than generic popularity. Return only structured fields."
+        "Respect the user's configured priorities more than generic popularity. "
+        "Return only the requested labeled lines, with no JSON and no Markdown."
     )
     importance_template = (
         "User importance configuration:\n{importance_config}\n\n"
@@ -513,9 +833,14 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
         "Subtopic: {subtopic}\n\n"
         "TL;DR:\n{tldr}\n\n"
         "Abstract:\n{abstract}\n\n"
-        "Task: rate the paper's importance for the user's daily reading queue."
+        "Task: rate the paper's importance for the user's daily reading queue.\n\n"
+        "Return exactly these four labeled fields:\n"
+        "research_value_score: <number from 0 to 100>\n"
+        "personal_relevance_score: <number from 0 to 100>\n"
+        "importance_reason: <one short sentence>\n"
+        "key_signals: <semicolon-separated short signals>"
     )
-    llm = build_llm(model_name, ImportanceStructure)
+    llm = build_plain_llm(model_name)
     print("Importance model:", model_name, file=sys.stderr)
     prompt_template = ChatPromptTemplate.from_messages(
         [
@@ -634,7 +959,7 @@ def main():
             unique_data.append(item)
 
     print("Open:", args.data, file=sys.stderr)
-    filtered_data = filter_all_items(unique_data, filter_model_name, filter_max_workers, directions)
+    filtered_data = filter_all_items(unique_data, filter_model_name, filter_max_workers, directions, importance_config)
     max_detail_items = int(os.environ.get("MAX_DETAIL_ITEMS") or "0")
     if max_detail_items > 0:
         filtered_data = filtered_data[:max_detail_items]
