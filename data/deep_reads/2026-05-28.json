@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2605.28816",
+    "title": "Gamma-World: Generative Multi-Agent World Modeling Beyond Two Players",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2605.27589",
+    "title": "What-If World: A Causal Benchmark for General World Models in Embodied Scenarios",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2605.28544",
+    "title": "DriveWAM: Video Generative Priors Enable Scalable World-Action Modeling for Autonomous Driving",
+    "rank": 3,
+    "status": "ok"
+  }
+]
