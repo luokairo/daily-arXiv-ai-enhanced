@@ -5,7 +5,9 @@ name: arXiv-daily-ai-enhanced
 
 on:
   schedule:
-    - cron: "30 0 * * *"
+    # GitHub schedule uses UTC and may be delayed at busy minutes.
+    # 00:23 UTC = 08:23 Asia/Shanghai; use an off-peak minute to reduce queueing.
+    - cron: "23 0 * * *"
   workflow_dispatch:
     inputs:
       target_date:
