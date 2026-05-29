@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2605.30351",
+    "title": "VideoMLA: Low-Rank Latent KV Cache for Minute-Scale Autoregressive Video Diffusion",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2605.30263",
+    "title": "minWM: A Full-Stack Open-Source Framework for Real-Time Interactive Video World Models",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2605.30325",
+    "title": "Veda: Scalable Video Diffusion via Distilled Sparse Attention",
+    "rank": 3,
+    "status": "ok"
+  }
+]
