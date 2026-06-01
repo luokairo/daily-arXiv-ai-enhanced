@@ -1,0 +1,1034 @@
+{
+  "directions": {
+    "continuous_language_multimodal": {
+      "id": "continuous_language_multimodal",
+      "name": "连续语言模型与连续多模态模型",
+      "subtopics": [
+        {
+          "created_at": null,
+          "description": "连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。",
+          "examples": [],
+          "id": "continuous_language_flow",
+          "is_canonical": true,
+          "keywords": [
+            "continuous language model",
+            "continuous latent language model",
+            "embedded language flow",
+            "diffusion language model",
+            "flow matching language",
+            "cola",
+            "elf"
+          ],
+          "name": "连续语言模型与语言流",
+          "paper_count": 0,
+          "updated_at": null
+        },
+        {
+          "created_at": null,
+          "description": "关注连续视觉语言模型、连续视觉 token、视觉 VAE/ViT latent、flow matching 与多模态理解。",
+          "examples": [
+            {
+              "id": "2605.30750",
+              "title": "SLAP: The Semantic Least Action Principle for Variational Video-Language Modeling"
+            },
+            {
+              "id": "2605.31503",
+              "title": "How can embedding models bind concepts?"
+            }
+          ],
+          "id": "continuous_vlm_latent_flow",
+          "is_canonical": true,
+          "keywords": [
+            "continuous vision-language model",
+            "continuous vlm",
+            "continuous visual token",
+            "continuous visual tokens",
+            "visual latent flow",
+            "latent flow",
+            "flow matching",
+            "visual vae",
+            "representation autoencoder",
+            "multimodal latent reasoning"
+          ],
+          "name": "连续 VLM 与视觉潜空间流",
+          "paper_count": 2,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "面向理解与生成统一的连续视觉 token、VAE/ViT、RAE、DINO/SigLIP/MAE latent 与视觉表征重建。",
+          "examples": [
+            {
+              "id": "2605.30904",
+              "title": "MergeTok: Unified Continuous and Discrete Visual Tokenization via Token Merging"
+            }
+          ],
+          "id": "continuous_visual_tokenizer",
+          "is_canonical": true,
+          "keywords": [
+            "continuous visual tokenizer",
+            "continuous visual representation",
+            "visual tokenizer",
+            "visual vae",
+            "representation autoencoder",
+            "rae",
+            "vit autoencoder",
+            "semantic visual latent"
+          ],
+          "name": "连续视觉 Tokenizer 与表征自编码器",
+          "paper_count": 1,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。",
+          "examples": [],
+          "id": "continuous_multimodal_reasoning",
+          "is_canonical": true,
+          "keywords": [
+            "multimodal latent reasoning",
+            "continuous multimodal reasoning",
+            "chain of continuous thought",
+            "continuous vision-language thought",
+            "latent visual reasoning",
+            "visual thought"
+          ],
+          "name": "连续多模态推理与潜空间思维",
+          "paper_count": 0,
+          "updated_at": null
+        }
+      ]
+    },
+    "multimodal_generation": {
+      "id": "multimodal_generation",
+      "name": "多模态生成",
+      "subtopics": [
+        {
+          "created_at": null,
+          "description": "文本到图像生成、图像扩散模型、DiT 等基础图像生成方法。",
+          "examples": [
+            {
+              "id": "2605.30631",
+              "title": "Controllable Lung Nodule Synthesis via Histogram-Regularized Latent Diffusion Models"
+            }
+          ],
+          "id": "text_to_image_diffusion",
+          "is_canonical": true,
+          "keywords": [
+            "text-to-image",
+            "image diffusion",
+            "stable diffusion",
+            "diffusion transformer",
+            "dit"
+          ],
+          "name": "文生图与图像扩散",
+          "paper_count": 1,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "文本到视频生成、视频扩散模型、视频 DiT 等视频生成方法（不含自回归与世界模型）。",
+          "examples": [
+            {
+              "id": "2605.30519",
+              "title": "OmniMem: Scalable and Adaptive Memory Retrieval for Long Video Generation"
+            },
+            {
+              "id": "2605.30774",
+              "title": "CameraNoise: Enabling Faithful Camera Control in Video Diffusion through Geometry-Flow-Guided Noise Warping"
+            },
+            {
+              "id": "2605.31033",
+              "title": "SlotMemory: Object-Centric KV Memory for Streaming Long-Video Generation"
+            },
+            {
+              "id": "2605.31204",
+              "title": "Probabilistic Precipitation Nowcasting with Rectified Flow Transformers"
+            },
+            {
+              "id": "2605.31590",
+              "title": "TunerDiT: Training-free Progressive Steering of Diffusion Transformer for Multi-Event Video Generation"
+            }
+          ],
+          "id": "text_to_video_diffusion",
+          "is_canonical": true,
+          "keywords": [
+            "text-to-video",
+            "video diffusion",
+            "video dit",
+            "video generation",
+            "svd"
+          ],
+          "name": "文生视频与视频扩散",
+          "paper_count": 5,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "自回归图像与视频生成，包括 next-token、MaskGIT、VAR、MAR、LlamaGen 等范式。",
+          "examples": [],
+          "id": "autoregressive_visual_generation",
+          "is_canonical": true,
+          "keywords": [
+            "autoregressive image",
+            "autoregressive video",
+            "next-token",
+            "maskgit",
+            "var",
+            "mar",
+            "llamagen"
+          ],
+          "name": "自回归视觉生成",
+          "paper_count": 0,
+          "updated_at": null
+        },
+        {
+          "created_at": null,
+          "description": "3D 物体/场景生成、3DGS、NeRF、Mesh 生成、神经渲染与重光照。",
+          "examples": [
+            {
+              "id": "2605.30819",
+              "title": "Function2Scene: 3D Indoor Scene Layout from Functional Specifications"
+            },
+            {
+              "id": "2605.30893",
+              "title": "Foundation VAEs for 3D CT Reconstruction, Augmentation, and Generation"
+            },
+            {
+              "id": "2605.31466",
+              "title": "VolFill: Single-View Amodal 3D Scene Reconstruction with Volumetric Flow Matching"
+            },
+            {
+              "id": "2605.31535",
+              "title": "RayDer: Scalable Self-Supervised Novel View Synthesis from Real-World Video"
+            },
+            {
+              "id": "2605.30396",
+              "title": "Smaller and Faster 3DGS via Post-Training Dictionary Learning"
+            }
+          ],
+          "id": "three_d_generation",
+          "is_canonical": true,
+          "keywords": [
+            "3d generation",
+            "3d gaussian",
+            "3dgs",
+            "nerf",
+            "mesh generation",
+            "neural rendering"
+          ],
+          "name": "3D 生成与重建",
+          "paper_count": 6,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "动态 3D/4D 场景生成与重建、4D 高斯泼溅、动态神经场。",
+          "examples": [
+            {
+              "id": "2605.30863",
+              "title": "DSD-GS: Dynamic-Static Decomposition of Gaussian Splatting for Efficient and High-Fidelity Dynamic Scene Reconstruction"
+            },
+            {
+              "id": "2605.31595",
+              "title": "Learning Global Motion with Compact Gaussians for Feed-Forward 4D Reconstruction"
+            }
+          ],
+          "id": "dynamic_4d_generation",
+          "is_canonical": true,
+          "keywords": [
+            "4d",
+            "dynamic scene",
+            "dynamic 3d",
+            "4d gaussian"
+          ],
+          "name": "4D 与动态场景生成",
+          "paper_count": 2,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "图像编辑、视频编辑、Inpainting、可控编辑、风格化等。",
+          "examples": [
+            {
+              "id": "2605.30409",
+              "title": "SANA-Streaming: Real-time Streaming Video Editing with Hybrid Diffusion Transformer"
+            },
+            {
+              "id": "2605.30431",
+              "title": "DTG-Restore: Training-Free Diffusion Refinement for Generative Video Super-Resolution"
+            },
+            {
+              "id": "2605.30437",
+              "title": "Mitigating Content Shift and Hallucination in GenAI Image Editing via Structural Refinement"
+            },
+            {
+              "id": "2605.30987",
+              "title": "Benchmarking Single-Step Inpainting Methods for Multi-Object 3D Gaussian Splatting Scenes"
+            },
+            {
+              "id": "2605.31162",
+              "title": "Guidance for Low-Level Perceptual Editing in Unconditional Diffusion Models"
+            }
+          ],
+          "id": "visual_editing",
+          "is_canonical": true,
+          "keywords": [
+            "image editing",
+            "video editing",
+            "inpainting",
+            "controllable editing",
+            "style transfer"
+          ],
+          "name": "图像与视频编辑",
+          "paper_count": 6,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "主体驱动、概念定制、个性化生成、ID 保持、参考图引导生成。",
+          "examples": [
+            {
+              "id": "2605.31266",
+              "title": "Envisioning Beyond the Few: Disentangled Semantics and Primitives for Few-Shot Atypical Layout-to-Image Generation"
+            }
+          ],
+          "id": "customization_generation",
+          "is_canonical": true,
+          "keywords": [
+            "subject-driven",
+            "concept-driven",
+            "customization",
+            "personalization",
+            "id preservation",
+            "reference image"
+          ],
+          "name": "主体与概念驱动生成",
+          "paper_count": 1,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "虚拟人、说话头、人体动作、肖像动画、面部重演。",
+          "examples": [
+            {
+              "id": "2605.30444",
+              "title": "Dex2HOI: Dexterous Bimanual Two-Object Interaction Generation"
+            },
+            {
+              "id": "2605.30969",
+              "title": "Omni-Supervised Motion Editing: Balancing Change and Invariance through Positive-Negative Learning"
+            },
+            {
+              "id": "2605.31294",
+              "title": "TokTalk: Expressive Real-time Facial Animation from Audio-LLM Tokens"
+            }
+          ],
+          "id": "avatar_motion_generation",
+          "is_canonical": true,
+          "keywords": [
+            "avatar",
+            "talking head",
+            "portrait animation",
+            "human motion",
+            "face reenactment"
+          ],
+          "name": "数字人与动作生成",
+          "paper_count": 3,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "音乐/语音生成、TTS、音视频联合生成、跨模态条件音频生成。",
+          "examples": [
+            {
+              "id": "2605.30940",
+              "title": "Towards Streaming Synchronized Spatial Audio Generation via Autoregressive Diffusion Transformer"
+            },
+            {
+              "id": "2605.30387",
+              "title": "Functional MRI Time Series Generation via Wavelet-Based Image Transform and Spectral Flow Matching for Brain Disorder Identification"
+            },
+            {
+              "id": "2605.30965",
+              "title": "ImmersiveTTS: Environment-Aware Text-to-Speech with Multimodal Diffusion Transformer and Domain-Specific Representation Alignment"
+            },
+            {
+              "id": "2605.31053",
+              "title": "AnchorSteer: Self-Discovered Concept Injection for Structure-Preserving Music Editing"
+            }
+          ],
+          "id": "audio_av_generation",
+          "is_canonical": true,
+          "keywords": [
+            "audio generation",
+            "music generation",
+            "tts",
+            "speech synthesis",
+            "audio-visual generation"
+          ],
+          "name": "音频与多模态联合生成",
+          "paper_count": 4,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "扩散加速、少步采样、蒸馏、量化、稀疏化等生成模型效率优化。",
+          "examples": [
+            {
+              "id": "2605.31057",
+              "title": "LVSA: Training-Free Sparse Attention for Long Video Diffusion"
+            },
+            {
+              "id": "2605.31215",
+              "title": "Fixed-Point Masked Generative Modeling"
+            },
+            {
+              "id": "2605.31369",
+              "title": "A Unifying View of Variational Generative Wasserstein Flows"
+            }
+          ],
+          "id": "efficient_generation",
+          "is_canonical": true,
+          "keywords": [
+            "acceleration",
+            "distillation",
+            "few-step",
+            "efficient sampling",
+            "quantization",
+            "sparse"
+          ],
+          "name": "生成模型加速与高效化",
+          "paper_count": 3,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "生成模型对齐、RLHF、奖励建模、偏好优化、guidance 与可控性。",
+          "examples": [
+            {
+              "id": "2605.30365",
+              "title": "Mental Damage: Caption Poisoning Attacks on Retrieval-Augmented Text-to-Music Generation"
+            },
+            {
+              "id": "2605.30991",
+              "title": "Parallel Tempering Initial Sampling in Inference-Time Reward Alignment"
+            }
+          ],
+          "id": "generation_alignment",
+          "is_canonical": true,
+          "keywords": [
+            "alignment",
+            "rlhf",
+            "reward",
+            "preference",
+            "dpo",
+            "guidance"
+          ],
+          "name": "生成模型对齐与奖励",
+          "paper_count": 2,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "生成模型评测基准、新数据集、自动评测指标、人类偏好评估。",
+          "examples": [
+            {
+              "id": "2605.30611",
+              "title": "Crafter: A Multi-Agent Harness for Editable Scientific Figure Generation from Diverse Inputs"
+            },
+            {
+              "id": "2605.31039",
+              "title": "GGT-100K: Generative Ground Truth for Generalizable Real-World Image Restoration"
+            },
+            {
+              "id": "2605.30807",
+              "title": "Conformal Reliability: A New Evaluation Metric for Conditional Generation"
+            },
+            {
+              "id": "2605.31212",
+              "title": "Benchmarking and Enhancing Text-to-Image Models for Generating Visual Representations in Early Arithmetic Education"
+            },
+            {
+              "id": "2605.30578",
+              "title": "AdvScene: Rethinking Adversarial Patch Evaluation Through Scene Robustness"
+            }
+          ],
+          "id": "generation_benchmark",
+          "is_canonical": true,
+          "keywords": [
+            "benchmark",
+            "evaluation",
+            "metric",
+            "dataset",
+            "human preference"
+          ],
+          "name": "生成模型评测与数据集",
+          "paper_count": 5,
+          "updated_at": "2026-05-31"
+        }
+      ]
+    },
+    "multimodal_understanding_generation": {
+      "id": "multimodal_understanding_generation",
+      "name": "多模态理解与生成",
+      "subtopics": [
+        {
+          "created_at": null,
+          "description": "通用视觉语言模型、MLLM 架构、多模态指令微调与对话。",
+          "examples": [
+            {
+              "id": "2605.31401",
+              "title": "\"Intelegi Româneşte?'' A Recipe for Romanian Vision-Language Models"
+            },
+            {
+              "id": "2605.31075",
+              "title": "Task-Focused Memorization for Multimodal Agents"
+            },
+            {
+              "id": "2605.31145",
+              "title": "FOCUS: Forcing In-Context Object Localization through Visual Support Constraints and Policy Optimization"
+            },
+            {
+              "id": "2605.31174",
+              "title": "Detect in Any Scene: An Agentic Framework for Object Detection with Experience-Aware Reasoning"
+            },
+            {
+              "id": "2605.31513",
+              "title": "Personalize Your Large Vision-language Models With In-context Prompt Tuning"
+            }
+          ],
+          "id": "vlm_mllm_general",
+          "is_canonical": true,
+          "keywords": [
+            "vision-language model",
+            "mllm",
+            "vlm",
+            "multimodal instruction"
+          ],
+          "name": "视觉语言模型与 MLLM",
+          "paper_count": 10,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。",
+          "examples": [
+            {
+              "id": "2605.31603",
+              "title": "Lumos-Nexus: Efficient Frequency Bridging with Homogeneous Latent Space for Video Unified Models"
+            },
+            {
+              "id": "2605.31604",
+              "title": "Representation Forcing for Bottleneck-Free Unified Multimodal Models"
+            }
+          ],
+          "id": "unified_multimodal_model",
+          "is_canonical": true,
+          "keywords": [
+            "unified multimodal",
+            "any-to-any",
+            "understanding generation",
+            "native multimodal"
+          ],
+          "name": "统一多模态模型",
+          "paper_count": 2,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "多模态 CoT、视觉推理、数学/代码/科学推理、推理时计算扩展。",
+          "examples": [
+            {
+              "id": "2605.30713",
+              "title": "Diversity Matters: Revisiting Test-Time Compute in Vision-Language Models"
+            },
+            {
+              "id": "2605.30557",
+              "title": "Seeing Isn't Knowing: Do VLMs Know When Not to Answer Spatial Questions (and Why)?"
+            },
+            {
+              "id": "2605.30651",
+              "title": "LARK: Learnability-Grounded Trajectory Selection for Efficient Reasoning Distillation"
+            },
+            {
+              "id": "2605.31404",
+              "title": "The Sword, Shield, and Achilles' Heel: Characterizing the Linguistic Inductive Bias of Large Language Models for Spatial Reasoning in Navigation Planning"
+            },
+            {
+              "id": "2605.31096",
+              "title": "iVGR: Internalizing Visually Grounded Reasoning for MLLMs with Reinforcement Learning"
+            }
+          ],
+          "id": "multimodal_reasoning_cot",
+          "is_canonical": true,
+          "keywords": [
+            "multimodal reasoning",
+            "chain of thought",
+            "visual reasoning",
+            "math reasoning",
+            "inference scaling"
+          ],
+          "name": "多模态推理与思维链",
+          "paper_count": 5,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "视频 LLM、视频问答、时序定位、长视频理解、第一视角视频。",
+          "examples": [
+            {
+              "id": "2605.31069",
+              "title": "Towards Effective Long-Video Event Prediction via Multi-Level Event Semantics Mining"
+            },
+            {
+              "id": "2605.31115",
+              "title": "Polyphony: Diffusion-based Dual-Hand Action Segmentation with Alternating Vision Transformer and Semantic Conditioning"
+            },
+            {
+              "id": "2605.31227",
+              "title": "HiERO-StepG @ Ego4D Step Grounding Challenge: hierarchical activity understanding enables zero-shot step grounding"
+            },
+            {
+              "id": "2605.31557",
+              "title": "EGOSTREAM: A Diagnostic Benchmark for Streaming Episodic Memory in Egocentric Vision"
+            },
+            {
+              "id": "2605.31598",
+              "title": "Linear Scaling Video VLMs for Long Video Understanding"
+            }
+          ],
+          "id": "video_understanding_temporal",
+          "is_canonical": true,
+          "keywords": [
+            "video understanding",
+            "video llm",
+            "temporal grounding",
+            "long video",
+            "ego video"
+          ],
+          "name": "视频理解与时序推理",
+          "paper_count": 5,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "视觉幻觉缓解、事实性、可靠性、忠实性提升。",
+          "examples": [
+            {
+              "id": "2605.30911",
+              "title": "What Makes LVLMs Hallucinate Less? Unveiling the Architectural Factors Behind Hallucination Robustness"
+            },
+            {
+              "id": "2605.31483",
+              "title": "BenHalluEval: A Multi-Task Hallucination Evaluation Framework for Large Language Models on Bengali"
+            },
+            {
+              "id": "2605.31312",
+              "title": "Learning from Fine-Grained Visual Discrepancies: Mitigating Multimodal Hallucinations via In-Context Visual Contrastive Optimization"
+            },
+            {
+              "id": "2605.31429",
+              "title": "YARD: Y-Architecture Register Decoding for Efficient Hallucination Mitigation in Large Vision-Language Models"
+            },
+            {
+              "id": "2605.31064",
+              "title": "Fighting Numerical Hallucinations via Data-centric Compilation for Online Financial QA"
+            }
+          ],
+          "id": "multimodal_hallucination",
+          "is_canonical": true,
+          "keywords": [
+            "hallucination",
+            "factuality",
+            "reliability",
+            "faithfulness"
+          ],
+          "name": "多模态幻觉与可靠性",
+          "paper_count": 5,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "多模态 RL、RLHF、DPO、偏好学习、多模态对齐。",
+          "examples": [
+            {
+              "id": "2605.30888",
+              "title": "The Flip Side of RLHF: On-Policy Feedback for Reward Model Self-Supervised Improvement"
+            },
+            {
+              "id": "2605.30898",
+              "title": "UniScale: Adaptive Unified Inference Scaling via Online Joint Optimization of Model Routing and Test-Time Scaling"
+            },
+            {
+              "id": "2605.30912",
+              "title": "Attend to Evidence: Evidence-Anchored Spatial Attention Supervision for Multimodal RLVR"
+            },
+            {
+              "id": "2605.31433",
+              "title": "SCOPE: Self-Play via Co-Evolving Policies for Open-Ended Tasks"
+            },
+            {
+              "id": "2605.30873",
+              "title": "Federated Variational Preference Alignment with Gumbel-Softmax Prior for Personalized User Preferences"
+            }
+          ],
+          "id": "multimodal_rl_alignment",
+          "is_canonical": true,
+          "keywords": [
+            "multimodal rl",
+            "multimodal rlhf",
+            "multimodal dpo",
+            "preference learning",
+            "multimodal alignment"
+          ],
+          "name": "多模态强化学习与对齐",
+          "paper_count": 5,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "高效 MLLM、PEFT、蒸馏、量化、token 压缩、稀疏推理。",
+          "examples": [
+            {
+              "id": "2605.31029",
+              "title": "PEEK: Picking Essential frames via Efficient Knowledge distillation"
+            },
+            {
+              "id": "2605.31457",
+              "title": "VisionPulse: Dynamic Visual Sparsity for Efficient Multimodal Reasoning"
+            }
+          ],
+          "id": "efficient_multimodal",
+          "is_canonical": true,
+          "keywords": [
+            "efficient mllm",
+            "peft",
+            "multimodal distillation",
+            "token compression",
+            "quantization"
+          ],
+          "name": "多模态高效化与轻量化",
+          "paper_count": 2,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "多模态评测、新基准、评测协议、自动评估。",
+          "examples": [
+            {
+              "id": "2605.31351",
+              "title": "A Visually Impaired Assistance Benchmark for VLM-as-a-Judge Evaluation"
+            },
+            {
+              "id": "2605.31251",
+              "title": "ERGeoBench:A Comprehensive Benchmark for Embodied Reasoning and Geo-localization in Multimodal Large Language Models"
+            },
+            {
+              "id": "2605.31529",
+              "title": "SVI-Bench: A Dynamic Microworld for Strategic Video Intelligence"
+            },
+            {
+              "id": "2605.31572",
+              "title": "nuReasoning: A Reasoning-Centric Dataset and Benchmark for Long-Tail Autonomous Driving"
+            },
+            {
+              "id": "2605.31597",
+              "title": "SOCO: Benchmarking Semantic Object Correspondence in Vision Foundation Models"
+            }
+          ],
+          "id": "multimodal_benchmark",
+          "is_canonical": true,
+          "keywords": [
+            "multimodal benchmark",
+            "mllm evaluation",
+            "vlm benchmark",
+            "evaluation suite"
+          ],
+          "name": "多模态评测与基准",
+          "paper_count": 10,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "空间推理、3D 视觉定位、具身推理、几何推理。",
+          "examples": [
+            {
+              "id": "2605.30561",
+              "title": "VLM3: Vision Language Models Are Native 3D Learners"
+            },
+            {
+              "id": "2605.31387",
+              "title": "Multi-Turn Multi-Agent Dialogue for Collaborative Reconstruction Improves VLM Performance on Spatial Reasoning, But Only Barely"
+            },
+            {
+              "id": "2605.31148",
+              "title": "SpatialAct: Probing Spatial Reasoning-to-Action Capabilities of VLM Agents in 3D Scenes"
+            }
+          ],
+          "id": "spatial_3d_reasoning",
+          "is_canonical": true,
+          "keywords": [
+            "spatial reasoning",
+            "3d grounding",
+            "embodied reasoning",
+            "geometric reasoning"
+          ],
+          "name": "空间与 3D 多模态推理",
+          "paper_count": 3,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "跨模态检索、组合检索、文档检索、多模态搜索。",
+          "examples": [
+            {
+              "id": "2605.31201",
+              "title": "Learning Whom to Trust: Market-Feedback Adaptive Retrieval for Frozen LLMs in Event-Driven Financial RAG"
+            },
+            {
+              "id": "2605.30968",
+              "title": "Variational Adapter for Cross-modal Similarity Representation"
+            },
+            {
+              "id": "2605.31229",
+              "title": "Beyond Classification: Dynamic Adapter Routing for Continual Multimodal Retrieval"
+            },
+            {
+              "id": "2605.30917",
+              "title": "Inference-Free Multimodal Learned Sparse Retrieval for Production-Scale Visual Document Search"
+            }
+          ],
+          "id": "multimodal_retrieval",
+          "is_canonical": true,
+          "keywords": [
+            "multimodal retrieval",
+            "composed retrieval",
+            "cross-modal retrieval",
+            "document retrieval"
+          ],
+          "name": "多模态检索",
+          "paper_count": 4,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "多模态越狱、对抗攻击、防御、安全评测。",
+          "examples": [
+            {
+              "id": "2605.31021",
+              "title": "A Persona-Based Evaluation Framework for Pluralistic Alignment in Generative AI"
+            },
+            {
+              "id": "2605.31196",
+              "title": "Probing Collision Grounding in Vision-Language Models for Safe Human-Robot Collaboration"
+            },
+            {
+              "id": "2605.30745",
+              "title": "Immuno-VLM: Immunizing Large Vision-Language Models via Generative Semantic Antibodies for Open-World Trustworthiness"
+            },
+            {
+              "id": "2605.31041",
+              "title": "Does Visual Information Play a Decisive Role in Vision-Language-Action Model Driving Behavior?"
+            },
+            {
+              "id": "2605.31556",
+              "title": "Vision-Language Models Suppress Female Representations Under Ambiguous Input"
+            }
+          ],
+          "id": "multimodal_safety_attack",
+          "is_canonical": true,
+          "keywords": [
+            "multimodal safety",
+            "jailbreak",
+            "adversarial",
+            "defense",
+            "safety benchmark"
+          ],
+          "name": "多模态安全与攻防",
+          "paper_count": 7,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "VQA、文档/图表/表格理解、OCR-free 文档智能。",
+          "examples": [
+            {
+              "id": "2605.30698",
+              "title": "Seeing Before Agreeing: Aligning Multi-Agent Consensus with Visual Evidence"
+            },
+            {
+              "id": "2605.30794",
+              "title": "MechVQA: Benchmarking and Enhancing Multimodal LLMs on Comprehensive Mechanical Drawing Understanding"
+            },
+            {
+              "id": "2605.31437",
+              "title": "Astra: a generalizable report generation foundation model for 3D computed tomography"
+            },
+            {
+              "id": "2605.31589",
+              "title": "Recognizing Co-Speech Gestures in-the-Wild"
+            }
+          ],
+          "id": "multimodal_vqa_doc",
+          "is_canonical": true,
+          "keywords": [
+            "visual question answering",
+            "vqa",
+            "document understanding",
+            "chart",
+            "ocr-free"
+          ],
+          "name": "视觉问答与文档理解",
+          "paper_count": 4,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": "2026-05-31",
+          "description": "多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。",
+          "examples": [
+            {
+              "id": "2605.30587",
+              "title": "ReGuLaR: Relation-Grounded Latent Reasoning for Large Vision-Language Models"
+            }
+          ],
+          "id": "continuous_multimodal_reasoning",
+          "name": "连续多模态推理与潜空间思维",
+          "paper_count": 1,
+          "updated_at": "2026-05-31"
+        }
+      ]
+    },
+    "world_model": {
+      "id": "world_model",
+      "name": "世界模型",
+      "subtopics": [
+        {
+          "created_at": null,
+          "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
+          "examples": [
+            {
+              "id": "2605.31314",
+              "title": "AR Forcing: Towards Long-Horizon Robot Navigation World Model"
+            },
+            {
+              "id": "2605.30855",
+              "title": "Robust Dreamer: Deviation-Aware Latent Gaussian Memory for Action-Controlled AR Video Generation"
+            },
+            {
+              "id": "2605.31336",
+              "title": "DecMem: Towards Minute-Long Consistent World Generation with Decoupled Memory"
+            },
+            {
+              "id": "2605.31111",
+              "title": "Subspace-Decomposed JEPAs: Disentangling Progression and Content in Latent World Models"
+            }
+          ],
+          "id": "video_world_model",
+          "is_canonical": true,
+          "keywords": [
+            "world model",
+            "video world model",
+            "generative world model",
+            "action-conditioned video",
+            "future prediction",
+            "long-horizon video"
+          ],
+          "name": "视频世界模型",
+          "paper_count": 4,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。",
+          "examples": [
+            {
+              "id": "2605.30542",
+              "title": "Physically Viable World Models: A Case for Query-Conditioned Embodied AI"
+            },
+            {
+              "id": "2605.30880",
+              "title": "PatchWorld: Gradient-Free Optimization of Executable World Models"
+            },
+            {
+              "id": "2605.31158",
+              "title": "Light Interaction: Training-Free Inference Acceleration for Interactive Video World Models"
+            }
+          ],
+          "id": "interactive_physical_world",
+          "is_canonical": true,
+          "keywords": [
+            "interactive world",
+            "physical world model",
+            "neural simulator",
+            "physics simulation",
+            "dynamics model",
+            "environment model"
+          ],
+          "name": "可交互与物理世界建模",
+          "paper_count": 3,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
+          "examples": [
+            {
+              "id": "2605.31476",
+              "title": "IDOL: Inverse-Dynamics-Guided Future Prediction for End-to-End Autonomous Driving"
+            },
+            {
+              "id": "2605.30639",
+              "title": "PInVerify: An Offline Embodied Benchmark for Active Instance Verification"
+            },
+            {
+              "id": "2605.30656",
+              "title": "Learning to Perceive the World Through Control: Empowerment-Based Representation Learning"
+            },
+            {
+              "id": "2605.31271",
+              "title": "DriveMA: Driving Vision-Language-Action Models with verifiable Meta-Actions"
+            },
+            {
+              "id": "2605.31361",
+              "title": "Dreaming Of Others: Latent Teammate Modeling In World Models For Multi-Agent Reinforcement Learning"
+            }
+          ],
+          "id": "embodied_world_model",
+          "is_canonical": true,
+          "keywords": [
+            "embodied world model",
+            "embodied ai",
+            "robotics world model",
+            "planning",
+            "control",
+            "policy learning"
+          ],
+          "name": "具身世界模型与规划控制",
+          "paper_count": 18,
+          "updated_at": "2026-05-31"
+        },
+        {
+          "created_at": null,
+          "description": "3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。",
+          "examples": [],
+          "id": "spatial_3d_4d_world_model",
+          "is_canonical": true,
+          "keywords": [
+            "3d world model",
+            "4d world model",
+            "dynamic scene",
+            "spatial world model",
+            "neural field",
+            "3d gaussian"
+          ],
+          "name": "空间 3D/4D 世界模型",
+          "paper_count": 0,
+          "updated_at": null
+        }
+      ]
+    }
+  },
+  "updated_at": "2026-05-31",
+  "version": 2
+}
