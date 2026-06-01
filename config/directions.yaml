@@ -1,4 +1,137 @@
 directions:
+  - id: continuous_language_multimodal
+    name: 连续语言模型与连续多模态模型
+    description: 关注 ELF、CoLa 等连续语言建模思想，以及连续视觉 token、连续潜空间、多模态 latent flow 与统一连续多模态模型。
+    arxiv_categories:
+      - cs.CL
+      - cs.CV
+      - cs.AI
+      - cs.MM
+      - cs.LG
+    keywords:
+      - continuous language model
+      - continuous multimodal model
+      - continuous vision-language model
+      - continuous vlm
+      - continuous latent
+      - continuous token
+      - continuous visual token
+      - latent flow
+      - flow matching
+      - embedded language flow
+      - cola
+      - elf
+    canonical_subtopics:
+      - id: continuous_language_flow
+        name: 连续语言模型与语言流
+        description: 连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。
+        keywords:
+          - continuous language model
+          - continuous latent language model
+          - embedded language flow
+          - diffusion language model
+          - flow matching language
+          - cola
+          - elf
+      - id: continuous_vlm_latent_flow
+        name: 连续 VLM 与视觉潜空间流
+        description: 关注连续视觉语言模型、连续视觉 token、视觉 VAE/ViT latent、flow matching 与多模态理解。
+        keywords:
+          - continuous vision-language model
+          - continuous vlm
+          - continuous visual token
+          - continuous visual tokens
+          - visual latent flow
+          - latent flow
+          - flow matching
+          - visual vae
+          - representation autoencoder
+          - multimodal latent reasoning
+      - id: continuous_visual_tokenizer
+        name: 连续视觉 Tokenizer 与表征自编码器
+        description: 面向理解与生成统一的连续视觉 token、VAE/ViT、RAE、DINO/SigLIP/MAE latent 与视觉表征重建。
+        keywords:
+          - continuous visual tokenizer
+          - continuous visual representation
+          - visual tokenizer
+          - visual vae
+          - representation autoencoder
+          - rae
+          - vit autoencoder
+          - semantic visual latent
+      - id: continuous_multimodal_reasoning
+        name: 连续多模态推理与潜空间思维
+        description: 多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。
+        keywords:
+          - multimodal latent reasoning
+          - continuous multimodal reasoning
+          - chain of continuous thought
+          - continuous vision-language thought
+          - latent visual reasoning
+          - visual thought
+
+  - id: world_model
+    name: 世界模型
+    description: 关注视频世界模型、物理世界建模、可交互模拟器、动作条件生成、具身智能环境模型与规划控制。
+    arxiv_categories:
+      - cs.CV
+      - cs.AI
+      - cs.LG
+      - cs.RO
+      - cs.MM
+    keywords:
+      - world model
+      - video world model
+      - generative world model
+      - physical world model
+      - neural simulator
+      - interactive world model
+      - embodied world model
+      - action-conditioned video
+      - dynamics model
+      - environment model
+    canonical_subtopics:
+      - id: video_world_model
+        name: 视频世界模型
+        description: 视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。
+        keywords:
+          - world model
+          - video world model
+          - generative world model
+          - action-conditioned video
+          - future prediction
+          - long-horizon video
+      - id: interactive_physical_world
+        name: 可交互与物理世界建模
+        description: 物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。
+        keywords:
+          - interactive world
+          - physical world model
+          - neural simulator
+          - physics simulation
+          - dynamics model
+          - environment model
+      - id: embodied_world_model
+        name: 具身世界模型与规划控制
+        description: 面向机器人、具身智能、动作规划和控制的世界模型。
+        keywords:
+          - embodied world model
+          - embodied ai
+          - robotics world model
+          - planning
+          - control
+          - policy learning
+      - id: spatial_3d_4d_world_model
+        name: 空间 3D/4D 世界模型
+        description: 3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。
+        keywords:
+          - 3d world model
+          - 4d world model
+          - dynamic scene
+          - spatial world model
+          - neural field
+          - 3d gaussian
+
   - id: multimodal_generation
     name: 多模态生成
     description: 关注文本、图像、视频、音频、3D 等多模态条件生成方法，包括扩散模型、自回归生成、统一生成模型与生成式评测。
@@ -49,16 +182,6 @@ directions:
           - var
           - mar
           - llamagen
-      - id: video_world_model
-        name: 视频世界模型
-        description: 视频生成式世界模型、可交互模拟器、物理世界建模、动作条件视频。
-        keywords:
-          - world model
-          - video world model
-          - neural simulator
-          - generative world
-          - interactive world
-          - physical world
       - id: three_d_generation
         name: 3D 生成与重建
         description: 3D 物体/场景生成、3DGS、NeRF、Mesh 生成、神经渲染与重光照。
@@ -144,133 +267,6 @@ directions:
           - dataset
           - human preference
 
-  - id: aigc
-    name: AIGC
-    description: 关注 AI 生成内容相关模型、系统、应用、安全、评测与内容创作工作流。
-    arxiv_categories:
-      - cs.CV
-      - cs.CL
-      - cs.AI
-      - cs.MM
-      - cs.HC
-    keywords:
-      - aigc
-      - ai-generated content
-      - generative ai
-      - content generation
-      - creative generation
-      - controllable generation
-      - editing
-      - synthetic data
-      - generative content
-      - watermark
-      - deepfake
-    canonical_subtopics:
-      - id: aigc_detection_attribution
-        name: AIGC 检测与溯源
-        description: AI 生成图像/视频/音频检测、深伪检测、生成模型溯源与归因。
-        keywords:
-          - deepfake detection
-          - synthetic detection
-          - aigc detection
-          - attribution
-          - provenance
-      - id: aigc_watermark_copyright
-        name: 水印与版权保护
-        description: 生成内容水印、指纹、版权保护、IP 防护。
-        keywords:
-          - watermark
-          - fingerprint
-          - copyright
-          - ip protection
-      - id: aigc_unlearning_erasure
-        name: 概念擦除与遗忘学习
-        description: 生成模型概念擦除、有害内容遗忘、安全生成、模型 unlearning。
-        keywords:
-          - concept erasure
-          - unlearning
-          - safe generation
-          - harmful concept
-      - id: aigc_evaluation_benchmark
-        name: AIGC 评测与基准
-        description: 生成内容质量评测、创意质量、AIGC benchmark、人类偏好对齐评估。
-        keywords:
-          - aigc evaluation
-          - quality assessment
-          - aigc benchmark
-          - creative evaluation
-      - id: aigc_creative_art
-        name: 创意与艺术生成
-        description: 艺术创作、设计、SVG/矢量、叙事生成、风格化创作。
-        keywords:
-          - art generation
-          - creative generation
-          - design
-          - svg
-          - storytelling
-      - id: aigc_agent_workflow
-        name: AI 智能体与生成工作流
-        description: LLM 智能体、生成工作流、工具使用、自动化创作流水线。
-        keywords:
-          - llm agent
-          - workflow
-          - tool use
-          - automation
-          - multi-agent
-      - id: aigc_safety_governance
-        name: 生成内容安全与治理
-        description: 内容审核、AIGC 治理、有害内容检测、合规与监管。
-        keywords:
-          - content safety
-          - aigc governance
-          - harmful content
-          - moderation
-          - jailbreak
-      - id: aigc_domain_application
-        name: 领域内容生成应用
-        description: 医疗/法律/科学/代码等垂直领域生成应用与文档生成。
-        keywords:
-          - medical generation
-          - legal document
-          - scientific writing
-          - clinical
-          - code generation
-      - id: aigc_robustness_privacy
-        name: 模型鲁棒性与隐私
-        description: 生成模型鲁棒性、公平性、记忆与数据提取、隐私保护。
-        keywords:
-          - robustness
-          - fairness
-          - bias
-          - memorization
-          - data extraction
-          - privacy
-      - id: aigc_synthetic_data
-        name: 合成数据与数据集蒸馏
-        description: 合成训练数据生成、数据集蒸馏、AI 生成标注与数据增强。
-        keywords:
-          - synthetic data
-          - dataset distillation
-          - data augmentation
-          - synthetic training
-      - id: aigc_video_audio_creation
-        name: 视频音频生成应用
-        description: 视频后期、音视频编辑、内容创作产品级生成应用。
-        keywords:
-          - video creation
-          - audio editing
-          - video post-production
-          - content creation
-      - id: aigc_personalization_persona
-        name: 个性化与对话生成
-        description: 个性化生成、角色扮演、persona 对话、个性化助手与角色生成。
-        keywords:
-          - personalization
-          - role-play
-          - persona
-          - personalized assistant
-          - dialogue generation
-
   - id: multimodal_understanding_generation
     name: 多模态理解与生成
     description: 关注视觉语言模型、统一多模态模型、理解与生成一体化、跨模态推理、指令跟随与交互式多模态系统。
@@ -309,23 +305,6 @@ directions:
           - any-to-any
           - understanding generation
           - native multimodal
-      - id: continuous_vlm_latent_flow
-        name: 连续 VLM 与视觉潜空间流
-        description: 关注 ELF/CoLa 思路下的连续视觉语言模型、连续视觉 token、视觉 VAE/ViT latent、flow matching 与多模态理解。
-        keywords:
-          - continuous vision-language model
-          - continuous vlm
-          - continuous visual token
-          - continuous visual tokens
-          - visual latent flow
-          - latent flow
-          - flow matching
-          - embedded language flow
-          - elf
-          - cola
-          - visual vae
-          - representation autoencoder
-          - multimodal latent reasoning
       - id: multimodal_reasoning_cot
         name: 多模态推理与思维链
         description: 多模态 CoT、视觉推理、数学/代码/科学推理、推理时计算扩展。
@@ -416,20 +395,26 @@ directions:
 importance:
   daily_deep_read_top_k: 3
   direction_weights:
-    multimodal_generation: 1.3
-    aigc: 1.0
-    multimodal_understanding_generation: 1.5
+    continuous_language_multimodal: 1.6
+    world_model: 1.5
+    multimodal_generation: 1.2
+    multimodal_understanding_generation: 1.4
   priority_subtopics:
-    - name: 连续 VLM 与视觉潜空间流
+    - name: 连续语言模型与连续多模态模型
       weight: 2.0
       keywords:
+        - continuous language model
+        - continuous latent language model
+        - continuous multimodal model
         - continuous vision-language model
         - continuous vlm
+        - continuous token
         - continuous visual token
         - continuous visual tokens
         - visual latent flow
         - latent flow
         - flow matching
+        - diffusion language model
         - embedded language flow
         - elf
         - cola
@@ -495,6 +480,8 @@ importance:
     - video diffusion
     - world model
     - neural simulator
+    - continuous language model
+    - continuous multimodal model
     - continuous vlm
     - continuous visual token
     - visual latent flow
