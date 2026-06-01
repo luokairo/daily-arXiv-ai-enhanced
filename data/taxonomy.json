@@ -40,7 +40,7 @@
           ],
           "name": "AIGC 检测与溯源",
           "paper_count": 43,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -77,7 +77,7 @@
           ],
           "name": "水印与版权保护",
           "paper_count": 13,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -114,16 +114,12 @@
           ],
           "name": "概念擦除与遗忘学习",
           "paper_count": 22,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "生成内容质量评测、创意质量、AIGC benchmark、人类偏好对齐评估。",
           "examples": [
-            {
-              "id": "2605.31086",
-              "title": "Beyond Static Dialogues: Benchmarking Realistic, Heterogeneous, and Evolving Long-Term Memory"
-            },
             {
               "id": "2605.31099",
               "title": "KnowledgeGain: Evaluating and Optimizing Science News Generation for Reader Learning"
@@ -131,6 +127,10 @@
             {
               "id": "2605.31113",
               "title": "TSM-Bench: Detecting LLM-Generated Text in Real-World Wikipedia Editing Practices"
+            },
+            {
+              "id": "2605.30916",
+              "title": "Welfare, Improvability, and Variance: A Principal-Agent Approach to Optimal Benchmark Item Aggregation"
             },
             {
               "id": "2605.31545",
@@ -150,8 +150,8 @@
             "creative evaluation"
           ],
           "name": "AIGC 评测与基准",
-          "paper_count": 129,
-          "updated_at": "2026-05-31"
+          "paper_count": 132,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -189,7 +189,7 @@
           ],
           "name": "创意与艺术生成",
           "paper_count": 8,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -226,8 +226,8 @@
             "multi-agent"
           ],
           "name": "AI 智能体与生成工作流",
-          "paper_count": 137,
-          "updated_at": "2026-05-31"
+          "paper_count": 138,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -264,32 +264,32 @@
             "jailbreak"
           ],
           "name": "生成内容安全与治理",
-          "paper_count": 87,
-          "updated_at": "2026-05-31"
+          "paper_count": 85,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "医疗/法律/科学/代码等垂直领域生成应用与文档生成。",
           "examples": [
             {
-              "id": "2605.30740",
-              "title": "GSAM: A Generalizable and Safe Robotic Framework for Articulated Object Manipulation"
+              "id": "2605.31437",
+              "title": "Astra: a generalizable report generation foundation model for 3D computed tomography"
+            },
+            {
+              "id": "2605.31393",
+              "title": "Target-Side Paraphrase Augmentation for Sign Language Translation with Large Language Models"
+            },
+            {
+              "id": "2605.31512",
+              "title": "Reliable Multilingual Orthopedic Decision Support from Clinical Narratives: Language-Aware Adaptation and Verification-Guided Deferral"
             },
             {
               "id": "2605.30478",
               "title": "Improving Small Language Models for Code Generation with Reinforcement Learning from Verification Feedback"
             },
             {
-              "id": "2605.30743",
-              "title": "A Padding Method for Enhanced Encoding of Inorganic Structures with Varying Chemical Compositions"
-            },
-            {
               "id": "2605.31478",
               "title": "Knowledge Boundary Probing and Demand-Guided Intervention for LLM-Based Power System Code Generation"
-            },
-            {
-              "id": "2605.31064",
-              "title": "Fighting Numerical Hallucinations via Data-centric Compilation for Online Financial QA"
             }
           ],
           "id": "aigc_domain_application",
@@ -302,8 +302,8 @@
             "code generation"
           ],
           "name": "领域内容生成应用",
-          "paper_count": 123,
-          "updated_at": "2026-05-31"
+          "paper_count": 120,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -349,6 +349,10 @@
           "description": "合成训练数据生成、数据集蒸馏、AI 生成标注与数据增强。",
           "examples": [
             {
+              "id": "2605.30039",
+              "title": "Domain-Specific Data Synthesis for LLMs via Minimal Sufficient Representation Learning"
+            },
+            {
               "id": "2605.30894",
               "title": "SteerFace: Debiasing Synthetic Face Generation via Adaptive Residue Perturbation"
             },
@@ -359,10 +363,6 @@
             {
               "id": "2605.31126",
               "title": "Not All Synthetic Data Is Yours to Learn From"
-            },
-            {
-              "id": "2605.30529",
-              "title": "Generalistic or Specific Embeddings, Which is Better? An Empirical Study on Search for Clinical Coding in Non-English Languages"
             },
             {
               "id": "2605.30808",
@@ -378,8 +378,8 @@
             "synthetic training"
           ],
           "name": "合成数据与数据集蒸馏",
-          "paper_count": 19,
-          "updated_at": "2026-05-31"
+          "paper_count": 18,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -408,7 +408,7 @@
           ],
           "name": "视频音频生成应用",
           "paper_count": 6,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -446,7 +446,7 @@
           ],
           "name": "个性化与对话生成",
           "paper_count": 12,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
@@ -476,7 +476,7 @@
           "id": "generation_alignment",
           "name": "生成模型对齐与奖励",
           "paper_count": 6,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         }
       ]
     },
@@ -523,10 +523,6 @@
           "description": "文本到视频生成、视频扩散模型、视频 DiT 等视频生成方法（不含自回归与世界模型）。",
           "examples": [
             {
-              "id": "2605.27891",
-              "title": "SmartDirector: Keyframe-Conditioned Cinematic Video Generation with Narrative Pacing Control"
-            },
-            {
               "id": "2605.30349",
               "title": "AdaState: Self-Evolving Anchors for Streaming Video Generation"
             },
@@ -541,6 +537,10 @@
             {
               "id": "2605.31590",
               "title": "TunerDiT: Training-free Progressive Steering of Diffusion Transformer for Multi-Event Video Generation"
+            },
+            {
+              "id": "2605.30519",
+              "title": "OmniMem: Scalable and Adaptive Memory Retrieval for Long Video Generation"
             }
           ],
           "id": "text_to_video_diffusion",
@@ -553,8 +553,8 @@
             "svd"
           ],
           "name": "文生视频与视频扩散",
-          "paper_count": 15,
-          "updated_at": "2026-05-31"
+          "paper_count": 16,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -593,16 +593,16 @@
           "description": "视频生成式世界模型、可交互模拟器、物理世界建模、动作条件视频。",
           "examples": [
             {
+              "id": "2605.30855",
+              "title": "Robust Dreamer: Deviation-Aware Latent Gaussian Memory for Action-Controlled AR Video Generation"
+            },
+            {
               "id": "2605.31158",
               "title": "Light Interaction: Training-Free Inference Acceleration for Interactive Video World Models"
             },
             {
               "id": "2605.31204",
               "title": "Probabilistic Precipitation Nowcasting with Rectified Flow Transformers"
-            },
-            {
-              "id": "2605.30880",
-              "title": "PatchWorld: Gradient-Free Optimization of Executable World Models"
             },
             {
               "id": "2605.31336",
@@ -624,17 +624,13 @@
             "physical world"
           ],
           "name": "视频世界模型",
-          "paper_count": 34,
-          "updated_at": "2026-05-31"
+          "paper_count": 33,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "3D 物体/场景生成、3DGS、NeRF、Mesh 生成、神经渲染与重光照。",
           "examples": [
-            {
-              "id": "2605.30987",
-              "title": "Benchmarking Single-Step Inpainting Methods for Multi-Object 3D Gaussian Splatting Scenes"
-            },
             {
               "id": "2605.31283",
               "title": "Topologically Consistent Multi-view 3D Head Reconstruction via Coarse-Guided Layered Surface Sampling"
@@ -646,6 +642,10 @@
             {
               "id": "2605.31535",
               "title": "RayDer: Scalable Self-Supervised Novel View Synthesis from Real-World Video"
+            },
+            {
+              "id": "2605.31595",
+              "title": "Learning Global Motion with Compact Gaussians for Feed-Forward 4D Reconstruction"
             },
             {
               "id": "2605.30396",
@@ -663,13 +663,17 @@
             "neural rendering"
           ],
           "name": "3D 生成与重建",
-          "paper_count": 85,
-          "updated_at": "2026-05-31"
+          "paper_count": 86,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "动态 3D/4D 场景生成与重建、4D 高斯泼溅、动态神经场。",
           "examples": [
+            {
+              "id": "2605.25909",
+              "title": "R5DGS: Semantic-Aware 4D Gaussian Splatting with Rigid Body Constraints for Efficient Dynamic Scene Reconstruction"
+            },
             {
               "id": "2605.26109",
               "title": "Helix4D: Complex 4D Mesh Generation"
@@ -685,10 +689,6 @@
             {
               "id": "2605.30863",
               "title": "DSD-GS: Dynamic-Static Decomposition of Gaussian Splatting for Efficient and High-Fidelity Dynamic Scene Reconstruction"
-            },
-            {
-              "id": "2605.31595",
-              "title": "Learning Global Motion with Compact Gaussians for Feed-Forward 4D Reconstruction"
             }
           ],
           "id": "dynamic_4d_generation",
@@ -700,8 +700,8 @@
             "4d gaussian"
           ],
           "name": "4D 与动态场景生成",
-          "paper_count": 8,
-          "updated_at": "2026-05-31"
+          "paper_count": 7,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -739,7 +739,7 @@
           ],
           "name": "图像与视频编辑",
           "paper_count": 36,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -812,16 +812,12 @@
           ],
           "name": "数字人与动作生成",
           "paper_count": 44,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "音乐/语音生成、TTS、音视频联合生成、跨模态条件音频生成。",
           "examples": [
-            {
-              "id": "2605.29948",
-              "title": "HoliTok:A Coutinuous Holistic Tokenization with Robust Dual Capabilities of Speech Generation and Understanding"
-            },
             {
               "id": "2605.30940",
               "title": "Towards Streaming Synchronized Spatial Audio Generation via Autoregressive Diffusion Transformer"
@@ -837,6 +833,10 @@
             {
               "id": "2605.31295",
               "title": "Latent Space Disentanglement via Activation Steering for Interpretable Attribute Control in Symbolic Music Generation"
+            },
+            {
+              "id": "2605.30469",
+              "title": "3DAE: Binaural Quality Assessment for Audio Novel View Synthesis with Spatial Maps and Benchmark"
             }
           ],
           "id": "audio_av_generation",
@@ -849,8 +849,8 @@
             "audio-visual generation"
           ],
           "name": "音频与多模态联合生成",
-          "paper_count": 24,
-          "updated_at": "2026-05-31"
+          "paper_count": 25,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -859,6 +859,10 @@
             {
               "id": "2605.30573",
               "title": "Zeroth-Order Non-Log-Concave Sampling with Variance Reduction and Applications to Inverse Problems"
+            },
+            {
+              "id": "2605.31057",
+              "title": "LVSA: Training-Free Sparse Attention for Long Video Diffusion"
             },
             {
               "id": "2605.31124",
@@ -871,10 +875,6 @@
             {
               "id": "2605.31215",
               "title": "Fixed-Point Masked Generative Modeling"
-            },
-            {
-              "id": "2605.31245",
-              "title": "Toward Identifiable Sparse Autoencoders"
             }
           ],
           "id": "efficient_generation",
@@ -888,8 +888,8 @@
             "sparse"
           ],
           "name": "生成模型加速与高效化",
-          "paper_count": 71,
-          "updated_at": "2026-05-31"
+          "paper_count": 70,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -908,12 +908,12 @@
               "title": "Parallel Tempering Initial Sampling in Inference-Time Reward Alignment"
             },
             {
-              "id": "2605.31369",
-              "title": "A Unifying View of Variational Generative Wasserstein Flows"
-            },
-            {
               "id": "2605.31159",
               "title": "Trust-Region Behavior Blending for On-Policy Distillation"
+            },
+            {
+              "id": "2605.31369",
+              "title": "A Unifying View of Variational Generative Wasserstein Flows"
             }
           ],
           "id": "generation_alignment",
@@ -928,7 +928,7 @@
           ],
           "name": "生成模型对齐与奖励",
           "paper_count": 74,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -965,17 +965,13 @@
             "human preference"
           ],
           "name": "生成模型评测与数据集",
-          "paper_count": 42,
-          "updated_at": "2026-05-31"
+          "paper_count": 41,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
           "description": "医疗/法律/科学/代码等垂直领域生成应用与文档生成。",
           "examples": [
-            {
-              "id": "2605.31093",
-              "title": "Cross-Modal Clinical Knowledge Integration for Mammography Report Generation"
-            },
             {
               "id": "2605.31393",
               "title": "Target-Side Paraphrase Augmentation for Sign Language Translation with Large Language Models"
@@ -989,14 +985,18 @@
               "title": "Functional MRI Time Series Generation via Wavelet-Based Image Transform and Spectral Flow Matching for Brain Disorder Identification"
             },
             {
+              "id": "2605.30784",
+              "title": "Text-guided Feature Disentanglement for Cross-modal Gait Recognition"
+            },
+            {
               "id": "2605.31564",
               "title": "What Gets Unmasked First? Trajectory Analysis of Diffusion Models for Graph-to-Text Generation"
             }
           ],
           "id": "aigc_domain_application",
           "name": "领域内容生成应用",
-          "paper_count": 25,
-          "updated_at": "2026-05-31"
+          "paper_count": 26,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
@@ -1026,7 +1026,7 @@
           "id": "aigc_synthetic_data",
           "name": "合成数据与数据集蒸馏",
           "paper_count": 11,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
@@ -1051,8 +1051,8 @@
           ],
           "id": "unified_multimodal_model",
           "name": "统一多模态模型",
-          "paper_count": 6,
-          "updated_at": "2026-05-31"
+          "paper_count": 5,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
@@ -1071,14 +1071,14 @@
               "title": "No More K-means:Single-Stage Sparse Coding for Efficient Multi-Vector Retrieval"
             },
             {
-              "id": "2605.30784",
-              "title": "Text-guided Feature Disentanglement for Cross-modal Gait Recognition"
+              "id": "2605.30917",
+              "title": "Inference-Free Multimodal Learned Sparse Retrieval for Production-Scale Visual Document Search"
             }
           ],
           "id": "multimodal_retrieval",
           "name": "多模态检索",
           "paper_count": 4,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
@@ -1104,7 +1104,7 @@
           "id": "aigc_unlearning_erasure",
           "name": "概念擦除与遗忘学习",
           "paper_count": 5,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-28",
@@ -1161,7 +1161,7 @@
           ],
           "name": "视觉语言模型与 MLLM",
           "paper_count": 39,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -1198,27 +1198,27 @@
           ],
           "name": "统一多模态模型",
           "paper_count": 8,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "多模态 CoT、视觉推理、数学/代码/科学推理、推理时计算扩展。",
           "examples": [
             {
-              "id": "2605.30587",
-              "title": "ReGuLaR: Relation-Grounded Latent Reasoning for Large Vision-Language Models"
+              "id": "2605.30651",
+              "title": "LARK: Learnability-Grounded Trajectory Selection for Efficient Reasoning Distillation"
             },
             {
               "id": "2605.31096",
               "title": "iVGR: Internalizing Visually Grounded Reasoning for MLLMs with Reinforcement Learning"
             },
             {
-              "id": "2605.30651",
-              "title": "LARK: Learnability-Grounded Trajectory Selection for Efficient Reasoning Distillation"
-            },
-            {
               "id": "2605.31404",
               "title": "The Sword, Shield, and Achilles' Heel: Characterizing the Linguistic Inductive Bias of Large Language Models for Spatial Reasoning in Navigation Planning"
+            },
+            {
+              "id": "2605.30740",
+              "title": "GSAM: A Generalizable and Safe Robotic Framework for Articulated Object Manipulation"
             },
             {
               "id": "2605.31584",
@@ -1235,13 +1235,17 @@
             "inference scaling"
           ],
           "name": "多模态推理与思维链",
-          "paper_count": 52,
-          "updated_at": "2026-05-31"
+          "paper_count": 54,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "视频 LLM、视频问答、时序定位、长视频理解、第一视角视频。",
           "examples": [
+            {
+              "id": "2605.30742",
+              "title": "Annotations Are Not All You Need: A Cross-modal Knowledge Transfer Network for Unsupervised Temporal Sentence Grounding"
+            },
             {
               "id": "2605.30750",
               "title": "SLAP: The Semantic Least Action Principle for Variational Video-Language Modeling"
@@ -1253,10 +1257,6 @@
             {
               "id": "2605.31227",
               "title": "HiERO-StepG @ Ego4D Step Grounding Challenge: hierarchical activity understanding enables zero-shot step grounding"
-            },
-            {
-              "id": "2605.30671",
-              "title": "WristCompass: Kinematic Coupling as a Learnable Visual Concept for Ego-Camera Orientation"
             },
             {
               "id": "2605.31029",
@@ -1273,17 +1273,13 @@
             "ego video"
           ],
           "name": "视频理解与时序推理",
-          "paper_count": 22,
-          "updated_at": "2026-05-31"
+          "paper_count": 21,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "视觉幻觉缓解、事实性、可靠性、忠实性提升。",
           "examples": [
-            {
-              "id": "2605.30911",
-              "title": "What Makes LVLMs Hallucinate Less? Unveiling the Architectural Factors Behind Hallucination Robustness"
-            },
             {
               "id": "2605.30675",
               "title": "Human-Alignment, Calibration, and Activation Patterns in Large Language Model Uncertainty"
@@ -1299,6 +1295,10 @@
             {
               "id": "2605.31483",
               "title": "BenHalluEval: A Multi-Task Hallucination Evaluation Framework for Large Language Models on Bengali"
+            },
+            {
+              "id": "2605.31064",
+              "title": "Fighting Numerical Hallucinations via Data-centric Compilation for Online Financial QA"
             }
           ],
           "id": "multimodal_hallucination",
@@ -1310,8 +1310,8 @@
             "faithfulness"
           ],
           "name": "多模态幻觉与可靠性",
-          "paper_count": 57,
-          "updated_at": "2026-05-31"
+          "paper_count": 58,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -1349,7 +1349,7 @@
           ],
           "name": "多模态强化学习与对齐",
           "paper_count": 14,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -1387,12 +1387,20 @@
           ],
           "name": "多模态高效化与轻量化",
           "paper_count": 35,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "多模态评测、新基准、评测协议、自动评估。",
           "examples": [
+            {
+              "id": "2605.31351",
+              "title": "A Visually Impaired Assistance Benchmark for VLM-as-a-Judge Evaluation"
+            },
+            {
+              "id": "2605.31529",
+              "title": "SVI-Bench: A Dynamic Microworld for Strategic Video Intelligence"
+            },
             {
               "id": "2605.31557",
               "title": "EGOSTREAM: A Diagnostic Benchmark for Streaming Episodic Memory in Egocentric Vision"
@@ -1402,16 +1410,8 @@
               "title": "nuReasoning: A Reasoning-Centric Dataset and Benchmark for Long-Tail Autonomous Driving"
             },
             {
-              "id": "2605.31589",
-              "title": "Recognizing Co-Speech Gestures in-the-Wild"
-            },
-            {
               "id": "2605.31597",
               "title": "SOCO: Benchmarking Semantic Object Correspondence in Vision Foundation Models"
-            },
-            {
-              "id": "2605.31351",
-              "title": "A Visually Impaired Assistance Benchmark for VLM-as-a-Judge Evaluation"
             }
           ],
           "id": "multimodal_benchmark",
@@ -1423,8 +1423,8 @@
             "evaluation suite"
           ],
           "name": "多模态评测与基准",
-          "paper_count": 109,
-          "updated_at": "2026-05-31"
+          "paper_count": 108,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -1461,7 +1461,7 @@
           ],
           "name": "空间与 3D 多模态推理",
           "paper_count": 24,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -1497,8 +1497,8 @@
             "document retrieval"
           ],
           "name": "多模态检索",
-          "paper_count": 34,
-          "updated_at": "2026-05-31"
+          "paper_count": 33,
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -1536,16 +1536,12 @@
           ],
           "name": "多模态安全与攻防",
           "paper_count": 14,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
           "description": "VQA、文档/图表/表格理解、OCR-free 文档智能。",
           "examples": [
-            {
-              "id": "2605.30344",
-              "title": "Tiny but Trusted: Efficient Vision-Language Reasoning for Time-Series Anomaly Detection"
-            },
             {
               "id": "2605.30698",
               "title": "Seeing Before Agreeing: Aligning Multi-Agent Consensus with Visual Evidence"
@@ -1561,6 +1557,10 @@
             {
               "id": "2605.30538",
               "title": "DisasterLex: An Expert Concept-to-Schema Knowledge Graph for Geospatial Reasoning in Disaster Analytics"
+            },
+            {
+              "id": "2605.31589",
+              "title": "Recognizing Co-Speech Gestures in-the-Wild"
             }
           ],
           "id": "multimodal_vqa_doc",
@@ -1574,7 +1574,7 @@
           ],
           "name": "视觉问答与文档理解",
           "paper_count": 42,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
@@ -1618,7 +1618,7 @@
           "id": "aigc_domain_application",
           "name": "领域内容生成应用",
           "paper_count": 14,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": "2026-05-27",
@@ -1666,7 +1666,7 @@
           "id": "aigc_agent_workflow",
           "name": "AI 智能体与生成工作流",
           "paper_count": 15,
-          "updated_at": "2026-05-31"
+          "updated_at": "2026-05-30"
         },
         {
           "created_at": null,
@@ -1696,6 +1696,6 @@
       ]
     }
   },
-  "updated_at": "2026-05-31",
+  "updated_at": "2026-05-30",
   "version": 2
 }
