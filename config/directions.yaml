@@ -309,6 +309,23 @@ directions:
           - any-to-any
           - understanding generation
           - native multimodal
+      - id: continuous_vlm_latent_flow
+        name: 连续 VLM 与视觉潜空间流
+        description: 关注 ELF/CoLa 思路下的连续视觉语言模型、连续视觉 token、视觉 VAE/ViT latent、flow matching 与多模态理解。
+        keywords:
+          - continuous vision-language model
+          - continuous vlm
+          - continuous visual token
+          - continuous visual tokens
+          - visual latent flow
+          - latent flow
+          - flow matching
+          - embedded language flow
+          - elf
+          - cola
+          - visual vae
+          - representation autoencoder
+          - multimodal latent reasoning
       - id: multimodal_reasoning_cot
         name: 多模态推理与思维链
         description: 多模态 CoT、视觉推理、数学/代码/科学推理、推理时计算扩展。
@@ -401,8 +418,27 @@ importance:
   direction_weights:
     multimodal_generation: 1.3
     aigc: 1.0
-    multimodal_understanding_generation: 1.2
+    multimodal_understanding_generation: 1.5
   priority_subtopics:
+    - name: 连续 VLM 与视觉潜空间流
+      weight: 2.0
+      keywords:
+        - continuous vision-language model
+        - continuous vlm
+        - continuous visual token
+        - continuous visual tokens
+        - visual latent flow
+        - latent flow
+        - flow matching
+        - embedded language flow
+        - elf
+        - cola
+        - visual vae
+        - representation autoencoder
+        - multimodal latent reasoning
+        - chain of continuous vision-language thought
+        - continuous multimodal representation
+        - unified continuous tokenizer
     - name: 自回归视频生成
       weight: 1.6
       keywords:
@@ -459,6 +495,12 @@ importance:
     - video diffusion
     - world model
     - neural simulator
+    - continuous vlm
+    - continuous visual token
+    - visual latent flow
+    - flow matching
+    - representation autoencoder
+    - multimodal latent reasoning
   negative_keywords:
     - molecule
     - medical diagnosis
