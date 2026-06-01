@@ -12,12 +12,37 @@ if str(ROOT_DIR) not in sys.path:
 from semantic_arxiv import load_directions
 
 
-def direction_value(item):
+def direction_value(item, valid_directions=None):
+    valid_directions = valid_directions or {}
+
     direction = item.get("primary_direction")
     if isinstance(direction, dict):
-        return direction.get("id", ""), direction.get("name", direction.get("id", ""))
+        direction_id = direction.get("id", "")
+        if not valid_directions or direction_id in valid_directions:
+            configured = valid_directions.get(direction_id, {})
+            return direction_id, configured.get("name") or direction.get("name", direction_id)
     if isinstance(direction, str) and direction:
-        return direction, direction
+        if not valid_directions or direction in valid_directions:
+            configured = valid_directions.get(direction, {})
+            return direction, configured.get("name") or direction
+
+    for matched in item.get("matched_directions", []) or []:
+        if not isinstance(matched, dict):
+            continue
+        direction_id = matched.get("id", "")
+        if direction_id in valid_directions:
+            return direction_id, valid_directions[direction_id].get("name", direction_id)
+
+    ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
+    candidate_ids = [ai.get("primary_direction_id", "")]
+    candidate_ids.extend(ai.get("matched_direction_ids", []) or [])
+    for direction_id in candidate_ids:
+        if direction_id in valid_directions:
+            return direction_id, valid_directions[direction_id].get("name", direction_id)
+
+    if valid_directions:
+        return "uncategorized", "未分类"
+
     categories = item.get("categories", ["Uncategorized"])
     if isinstance(categories, list):
         return categories[0], categories[0]
@@ -39,9 +64,9 @@ def safe_authors(authors):
     return authors or ""
 
 
-def render_paper(template, item, idx):
+def render_paper(template, item, idx, valid_directions=None):
     ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
-    direction_id, direction_name = direction_value(item)
+    direction_id, direction_name = direction_value(item, valid_directions)
     subtopic_id, subtopic_name, _ = subtopic_value(item)
     deep_read_rank = ai.get("deep_read_rank")
     deep_read_badge = f"Top {deep_read_rank} 精读候选" if ai.get("deep_read_selected") and deep_read_rank else "未入选精读"
@@ -88,10 +113,11 @@ if __name__ == "__main__":
 
     directions = load_directions(args.directions)
     direction_order = {direction["id"]: idx for idx, direction in enumerate(directions)}
+    valid_directions = {direction["id"]: direction for direction in directions}
 
     grouped = {}
     for item in data:
-        direction_id, direction_name = direction_value(item)
+        direction_id, direction_name = direction_value(item, valid_directions)
         subtopic_id, subtopic_name, subtopic_description = subtopic_value(item)
         direction_group = grouped.setdefault(
             direction_id,
@@ -131,7 +157,7 @@ if __name__ == "__main__":
             markdown += f"\n\n<div id='{anchor}-{subtopic_id}'></div>\n\n## {subtopic['name']} [[Back]](#toc)\n\n"
             if subtopic.get("description"):
                 markdown += f"{subtopic['description']}\n\n"
-            papers = [render_paper(template, paper, next(idx)) for paper in subtopic["papers"]]
+            papers = [render_paper(template, paper, next(idx), valid_directions) for paper in subtopic["papers"]]
             markdown += "\n\n".join(papers)
 
     data_path = Path(args.data)

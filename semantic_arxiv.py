@@ -260,6 +260,22 @@ def load_taxonomy(path: Optional[str], directions: List[Dict[str, Any]]) -> Dict
     taxonomy.setdefault("version", 2)
     taxonomy.setdefault("updated_at", None)
     taxonomy.setdefault("directions", {})
+    existing_direction_ids = set(taxonomy.get("directions", {}))
+    valid_direction_ids = {direction["id"] for direction in directions}
+    stale_direction_ids = existing_direction_ids - valid_direction_ids
+    taxonomy["directions"] = {
+        direction_id: entry
+        for direction_id, entry in taxonomy.get("directions", {}).items()
+        if direction_id in valid_direction_ids
+    }
+    stale_prefixes = tuple(f"{direction_id}_" for direction_id in stale_direction_ids)
+    if stale_prefixes:
+        for entry in taxonomy["directions"].values():
+            entry["subtopics"] = [
+                subtopic
+                for subtopic in entry.get("subtopics", [])
+                if not str(subtopic.get("id", "")).startswith(stale_prefixes)
+            ]
     for direction in directions:
         entry = taxonomy["directions"].setdefault(
             direction["id"],
