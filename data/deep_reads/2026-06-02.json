@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.01774",
+    "title": "FLARE: Diffusion for Hybrid Language Model",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.00229",
+    "title": "Continuous Reasoning for Vision-Language-Action",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.02248",
+    "title": "Geometric Latent Reasoning Induces Shorter Generations in LLMs",
+    "rank": 3,
+    "status": "ok"
+  }
+]
