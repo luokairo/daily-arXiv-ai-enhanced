@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.04527",
+    "title": "Echo-Infinity: Learning Evolving Memory for Real-Time Infinite Video Generation",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.04461",
+    "title": "ChannelTok: Efficient Flexible-Length Vision Tokenization",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.04432",
+    "title": "DSA: Dynamic Step Allocation for Fast Autoregressive Video Generation",
+    "rank": 3,
+    "status": "ok"
+  }
+]
