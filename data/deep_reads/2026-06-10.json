@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.11096",
+    "title": "IDEAL: In-DEpth ALignment Makes A Discrete Representation AutoEncoder",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.11188",
+    "title": "ARM: An AutoRegressive Large Multimodal Model with Unified Discrete Representations",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.11129",
+    "title": "WorldOlympiad: Can Your World Model Survive a Triathlon?",
+    "rank": 3,
+    "status": "ok"
+  }
+]
