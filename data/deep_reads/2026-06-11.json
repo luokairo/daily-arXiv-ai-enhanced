@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.12072",
+    "title": "World Model Self-Distillation: Training World Models to Solve General Tasks",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.12403",
+    "title": "World Pilot: Steering Vision-Language-Action Models with World-Action Priors",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.12273",
+    "title": "Beyond Fully Random Masking: Attention-Guided Denoising and Optimization for Diffusion Language Models",
+    "rank": 3,
+    "status": "ok"
+  }
+]
