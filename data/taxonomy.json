@@ -235,7 +235,7 @@
           ],
           "name": "文生视频与视频扩散",
           "paper_count": 31,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -314,7 +314,7 @@
           ],
           "name": "3D 生成与重建",
           "paper_count": 68,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -358,8 +358,8 @@
           "description": "图像编辑、视频编辑、Inpainting、可控编辑、风格化等。",
           "examples": [
             {
-              "id": "2606.13809",
-              "title": "Compressing Image Style Training into a Single Model Forward"
+              "id": "2606.14072",
+              "title": "Diffusion-Refined Segmentation and Vision-Language Interpretation for Pediatric Brain Tumor MRI"
             },
             {
               "id": "2606.13964",
@@ -388,8 +388,8 @@
             "style transfer"
           ],
           "name": "图像与视频编辑",
-          "paper_count": 66,
-          "updated_at": "2026-06-14"
+          "paper_count": 67,
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -466,7 +466,7 @@
           ],
           "name": "数字人与动作生成",
           "paper_count": 30,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -504,7 +504,7 @@
           ],
           "name": "音频与多模态联合生成",
           "paper_count": 28,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -543,7 +543,7 @@
           ],
           "name": "生成模型加速与高效化",
           "paper_count": 41,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -582,7 +582,7 @@
           ],
           "name": "生成模型对齐与奖励",
           "paper_count": 59,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -620,7 +620,7 @@
           ],
           "name": "生成模型评测与数据集",
           "paper_count": 63,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": "2026-06-04",
@@ -707,7 +707,7 @@
           ],
           "name": "视觉语言模型与 MLLM",
           "paper_count": 79,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -782,7 +782,7 @@
           ],
           "name": "多模态推理与思维链",
           "paper_count": 73,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -827,10 +827,6 @@
           "description": "视觉幻觉缓解、事实性、可靠性、忠实性提升。",
           "examples": [
             {
-              "id": "2606.10198",
-              "title": "Density Ridge Selective Prediction for LLM and VLM Hallucination Detection under Calibration Label Scarcity"
-            },
-            {
               "id": "2606.11792",
               "title": "MultiToP: Learning to Patch Visual Tokens to Mitigate Hallucinations in Video Large Multimodal Models"
             },
@@ -845,6 +841,10 @@
             {
               "id": "2606.14697",
               "title": "ClinHallu: A Benchmark for Diagnosing Stage-Wise Hallucinations in Medical MLLM Reasoning"
+            },
+            {
+              "id": "2606.13870",
+              "title": "Mirage Probes: How Vision Models Fake Visual Understanding"
             }
           ],
           "id": "multimodal_hallucination",
@@ -856,8 +856,8 @@
             "faithfulness"
           ],
           "name": "多模态幻觉与可靠性",
-          "paper_count": 35,
-          "updated_at": "2026-06-15"
+          "paper_count": 37,
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -872,16 +872,16 @@
               "title": "When Good Verifiers Go Bad: Self-Improving VLMs Can Regress on New Tasks"
             },
             {
+              "id": "2606.14239",
+              "title": "SkillAudit: Ground-Truth-Free Skill Evolution via Paired Trajectory Auditing"
+            },
+            {
               "id": "2606.14299",
               "title": "What Drives Test-Time Adaptation for CLIP? A Controlled Empirical Study from an Update Perspective"
             },
             {
               "id": "2606.14586",
               "title": "S$^2$COPE: Self-Supervised Concept Discovery via Preference Learning"
-            },
-            {
-              "id": "2606.14239",
-              "title": "SkillAudit: Ground-Truth-Free Skill Evolution via Paired Trajectory Auditing"
             }
           ],
           "id": "multimodal_rl_alignment",
@@ -895,7 +895,7 @@
           ],
           "name": "多模态强化学习与对齐",
           "paper_count": 71,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -933,27 +933,27 @@
           ],
           "name": "多模态高效化与轻量化",
           "paper_count": 29,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
           "description": "多模态评测、新基准、评测协议、自动评估。",
           "examples": [
             {
-              "id": "2606.14697",
-              "title": "ClinHallu: A Benchmark for Diagnosing Stage-Wise Hallucinations in Medical MLLM Reasoning"
+              "id": "2606.14240",
+              "title": "AFFORDANCE20Q: Evaluating Affordance Reasoning from Physical Properties"
             },
             {
-              "id": "2606.14702",
-              "title": "OmniVideo-100K: A Dataset for Audio-Visual Reasoning through Structured Scripts and Evidence Chains"
-            },
-            {
-              "id": "2606.14516",
-              "title": "Every Eval Ever: A Unifying Schema and Community Repository for AI Evaluation Results"
+              "id": "2606.14383",
+              "title": "IndustryBench-MIPU: Benchmarking Multi-Image Attribute Value Extraction for Industrial Products"
             },
             {
               "id": "2606.14571",
               "title": "StreamMemBench: Streaming Evaluation of Agent Memory for Future-Oriented Assistance"
+            },
+            {
+              "id": "2606.14702",
+              "title": "OmniVideo-100K: A Dataset for Audio-Visual Reasoning through Structured Scripts and Evidence Chains"
             },
             {
               "id": "2606.14591",
@@ -969,8 +969,8 @@
             "evaluation suite"
           ],
           "name": "多模态评测与基准",
-          "paper_count": 191,
-          "updated_at": "2026-06-14"
+          "paper_count": 189,
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -1044,7 +1044,7 @@
           ],
           "name": "多模态检索",
           "paper_count": 34,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -1082,12 +1082,16 @@
           ],
           "name": "多模态安全与攻防",
           "paper_count": 54,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
           "description": "VQA、文档/图表/表格理解、OCR-free 文档智能。",
           "examples": [
+            {
+              "id": "2606.12106",
+              "title": "MSUE: Multi-Modal Soccer Understanding Expert"
+            },
             {
               "id": "2606.12898",
               "title": "Magnifying What Matters: Attention-Guided Adaptive Rendering for Visual Text Comprehension"
@@ -1099,10 +1103,6 @@
             {
               "id": "2606.13275",
               "title": "Zero-Shot Captioning for Cultural Heritage: Automated Image Analysis of Traditional Indonesian Clothing"
-            },
-            {
-              "id": "2606.14072",
-              "title": "Diffusion-Refined Segmentation and Vision-Language Interpretation for Pediatric Brain Tumor MRI"
             },
             {
               "id": "2606.14579",
@@ -1119,8 +1119,8 @@
             "ocr-free"
           ],
           "name": "视觉问答与文档理解",
-          "paper_count": 36,
-          "updated_at": "2026-06-14"
+          "paper_count": 35,
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": "2026-06-02",
@@ -1213,10 +1213,6 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2606.12828",
-              "title": "Topical Phase Transitions in Artificial Intelligence Research: Large-Scale Evidence and an Early-Warning Signature for Emerging Topics"
-            },
-            {
               "id": "2606.13376",
               "title": "MoVerse: Real-Time Video World Modeling with Panoramic Gaussian Scaffold"
             },
@@ -1231,6 +1227,10 @@
             {
               "id": "2606.14380",
               "title": "FLaRA: Predicting Future Latent Representations for Accident Anticipation"
+            },
+            {
+              "id": "2606.13817",
+              "title": "FlowMo-WM: A World Model with Object Momentum and Hidden Ambient Drift"
             }
           ],
           "id": "video_world_model",
@@ -1244,8 +1244,8 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 46,
-          "updated_at": "2026-06-14"
+          "paper_count": 47,
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -1283,17 +1283,13 @@
             "environment model"
           ],
           "name": "可交互与物理世界建模",
-          "paper_count": 26,
-          "updated_at": "2026-06-14"
+          "paper_count": 25,
+          "updated_at": "2026-06-15"
         },
         {
           "created_at": null,
           "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
           "examples": [
-            {
-              "id": "2606.14674",
-              "title": "AgentSpec: Understanding Embodied Agent Scaffolds Through Controlled Composition"
-            },
             {
               "id": "2606.14438",
               "title": "CADET: Physics-Grounded Causal Auditing and Training-Free Deconfounding of End-to-End Driving Planners"
@@ -1301,6 +1297,10 @@
             {
               "id": "2606.14535",
               "title": "Spatially Conditioned Diffusion Policy: Learning Precise and Robust Manipulation with a Single RGB Camera"
+            },
+            {
+              "id": "2606.14551",
+              "title": "TRACE: Trajectory-Routed Causal Memory for Delayed-Evidence Visuomotor Imitation"
             },
             {
               "id": "2606.14585",
@@ -1323,7 +1323,7 @@
           ],
           "name": "具身世界模型与规划控制",
           "paper_count": 297,
-          "updated_at": "2026-06-14"
+          "updated_at": "2026-06-13"
         },
         {
           "created_at": null,
@@ -1363,6 +1363,6 @@
       ]
     }
   },
-  "updated_at": "2026-06-14",
+  "updated_at": "2026-06-13",
   "version": 2
 }
