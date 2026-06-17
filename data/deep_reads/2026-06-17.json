@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.18208",
+    "title": "Looped World Models",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.18249",
+    "title": "Unified Multimodal Autoregressive Modeling with Shared Context-Visual Tokenizer is Key to Unification",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.17999",
+    "title": "VoidPadding: Let [VOID] Handle Padding in Masked Diffusion Language Models so that [EOS] Can Focus on Semantic Termination",
+    "rank": 3,
+    "status": "ok"
+  }
+]
