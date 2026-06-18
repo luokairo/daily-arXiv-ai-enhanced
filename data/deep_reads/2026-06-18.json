@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.19005",
+    "title": "Sumi: Open Uniform Diffusion Language Model from Scratch",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.18974",
+    "title": "Visual-OPSD: Cross-Modal On-Policy Self-Distillation for Efficient Unified Multimodal Reasoning",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.18702",
+    "title": "UniTemp: Unlocking Video Generation in Any Temporal Order via Bidirectional Distillation",
+    "rank": 3,
+    "status": "ok"
+  }
+]
