@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.24152",
+    "title": "Autonomous Video Generation with Counterfactual Controllability for Self-Evolving World Models",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.24597",
+    "title": "Qwen-AgentWorld: Language World Models for General Agents",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.24101",
+    "title": "NavWM: A Unified Navigation World Model for Foresight-Driven Planning",
+    "rank": 3,
+    "status": "ok"
+  }
+]
