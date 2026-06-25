@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2606.26025",
+    "title": "In-Context World Modeling for Robotic Control",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2606.24945",
+    "title": "When Do Conservation Laws Survive Learned Representations? Certified Horizons for Latent World Models",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2606.25800",
+    "title": "ROAD-VLA: Robust Online Adaptation via Self-Distillation for Vision-Language-Action Models",
+    "rank": 3,
+    "status": "ok"
+  }
+]

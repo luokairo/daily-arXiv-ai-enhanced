@@ -286,10 +286,6 @@
           "description": "3D 物体/场景生成、3DGS、NeRF、Mesh 生成、神经渲染与重光照。",
           "examples": [
             {
-              "id": "2606.24301",
-              "title": "MM-TRELLIS: Point-Cloud Guided Multi-Modal 3D Vehicle Generation in Autonomous Driving"
-            },
-            {
               "id": "2606.24433",
               "title": "MedPCFM: Improving Medical Point Cloud Completion by Integrating Point Transformers and Flow Matching"
             },
@@ -304,6 +300,10 @@
             {
               "id": "2606.24876",
               "title": "FLAT: Feedforward Latent Triangle Splatting for Geometrically Accurate Scene Generation"
+            },
+            {
+              "id": "2606.25503",
+              "title": "AISPO: Enhancing Depth Reliability for Robotic Manipulation of Non-Lambertian Objects via Affine-Invariant Shape Prior"
             }
           ],
           "id": "three_d_generation",
@@ -317,8 +317,8 @@
             "neural rendering"
           ],
           "name": "3D 生成与重建",
-          "paper_count": 100,
-          "updated_at": "2026-06-24"
+          "paper_count": 101,
+          "updated_at": "2026-06-25"
         },
         {
           "created_at": null,
@@ -689,10 +689,6 @@
           "description": "通用视觉语言模型、MLLM 架构、多模态指令微调与对话。",
           "examples": [
             {
-              "id": "2606.21993",
-              "title": "From Driving Videos to Simulatable Scenarios"
-            },
-            {
               "id": "2606.24814",
               "title": "Vision-Language Model Reasoning for Contextual Semantic Mapping in Intralogistics"
             },
@@ -707,6 +703,10 @@
             {
               "id": "2606.24759",
               "title": "UniDrive: A Unified Vision-Language and Grounding Framework for Interpretable Risk Understanding in Autonomous Driving"
+            },
+            {
+              "id": "2606.25162",
+              "title": "fARfetch: Enabling Collocated AR-HRC in Large Visually Diverse Environments with VLM-Driven AR Content Adaptation"
             }
           ],
           "id": "vlm_mllm_general",
@@ -718,8 +718,8 @@
             "multimodal instruction"
           ],
           "name": "视觉语言模型与 MLLM",
-          "paper_count": 109,
-          "updated_at": "2026-06-24"
+          "paper_count": 110,
+          "updated_at": "2026-06-25"
         },
         {
           "created_at": null,
@@ -914,10 +914,6 @@
           "description": "高效 MLLM、PEFT、蒸馏、量化、token 压缩、稀疏推理。",
           "examples": [
             {
-              "id": "2606.23581",
-              "title": "Kamera: Unified Position-Invariant Multimodal KV Cache for Training-Free Reuse"
-            },
-            {
               "id": "2606.24286",
               "title": "AVOC: Enhancing Hour-Level Audio-Video Understanding in Omni-Modal LLMs via Retrieval-Inspired Token Compression"
             },
@@ -932,6 +928,10 @@
             {
               "id": "2606.24187",
               "title": "Towards Fast and Effective Long Video Understanding of Multimodal Large Language Models via Adaptive Quasi-Gaussian Sampling"
+            },
+            {
+              "id": "2606.25160",
+              "title": "Toward Low-Latency Vision-Language Models with Doubly-Correct Predictions in Egocentric Visual Understanding"
             }
           ],
           "id": "efficient_multimodal",
@@ -944,17 +944,13 @@
             "quantization"
           ],
           "name": "多模态高效化与轻量化",
-          "paper_count": 44,
-          "updated_at": "2026-06-24"
+          "paper_count": 45,
+          "updated_at": "2026-06-25"
         },
         {
           "created_at": null,
           "description": "多模态评测、新基准、评测协议、自动评估。",
           "examples": [
-            {
-              "id": "2606.24526",
-              "title": "AGORA: An Archive-Grounded Benchmark for Agentic Workplace Document Reasoning"
-            },
             {
               "id": "2606.24391",
               "title": "Age of LLM: A Strategic 1v1 Benchmark for Reasoning, Diplomacy and Reliability of Large Language Models under Fog of War"
@@ -970,6 +966,10 @@
             {
               "id": "2606.24797",
               "title": "EG-VQA: Benchmarking Verifiable Video Question Answering with Grounded Temporal Evidence"
+            },
+            {
+              "id": "2606.25391",
+              "title": "From Sounds to Scenes: A Benchmark for Evaluating Context-Aware Auditory Scene Understanding in Large Audio Language Models"
             }
           ],
           "id": "multimodal_benchmark",
@@ -981,8 +981,8 @@
             "evaluation suite"
           ],
           "name": "多模态评测与基准",
-          "paper_count": 285,
-          "updated_at": "2026-06-24"
+          "paper_count": 286,
+          "updated_at": "2026-06-25"
         },
         {
           "created_at": null,
@@ -1101,10 +1101,6 @@
           "description": "VQA、文档/图表/表格理解、OCR-free 文档智能。",
           "examples": [
             {
-              "id": "2606.24353",
-              "title": "Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints"
-            },
-            {
               "id": "2606.24447",
               "title": "P-MTP: Efficient Document Parsing via Multi-Token Prediction with Progressive Depth Scaling"
             },
@@ -1119,6 +1115,10 @@
             {
               "id": "2606.24602",
               "title": "ViTexQA: A Multi-Frame Temporal Perception Dataset for Video Text Question Answering"
+            },
+            {
+              "id": "2606.25906",
+              "title": "OracleAnalyser: Analysing Implicit Semantics of Oracle Bone Scripts through MLLMs with Post-training"
             }
           ],
           "id": "multimodal_vqa_doc",
@@ -1131,8 +1131,8 @@
             "ocr-free"
           ],
           "name": "视觉问答与文档理解",
-          "paper_count": 68,
-          "updated_at": "2026-06-24"
+          "paper_count": 69,
+          "updated_at": "2026-06-25"
         },
         {
           "created_at": "2026-06-02",
@@ -1272,10 +1272,6 @@
           "description": "物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。",
           "examples": [
             {
-              "id": "2606.21961",
-              "title": "VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation"
-            },
-            {
               "id": "2606.23296",
               "title": "IOI: Decoupling Kinematics and Physics for Interactive World Models"
             },
@@ -1290,6 +1286,10 @@
             {
               "id": "2606.24824",
               "title": "Solving Inverse Problems of Chaotic Systems with Bidirectional Conditional Flow Matching"
+            },
+            {
+              "id": "2606.24945",
+              "title": "When Do Conservation Laws Survive Learned Representations? Certified Horizons for Latent World Models"
             }
           ],
           "id": "interactive_physical_world",
@@ -1303,32 +1303,32 @@
             "environment model"
           ],
           "name": "可交互与物理世界建模",
-          "paper_count": 47,
-          "updated_at": "2026-06-24"
+          "paper_count": 48,
+          "updated_at": "2026-06-25"
         },
         {
           "created_at": null,
           "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
           "examples": [
             {
-              "id": "2606.24884",
-              "title": "InSight: Self-Guided Skill Acquisition via Steerable VLAs"
+              "id": "2606.26046",
+              "title": "RoboAtlas: Contextual Active SLAM"
             },
             {
-              "id": "2606.24068",
-              "title": "ObsGraph: Hierarchical Observation Representation for Embodied Reasoning and Exploration"
+              "id": "2606.26095",
+              "title": "Learning Action Priors for Cross-embodiment Robot Manipulation"
             },
             {
-              "id": "2606.24597",
-              "title": "Qwen-AgentWorld: Language World Models for General Agents"
+              "id": "2606.24946",
+              "title": "Conformal Orbit-Valid Trust Horizons for Equivariant World Models"
             },
             {
-              "id": "2606.24669",
-              "title": "LaGO: Latent Action Guidance for Online Reinforcement Learning"
+              "id": "2606.25215",
+              "title": "Reflective VLA: In-Context Action Consequences Make VLAs Generalize"
             },
             {
-              "id": "2606.24842",
-              "title": "World Models in Pieces: Structural Certification for General Agents"
+              "id": "2606.25800",
+              "title": "ROAD-VLA: Robust Online Adaptation via Self-Distillation for Vision-Language-Action Models"
             }
           ],
           "id": "embodied_world_model",
@@ -1342,8 +1342,8 @@
             "policy learning"
           ],
           "name": "具身世界模型与规划控制",
-          "paper_count": 471,
-          "updated_at": "2026-06-24"
+          "paper_count": 494,
+          "updated_at": "2026-06-25"
         },
         {
           "created_at": null,
@@ -1401,6 +1401,6 @@
       ]
     }
   },
-  "updated_at": "2026-06-24",
+  "updated_at": "2026-06-25",
   "version": 2
 }
