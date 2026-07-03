@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.02517",
+    "title": "WorldDirector: Building Controllable World Simulators with Persistent Dynamic Memory",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.02461",
+    "title": "OrbitQuant: Data-Agnostic Quantization for Image and Video Diffusion Transformers",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.02010",
+    "title": "InduceKV: Fixed-Footprint Continual Adaptation of Multimodal LLMs via Inducing KV Memories",
+    "rank": 3,
+    "status": "ok"
+  }
+]
