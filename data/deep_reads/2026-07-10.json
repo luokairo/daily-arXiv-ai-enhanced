@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.08196",
+    "title": "A First-Principles Theory of Slow Thinking and Active Perception",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.08434",
+    "title": "DeltaV: Thinking with Visual State Updates in Unified Large Multimodal Models",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.08766",
+    "title": "OPSD-V: On-Policy Self-Distillation for Post-Training Few-Step Autoregressive Video Generators",
+    "rank": 3,
+    "status": "ok"
+  }
+]
