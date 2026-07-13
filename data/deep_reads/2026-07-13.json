@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.09661",
+    "title": "PanoWorld: Real-World Panoramic Generation",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.09133",
+    "title": "IB-Flow: Information Bottleneck-Guided CFG Distillation for Few-Step Text-to-Image Generation",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.09191",
+    "title": "GenVid2Robot: From Video Generation to Robot Manipulation via Rigid-Geometric Consistency",
+    "rank": 3,
+    "status": "ok"
+  }
+]
