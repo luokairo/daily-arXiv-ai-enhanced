@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.11643",
+    "title": "Xiaomi-Robotics-U0: Unified Embodied Synthesis with World Foundation Model",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.11836",
+    "title": "Cycle-World: Mitigating Error Accumulation in Long-term Video World Models via Reverse-Prediction Cycle Consistency",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.10362",
+    "title": "A Control Theory of Predictability in Latent World Models",
+    "rank": 3,
+    "status": "ok"
+  }
+]
