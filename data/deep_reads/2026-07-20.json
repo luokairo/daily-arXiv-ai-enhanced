@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.15898",
+    "title": "Orbis 2: A Hierarchical World Model for Driving",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.16190",
+    "title": "FVAttn: Adaptive Sparse Attention with Runtime Load Balancing for Video Generation",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.15893",
+    "title": "Induction in Both Directions: A Mechanistic Analysis of In-Context Learning in Masked Diffusion Language Models",
+    "rank": 3,
+    "status": "ok"
+  }
+]
