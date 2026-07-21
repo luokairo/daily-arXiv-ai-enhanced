@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.17523",
+    "title": "Thinking in Video: Can Video Generators Really Reason About the Real World?",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.17560",
+    "title": "Reinforcement Learning: From Algorithms To Foundation Models",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.16872",
+    "title": "Trace-Based On-Policy Distillation for Masked Diffusion Language Models",
+    "rank": 3,
+    "status": "ok"
+  }
+]
