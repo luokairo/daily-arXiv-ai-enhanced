@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.24157",
+    "title": "UniGen-AR: Unifying Visual Generation with Auto-Regressive Modeling",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.24306",
+    "title": "Rethinking the Generation Order of Block Diffusion Language Models",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.23265",
+    "title": "WaveZip: Wavelet-Driven Space-Time Decoupling for Video Token Condensation",
+    "rank": 3,
+    "status": "ok"
+  }
+]

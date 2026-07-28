@@ -139,6 +139,9 @@
 2026-07-27.jsonl
 2026-07-27.md
 2026-07-27_AI_enhanced_Chinese.jsonl
+2026-07-28.jsonl
+2026-07-28.md
+2026-07-28_AI_enhanced_Chinese.jsonl
 deep_reads/2026-05-27.json
 deep_reads/2026-05-27.md
 deep_reads/2026-05-28.json
@@ -233,4 +236,6 @@ deep_reads/2026-07-24.json
 deep_reads/2026-07-24.md
 deep_reads/2026-07-27.json
 deep_reads/2026-07-27.md
+deep_reads/2026-07-28.json
+deep_reads/2026-07-28.md
 taxonomy.json
