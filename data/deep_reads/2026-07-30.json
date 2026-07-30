@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.27036",
+    "title": "Mitigating Compounding Error via Video Representation Regularization",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.27110",
+    "title": "FreqForcing: Autoregressive Long Video Generation via Spectral Self-Anchoring",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.27017",
+    "title": "What Can Latent World Models Know? Physical Parameter Identifiability in Multimodal Predictive Representations",
+    "rank": 3,
+    "status": "ok"
+  }
+]
