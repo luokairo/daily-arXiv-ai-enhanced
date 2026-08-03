@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2607.29363",
+    "title": "Stable Autoregressive Speech Generation with Low-Frame-Rate High-Dimensional Continuous Tokens",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2607.29302",
+    "title": "BWM: A Low-Cost High-Fidelity World Simulator for Robot Learning",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2607.29545",
+    "title": "MoRoute: Dynamic Routing for In-Context Multimodal Video Generation",
+    "rank": 3,
+    "status": "ok"
+  }
+]
