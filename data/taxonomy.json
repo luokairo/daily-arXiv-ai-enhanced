@@ -9,24 +9,24 @@
           "description": "连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。",
           "examples": [
             {
-              "id": "2607.26775",
-              "title": "Journey Operators for Structured Multi-Axis Composition"
+              "id": "2608.00978",
+              "title": "One-Sided Quantile Coupling for Flow Matching"
             },
             {
-              "id": "2607.27529",
-              "title": "Latent-Kernel Discrete Flow Maps for Few-Step Generation"
+              "id": "2608.01672",
+              "title": "Learning What to Remember: Test-Time Training via Context Distillation"
             },
             {
-              "id": "2607.27386",
-              "title": "Beyond the Bidirectional Promise: Re-evaluating the Robustness of Diffusion Language Models"
+              "id": "2608.02602",
+              "title": "AURORA-LM: Autoencoding Unified Representation for Continuous-Latent Diffusion Language Modeling"
             },
             {
-              "id": "2607.28166",
-              "title": "Where and When to Commit: Candidate-Aware Decoding for Diffusion Language Models"
+              "id": "2608.01784",
+              "title": "REFLEX: Rethinking MoE Inference as Refinement-Aware Compute Allocation in Diffusion Language Models"
             },
             {
-              "id": "2607.29363",
-              "title": "Stable Autoregressive Speech Generation with Low-Frame-Rate High-Dimensional Continuous Tokens"
+              "id": "2608.02585",
+              "title": "GradCuit: Credit-Assigned Gradient Flow Enables Robust and Interpretable Test-Time Latent Reasoning"
             }
           ],
           "id": "continuous_language_flow",
@@ -41,8 +41,8 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 82,
-          "updated_at": "2026-08-03"
+          "paper_count": 89,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
@@ -88,14 +88,6 @@
           "description": "面向理解与生成统一的连续视觉 token、VAE/ViT、RAE、DINO/SigLIP/MAE latent 与视觉表征重建。",
           "examples": [
             {
-              "id": "2606.15956",
-              "title": "You Don't Need Strong Assumptions: Visual Representation Learning via Temporal Differences"
-            },
-            {
-              "id": "2606.27313",
-              "title": "ViQ: Text-Aligned Visual Quantized Representations at Any Resolution"
-            },
-            {
               "id": "2606.29723",
               "title": "ScaleAware-JEPA: Latent Representation for Discovery in Multiscale Physical Fields"
             },
@@ -106,6 +98,14 @@
             {
               "id": "2607.03624",
               "title": "RADIO1D: Elastic Representations for Condensed Vision Modeling"
+            },
+            {
+              "id": "2608.01306",
+              "title": "SPAE: Spectrally Guided Autoencoder for Pretrained Visual Latents"
+            },
+            {
+              "id": "2608.02208",
+              "title": "Self-supervised DXA representations encode multi-system disease risk, biological aging and heritability"
             }
           ],
           "id": "continuous_visual_tokenizer",
@@ -121,17 +121,13 @@
             "semantic visual latent"
           ],
           "name": "连续视觉 Tokenizer 与表征自编码器",
-          "paper_count": 10,
-          "updated_at": "2026-07-07"
+          "paper_count": 12,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。",
           "examples": [
-            {
-              "id": "2607.14228",
-              "title": "SeeSE3: Emergence of 3D Space in Vision Features"
-            },
             {
               "id": "2607.16972",
               "title": "Training Continuous Chain of Thought Models: A Tale of Two Regimes"
@@ -147,6 +143,10 @@
             {
               "id": "2607.28154",
               "title": "OPLD: On-Policy Latent Distillation for Multimodal Reasoning"
+            },
+            {
+              "id": "2608.01593",
+              "title": "Latent Thought Credit: Multi-Answer Credit Assignment for Latent Reasoning"
             }
           ],
           "id": "continuous_multimodal_reasoning",
@@ -160,8 +160,8 @@
             "visual thought"
           ],
           "name": "连续多模态推理与潜空间思维",
-          "paper_count": 18,
-          "updated_at": "2026-07-31"
+          "paper_count": 19,
+          "updated_at": "2026-08-04"
         }
       ]
     },
@@ -174,24 +174,24 @@
           "description": "文本到图像生成、图像扩散模型、DiT 等基础图像生成方法。",
           "examples": [
             {
-              "id": "2607.28565",
-              "title": "MIND: Multimodal Intent-Driven Network via Diffusion Transformers for Medical Image Fusion"
+              "id": "2608.00064",
+              "title": "Noise-Robust Conditional Flow Matching: Generating Clean Samples from Noisy Datasets"
             },
             {
-              "id": "2607.28611",
-              "title": "Chimera: Designing and Chinchilla-Scaling Hybrid Visual Diffusion Transformers"
+              "id": "2608.00083",
+              "title": "Beyond Edge Maps: Wavelet-Domain Conditioning for Multi-Adapter Map-to-Satellite Diffusion"
             },
             {
-              "id": "2607.28759",
-              "title": "SCMA: Structure-Conditioned and Metal-Aware Flow Matching for CT Metal Artifact Reduction"
+              "id": "2608.00444",
+              "title": "Reconstruction-Shift Discrimination via Mask-Guided Latent Diffusion for Medical Anomaly Detection"
             },
             {
-              "id": "2607.28760",
-              "title": "WaiT for the Signal: Simple Frequency-Aware Flow-Matching"
+              "id": "2608.01298",
+              "title": "UDT: Reconciling U-Nets and Diffusion Transformers with Data-Adaptive Token Reduction"
             },
             {
-              "id": "2607.29337",
-              "title": "DualDiT: A Conditional Dual-Output Diffusion Transformer for Joint OCT Image and Segmentation Mask Generation"
+              "id": "2608.01896",
+              "title": "GeoCore-9B: Towards Geo-Aware Generative Foundation Models in Earth Observation"
             }
           ],
           "id": "text_to_image_diffusion",
@@ -204,17 +204,13 @@
             "dit"
           ],
           "name": "文生图与图像扩散",
-          "paper_count": 81,
-          "updated_at": "2026-08-03"
+          "paper_count": 86,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "文本到视频生成、视频扩散模型、视频 DiT 等视频生成方法（不含自回归与世界模型）。",
           "examples": [
-            {
-              "id": "2607.26706",
-              "title": "TPD: Temporal Prior Decoupling for Text-to-Video Diffusion Models"
-            },
             {
               "id": "2607.27110",
               "title": "FreqForcing: Autoregressive Long Video Generation via Spectral Self-Anchoring"
@@ -230,6 +226,10 @@
             {
               "id": "2607.29545",
               "title": "MoRoute: Dynamic Routing for In-Context Multimodal Video Generation"
+            },
+            {
+              "id": "2608.00094",
+              "title": "Video Models as Native 4D Renderers: World-Grounded Conditioning from Animated Mesh"
             }
           ],
           "id": "text_to_video_diffusion",
@@ -242,25 +242,13 @@
             "svd"
           ],
           "name": "文生视频与视频扩散",
-          "paper_count": 101,
-          "updated_at": "2026-08-03"
+          "paper_count": 102,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "自回归图像与视频生成，包括 next-token、MaskGIT、VAR、MAR、LlamaGen 等范式。",
           "examples": [
-            {
-              "id": "2607.09892",
-              "title": "Next-Dense-Stride Prediction for Multimodal Autoregressive Visual Modeling"
-            },
-            {
-              "id": "2607.12433",
-              "title": "ARDepth: Auto-regressive Monocular Depth Estimation with Progressive Visual Conditioning"
-            },
-            {
-              "id": "2607.16824",
-              "title": "Test-Time Registers as Global Priors for Tokenized Image Generation"
-            },
             {
               "id": "2607.24157",
               "title": "UniGen-AR: Unifying Visual Generation with Auto-Regressive Modeling"
@@ -268,6 +256,18 @@
             {
               "id": "2607.25815",
               "title": "Freq-RemoteVAR: Next-Frequency Autoregressive Modeling for Remote Sensing Change Detection"
+            },
+            {
+              "id": "2608.00562",
+              "title": "Beyond Token-Level Cross-Entropy: Fréchet Distributional Post-Training for Autoregressive Image Generation"
+            },
+            {
+              "id": "2608.01823",
+              "title": "Detail Continuation over a Trustworthy Coarse Scale for Autoregressive Super-Resolution"
+            },
+            {
+              "id": "2608.02214",
+              "title": "VARPose: Flexible 2D Pose Densification via Visual Autoregressive Modeling for Enhanced 3D Lifting"
             }
           ],
           "id": "autoregressive_visual_generation",
@@ -282,32 +282,32 @@
             "llamagen"
           ],
           "name": "自回归视觉生成",
-          "paper_count": 21,
-          "updated_at": "2026-07-29"
+          "paper_count": 24,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "3D 物体/场景生成、3DGS、NeRF、Mesh 生成、神经渲染与重光照。",
           "examples": [
             {
-              "id": "2607.27825",
-              "title": "Endo-NeRF++: Uncertainty-Aware Neural Rendering with Multi-Resolution Hash Encoding for Dynamic Surgical Scene Reconstruction"
+              "id": "2608.02016",
+              "title": "Beyond Global Latents: Chunk-Based Sparse Grid VAE for Scalable 3D Modeling"
             },
             {
-              "id": "2607.28834",
-              "title": "FocusGS: Spatial Delta Layers for Local Repair and Deterministic Editing of Trained 3D Gaussian Assets"
+              "id": "2608.02145",
+              "title": "UniqueSplat: View-conditioned 3D Gaussian Splatting for Generalizable 3D Reconstruction"
             },
             {
-              "id": "2607.29106",
-              "title": "Forwardrobe: Garment-Aware Gaussian Avatars from a Single Image"
+              "id": "2608.02191",
+              "title": "DerainSplat: Feed-Forward Clean 3D Gaussian Splatting from Sparse Rainy Views"
             },
             {
-              "id": "2607.29633",
-              "title": "OASIS: Occlusion-aware Single-image Hand Avatar Reconstruction via 3D Gaussian Splatting"
+              "id": "2608.02206",
+              "title": "CLEAR: Conflict-aware Learning via Evidence-guided Adaptive Routing for Unified Sparse-View 3D Gaussian Super-Resolution"
             },
             {
-              "id": "2607.28675",
-              "title": "Meshy T2: Fast Native Mesh Generation with Flow Matching"
+              "id": "2608.02432",
+              "title": "Learning to Tessellate: Point Cloud Generation via Recursive Spectral Partitioning"
             }
           ],
           "id": "three_d_generation",
@@ -321,21 +321,13 @@
             "neural rendering"
           ],
           "name": "3D 生成与重建",
-          "paper_count": 256,
-          "updated_at": "2026-08-03"
+          "paper_count": 270,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "动态 3D/4D 场景生成与重建、4D 高斯泼溅、动态神经场。",
           "examples": [
-            {
-              "id": "2607.17097",
-              "title": "HarmoHOI: Harmonizing Appearance and 3D Motion for Multi-view Hand-Object Interaction Synthesis"
-            },
-            {
-              "id": "2607.18539",
-              "title": "AniGS: Bridging Rendering and Diffusion Prior for 3D Scene Animation"
-            },
             {
               "id": "2607.22534",
               "title": "SM4RT: Learning Structured Motion Geometry for 4D Reconstruction"
@@ -347,6 +339,14 @@
             {
               "id": "2607.29284",
               "title": "FillGS: Filling Observation Gaps in 4D Gaussian Splatting via Viewpoint-Time Selection and Generative Refinement"
+            },
+            {
+              "id": "2608.01588",
+              "title": "D^2-4DGS: Dual-Depth Guided Sparse-Camera 4D Gaussian Splatting"
+            },
+            {
+              "id": "2608.02006",
+              "title": "ASTRA: Asynchronous Spatio-Temporal Reconstruction via Trajectory Alignment"
             }
           ],
           "id": "dynamic_4d_generation",
@@ -358,32 +358,32 @@
             "4d gaussian"
           ],
           "name": "4D 与动态场景生成",
-          "paper_count": 52,
-          "updated_at": "2026-08-03"
+          "paper_count": 54,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "图像编辑、视频编辑、Inpainting、可控编辑、风格化等。",
           "examples": [
             {
-              "id": "2607.27800",
-              "title": "FDDWAN: A Frequency-Decoupled Diffusion Network for Watermarking Attack"
+              "id": "2608.01113",
+              "title": "CoT-Edit: Let CoT Guide Instruction Video Editing"
             },
             {
-              "id": "2607.27974",
-              "title": "Now You Have My Healthy Attention: A U-DiT for Brain-MRI Inpainting"
+              "id": "2608.01288",
+              "title": "TurboClear: One-Step Object-Effect Removal via Region-Calibrated Distribution Matching and Fusion"
             },
             {
-              "id": "2607.29025",
-              "title": "Evaluation-Verification Reward for Consistent Multi-Reference Image Editing"
+              "id": "2608.01771",
+              "title": "LiveLight: Real-time Streaming Video Relighting with Interactive Control"
             },
             {
-              "id": "2607.29367",
-              "title": "SatEdit: Mask-Conditioned Image Editing via VLM-Guided Segment Annotation"
+              "id": "2608.00111",
+              "title": "FDIR: Harmonizing Fidelity and Human-Machine Preference in Lossy Compression Image Restoration"
             },
             {
-              "id": "2607.29627",
-              "title": "FlexComposer: Unified Video Compositing from Images to Dynamic Footage with Flexible Trajectory Control"
+              "id": "2608.02177",
+              "title": "GSRAIN: Physically Calibrated High-/Low-Frequency Rainfall Synthesis for 3D Gaussian Driving Scenes"
             }
           ],
           "id": "visual_editing",
@@ -396,17 +396,13 @@
             "style transfer"
           ],
           "name": "图像与视频编辑",
-          "paper_count": 260,
-          "updated_at": "2026-08-03"
+          "paper_count": 270,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "主体驱动、概念定制、个性化生成、ID 保持、参考图引导生成。",
           "examples": [
-            {
-              "id": "2607.15619",
-              "title": "StructGen: Disambiguating Multi-Reference Image Generation via Structured Context Modeling"
-            },
             {
               "id": "2607.18217",
               "title": "HOMIE: Human-object Centric Video Personalization via Multimodal Intelligent Enchancement"
@@ -422,6 +418,10 @@
             {
               "id": "2607.25622",
               "title": "Beyond Facial Consistency: Personalized Person Image Generation with Holistic Identity Preservation"
+            },
+            {
+              "id": "2608.00674",
+              "title": "CopyCat: Improving Fine-Grained Subject Consistency in Subject-to-Image Models within Seconds"
             }
           ],
           "id": "customization_generation",
@@ -435,32 +435,32 @@
             "reference image"
           ],
           "name": "主体与概念驱动生成",
-          "paper_count": 32,
-          "updated_at": "2026-07-29"
+          "paper_count": 33,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "虚拟人、说话头、人体动作、肖像动画、面部重演。",
           "examples": [
             {
-              "id": "2607.27348",
-              "title": "Bunraku: Turning a Single Illustration into an Editable Live2D Character"
+              "id": "2608.01628",
+              "title": "Motion Beyond Morphology: Bootstrapping Cross-Category Motion Transfer from Abstract Motion Representations"
             },
             {
-              "id": "2607.27755",
-              "title": "EgoGVAE: Ego-body Mesh Reconstruction via Guided Variational Autoencoder"
+              "id": "2608.01726",
+              "title": "G-Skin: Learning to Bind 3D Gaussians with Generative Visual Priors"
             },
             {
-              "id": "2607.28032",
-              "title": "Split and Drive: Dual-Axis Disentanglement for Real-Time Gaussian Head Avatars"
+              "id": "2608.01905",
+              "title": "PhotoHOI: Synthesizing 3D Hand-Object Interactions from a Single RGB Photograph"
             },
             {
-              "id": "2607.28039",
-              "title": "TongueReenact: Geometry-Anchored Tongue Synthesis for Face Reenactment"
+              "id": "2608.01944",
+              "title": "UniMoCa: Unifying Motion and Camera Controls as Visual Proxies for Faithful Human Video Generation"
             },
             {
-              "id": "2607.29180",
-              "title": "MoRAE: Flow-Friendly Self-Supervised Latents for Text-to-Motion Generation"
+              "id": "2608.01978",
+              "title": "Proxy Avatar Meets Low-Rank Caching: Real-Time One-Shot Emotion-Controllable Portrait Animation"
             }
           ],
           "id": "avatar_motion_generation",
@@ -473,21 +473,13 @@
             "face reenactment"
           ],
           "name": "数字人与动作生成",
-          "paper_count": 113,
-          "updated_at": "2026-08-03"
+          "paper_count": 121,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "音乐/语音生成、TTS、音视频联合生成、跨模态条件音频生成。",
           "examples": [
-            {
-              "id": "2607.24873",
-              "title": "MusiChat: Vibe Composing for Music Creation"
-            },
-            {
-              "id": "2607.26818",
-              "title": "Ripple: Real-Time Streaming Audio-Video Generation With Cross-Modal Recurrent Memory"
-            },
             {
               "id": "2607.26698",
               "title": "MPEcho: A Melody and Phoneme-Aware Generative Framework for Controllable Cover Song Generation"
@@ -499,6 +491,14 @@
             {
               "id": "2607.27296",
               "title": "SKY-Piano: A Multimodal Piano Performance Dataset"
+            },
+            {
+              "id": "2608.00463",
+              "title": "Scene2Sound: Auditory-Grounded Soundscape Generation for 3D Gaussian Worlds"
+            },
+            {
+              "id": "2608.00011",
+              "title": "DLLM-TTS: Block Discrete Diffusion Language Model for Text-to-Speech Synthesis"
             }
           ],
           "id": "audio_av_generation",
@@ -511,32 +511,32 @@
             "audio-visual generation"
           ],
           "name": "音频与多模态联合生成",
-          "paper_count": 80,
-          "updated_at": "2026-07-31"
+          "paper_count": 82,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "扩散加速、少步采样、蒸馏、量化、稀疏化等生成模型效率优化。",
           "examples": [
             {
-              "id": "2607.27431",
-              "title": "SE(3)-MeanFlow: Few-Step Protein Backbone Generation on Lie Groups"
+              "id": "2608.01740",
+              "title": "Disagree to Accelerate: Closing the Loop on Diffusion Feature Forecasts"
             },
             {
-              "id": "2607.28144",
-              "title": "ReGenVC: End-to-End Real-Time Generative Video Coding at Ultra-Low Bitrate"
+              "id": "2608.01990",
+              "title": "SPARE: Structural Parameter-Free Affinity Regularization for Flow Matching"
             },
             {
-              "id": "2607.29079",
-              "title": "Faster but Different: Diagnosing and Controlling Content Drift in Accelerated Multimodal Diffusion Language Models"
+              "id": "2608.02502",
+              "title": "CMuon: Accelerating and Stabilizing Diffusion Transformer Training via Chunked Momentum Orthogonalization"
             },
             {
-              "id": "2607.29122",
-              "title": "A Frozen Pixel-Space Diffusion Model Can Guide Itself with Its Own Samples"
+              "id": "2608.02474",
+              "title": "EchoCache: Energy-Guided Cross-Modal Caching for Efficient Audio-Driven Video Generation"
             },
             {
-              "id": "2607.29398",
-              "title": "OnlineCache: Learning Dynamic Caching Policies with Error Correction for Efficient Diffusion Inference"
+              "id": "2608.02504",
+              "title": "Token Radius Attention for Efficient Video Generation"
             }
           ],
           "id": "efficient_generation",
@@ -550,17 +550,13 @@
             "sparse"
           ],
           "name": "生成模型加速与高效化",
-          "paper_count": 163,
-          "updated_at": "2026-08-03"
+          "paper_count": 170,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "生成模型对齐、RLHF、奖励建模、偏好优化、guidance 与可控性。",
           "examples": [
-            {
-              "id": "2607.27699",
-              "title": "RefineSVG: Visual Feedback-Driven Reinforcement Learning for Image-to-SVG Generation"
-            },
             {
               "id": "2607.28073",
               "title": "GVR-Coder: A Visual-Feedback Framework for Structured SVG Generation in Complex Document and Meeting Scenarios"
@@ -576,6 +572,10 @@
             {
               "id": "2607.29679",
               "title": "Scaling Properties of Text Conditioning in Visual Generation"
+            },
+            {
+              "id": "2608.00584",
+              "title": "Element-Aware Group Learning for E-Commerce Image Generation"
             }
           ],
           "id": "generation_alignment",
@@ -589,32 +589,32 @@
             "guidance"
           ],
           "name": "生成模型对齐与奖励",
-          "paper_count": 183,
-          "updated_at": "2026-08-03"
+          "paper_count": 184,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "生成模型评测基准、新数据集、自动评测指标、人类偏好评估。",
           "examples": [
             {
-              "id": "2607.26641",
-              "title": "FakeIDet3-DB: Refining Digital Attacks and Patch Extraction for Secure ID Benchmarking"
+              "id": "2608.01301",
+              "title": "Ranking Image Fusion the Way Humans Do: A Learned Pairwise Preference Metric for Infrared-Visible Fusion Assessment"
             },
             {
-              "id": "2607.27109",
-              "title": "MMAC: A Massive Multi-dimensional Benchmark for Audio Captioning"
+              "id": "2608.01686",
+              "title": "Generative AI and Foundation Models in Medical Image"
             },
             {
-              "id": "2607.27616",
-              "title": "MPIE-Bench: Benchmarking Anatomically Plausible Multi-Person Interaction Editing"
+              "id": "2608.01780",
+              "title": "Investigating Social Bias in Narrative Image Generation"
             },
             {
-              "id": "2607.29394",
-              "title": "Dense Temporal Contrast Synthesis via Conditioned Latent Transport"
+              "id": "2608.02218",
+              "title": "PosterMELD: Multi-Agent Paper-to-Poster Generation for Controllable Design Diversity with Editable Print-Ready Outputs"
             },
             {
-              "id": "2607.29533",
-              "title": "OSAGEN: Object-Aware Mask Priors and Multistage Decoupled Diffusion for Industrial Anomaly Generation"
+              "id": "2608.02258",
+              "title": "Open-Set Visual Text Forensics via Sparse-Constraint Rectified Flow"
             }
           ],
           "id": "generation_benchmark",
@@ -627,8 +627,8 @@
             "human preference"
           ],
           "name": "生成模型评测与数据集",
-          "paper_count": 198,
-          "updated_at": "2026-08-03"
+          "paper_count": 213,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": "2026-06-04",
@@ -665,10 +665,6 @@
           "description": "面向理解与生成统一的连续视觉 token、VAE/ViT、RAE、DINO/SigLIP/MAE latent 与视觉表征重建。",
           "examples": [
             {
-              "id": "2607.14088",
-              "title": "VideoRAE: Taming Video Foundation Models for Generative Modeling via Representation Autoencoders"
-            },
-            {
               "id": "2607.15933",
               "title": "Distributional Matching for Vector Quantization: A Unified Theoretical and Empirical Framework"
             },
@@ -683,12 +679,34 @@
             {
               "id": "2607.22531",
               "title": "Twins: Learn to Predict Unified Representations with Focal Loss"
+            },
+            {
+              "id": "2608.00626",
+              "title": "Where Does Generative Difficulty Reside? An Empirical Study of Target Representations"
             }
           ],
           "id": "continuous_visual_tokenizer",
           "name": "连续视觉 Tokenizer 与表征自编码器",
-          "paper_count": 14,
-          "updated_at": "2026-07-27"
+          "paper_count": 15,
+          "updated_at": "2026-08-04"
+        },
+        {
+          "created_at": "2026-08-04",
+          "description": "多模态越狱、对抗攻击、防御、安全评测。",
+          "examples": [
+            {
+              "id": "2608.00973",
+              "title": "Mind the Gap: Zero-Query Jailbreaks via Filter-Generator Discrepancy in Text-to-Image Systems"
+            },
+            {
+              "id": "2608.00543",
+              "title": "Robust Watermarks Meet Backdoored Models: Evading Diffusion Semantic Watermarks via Stealthy Backdoor"
+            }
+          ],
+          "id": "multimodal_safety_attack",
+          "name": "多模态安全与攻防",
+          "paper_count": 2,
+          "updated_at": "2026-08-04"
         }
       ]
     },
@@ -701,24 +719,24 @@
           "description": "通用视觉语言模型、MLLM 架构、多模态指令微调与对话。",
           "examples": [
             {
-              "id": "2607.28285",
-              "title": "Beyond Visual Ambiguity: Guiding Robust Monocular Depth Estimation in Challenging Scenarios via Detailed Long Captions"
+              "id": "2608.02124",
+              "title": "HAFI-VLM: A Frequency Perspective for Diagnosing and Enhancing Visual Perception in Vision-Language Models"
             },
             {
-              "id": "2607.28394",
-              "title": "Hand-Object Interaction in the Age of Large Foundation Models:Reconstruction, Generation, and Embodied Transfer"
+              "id": "2608.01753",
+              "title": "Can Urban Blight Be Accessed with Vision-language Models: A Case Study in Detroit"
             },
             {
-              "id": "2607.28466",
-              "title": "A report-grounded vision-language foundation model for colonoscopy from 280000 routine reports"
+              "id": "2608.01906",
+              "title": "Assessing the Benefits of Combining Advanced Deep Learning Techniques for Post-Disaster Building Damage Assessment from UAV Imagery"
             },
             {
-              "id": "2607.29136",
-              "title": "On the Efficacy of Self-Supervised Point Cloud Encoders for Efficient 3D Large Language Models"
+              "id": "2608.02252",
+              "title": "HarMoE: Multi-Source Chest Radiograph Pretraining with Dataset-Disentangled Experts"
             },
             {
-              "id": "2607.29200",
-              "title": "UltraSAM3: A Concept-Driven Foundation Model for Universal Ultrasound Image Segmentation"
+              "id": "2608.01998",
+              "title": "TALSC: Timeliness-Aware Large-Small VLM Collaboration for Infrastructure-Assisted Autonomous Driving"
             }
           ],
           "id": "vlm_mllm_general",
@@ -730,8 +748,8 @@
             "multimodal instruction"
           ],
           "name": "视觉语言模型与 MLLM",
-          "paper_count": 228,
-          "updated_at": "2026-08-03"
+          "paper_count": 245,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
@@ -775,24 +793,24 @@
           "description": "多模态 CoT、视觉推理、数学/代码/科学推理、推理时计算扩展。",
           "examples": [
             {
-              "id": "2607.28457",
-              "title": "SVR: Self-Verifying Refinement via Joint Verdict-Confidence Reinforcement Learning for Adaptive Test-Time Compute"
+              "id": "2608.01822",
+              "title": "SearchMaster: Grounded and Regulated Self-Play for Search Agents"
             },
             {
-              "id": "2607.28595",
-              "title": "Beacon: Knowing When and How to Perform Agentic Visual Reasoning"
+              "id": "2608.01930",
+              "title": "Recompute or Reuse? Diagnosing and Mitigating Textual Shortcuts in VLM Self-Reflection"
             },
             {
-              "id": "2607.29062",
-              "title": "On the Generalization of Steering Vectors for Chain-of-Thought Faithfulness"
+              "id": "2608.02291",
+              "title": "Shared Prefixes, Better Credit: Adaptive Routing for Multi-Agent Reasoning"
             },
             {
-              "id": "2607.29549",
-              "title": "AMTFV: Agentic Mathematical Tool-Flow Verification for LLM Self-Correction"
+              "id": "2608.01980",
+              "title": "AdaThinkV: Adaptive Thinking for Token-Efficient Video Reasoning"
             },
             {
-              "id": "2607.29577",
-              "title": "DungeonBench: A Benchmark for Rules-Rich Tactical Reasoning in Dungeons & Dragons Combat"
+              "id": "2608.02217",
+              "title": "VC-Tooler: Learning Compositional and Adaptive Visual Tool Use"
             }
           ],
           "id": "multimodal_reasoning_cot",
@@ -805,32 +823,32 @@
             "inference scaling"
           ],
           "name": "多模态推理与思维链",
-          "paper_count": 210,
-          "updated_at": "2026-08-03"
+          "paper_count": 225,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "视频 LLM、视频问答、时序定位、长视频理解、第一视角视频。",
           "examples": [
             {
-              "id": "2607.28312",
-              "title": "ObjectStream: Latent Objects as Memory Anchors for Streaming Video Understanding"
+              "id": "2608.00714",
+              "title": "Coverage-Driven Adaptive Keyframe Selection for Video Understanding"
             },
             {
-              "id": "2607.28463",
-              "title": "VisualRouter: Query-Grounded Visual Sampling for Long Video Understanding"
+              "id": "2608.02078",
+              "title": "CAVE: Competence-Aware Visual Boundary Evidence Alignment for Video Temporal Grounding"
             },
             {
-              "id": "2607.28516",
-              "title": "Beyond Frame Selection: Generative Latent Evidence Aggregation for Long-Video Understanding"
+              "id": "2608.01660",
+              "title": "Ground, Cover, and Refine: Evidence-Centric Frame Selection for Long-Video Question Answering"
             },
             {
-              "id": "2607.28678",
-              "title": "ViSAGE: Constructing Self-Correcting Memories for Long-Form Video Understanding"
+              "id": "2608.02200",
+              "title": "RSC-GestureNet: Reliability-Aware Selective Causal Recognition of Chinese Traffic Police Gestures"
             },
             {
-              "id": "2607.29401",
-              "title": "OSEF: One-Step Evidence Fusion for Cross-Video Scene Procedure Planning"
+              "id": "2608.02392",
+              "title": "GROVE: Growing and Reasoning over Temporally Stratified Memory from Streaming Video Experience"
             }
           ],
           "id": "video_understanding_temporal",
@@ -843,32 +861,32 @@
             "ego video"
           ],
           "name": "视频理解与时序推理",
-          "paper_count": 78,
-          "updated_at": "2026-08-03"
+          "paper_count": 83,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "视觉幻觉缓解、事实性、可靠性、忠实性提升。",
           "examples": [
             {
-              "id": "2607.27667",
-              "title": "Witness Evidence Portfolios: Single-Prefill Risk Detection for Closed Multimodal Answers"
-            },
-            {
-              "id": "2607.27823",
-              "title": "Hallucinations Leave a Grounding Signature:Verifier-Guided Decoding for Selective Object Correction"
-            },
-            {
-              "id": "2607.28991",
-              "title": "CAER: Conflict-Aware Evidence Routing with Dual Prefix Experts for Multimodal Large Language Models"
-            },
-            {
-              "id": "2607.29240",
-              "title": "When Model Priors Conflict with Visual Evidence: Mitigating Commonsense-Driven Hallucinations by Selective Prior Calibration"
-            },
-            {
               "id": "2607.29412",
               "title": "Role-Break in Attention Heads: Understanding and Detecting Hallucinations in VLMs"
+            },
+            {
+              "id": "2608.00033",
+              "title": "SIRIN: A Unified Toolkit for Detecting Contextual Hallucinations in Retrieval-Augmented and Memory-Grounded LLM Systems"
+            },
+            {
+              "id": "2608.00711",
+              "title": "Tracing the Cascade: A Topology-Aware Evaluation Framework for Scientific Agent Hallucinations"
+            },
+            {
+              "id": "2608.01021",
+              "title": "Can Humans Dream of Electric Sheep? Human-Written Samples for Fine-Grained Vision-and-Language Hallucination Benchmarking"
+            },
+            {
+              "id": "2608.02470",
+              "title": "Grounding Agentic VLMs with Dedicated Segmentation for Fine-Grained Vehicle Damage Assessment"
             }
           ],
           "id": "multimodal_hallucination",
@@ -880,32 +898,32 @@
             "faithfulness"
           ],
           "name": "多模态幻觉与可靠性",
-          "paper_count": 126,
-          "updated_at": "2026-08-03"
+          "paper_count": 130,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "多模态 RL、RLHF、DPO、偏好学习、多模态对齐。",
           "examples": [
             {
-              "id": "2607.28225",
-              "title": "FaithEyes: Towards Faithful Tool Use via Multi-Agent Process-Image Verification"
+              "id": "2608.01055",
+              "title": "Credit the Right Box: Marginal Contribution Assignment for Structured Visual Perception"
             },
             {
-              "id": "2607.28076",
-              "title": "Group-Reflective Self-Distillation for Agentic Reinforcement Learning"
+              "id": "2608.01263",
+              "title": "Distill What the Student Can See: Fisher-Projected On-Policy Distillation for Vision-Language Models"
             },
             {
-              "id": "2607.28590",
-              "title": "VAD: Attributing Visual Evidence for Target Reconstruction in Multimodal On-Policy Distillation"
+              "id": "2608.02087",
+              "title": "Instruction-Conditioned Exploration with Asymmetric Reinforcement Learning and Self-Distillation"
             },
             {
-              "id": "2607.28464",
-              "title": "Can Vision-Language Models Reason about AI Edits in Images?"
+              "id": "2608.02109",
+              "title": "Same Semantics, Different Paths: Self-Improving Alignment for Vision-Text Compression"
             },
             {
-              "id": "2607.28336",
-              "title": "Correcting What You Cannot See: Credit Assignment for Perception Distillation in Multimodal Reasoners"
+              "id": "2608.02216",
+              "title": "Local Margin Restoration for Test-Time Adaptation of Vision-Language Models"
             }
           ],
           "id": "multimodal_rl_alignment",
@@ -918,32 +936,32 @@
             "multimodal alignment"
           ],
           "name": "多模态强化学习与对齐",
-          "paper_count": 211,
-          "updated_at": "2026-07-31"
+          "paper_count": 216,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "高效 MLLM、PEFT、蒸馏、量化、token 压缩、稀疏推理。",
           "examples": [
             {
-              "id": "2607.26596",
-              "title": "Decoupled Visual Processing: Efficient Multimodal Adaptation via Modality-Specific Transformer Substitution"
+              "id": "2608.01644",
+              "title": "CRAFT: Compression via Recursive Adaptive Fusion of Video Tokens for Vision-Language Models"
             },
             {
-              "id": "2607.27700",
-              "title": "Calibrate Before Reason: Robust Visual Token Reduction against Semantic Drift in VLMs"
+              "id": "2608.01979",
+              "title": "ET-Prune: Evidence-Aware Dynamic Budgeting for Visual Token Pruning in Text-Rich MLLMs"
             },
             {
-              "id": "2607.27952",
-              "title": "LAST: The Last Query Token Guides Visual Token Pruning for Edge-Cloud Collaborative MLLM Inference"
+              "id": "2608.01821",
+              "title": "DAVET: Denoising-Aware Visual Evidence Trajectory Allocation for Diffusion Vision-Language Models"
             },
             {
-              "id": "2607.28341",
-              "title": "Capturing Token Tendencies for Training-Free Token Pruning in Multimodal Large Language Models"
+              "id": "2608.01985",
+              "title": "DiffPrune: differentiable information throttling for token pruning in vision-language models"
             },
             {
-              "id": "2607.29637",
-              "title": "CodeShrink: Adaptive Visual Compression for Efficient Multimodal Code Understanding"
+              "id": "2608.02134",
+              "title": "Messages, Not Tokens: Grounded Coresets for Faithful VLM Compression"
             }
           ],
           "id": "efficient_multimodal",
@@ -956,32 +974,32 @@
             "quantization"
           ],
           "name": "多模态高效化与轻量化",
-          "paper_count": 106,
-          "updated_at": "2026-08-03"
+          "paper_count": 121,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "多模态评测、新基准、评测协议、自动评估。",
           "examples": [
             {
-              "id": "2607.28896",
-              "title": "TORUS: A Test of Rendering-Understanding Self-Coherence for Unified Audio Models"
+              "id": "2608.02150",
+              "title": "PhyCheck: Fine-Grained Evidence-Grounded Dataset for Physical Law Understanding in Video-LLMs"
             },
             {
-              "id": "2607.29222",
-              "title": "Is It Time for the Renaissance of Salient Object Detection in the Era of MLLMs?"
+              "id": "2608.02300",
+              "title": "A General-Purpose VLM Can Teach an Astronomy Foundation Model to Better Recognize Galaxy Morphology"
             },
             {
-              "id": "2607.29626",
-              "title": "AgentHPOBench: A Benchmark For Evaluating LLM Agents as Sequential Hyperparameter Optimizers"
+              "id": "2608.02315",
+              "title": "GEOID-Flood: A Large-Scale Multi-Modal Benchmark Dataset for Flood Segmentation"
             },
             {
-              "id": "2607.29677",
-              "title": "ExtractBench: A Benchmark for Schema-Guided Enterprise Document Extraction"
+              "id": "2608.01033",
+              "title": "CallScreenBench: Benchmarking On-Device Models as Phone Secretaries"
             },
             {
-              "id": "2607.28645",
-              "title": "Looks Right, Works Right: A Project-Level Benchmark for Multi-Screen Mobile App Generation"
+              "id": "2608.02397",
+              "title": "Can Foundation Models Hear What Made That Sound? A Tiered Benchmark of Audio-Language Models and Traditional Classifiers for Closed-Set Sound Source Identification"
             }
           ],
           "id": "multimodal_benchmark",
@@ -993,32 +1011,32 @@
             "evaluation suite"
           ],
           "name": "多模态评测与基准",
-          "paper_count": 559,
-          "updated_at": "2026-08-03"
+          "paper_count": 591,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "空间推理、3D 视觉定位、具身推理、几何推理。",
           "examples": [
             {
-              "id": "2607.18801",
-              "title": "ZeroSplat: Generalized Referring Segmentation in 3D Gaussian Splatting"
+              "id": "2608.00110",
+              "title": "Distill What RGB Can Recover: Privileged 3D Evidence for RGB-Only Vision-Language Models"
             },
             {
-              "id": "2607.21595",
-              "title": "3D-Aware VLMs with Implicit and Explicit Geometries"
+              "id": "2608.00502",
+              "title": "SpatialAfford: Teaching Compact VLMs Where to Look and Where to Ground for Affordance"
             },
             {
-              "id": "2607.23504",
-              "title": "MemVLN: Episodic and Procedural Memory for Vision-and-Language Navigation"
+              "id": "2608.00518",
+              "title": "GuideGround: VLM-guided Semantic Understanding and Viewpoint-aware Reasoning for 3D Visual Grounding"
             },
             {
-              "id": "2607.28300",
-              "title": "MonoVoc: Decoupling Geometry and Semantics for Lightweight Monocular Open-Vocabulary 3D Gaussians"
+              "id": "2608.01899",
+              "title": "SpatioLM: Towards General Physical Spatial Intelligence in Vision-Language Models"
             },
             {
-              "id": "2607.28442",
-              "title": "ViewMind3D: Modular View-Aware Inference for Training-Free 3D-QA"
+              "id": "2608.01709",
+              "title": "SpatialQuery: Benchmarking Geometry-Grounded Multi-Instance Spatial Reasoning in Vision-Language Models"
             }
           ],
           "id": "spatial_3d_reasoning",
@@ -1030,32 +1048,32 @@
             "geometric reasoning"
           ],
           "name": "空间与 3D 多模态推理",
-          "paper_count": 68,
-          "updated_at": "2026-07-31"
+          "paper_count": 73,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "跨模态检索、组合检索、文档检索、多模态搜索。",
           "examples": [
             {
-              "id": "2607.27766",
-              "title": "Gradient-free Task-Conditioned Retrieval for On-Device In-Context Learning"
+              "id": "2608.01430",
+              "title": "MRAFnd: Multimodal Retrieval-Augmented Framework for Zero-Shot Fake News Detection"
             },
             {
-              "id": "2607.27779",
-              "title": "CXR-Retrieve: Compositional Text-to-Image Retrieval in Chest Radiography"
+              "id": "2608.01147",
+              "title": "UniHEAR: Unified Heterogeneous-Source Attentive Retrieval for Knowledge-Based Visual Question Answering"
             },
             {
-              "id": "2607.27959",
-              "title": "FiRE: Enhancing MLLMs with Fine-Grained Context Learning for Complex Image Retrieval"
+              "id": "2608.01794",
+              "title": "Illuminating Visual Identity in Universal Multimodal Embeddings"
             },
             {
-              "id": "2607.28627",
-              "title": "ReToken: One Token to Improve Vision-Language Models for Visual Retrieval"
+              "id": "2608.02148",
+              "title": "Douyin Multimodal Embedding Model Technical Report"
             },
             {
-              "id": "2607.28580",
-              "title": "DualG-MRAG: Decoupling Macro-Reasoning and Micro-Matching for Multimodal Retrieval-Augmented Generation"
+              "id": "2608.02583",
+              "title": "UEmbed: Unified Sparse and Dense Multimodal Embeddings"
             }
           ],
           "id": "multimodal_retrieval",
@@ -1067,32 +1085,32 @@
             "document retrieval"
           ],
           "name": "多模态检索",
-          "paper_count": 117,
-          "updated_at": "2026-07-31"
+          "paper_count": 128,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "多模态越狱、对抗攻击、防御、安全评测。",
           "examples": [
             {
-              "id": "2607.27917",
-              "title": "One Anchor for All: Unified Multilingual and Multimodal Safety Alignment for LVLMs"
+              "id": "2608.01661",
+              "title": "FairForensics: Seeing Expressions and Parsing Demographics via Vision-Language Modeling for Generalizable Fair Deepfake Detection"
             },
             {
-              "id": "2607.28637",
-              "title": "ZeroR@CHiPSAL 2026: Two-Stage Vision-Language Adaptation with Contrastive Learning for Nepali Meme Classification"
+              "id": "2608.01849",
+              "title": "Exploring and Bridging Knowledge Holes in Unlearned Multimodal Large Language Models"
             },
             {
-              "id": "2607.28969",
-              "title": "SafeNexus: Discovering and Steering Modality-Universal Safety Neurons in MLLMs"
+              "id": "2608.02018",
+              "title": "Invisible Ink Threats: Adversarial Goals Behind Legitimate Tasks in Computer-Use Agents"
             },
             {
-              "id": "2607.28696",
-              "title": "Mitigating Class-Tail Undercoverage in Medical Vision-Language Models under Clinical Shift"
+              "id": "2608.02137",
+              "title": "Two Sides of the Same Coin: Co-Evolving Search for Cross-Task Attacks on Vision-Language Models"
             },
             {
-              "id": "2607.29445",
-              "title": "QR-Structured Thermal Triggers for Targeted Semantic Attacks on Infrared Vision-Language Models"
+              "id": "2608.01043",
+              "title": "Decoy Images Amplify Caption-Mediated Defenses Against Encoded Jailbreaks"
             }
           ],
           "id": "multimodal_safety_attack",
@@ -1105,32 +1123,32 @@
             "safety benchmark"
           ],
           "name": "多模态安全与攻防",
-          "paper_count": 166,
-          "updated_at": "2026-08-03"
+          "paper_count": 175,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "VQA、文档/图表/表格理解、OCR-free 文档智能。",
           "examples": [
             {
-              "id": "2607.28006",
-              "title": "MMLDSum-LLM: Multimodal Long-Document Summarization with Visual-Alignment and Keyword-Aware"
+              "id": "2608.00239",
+              "title": "Semantically Calibrated Evidence Composition for CT Vision-Language Learning"
             },
             {
-              "id": "2607.28509",
-              "title": "RefCaptioner: Multi-Reference Image-Grounded Video Captioning"
+              "id": "2608.00442",
+              "title": "Beyond Static Anchors: Bounded Prototype Conditioning for Language-Free Medical Anomaly Detection"
             },
             {
-              "id": "2607.28532",
-              "title": "MarkushGlyph and OCSRGlyph: Improved Chemical Structure Recognition"
+              "id": "2608.00994",
+              "title": "Entity-Faithful Repair of Synthetic Supervision for Zero-Shot Image Captioning"
             },
             {
-              "id": "2607.29370",
-              "title": "VFAD: Variational Semantic Prompting Meets Frequency-Adaptive Representation Learning for Zero-Shot Anomaly Detection"
+              "id": "2608.01664",
+              "title": "FAU at ImageCLEF 2026 Task on Multimodal Reasoning Robust Candidate Scoring and Concise Multilingual Visual Answering"
             },
             {
-              "id": "2607.29638",
-              "title": "HierDoc: Hierarchical Page-to-Region Evidence Routing for Long-Document Visual Question Answering"
+              "id": "2608.01856",
+              "title": "EchoChange: A Diffusion Language Model with Dual Pass Remasking for Factual Remote Sensing Disaster Change Captioning"
             }
           ],
           "id": "multimodal_vqa_doc",
@@ -1143,17 +1161,13 @@
             "ocr-free"
           ],
           "name": "视觉问答与文档理解",
-          "paper_count": 172,
-          "updated_at": "2026-08-03"
+          "paper_count": 177,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": "2026-06-02",
           "description": "生成模型评测基准、新数据集、自动评测指标、人类偏好评估。",
           "examples": [
-            {
-              "id": "2607.23235",
-              "title": "A Reconstruction-Based Framework for Caption Evaluation Beyond Reference Captions"
-            },
             {
               "id": "2607.24516",
               "title": "DecoupleMix: Decoupled Ratio Search and Convex Allocation for Scalable VLM Data Recipes"
@@ -1169,12 +1183,16 @@
             {
               "id": "2607.27066",
               "title": "SciFigAlign: Scoring Scientific Figures by Fine-tuned Alignment of Visuals with Manuscript Evidence"
+            },
+            {
+              "id": "2608.02589",
+              "title": "CAPEval: A Decoupled Caption Evaluation across Understanding and Generation"
             }
           ],
           "id": "generation_benchmark",
           "name": "生成模型评测与数据集",
-          "paper_count": 35,
-          "updated_at": "2026-07-30"
+          "paper_count": 36,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": "2026-06-02",
@@ -1209,10 +1227,6 @@
           "description": "多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。",
           "examples": [
             {
-              "id": "2606.15160",
-              "title": "DLWM: Diverse Latent World Models for Efficient Multimodal Reasoning"
-            },
-            {
               "id": "2606.22870",
               "title": "VideoLatent: Video-Language Learning via Latent Self-Forcing"
             },
@@ -1227,12 +1241,34 @@
             {
               "id": "2607.04179",
               "title": "CritiqueDriveVLM: From Verifier-Guided Reinforcement Learning to Latent Thought Distillation for Autonomous Driving"
+            },
+            {
+              "id": "2608.00743",
+              "title": "LUT: Latent Utility Training for Visual Reasoning"
             }
           ],
           "id": "continuous_multimodal_reasoning",
           "name": "连续多模态推理与潜空间思维",
-          "paper_count": 11,
-          "updated_at": "2026-07-07"
+          "paper_count": 12,
+          "updated_at": "2026-08-04"
+        },
+        {
+          "created_at": "2026-08-04",
+          "description": "面向理解与生成统一的连续视觉 token、VAE/ViT、RAE、DINO/SigLIP/MAE latent 与视觉表征重建。",
+          "examples": [
+            {
+              "id": "2608.00976",
+              "title": "Location-Aware Fine-Grained Representation Learning for Medical Vision Foundation Models"
+            },
+            {
+              "id": "2608.01473",
+              "title": "Slot2Text: Object-Centric Visual Tokenization for Efficient and Spatially Traceable Surgical MLLMs"
+            }
+          ],
+          "id": "continuous_visual_tokenizer",
+          "name": "连续视觉 Tokenizer 与表征自编码器",
+          "paper_count": 2,
+          "updated_at": "2026-08-04"
         }
       ]
     },
@@ -1245,24 +1281,24 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2607.27036",
-              "title": "Mitigating Compounding Error via Video Representation Regularization"
+              "id": "2608.01127",
+              "title": "MiniWorld: Democratizing the Training of Video World Models from Scratch"
             },
             {
-              "id": "2607.27924",
-              "title": "ODEWorld: A Continuous Predictive Architecture via Physical-Time Flow"
+              "id": "2608.01049",
+              "title": "FactorJEPA: Factorizing Monolithic Futures into Layout-Agent-Interaction Channels for Crowded and Chaotic Global South Urban Worlds"
             },
             {
-              "id": "2607.28362",
-              "title": "ShadowDancer: Teaching Video World Models Any Action by Learning Unified Dynamics Representations from a Video and Its Shadow"
+              "id": "2608.01845",
+              "title": "WorldDynCache: Risk-Controlled Latent Dynamics Approximation for Diffusion World Model"
             },
             {
-              "id": "2607.28624",
-              "title": "PhiZero: A World Model Built Around Physical Language"
+              "id": "2608.01926",
+              "title": "ProWorld: Progress-Aware Hyperbolic World Models for Long-Horizon Visual Goal Reaching"
             },
             {
-              "id": "2607.29302",
-              "title": "BWM: A Low-Cost High-Fidelity World Simulator for Robot Learning"
+              "id": "2608.02428",
+              "title": "DF$^3$: World Modeling via Decoder-Free Feature Forecasting in Autonomous Navigation"
             }
           ],
           "id": "video_world_model",
@@ -1276,32 +1312,32 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 153,
-          "updated_at": "2026-08-03"
+          "paper_count": 158,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。",
           "examples": [
             {
-              "id": "2607.27017",
-              "title": "What Can Latent World Models Know? Physical Parameter Identifiability in Multimodal Predictive Representations"
+              "id": "2608.00298",
+              "title": "WM-Cov: Test Adequacy for Interactive World-Model-Style Autonomous Driving Simulation"
             },
             {
-              "id": "2607.27749",
-              "title": "Articulated Object Reconstruction from Rest-State Observation"
+              "id": "2608.00591",
+              "title": "Why Does the Future Branch? Identifiable Closure Tests for Stochastic Physical World Models"
             },
             {
-              "id": "2607.27865",
-              "title": "Learning to Understand Body Language from Flight through Robust 3D Avatar Placing"
+              "id": "2608.01178",
+              "title": "DynActiveGS: Active Gaussian Splatting for Dynamic Scene Reconstruction"
             },
             {
-              "id": "2607.28487",
-              "title": "AuricularWorld: Hierarchical Action-Guided World Modeling for Fine-Grained Auricular Structure Segmentation from CT Scans"
+              "id": "2608.01761",
+              "title": "DecoupleGS: Interactive 3D Gaussian Splatting for End-to-End Autonomous Driving Testing"
             },
             {
-              "id": "2607.28287",
-              "title": "Tycho: Active Abstraction with Programmatic World Models for ARC-AGI-3"
+              "id": "2608.01164",
+              "title": "Hybrid Lagrangian-Eulerian Model for Lagrangian Fluid Simulation"
             }
           ],
           "id": "interactive_physical_world",
@@ -1315,32 +1351,32 @@
             "environment model"
           ],
           "name": "可交互与物理世界建模",
-          "paper_count": 111,
-          "updated_at": "2026-07-31"
+          "paper_count": 116,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
           "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
           "examples": [
             {
-              "id": "2607.29613",
-              "title": "WCM: A World Critic Model for Vision-Language-Action Reinforcement Learning"
+              "id": "2608.02014",
+              "title": "MANGO-Grasp: Mahalanobis Fields over Geometry-Oriented 3D Gaussians for Cross-Embodiment Dexterous Grasping"
             },
             {
-              "id": "2607.29622",
-              "title": "RayViT: Ray-Conditioned Visual Representations for Viewpoint-Robust Imitation Learning"
+              "id": "2608.02547",
+              "title": "Why Does Action Chunking Improve Behavioral Cloning Performance in Robotic Control?"
             },
             {
-              "id": "2607.29625",
-              "title": "Balancing of Humanoid with Object Mass: Trade-off Analyses and Lifting Control"
+              "id": "2608.02365",
+              "title": "Faster-WAM: Do World Action Models Need Deep Action Modules?"
             },
             {
-              "id": "2607.28737",
-              "title": "Mirror Learning"
+              "id": "2608.02441",
+              "title": "Agentic Commerce World: An Auditable and Verifiable Environment for Vibe Commerce"
             },
             {
-              "id": "2607.29218",
-              "title": "MirrorCraft: Paired Evaluation under Hidden Rule Changes in Minecraft"
+              "id": "2608.00181",
+              "title": "Cross-Benchmark Generalization in Long-Horizon Agents"
             }
           ],
           "id": "embodied_world_model",
@@ -1354,8 +1390,8 @@
             "policy learning"
           ],
           "name": "具身世界模型与规划控制",
-          "paper_count": 944,
-          "updated_at": "2026-08-03"
+          "paper_count": 982,
+          "updated_at": "2026-08-04"
         },
         {
           "created_at": null,
@@ -1401,10 +1437,6 @@
           "description": "生成模型评测基准、新数据集、自动评测指标、人类偏好评估。",
           "examples": [
             {
-              "id": "2607.05390",
-              "title": "Deform360: A Massive Multi-view Visuotactile Dataset for Deformable World Models"
-            },
-            {
               "id": "2607.13681",
               "title": "Towards Spatial Supersensing in the Wild"
             },
@@ -1419,16 +1451,20 @@
             {
               "id": "2607.26452",
               "title": "CG-World: A Large-Scale World-State Dataset and Protocol for World Models"
+            },
+            {
+              "id": "2608.02603",
+              "title": "WorldExam: Benchmarking World Models from Apparent Appearance to Inherent Reactivity"
             }
           ],
           "id": "generation_benchmark",
           "name": "生成模型评测与数据集",
-          "paper_count": 11,
-          "updated_at": "2026-07-30"
+          "paper_count": 12,
+          "updated_at": "2026-08-04"
         }
       ]
     }
   },
-  "updated_at": "2026-08-03",
+  "updated_at": "2026-08-04",
   "version": 2
 }
