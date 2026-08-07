@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2608.05798",
+    "title": "KVAE: Family of Tokenizers for Multimodal Generative Models",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2608.05237",
+    "title": "In-Context Forcing: Uncovering Context Effects in Autoregressive Video Diffusion",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2608.06257",
+    "title": "MASS: Multiplayer World Models with Authoritative Shared State",
+    "rank": 3,
+    "status": "ok"
+  }
+]
