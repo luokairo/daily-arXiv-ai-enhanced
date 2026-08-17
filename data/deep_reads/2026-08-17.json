@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2608.13570",
+    "title": "Think in Latent, Explain in Language: Self-Explainable Latent Reasoning",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2608.14022",
+    "title": "ForgeWM: Progressive Causal Training for Few-Step Action-Conditioned Video World Models",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2608.14530",
+    "title": "Marionette: Predicting World States, Rendering Geometry, Painting Appearance",
+    "rank": 3,
+    "status": "ok"
+  }
+]
