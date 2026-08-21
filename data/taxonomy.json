@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.18933",
-              "title": "SkillForge: Self-Distilling Agents for Project-Specific Issue Resolution"
+              "id": "2608.19901",
+              "title": "MaliciousSkillBench: A Comprehensive Benchmark for Malicious Agent Skill Detection"
             },
             {
-              "id": "2608.18669",
-              "title": "Reinforced Planning with Latent World Models"
+              "id": "2608.20112",
+              "title": "Flow Matching-Based PET Image Reconstruction"
             },
             {
-              "id": "2608.18849",
-              "title": "GEAR: Generative Expansion and Real Anchoring for Two-Stage Distillation of Tabular Foundation Models"
+              "id": "2608.20195",
+              "title": "From Agent Behaviour to Agent-Friendly Documentation: An Empirical Study of How Coding Agents Discover, Read, and Write Technical Documentation"
             },
             {
-              "id": "2608.18282",
-              "title": "Self-supervised In-context Operator Learning for Stochastic Mean-Field Control"
+              "id": "2608.20231",
+              "title": "Growth Without Us: Machine Consumers, Corporate Circularity, and the Decoupling of GDP from Humanity after AGI"
             },
             {
-              "id": "2608.19141",
-              "title": "Geometric Iterative Retrieval for Neural Audio Codec Resynthesis"
+              "id": "2608.20337",
+              "title": "Information on trajectories: martingales and random times"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 18,
-          "updated_at": "2026-08-20"
+          "paper_count": 54,
+          "updated_at": "2026-08-21"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.18607",
-              "title": "VA-Judger: Reward Modeling from Human Preference Feedback for Joint Video-Audio Generation"
+              "id": "2608.20308",
+              "title": "DreamHand: Repurposing Video Diffusion Models for Occlusion-Robust Egocentric 3D Hand Motion Recovery"
             },
             {
-              "id": "2608.18679",
-              "title": "FRAGMENT: Factorized Graph Representations for Document Generation and Editing via Entity-Aware Transformations"
+              "id": "2608.20334",
+              "title": "Swift-Image: Exploring the Performance Frontier of Compact Unified Image Generation Models"
             },
             {
-              "id": "2608.18710",
-              "title": "CamWorldQA: Perceptual Quality Assessment of Camera-Controlled World Video Generation"
+              "id": "2608.20335",
+              "title": "4DAnyone: Create Anyone in 4D from a Casual Monocular Video"
             },
             {
-              "id": "2608.18907",
-              "title": "Learning-State-Aware Dynamic Generative Data Augmentation on Small-Scale Datasets"
+              "id": "2608.20336",
+              "title": "WithEveryone: Unified Planning and Identity Grounding for Group Image Generation"
             },
             {
-              "id": "2608.18560",
-              "title": "SemanticSlider3D: Training-Free Continuous Semantic Editing for 3D Objects"
+              "id": "2608.19227",
+              "title": "M3: A State-Event Generative Foundation Model for Market Microstructure Dynamics"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 6,
-          "updated_at": "2026-08-20"
+          "paper_count": 23,
+          "updated_at": "2026-08-21"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.18671",
-              "title": "Vision-Language Models for Egocentric Video: From Hand-Object Interaction to Embodied AI"
+              "id": "2608.19723",
+              "title": "StreamSoccer: Event-Driven Memory for Streaming Soccer Commentary"
             },
             {
-              "id": "2608.18734",
-              "title": "CL4D: Contrastive Language-4D Pretraining for Vision-Language Reasoning in Dynamic Scenes"
+              "id": "2608.19737",
+              "title": "TempJail: Temporal Jailbreak Attack against Large Vision-Language Models via Subtitle Scheduling"
             },
             {
-              "id": "2608.19075",
-              "title": "ReWEIGH the Evidence: Calibrating Token-Level Ordinal Visual Evidence to Mitigate Hallucinations in Large Vision-Language Models"
+              "id": "2608.19739",
+              "title": "Question-Guided Evidence Acquisition for Multimodal Visual Question Answering"
             },
             {
-              "id": "2608.18993",
-              "title": "ForeSightGuide: An Anticipatory Framework toward Accurate and Low-Redundancy Guidance for the Visually Impaired"
+              "id": "2608.20026",
+              "title": "From Street View Imagery to Street Quality Indicators: Vision Language Inference for the Suburban 15-minute City"
             },
             {
-              "id": "2608.18166",
-              "title": "TractoGraphVLM: A Unified Vision-Language Framework for White Matter Tractography"
+              "id": "2608.20141",
+              "title": "DPC-Net: Dual-Prior Collaborative Network for All-in-One Image Restoration"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 10,
-          "updated_at": "2026-08-20"
+          "paper_count": 28,
+          "updated_at": "2026-08-21"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,18 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.18746",
-              "title": "Decision-Metric Alignment in Latent World Models: Diagnostics and Action-Conditioned Objectives for MPC Planning"
+              "id": "2608.19804",
+              "title": "ADAPT: Physics-Aware Diffusion-based World Models for Adaptive Predictive Transferable HVAC Control"
+            },
+            {
+              "id": "2608.19375",
+              "title": "Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control"
+            },
+            {
+              "id": "2608.19661",
+              "title": "World-Model-Grounded LLM Planning for AUV and ASV Navigation Near Offshore Wind Farms"
+            },
+            {
+              "id": "2608.19492",
+              "title": "Beyond Multimodal Alignment: Certifying Physical Language through Response Substitution and Ordered Execution"
+            },
+            {
+              "id": "2608.20065",
+              "title": "Orthogonal JEPA: Factorized Predictive States for Latent World Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 1,
-          "updated_at": "2026-08-20"
+          "paper_count": 6,
+          "updated_at": "2026-08-21"
         }
       ]
     }
   },
-  "updated_at": "2026-08-20",
+  "updated_at": "2026-08-21",
   "version": 2
 }
