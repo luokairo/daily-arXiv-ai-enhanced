@@ -1,0 +1,30 @@
+name: LLM API Diagnostic
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_name:
+        description: "Model name to test"
+        required: true
+        default: "gpt-5.6-luna"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    name: Test OpenAI-compatible API
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run API compatibility tests
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          MODEL_NAME: ${{ inputs.model_name }}
+        run: python3 scripts/test_hdnsmantle_api.py --non-interactive
