@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.21278",
-              "title": "CLEAR: Continuous Latent Adapter Routing for Utility-Preserving LLM Safety Alignment"
+              "id": "2608.22284",
+              "title": "Learning from the Test: Self-Referential Differential Testing for Deep RL Agents"
             },
             {
-              "id": "2608.20367",
-              "title": "A Hybrid Edge Cloud Digital Twin for Welfare-Constrained Control in Poultry Production"
+              "id": "2608.22389",
+              "title": "KONTOGRAPH: Verified Point-in-Time Feature Consistency and Amortised Explanation for Real-Time Anti-Money Laundering under a 200 ms Decision Budget"
             },
             {
-              "id": "2608.21049",
-              "title": "$Z^2$-ACT: End-to-End Verifiable Agentic Intent Control for Open 6G RAN"
+              "id": "2608.22652",
+              "title": "Evaluating Inference-Time Defenses Against Package Hallucination in LLM-Generated Code"
             },
             {
-              "id": "2608.21156",
-              "title": "Graph Engineering in the Era of LLM Agents: From Individual Intelligence to System Intelligence"
+              "id": "2608.23308",
+              "title": "FIDES: A Concordance Protocol for LLM-Generated Trading Strategies"
             },
             {
-              "id": "2608.21230",
-              "title": "Utility Under Attack: Agent Memory Poisoning and the Limits of Content Screening and Provenance Ranking"
+              "id": "2608.23536",
+              "title": "Adapter-Based Few-Shot Continual Learning for Malicious Packet Recognition"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 138,
-          "updated_at": "2026-08-24"
+          "paper_count": 224,
+          "updated_at": "2026-08-26"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.21229",
-              "title": "Anchoring Instruction Outside Mask: Exact Reference Caching for Efficient In-Context Diffusion Transformers"
+              "id": "2608.23410",
+              "title": "Photorealistic Novel View Synthesis of Human Faces using Next-Scale Transformers"
             },
             {
-              "id": "2608.20448",
-              "title": "MultiCube: Compositional 3D Generation With Part-Level Semantic and Spatial Control"
+              "id": "2608.23432",
+              "title": "Image-Conditioned Diffusion Models for Quality Assurance of Organ-at-Risk Segmentations in Radiotherapy"
             },
             {
-              "id": "2608.20561",
-              "title": "Consistency Models for Fast MRI Reconstruction Using Regularization by Denoising"
+              "id": "2608.23549",
+              "title": "FixAnything: 3D-Consistent Rendering Refinement via Video Generative Priors"
             },
             {
-              "id": "2608.20562",
-              "title": "Conditional-Independence-Regularized Distributional Autoencoders for Mixed-Type Data"
+              "id": "2608.21700",
+              "title": "Scalable quantum simulation of continuous-time generative models via tensor networks"
             },
             {
-              "id": "2608.20611",
-              "title": "Difficulty-Aware Semantic-ID Optimization for Generative Recommendation"
+              "id": "2608.23400",
+              "title": "Adaptive Item-based Collaborative Structures via Noise Rescheduling in Diffusion for Generative Recommendation"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 54,
-          "updated_at": "2026-08-24"
+          "paper_count": 86,
+          "updated_at": "2026-08-26"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.20379",
-              "title": "A Survey on Foundations and Frontiers of Multimodal Agentic Frameworks: Techniques and Applications"
+              "id": "2608.23435",
+              "title": "Towards Comprehensive Basketball Understanding"
             },
             {
-              "id": "2608.20549",
-              "title": "Volumetric Radiology AI in the Era of Multimodal Large Language Models"
+              "id": "2608.23518",
+              "title": "Investigating Relational Reasoning in VLMs"
             },
             {
-              "id": "2608.20975",
-              "title": "Belief Without Behavior: Measuring the Translation of Theory of Mind into Coordinated Social Action in Vision-Language Models"
+              "id": "2608.23563",
+              "title": "EG-ARSA: An Expert-Grounded Open Model for Visual Road Safety Auditing in Low-Resource Settings"
             },
             {
-              "id": "2608.21100",
-              "title": "ReFrame: Evidence-Guided Test-Time Safety Alignment in Multimodal Large Language Models"
+              "id": "2608.21476",
+              "title": "From Subjective Judgments to Auditable Standards:Protocol-Guided AI Auditing of Website Redundancy"
             },
             {
-              "id": "2608.21357",
-              "title": "VIALS: A Benchmark for Visual Interpretation of Artifacts in the Life Sciences"
+              "id": "2608.22833",
+              "title": "Minimal Local Simulation Foundations for LLM- and VLM-Driven Agents in 2D and 3D Environments"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 68,
-          "updated_at": "2026-08-24"
+          "paper_count": 134,
+          "updated_at": "2026-08-26"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.20065",
-              "title": "Orthogonal JEPA: Factorized Predictive States for Latent World Models"
+              "id": "2608.22764",
+              "title": "LpWM: A Case for Sparse Representations in World Models"
             },
             {
-              "id": "2608.20891",
-              "title": "IMU-Free Body-Frame State Estimation with Sparse Scene Flow for Quadcopters"
+              "id": "2608.23070",
+              "title": "From Generation to Simulation: How Far Are World Models from Being True Simulators?"
             },
             {
-              "id": "2608.20936",
-              "title": "Graph-Operator World Models for Morphology-Parameter Generalization in Continuous Control"
+              "id": "2608.23526",
+              "title": "Correcting a learned physical invariant improves world-model rollouts"
             },
             {
-              "id": "2608.20401",
-              "title": "World models of environment, agent and joint agent-environment systems"
+              "id": "2608.23189",
+              "title": "EchoWM: Open and Enterable Omnimodal World Models"
             },
             {
-              "id": "2608.21075",
-              "title": "AudioWorldSim: Realistic Binaural Audio Datasets For World Models"
+              "id": "2608.23565",
+              "title": "ReWorld: An Interactive World Model with Long-Horizon Memory"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 15,
-          "updated_at": "2026-08-24"
+          "paper_count": 33,
+          "updated_at": "2026-08-26"
         }
       ]
     }
   },
-  "updated_at": "2026-08-24",
+  "updated_at": "2026-08-26",
   "version": 2
 }

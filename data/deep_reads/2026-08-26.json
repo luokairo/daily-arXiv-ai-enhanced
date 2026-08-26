@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2608.23552",
+    "title": "Prime Agent: A Self-Improving RLM Harness",
+    "rank": 1,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2608.23551",
+    "title": "ConvergeFlow: Language Flow with Provable Convergence to Token Embeddings",
+    "rank": 2,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2608.23536",
+    "title": "Adapter-Based Few-Shot Continual Learning for Malicious Packet Recognition",
+    "rank": 3,
+    "status": "generation_failed"
+  }
+]
