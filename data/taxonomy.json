@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.25285",
-              "title": "A Training-Free Proactive Defense Against Partial Speech Manipulation via Self-Embedding Steganography"
+              "id": "2608.26480",
+              "title": "Zero-Shot Self-Orchestration with Ledger-Based Control for Improved LLM Coding Performance"
             },
             {
-              "id": "2608.25289",
-              "title": "Combining Self-Embedding Audio Watermarking with Ultra-Low-Bitrate Neural Codecs"
+              "id": "2608.27291",
+              "title": "Recovering Expert Critic-Sourced Network Adjacency between Musical Artists from Acoustic Distributions: A Construct-Validity Approach"
             },
             {
-              "id": "2608.25095",
-              "title": "Scalable Self-Supervised Learning for Multiphase AC-OPF in Distribution Systems with Topology Reconfiguration"
+              "id": "2608.26418",
+              "title": "Redwood: A Frontier AI Accelerator Designed, Verified, and Deployed from Scratch in 2 Weeks by AI"
             },
             {
-              "id": "2608.25661",
-              "title": "From General Agents to RCA Experts: A Self-Evolving Harness for Root Cause Analysis"
+              "id": "2608.27244",
+              "title": "Compositional Online Learning for Semantic Data Processing Systems"
             },
             {
-              "id": "2608.25776",
-              "title": "EVOMAL: Self-Poisoning in Self-Evolving Coding Agents"
+              "id": "2608.27427",
+              "title": "Persona-Execution Separation: An Architecture Pattern for Evolving LLM Agents under Execution Audit"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 268,
-          "updated_at": "2026-08-27"
+          "paper_count": 339,
+          "updated_at": "2026-08-28"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.25398",
-              "title": "OmniPhys: A Unified Multimodal Benchmark for Physics Understanding and Generation from Chinese Educational Corpora"
+              "id": "2608.26535",
+              "title": "Multi2AV-Safety: Benchmarking Safety in Multimodal-to-Audio-Video Generation"
             },
             {
-              "id": "2608.25428",
-              "title": "DCGC: Draft-Conditioned Global Correction for Complex Reasoning with Masked Diffusion Models"
+              "id": "2608.27199",
+              "title": "Vision-centric generative AI models: A software-hardware perspective"
             },
             {
-              "id": "2608.25862",
-              "title": "Learning Late, Guiding Early: Timestep-Decoupled Semantic Guidance for Fair Face Generation"
+              "id": "2608.27280",
+              "title": "Sidecar: Training-Free Semantic Reuse for Character-Consistent Free-form Visual Storytelling"
             },
             {
-              "id": "2608.25933",
-              "title": "When Composition Doesn't Add Up: Humans Identifying Defects in AI-Generated Images"
+              "id": "2608.27198",
+              "title": "Knowledge Distillation Driven Semantic NOMA with GAN Refinement for 6G Robotic Vehicle Networks"
             },
             {
-              "id": "2608.25998",
-              "title": "Uncertainty-Guided Latent Diffusion Models for Faithful Super Resolution"
+              "id": "2608.27077",
+              "title": "Learning Transverse Momentum Distributions from Raw Scattering Events via Conditional Diffusion"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 98,
-          "updated_at": "2026-08-27"
+          "paper_count": 116,
+          "updated_at": "2026-08-28"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.25876",
-              "title": "Do Vision-Language Models Agree on the Affective Qualities of Shape? A Cross-Model Audit for Generative Design Interfaces"
+              "id": "2608.27169",
+              "title": "Ancient-Bench: A Comprehensive Multi-millennial, Multi-medium, and Multi-script Benchmark for Ancient Chinese Artifact Text Recognition"
             },
             {
-              "id": "2608.25973",
-              "title": "SciMIF: Understanding Multimodal Instruction Following in Scientific Domains"
+              "id": "2608.27206",
+              "title": "PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference"
             },
             {
-              "id": "2608.25986",
-              "title": "Multi-Granularity Context-Enhanced RAG over Multimodal Knowledge Graphs"
+              "id": "2608.26641",
+              "title": "Information-Guided Frontier Decoding: Contextual Utility-Driven Commitment in dMLLMs"
             },
             {
-              "id": "2608.24910",
-              "title": "From Plots to Words: Model-Aware Multimodal Explanations as a Foundation for Accessible, Non-Visual Interaction"
+              "id": "2608.27417",
+              "title": "Retrieval Heads Meet Vision: Uncovering How VLMs Locate and Extract Visual Information"
             },
             {
-              "id": "2608.25425",
-              "title": "RotDroid: Cross-Orientation State Equivalence Testing for Detecting GUI Rotation Bugs in Android Apps"
+              "id": "2608.27456",
+              "title": "UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 162,
-          "updated_at": "2026-08-27"
+          "paper_count": 187,
+          "updated_at": "2026-08-28"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.25017",
-              "title": "Rollout-Decoded Reconstruction for Long-Horizon Prediction in Latent World Models"
+              "id": "2608.26214",
+              "title": "Surgical Video Generation From Diffusion to World Models: A Survey"
             },
             {
-              "id": "2608.25927",
-              "title": "Code World Model: Coding Agent as World Brain"
+              "id": "2608.26190",
+              "title": "Predicting Consequences and Reinforcing Navigation Policies with Latent World Models"
             },
             {
-              "id": "2608.25956",
-              "title": "4DGS-WAM: Bridging Past and Future with an Object-Centric World Action Model based on 4D Gaussian Splatting"
+              "id": "2608.27328",
+              "title": "R2M-Bench: Evaluating Revisit Memory via Relative Consistency in Interactive Video World Models"
             },
             {
-              "id": "2608.25163",
-              "title": "Bayesian Flow Networks for Offline Trajectory Planning"
+              "id": "2608.27345",
+              "title": "PAWBench: How Far Are We from Probabilistically Aligned World Modeling?"
             },
             {
-              "id": "2608.25518",
-              "title": "Agentic Game Development as a Verifiable Trajectory Data Engine for Scaling World Models"
+              "id": "2608.27367",
+              "title": "Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 42,
-          "updated_at": "2026-08-27"
+          "paper_count": 49,
+          "updated_at": "2026-08-28"
         }
       ]
     }
   },
-  "updated_at": "2026-08-27",
+  "updated_at": "2026-08-28",
   "version": 2
 }

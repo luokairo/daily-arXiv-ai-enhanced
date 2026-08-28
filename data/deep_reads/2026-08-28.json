@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2608.27454",
+    "title": "WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution",
+    "rank": 1,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2608.27429",
+    "title": "Mechanistic Reaction Prediction via Discrete Flow Matching on Graph-Structured Electron Occupation",
+    "rank": 2,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2608.27427",
+    "title": "Persona-Execution Separation: An Architecture Pattern for Evolving LLM Agents under Execution Audit",
+    "rank": 3,
+    "status": "generation_failed"
+  }
+]
