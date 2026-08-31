@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.26480",
-              "title": "Zero-Shot Self-Orchestration with Ledger-Based Control for Improved LLM Coding Performance"
+              "id": "2608.28264",
+              "title": "Finding Where the Buck Stops: An Automated Failure Attribution-Based Reflection Framework for Multi-Agent Collaboration"
             },
             {
-              "id": "2608.27291",
-              "title": "Recovering Expert Critic-Sourced Network Adjacency between Musical Artists from Acoustic Distributions: A Construct-Validity Approach"
+              "id": "2608.28363",
+              "title": "EvoUndo: Recoverability-Constrained Self-Evolution for LLM Agent Harnesses"
             },
             {
-              "id": "2608.26418",
-              "title": "Redwood: A Frontier AI Accelerator Designed, Verified, and Deployed from Scratch in 2 Weeks by AI"
+              "id": "2608.28399",
+              "title": "RetailAgent: Structured Adverse Timing in Self-Conditioned Multimodal LLM Trading Agents"
             },
             {
-              "id": "2608.27244",
-              "title": "Compositional Online Learning for Semantic Data Processing Systems"
+              "id": "2608.28475",
+              "title": "COVER: Identifiable Evaluation of Coalition Routing"
             },
             {
-              "id": "2608.27427",
-              "title": "Persona-Execution Separation: An Architecture Pattern for Evolving LLM Agents under Execution Audit"
+              "id": "2608.28490",
+              "title": "LLM-Based Agents for Software and Systems Security: Approaches, Applications, and Assessment"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 339,
-          "updated_at": "2026-08-28"
+          "paper_count": 379,
+          "updated_at": "2026-08-31"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.26535",
-              "title": "Multi2AV-Safety: Benchmarking Safety in Multimodal-to-Audio-Video Generation"
+              "id": "2608.28142",
+              "title": "Conditional Diffusion Models for Energy-Efficient Driving"
             },
             {
-              "id": "2608.27199",
-              "title": "Vision-centric generative AI models: A software-hardware perspective"
+              "id": "2608.28206",
+              "title": "NumBench: Diagnosing Counting Failures in Text-to-Image Models"
             },
             {
-              "id": "2608.27280",
-              "title": "Sidecar: Training-Free Semantic Reuse for Character-Consistent Free-form Visual Storytelling"
+              "id": "2608.28339",
+              "title": "Abstract4D: A Large-Scale Dataset and Framework for Understanding the Visual Language of Abstract Art"
             },
             {
-              "id": "2608.27198",
-              "title": "Knowledge Distillation Driven Semantic NOMA with GAN Refinement for 6G Robotic Vehicle Networks"
+              "id": "2608.28404",
+              "title": "How Far Can 5,500 Hours of Driving Take You? A Scaling Law Analysis of Video Diffusion Models"
             },
             {
-              "id": "2608.27077",
-              "title": "Learning Transverse Momentum Distributions from Raw Scattering Events via Conditional Diffusion"
+              "id": "2608.28568",
+              "title": "SignRR: Retrieve and Refine Real Motion for Sign Language Production"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 116,
-          "updated_at": "2026-08-28"
+          "paper_count": 130,
+          "updated_at": "2026-08-31"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.27169",
-              "title": "Ancient-Bench: A Comprehensive Multi-millennial, Multi-medium, and Multi-script Benchmark for Ancient Chinese Artifact Text Recognition"
+              "id": "2608.28218",
+              "title": "Focus Where It Counts: A Salience-Driven Vision-Language Model for Low Vision Assistance"
             },
             {
-              "id": "2608.27206",
-              "title": "PACE: A Unified Condense-and-Extract Paradigm for Fast VLM Inference"
+              "id": "2608.27867",
+              "title": "CoRe-MoE: Compact Reusable MoE for Continual Multimodal Instruction Tuning"
             },
             {
-              "id": "2608.26641",
-              "title": "Information-Guided Frontier Decoding: Contextual Utility-Driven Commitment in dMLLMs"
+              "id": "2608.28567",
+              "title": "GeBDA: Building Damage Assessment as Text-Based Sequence Prediction"
             },
             {
-              "id": "2608.27417",
-              "title": "Retrieval Heads Meet Vision: Uncovering How VLMs Locate and Extract Visual Information"
+              "id": "2608.28062",
+              "title": "WeAgent-MMSearch: Native Text-Vision Interaction for Multimodal Search Agents"
             },
             {
-              "id": "2608.27456",
-              "title": "UrbanGround: From Local Perception to Spatial Agency in a Real-Scale City"
+              "id": "2608.28092",
+              "title": "Do Medical Vision Models Reason About Anatomy? Probing the Spatial Inductive Biases of Learned Visual Representations"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 187,
-          "updated_at": "2026-08-28"
+          "paper_count": 207,
+          "updated_at": "2026-08-31"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.26214",
-              "title": "Surgical Video Generation From Diffusion to World Models: A Survey"
+              "id": "2608.28491",
+              "title": "AcrossVAM1.0: Particle World Modeling for Text-Assisted Robot Video Prediction"
             },
             {
-              "id": "2608.26190",
-              "title": "Predicting Consequences and Reinforcing Navigation Policies with Latent World Models"
+              "id": "2608.27508",
+              "title": "WM-R1: Training GUI Agents to Reason and leverage World Models with Reinforcement Learning"
             },
             {
-              "id": "2608.27328",
-              "title": "R2M-Bench: Evaluating Revisit Memory via Relative Consistency in Interactive Video World Models"
+              "id": "2608.28541",
+              "title": "An Enclosed Mode Is a Gauge Choice: Topology Relative to Reach in Certified Code World Models"
             },
             {
-              "id": "2608.27345",
-              "title": "PAWBench: How Far Are We from Probabilistically Aligned World Modeling?"
+              "id": "2608.27996",
+              "title": "Should I Use This Synthetic Dataset for Training? How to Test with Minimal Real Data"
             },
             {
-              "id": "2608.27367",
-              "title": "Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models"
+              "id": "2608.28065",
+              "title": "Learning to Allocate Incentives for Incentivized Advertising via Offline Model-Based Reinforcement Learning"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 49,
-          "updated_at": "2026-08-28"
+          "paper_count": 54,
+          "updated_at": "2026-08-31"
         }
       ]
     }
   },
-  "updated_at": "2026-08-28",
+  "updated_at": "2026-08-31",
   "version": 2
 }
