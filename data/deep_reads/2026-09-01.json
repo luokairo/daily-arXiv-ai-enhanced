@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2608.31142",
+    "title": "Auditing Anonymous AI Models: A Four-Stage Protocol for Black-Box Identity Verification",
+    "rank": 1,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2608.31119",
+    "title": "PaperGym: Rubric-Centered Evolution for Research-Plan Generation",
+    "rank": 2,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2608.31111",
+    "title": "Aspire: Can Models Self-Evolve from Vague Goals?",
+    "rank": 3,
+    "status": "generation_failed"
+  }
+]
