@@ -211,6 +211,9 @@
 2026-09-01.jsonl
 2026-09-01.md
 2026-09-01_AI_enhanced_Chinese.jsonl
+2026-09-02.jsonl
+2026-09-02.md
+2026-09-02_AI_enhanced_Chinese.jsonl
 deep_reads/2026-04-27.json
 deep_reads/2026-04-27.md
 deep_reads/2026-05-27.json
@@ -353,4 +356,6 @@ deep_reads/2026-08-31.json
 deep_reads/2026-08-31.md
 deep_reads/2026-09-01.json
 deep_reads/2026-09-01.md
+deep_reads/2026-09-02.json
+deep_reads/2026-09-02.md
 taxonomy.json

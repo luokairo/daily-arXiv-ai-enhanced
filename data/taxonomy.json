@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.30974",
-              "title": "CoJEPA: Combining Contrastive Learning and JEPA for Global-Local Music Representations"
+              "id": "2609.01032",
+              "title": "On Synthesis of Metric Interval Temporal Logics"
             },
             {
-              "id": "2608.30207",
-              "title": "SIR: Self-improving Red-teaming for Compute Use Agents"
+              "id": "2609.01076",
+              "title": "Text-guided flow matching enables sample-efficient crystal structure generation"
             },
             {
-              "id": "2608.30333",
-              "title": "Beyond Ranking Accuracy: Evaluating LLM-Cited Feature Rationales for Next Basket Repurchase Recommendation"
+              "id": "2609.01235",
+              "title": "MutMem-V2: Cryptographically Authorized Mutation in Persistent Agent Memory Portable Verification and Reproducible Evidence"
             },
             {
-              "id": "2608.30956",
-              "title": "Taking the Whys Seriously: Limitations of Counterfactual Explanations in Justification and Recourse"
+              "id": "2609.01487",
+              "title": "Defense-as-Skill: Evolving Runtime Guard Skill for Skill-Augmented Agents"
             },
             {
-              "id": "2608.31142",
-              "title": "Auditing Anonymous AI Models: A Four-Stage Protocol for Black-Box Identity Verification"
+              "id": "2609.01525",
+              "title": "Relational-Core Graph Analytics Querying graphs at SQL scale, and why the node/edge model is a performance tax, not a truer picture of connected data"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 505,
-          "updated_at": "2026-09-01"
+          "paper_count": 593,
+          "updated_at": "2026-09-02"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.30727",
-              "title": "RailGen: Improving Railway Intrusion Detection via Agent-Guided Small-Scale Foreign Object Generation"
+              "id": "2609.01582",
+              "title": "SpatialGuard: Harness-Guided Verifiable Spatial Reasoning for Text-to-Image Generation"
             },
             {
-              "id": "2608.31053",
-              "title": "Identity-Conditioned Latent Consistency Distillation for Face Synthesis"
+              "id": "2609.00708",
+              "title": "Differentially Private Paired Table-Image Multimodal Synthesis"
             },
             {
-              "id": "2608.31106",
-              "title": "DreamX-Creator: Democratizing Native Audio-Video Generation at 2K Resolution"
+              "id": "2609.00332",
+              "title": "Latent-Space No-Arbitrage Geometry of Generative Models for Implied Volatility Surfaces"
             },
             {
-              "id": "2608.31159",
-              "title": "BRF-GS: Hyperspectral Bidirectional Reflectance Factor Modeling and Image Generation Based on 3D Gaussian Splatting"
+              "id": "2609.01601",
+              "title": "Adaptive Critical Token-Aware Retrieval for Repository-Level Code Generation"
             },
             {
-              "id": "2608.28929",
-              "title": "Membership is Ownership: A Robust Ownership Verification Framework for Diffusion Models"
+              "id": "2609.01015",
+              "title": "A Network Science Perspective on Evaluating Deep Graph Generative Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 175,
-          "updated_at": "2026-09-01"
+          "paper_count": 202,
+          "updated_at": "2026-09-02"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.30758",
-              "title": "CheXGround: Anatomical Region Tokens for Grounded Longitudinal Chest X-ray Interpretation"
+              "id": "2609.01607",
+              "title": "Uncovering Understanding-Generation Synergy in Native Unified Multimodal Models: From Representation, Task to System"
             },
             {
-              "id": "2608.30997",
-              "title": "Multi-View Reflective Surface Inspection via Semantic-Saliency Cross-Verification"
+              "id": "2609.01409",
+              "title": "EdiTikZ: Scientific Figure Editing from Revision Trajectories"
             },
             {
-              "id": "2608.28794",
-              "title": "Breaking Darknet CAPTCHAs with general purpose LLM"
+              "id": "2609.00667",
+              "title": "From Saliency to Discriminability: Rank-Preserving Visual Token Pruning for VLM Rerankers"
             },
             {
-              "id": "2608.29489",
-              "title": "SpatialTrust: A Benchmark for Environmental Risk Recognition in Secure Authentication"
+              "id": "2609.01567",
+              "title": "Selective Agent Guidance via Entropy: Learning Autonomous Policies from Imperfect VLM Teachers"
             },
             {
-              "id": "2608.30210",
-              "title": "Frontier vision-language models have overtaken young adults at detecting AI-generated portraits -- but not their calibration"
+              "id": "2609.01316",
+              "title": "MIDR: Enrichment-Augmented Indexing for Multimodal Document Retrieval"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 269,
-          "updated_at": "2026-09-01"
+          "paper_count": 307,
+          "updated_at": "2026-09-02"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2608.30188",
-              "title": "GPAgentBench-2K: Benchmarking Large Language Model Agents in Complex Clinical Action Space"
+              "id": "2609.00048",
+              "title": "GUI-CC: Benchmarking Contextual Consistency of GUI World Models as Agent Environments"
             },
             {
-              "id": "2608.29937",
-              "title": "AcrossWAM1.0:A Modular Latent World-Action Stack for Compact Robot Policies"
+              "id": "2609.00002",
+              "title": "HyperWorld: Hypergraph-Structured State Serialization Improves Learned Textual World Models"
             },
             {
-              "id": "2608.29904",
-              "title": "Off-Manifold Refinement: Guiding Video Generators with a Frozen World Model"
+              "id": "2609.00776",
+              "title": "Solaris: Towards Interfaces That Are Generated, Not Coded"
             },
             {
-              "id": "2608.30897",
-              "title": "CAER: Causal Action Effect Reweighting for World Model Training"
+              "id": "2609.00455",
+              "title": "Towards a Belief-Based World Model for LLM Agents"
             },
             {
-              "id": "2608.30692",
-              "title": "Can Video World Models Track Unobserved World States?"
+              "id": "2609.01560",
+              "title": "H3-World: Turning Language Understanding into World Control"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 63,
-          "updated_at": "2026-09-01"
+          "paper_count": 73,
+          "updated_at": "2026-09-02"
         }
       ]
     }
   },
-  "updated_at": "2026-09-01",
+  "updated_at": "2026-09-02",
   "version": 2
 }
