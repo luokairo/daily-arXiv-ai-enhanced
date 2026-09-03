@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.01032",
-              "title": "On Synthesis of Metric Interval Temporal Logics"
+              "id": "2609.02748",
+              "title": "Balancing Frequencies and Pixels in Flow Matching"
             },
             {
-              "id": "2609.01076",
-              "title": "Text-guided flow matching enables sample-efficient crystal structure generation"
+              "id": "2609.01976",
+              "title": "Knowing Is Not Enough: Information Retrievability as a Precondition to Effective LLM Oversight"
             },
             {
-              "id": "2609.01235",
-              "title": "MutMem-V2: Cryptographically Authorized Mutation in Persistent Agent Memory Portable Verification and Reproducible Evidence"
+              "id": "2609.02143",
+              "title": "A Power Law in Logarithm's Clothing: On the Scalability of Graph-Based Vector Search"
             },
             {
-              "id": "2609.01487",
-              "title": "Defense-as-Skill: Evolving Runtime Guard Skill for Skill-Augmented Agents"
+              "id": "2609.02196",
+              "title": "Schrödinger Bridges on Lie Group Manifolds for Probabilistic Intrinsic Generation"
             },
             {
-              "id": "2609.01525",
-              "title": "Relational-Core Graph Analytics Querying graphs at SQL scale, and why the node/edge model is a performance tax, not a truer picture of connected data"
+              "id": "2609.02354",
+              "title": "Fair Stable Matching: A Nash Social Welfare Approach"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 593,
-          "updated_at": "2026-09-02"
+          "paper_count": 644,
+          "updated_at": "2026-09-03"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.01582",
-              "title": "SpatialGuard: Harness-Guided Verifiable Spatial Reasoning for Text-to-Image Generation"
+              "id": "2609.02697",
+              "title": "Generating Medical Image Counterfactuals using Causal Explanations"
             },
             {
-              "id": "2609.00708",
-              "title": "Differentially Private Paired Table-Image Multimodal Synthesis"
+              "id": "2609.02016",
+              "title": "Perceptually Regularized Diffusion Model for Image Super-Resolution"
             },
             {
-              "id": "2609.00332",
-              "title": "Latent-Space No-Arbitrage Geometry of Generative Models for Implied Volatility Surfaces"
+              "id": "2609.02813",
+              "title": "GDB-Reward: From Evaluation Metrics to Training Rewards for Graphic Design"
             },
             {
-              "id": "2609.01601",
-              "title": "Adaptive Critical Token-Aware Retrieval for Repository-Level Code Generation"
+              "id": "2609.02847",
+              "title": "RoGe: Novel View Synthesis via End-to-End Implicit Reconstruction and Generation"
             },
             {
-              "id": "2609.01015",
-              "title": "A Network Science Perspective on Evaluating Deep Graph Generative Models"
+              "id": "2609.02864",
+              "title": "Thinking in Pictures: A Systematic Benchmark for Reasoning-driven Image Generation"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 202,
-          "updated_at": "2026-09-02"
+          "paper_count": 226,
+          "updated_at": "2026-09-03"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.01607",
-              "title": "Uncovering Understanding-Generation Synergy in Native Unified Multimodal Models: From Representation, Task to System"
+              "id": "2609.02565",
+              "title": "MARS: What Retrieval Signals Are Hidden in Multimodal Large Language Models for Text-Video Retrieval?"
             },
             {
-              "id": "2609.01409",
-              "title": "EdiTikZ: Scientific Figure Editing from Revision Trajectories"
+              "id": "2609.02573",
+              "title": "Deeply Interleaved Text-Image Contexts for Multimodal LLMs Assessment"
             },
             {
-              "id": "2609.00667",
-              "title": "From Saliency to Discriminability: Rank-Preserving Visual Token Pruning for VLM Rerankers"
+              "id": "2609.01657",
+              "title": "NeoMME: A Single-Tower Multimodal-Native Multilingual Foundation Encoder for Efficient Fine-Tuning and Inference"
             },
             {
-              "id": "2609.01567",
-              "title": "Selective Agent Guidance via Entropy: Learning Autonomous Policies from Imperfect VLM Teachers"
+              "id": "2609.02663",
+              "title": "Characterizing Text Branch Sensitivity in Medical Vision-Language Segmentation via Evidence Decoupling"
             },
             {
-              "id": "2609.01316",
-              "title": "MIDR: Enrichment-Augmented Indexing for Multimodal Document Retrieval"
+              "id": "2609.02731",
+              "title": "RVSD: Retrieval Vision Sparse Decoding for Mitigating Visual Hallucinations in Large Vision-Language Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 307,
-          "updated_at": "2026-09-02"
+          "paper_count": 331,
+          "updated_at": "2026-09-03"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.00048",
-              "title": "GUI-CC: Benchmarking Contextual Consistency of GUI World Models as Agent Environments"
+              "id": "2609.01861",
+              "title": "Belief-Calibrated Optimization: An Explicit World Model for Agentic Optimization"
             },
             {
-              "id": "2609.00002",
-              "title": "HyperWorld: Hypergraph-Structured State Serialization Improves Learned Textual World Models"
+              "id": "2609.02339",
+              "title": "AGI Maze Prediction Datasets: A Compact Benchmark for Learning World Dynamics with Transformers"
             },
             {
-              "id": "2609.00776",
-              "title": "Solaris: Towards Interfaces That Are Generated, Not Coded"
+              "id": "2609.02885",
+              "title": "Discriminative World Models for Web Agents"
             },
             {
-              "id": "2609.00455",
-              "title": "Towards a Belief-Based World Model for LLM Agents"
+              "id": "2609.02797",
+              "title": "Dutch Books for Language Models"
             },
             {
-              "id": "2609.01560",
-              "title": "H3-World: Turning Language Understanding into World Control"
+              "id": "2609.02886",
+              "title": "SolarWM: Open Data and Scalable Training for Long-Horizon Video World Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 73,
-          "updated_at": "2026-09-02"
+          "paper_count": 80,
+          "updated_at": "2026-09-03"
         }
       ]
     }
   },
-  "updated_at": "2026-09-02",
+  "updated_at": "2026-09-03",
   "version": 2
 }
