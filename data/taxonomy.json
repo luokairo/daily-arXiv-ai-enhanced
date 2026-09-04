@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.02748",
-              "title": "Balancing Frequencies and Pixels in Flow Matching"
+              "id": "2609.03940",
+              "title": "Masked Autoregressive Speech Enhancement with Continuous Neural Audio Codec Representations"
             },
             {
-              "id": "2609.01976",
-              "title": "Knowing Is Not Enough: Information Retrievability as a Precondition to Effective LLM Oversight"
+              "id": "2609.03320",
+              "title": "Beyond .WAV: Design and Software Verification of VocalCap, a Traceable Browser-Based Audio Capture System for Vocal Biomarker Research"
             },
             {
-              "id": "2609.02143",
-              "title": "A Power Law in Logarithm's Clothing: On the Scalability of Graph-Based Vector Search"
+              "id": "2609.03329",
+              "title": "Introducing SINFONIA: Symplectic, slimplectic and Magnusian (Neural) Flows for Orbital Numerical Integration and Acceleration"
             },
             {
-              "id": "2609.02196",
-              "title": "Schrödinger Bridges on Lie Group Manifolds for Probabilistic Intrinsic Generation"
+              "id": "2609.04086",
+              "title": "A Non-Formulable Theorem: A Fundamental Limit of Finite Syntactic Systems and Its Consequences for Security and AI"
             },
             {
-              "id": "2609.02354",
-              "title": "Fair Stable Matching: A Nash Social Welfare Approach"
+              "id": "2609.03846",
+              "title": "EF1-Constrained Nash Social Welfare with Identical Additive Valuations: Complexity, Guarantees, and Experiments"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 644,
-          "updated_at": "2026-09-03"
+          "paper_count": 703,
+          "updated_at": "2026-09-04"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.02697",
-              "title": "Generating Medical Image Counterfactuals using Causal Explanations"
+              "id": "2609.03931",
+              "title": "Sparse auto-regressive modeling for scene generation from multi-view images"
             },
             {
-              "id": "2609.02016",
-              "title": "Perceptually Regularized Diffusion Model for Image Super-Resolution"
+              "id": "2609.04090",
+              "title": "Conditioning Degenerate Diffusion Models"
             },
             {
-              "id": "2609.02813",
-              "title": "GDB-Reward: From Evaluation Metrics to Training Rewards for Graphic Design"
+              "id": "2609.04031",
+              "title": "DSAQuant: Denoising-Stage-Aligned Quantization-Aware Training for Video Generation"
             },
             {
-              "id": "2609.02847",
-              "title": "RoGe: Novel View Synthesis via End-to-End Implicit Reconstruction and Generation"
+              "id": "2609.04120",
+              "title": "BooM-VVT: Boosting Mask-Free Video Virtual Try-On with Image-Level Pseudo Data"
             },
             {
-              "id": "2609.02864",
-              "title": "Thinking in Pictures: A Systematic Benchmark for Reasoning-driven Image Generation"
+              "id": "2609.04151",
+              "title": "Persistent Identity Preservation in Generative Image Models: A Benchmark and Evaluation System"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 226,
-          "updated_at": "2026-09-03"
+          "paper_count": 244,
+          "updated_at": "2026-09-04"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.02565",
-              "title": "MARS: What Retrieval Signals Are Hidden in Multimodal Large Language Models for Text-Video Retrieval?"
+              "id": "2609.03729",
+              "title": "Unfold The World: Factorize 4D Properties in Reinforcing Spatial Reasoning"
             },
             {
-              "id": "2609.02573",
-              "title": "Deeply Interleaved Text-Image Contexts for Multimodal LLMs Assessment"
+              "id": "2609.03414",
+              "title": "StrixAE: An Intelligent Agent for Audio Enhancement under Complex Distortion Coupling in Real-World Scenarios"
             },
             {
-              "id": "2609.01657",
-              "title": "NeoMME: A Single-Tower Multimodal-Native Multilingual Foundation Encoder for Efficient Fine-Tuning and Inference"
+              "id": "2609.04131",
+              "title": "Beyond Retrieval: Progressive Latent Memory Evolution for Streaming Video Understanding"
             },
             {
-              "id": "2609.02663",
-              "title": "Characterizing Text Branch Sensitivity in Medical Vision-Language Segmentation via Evidence Decoupling"
+              "id": "2609.04200",
+              "title": "Principia: Relational Physics Tests for Video Models"
             },
             {
-              "id": "2609.02731",
-              "title": "RVSD: Retrieval Vision Sparse Decoding for Mitigating Visual Hallucinations in Large Vision-Language Models"
+              "id": "2609.03816",
+              "title": "When Vision Meets Graphs: A Survey on Graph Reasoning and Learning"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 331,
-          "updated_at": "2026-09-03"
+          "paper_count": 352,
+          "updated_at": "2026-09-04"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.01861",
-              "title": "Belief-Calibrated Optimization: An Explicit World Model for Agentic Optimization"
+              "id": "2609.03602",
+              "title": "SV-WAM: An Efficient Surround-View World-Action Model for End-to-End Autonomous Driving"
             },
             {
-              "id": "2609.02339",
-              "title": "AGI Maze Prediction Datasets: A Compact Benchmark for Learning World Dynamics with Transformers"
+              "id": "2609.03294",
+              "title": "Latent Energy Action Planning with World Models"
             },
             {
-              "id": "2609.02885",
-              "title": "Discriminative World Models for Web Agents"
+              "id": "2609.03557",
+              "title": "Building Pretraining Data for World Models: An Unreal Engine-Based Pipeline for Action-Conditioned Video Generation"
             },
             {
-              "id": "2609.02797",
-              "title": "Dutch Books for Language Models"
+              "id": "2609.03572",
+              "title": "Drive-HWM: Hierarchical World Models for Dynamic-Latent Guided Autonomous Driving"
             },
             {
-              "id": "2609.02886",
-              "title": "SolarWM: Open Data and Scalable Training for Long-Horizon Video World Models"
+              "id": "2609.03952",
+              "title": "WorldReward: Reward Modeling for Camera-Conditioned World Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 80,
-          "updated_at": "2026-09-03"
+          "paper_count": 92,
+          "updated_at": "2026-09-04"
         }
       ]
     }
   },
-  "updated_at": "2026-09-03",
+  "updated_at": "2026-09-04",
   "version": 2
 }

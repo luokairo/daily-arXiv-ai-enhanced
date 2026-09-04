@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2609.04203",
+    "title": "Temporal Self-Distillation: Learning Visual State Tracking in Videos Without Supervision",
+    "rank": 1,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2609.04202",
+    "title": "TokenMatch: 3D Mesh Correspondence Transformer with Curvature-Guided Tokenisation",
+    "rank": 2,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2609.04198",
+    "title": "Clean Engineering, Unstable Measurement: A Preregistered Reliability Failure of Black-Box LLM Observers on Shared Endpoints",
+    "rank": 3,
+    "status": "generation_failed"
+  }
+]
