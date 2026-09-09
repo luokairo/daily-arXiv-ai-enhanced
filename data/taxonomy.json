@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.04634",
-              "title": "SCAPES: Semantically Conditioned Autoregressive Prior for Environmental Sounds"
+              "id": "2609.08333",
+              "title": "Fixed-Dimensional Latent Flow for Generating Variable-Size 3D Molecules"
             },
             {
-              "id": "2609.04766",
-              "title": "When Does an Interpretation Count as Established? The Formation, Evaluation, and Responsibility of Interpretation in Generative AI"
+              "id": "2609.08390",
+              "title": "Noise Adaptive Streaming Audio-Visual Speech Token Enhancement for Robust Full-Duplex Spoken Dialogue Models"
             },
             {
-              "id": "2609.05031",
-              "title": "An Analysis of Self-supervised Pre-training with Dependent Samples"
+              "id": "2609.08790",
+              "title": "Evidence-Grounded Retrieval for Investigation Hunt Lead Generation from CTI Reports"
             },
             {
-              "id": "2609.05018",
-              "title": "How a Chatbot's Response Style Shapes a Classroom: A Multi-Agent Simulation of Students Consulting AI"
+              "id": "2609.08869",
+              "title": "OntoKG-EQ: A provenance-grounded, competency-question-governed knowledge graph for auditable analyst querying"
             },
             {
-              "id": "2609.05364",
-              "title": "Design Docs Are All You Need: An AI-native Machine-Learning Performance Tool"
+              "id": "2609.09022",
+              "title": "It Is Not My Code Anymore"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 756,
-          "updated_at": "2026-09-07"
+          "paper_count": 884,
+          "updated_at": "2026-09-09"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.05396",
-              "title": "A Deep Generative Model for Synthesizing Labeled Wireless Signals"
+              "id": "2609.08841",
+              "title": "Leveraging Visual and Geometric Priors for Metric-scale and Complete Vehicle Gaussian Reconstruction from Limited Views"
             },
             {
-              "id": "2609.05382",
-              "title": "Reflection-aware Generative Novel View Synthesis"
+              "id": "2609.05418",
+              "title": "Benchmarking Storage Systems for Machine Learning Workloads Using NIO Bench"
             },
             {
-              "id": "2609.04432",
-              "title": "Recovering molecules from coarse-grained beads: free-energy-conditioned generative backmapping across chemical space"
+              "id": "2609.06226",
+              "title": "Scratchy: Visual-Scratchpad Multimodal Reasoning for Cryptographic Proof Generation in EasyCrypt"
             },
             {
-              "id": "2609.04516",
-              "title": "Pitch-class Steering for Diffusion-based Music Generation via Latent-space Probes"
+              "id": "2609.07012",
+              "title": "AstraMoE-SR: Trajectory-Guided Diffusion for Blind Satellite Jitter Deblurring and Super-Resolution"
             },
             {
-              "id": "2609.05404",
-              "title": "Diffusion TV: Experiencing Diffusion Models through Tangible, Embodied Interaction"
+              "id": "2609.08049",
+              "title": "LLMs for Social Network Modeling: From Network Generation to Dynamic Processes"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 261,
-          "updated_at": "2026-09-07"
+          "paper_count": 312,
+          "updated_at": "2026-09-09"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.05224",
-              "title": "First Things First: Teaching LLM-Based Agents to Prioritize Must-Haves before Nice-to-Haves"
+              "id": "2609.05756",
+              "title": "Concord: A Video Relational Algebra for Cross-Modal Query Optimization"
             },
             {
-              "id": "2609.05239",
-              "title": "Cross-Domain Tracker Adaptation Without Target-Domain Labels via Vision-Language Agents"
+              "id": "2609.08543",
+              "title": "STSG-VQA: Evidence-Grounded Temporal Question Answering from Surgical Spatio-Temporal Scene Graphs"
             },
             {
-              "id": "2609.05388",
-              "title": "Think-Verify-Revise: Neuro-Symbolic Visual Reasoning with Vision-Language Models and Dynamic Logic Tensor Networks"
+              "id": "2609.08867",
+              "title": "SeGDeP: Semantic- and Geometric-Aware Decoupled Prompts for Reasoning Segmentation"
             },
             {
-              "id": "2609.04645",
-              "title": "Latent-Aligned Reasoning for Multimodal Recommendation"
+              "id": "2609.09082",
+              "title": "GoDeep: Annotation-Free Open-Vocabulary 3D Scene Understanding via Language-Space Lifting"
             },
             {
-              "id": "2609.04242",
-              "title": "Training-Free Speech-Centric Omni Understanding with Frozen VLMs"
+              "id": "2609.09124",
+              "title": "Canonical Color as a Lens into Concept Decodability in Vision Encoders and VLMs"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 368,
-          "updated_at": "2026-09-07"
+          "paper_count": 449,
+          "updated_at": "2026-09-09"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.03572",
-              "title": "Drive-HWM: Hierarchical World Models for Dynamic-Latent Guided Autonomous Driving"
+              "id": "2609.05552",
+              "title": "An Agent Model Abstraction for Human-AI Teaming Cognitive Coupling"
             },
             {
-              "id": "2609.03952",
-              "title": "WorldReward: Reward Modeling for Camera-Conditioned World Models"
+              "id": "2609.08855",
+              "title": "Earth System World Model for What-If Simulations: A Case Study for Terrestrial Ecosystems"
             },
             {
-              "id": "2609.04264",
-              "title": "Spectral-Target Physical Latent Structuring for JEPA-Style World Models"
+              "id": "2609.08796",
+              "title": "Hi-FLoop: Hierarchical State-Feedback Loops for Multi-Timescale World Modeling"
             },
             {
-              "id": "2609.04851",
-              "title": "Coupled Control and Wireless World Models for Resilient Remote Robotic Control"
+              "id": "2609.09155",
+              "title": "SyncWorld: Visual Calibration Enables World Models as Zero-Shot Simulators"
             },
             {
-              "id": "2609.04911",
-              "title": "TourPhysics: Bringing Physics to World Models for Exploration and Manipulation from a Single Image"
+              "id": "2609.06837",
+              "title": "BinauralVAE: Spatial Audio Reconstruction For World Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 95,
-          "updated_at": "2026-09-07"
+          "paper_count": 117,
+          "updated_at": "2026-09-09"
         }
       ]
     }
   },
-  "updated_at": "2026-09-07",
+  "updated_at": "2026-09-09",
   "version": 2
 }

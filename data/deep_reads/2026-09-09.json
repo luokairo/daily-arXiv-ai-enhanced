@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2609.09153",
+    "title": "Procedural Graphs: Self-Evolving Execution Structures for LLM Agents",
+    "rank": 1,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2609.09143",
+    "title": "Studying Image Tokenizers as Visual Languages in Unified Multimodal Models",
+    "rank": 2,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2609.09123",
+    "title": "Mask Forcing: Improving Autoregressive Video Diffusion Distillation via Dual-Noise Masking Rollout",
+    "rank": 3,
+    "status": "generation_failed"
+  }
+]
