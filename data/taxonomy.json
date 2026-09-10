@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.08333",
-              "title": "Fixed-Dimensional Latent Flow for Generating Variable-Size 3D Molecules"
+              "id": "2609.09604",
+              "title": "Watermarks Without Verification: AI Text Watermarking After the EU AI Act"
             },
             {
-              "id": "2609.08390",
-              "title": "Noise Adaptive Streaming Audio-Visual Speech Token Enhancement for Robust Full-Duplex Spoken Dialogue Models"
+              "id": "2609.10028",
+              "title": "Dynamical Non-compensatory Multidimensional IRT Model Using Variational Approximation"
             },
             {
-              "id": "2609.08790",
-              "title": "Evidence-Grounded Retrieval for Investigation Hunt Lead Generation from CTI Reports"
+              "id": "2609.10105",
+              "title": "Beyond Training: A Feasibility Taxonomy for Inference-Time AI Governance"
             },
             {
-              "id": "2609.08869",
-              "title": "OntoKG-EQ: A provenance-grounded, competency-question-governed knowledge graph for auditable analyst querying"
+              "id": "2609.10248",
+              "title": "A-JIT: Agentic Just-In-Time Software Construction"
             },
             {
-              "id": "2609.09022",
-              "title": "It Is Not My Code Anymore"
+              "id": "2609.10193",
+              "title": "Are You Learning Biological Signal or Shortcuts? Auditing and Mitigating Bias in Protein-Protein Interaction Datasets"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 884,
-          "updated_at": "2026-09-09"
+          "paper_count": 927,
+          "updated_at": "2026-09-10"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.08841",
-              "title": "Leveraging Visual and Geometric Priors for Metric-scale and Complete Vehicle Gaussian Reconstruction from Limited Views"
+              "id": "2507.21816",
+              "title": "Control Copy-Paste: Controllable Diffusion-Based Augmentation Method for Remote Sensing Few-Shot Object Detection"
             },
             {
-              "id": "2609.05418",
-              "title": "Benchmarking Storage Systems for Machine Learning Workloads Using NIO Bench"
+              "id": "2609.09486",
+              "title": "Efficient Fairness Auditing Across Guidance Scales in Text-to-Image Diffusion Models via Causal Abstraction"
             },
             {
-              "id": "2609.06226",
-              "title": "Scratchy: Visual-Scratchpad Multimodal Reasoning for Cryptographic Proof Generation in EasyCrypt"
+              "id": "2609.10099",
+              "title": "A Systematic Evaluation of Molecule Generation Models for De Novo Drug Design: From Benchmarks to Practical Insights"
             },
             {
-              "id": "2609.07012",
-              "title": "AstraMoE-SR: Trajectory-Guided Diffusion for Blind Satellite Jitter Deblurring and Super-Resolution"
+              "id": "2609.09799",
+              "title": "uFlowCSP: Crystal Structure Prediction using Mean flow generative models"
             },
             {
-              "id": "2609.08049",
-              "title": "LLMs for Social Network Modeling: From Network Generation to Dynamic Processes"
+              "id": "2609.10132",
+              "title": "Context operations to architecture modelling output from large language models and evaluation criteria for their use in systems engineering design"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 312,
-          "updated_at": "2026-09-09"
+          "paper_count": 324,
+          "updated_at": "2026-09-10"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.05756",
-              "title": "Concord: A Video Relational Algebra for Cross-Modal Query Optimization"
+              "id": "2609.09985",
+              "title": "VLX-VR: An Agentic-Aware Video Reasoning Model"
             },
             {
-              "id": "2609.08543",
-              "title": "STSG-VQA: Evidence-Grounded Temporal Question Answering from Surgical Spatio-Temporal Scene Graphs"
+              "id": "2609.10321",
+              "title": "On-Policy Distillation for Vision-Language Model Adaptation, an Effective Paradigm on Low-Quality Multimodal Data"
             },
             {
-              "id": "2609.08867",
-              "title": "SeGDeP: Semantic- and Geometric-Aware Decoupled Prompts for Reasoning Segmentation"
+              "id": "2609.10410",
+              "title": "Can Foundation Models Moderate Online Content? Evaluating Instruction- vs. Example-Driven Policy Operationalization"
             },
             {
-              "id": "2609.09082",
-              "title": "GoDeep: Annotation-Free Open-Vocabulary 3D Scene Understanding via Language-Space Lifting"
+              "id": "2609.10224",
+              "title": "UOT-Gap: A Variational Principle for the Modality Gap in Vision-Language Models via Unbalanced Optimal Transport"
             },
             {
-              "id": "2609.09124",
-              "title": "Canonical Color as a Lens into Concept Decodability in Vision Encoders and VLMs"
+              "id": "2609.10346",
+              "title": "Beyond One-Size-Fits-All: Sample-Adaptive Strategy Routing for Vision Token Pruning in MLLMs"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 449,
-          "updated_at": "2026-09-09"
+          "paper_count": 463,
+          "updated_at": "2026-09-10"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.05552",
-              "title": "An Agent Model Abstraction for Human-AI Teaming Cognitive Coupling"
+              "id": "2609.10506",
+              "title": "DUET-DINO: Simultaneous Cross-View World Modeling for Latent Planning in Robot Manipulation"
             },
             {
-              "id": "2609.08855",
-              "title": "Earth System World Model for What-If Simulations: A Case Study for Terrestrial Ecosystems"
+              "id": "2609.09828",
+              "title": "RealSimLoop: Online Real-to-Sim Adaptation via Differentiable Reduced-Order Simulation with Vision Feedback"
             },
             {
-              "id": "2609.08796",
-              "title": "Hi-FLoop: Hierarchical State-Feedback Loops for Multi-Timescale World Modeling"
+              "id": "2609.09163",
+              "title": "World-Time Compute with Verified Code World Models"
             },
             {
-              "id": "2609.09155",
-              "title": "SyncWorld: Visual Calibration Enables World Models as Zero-Shot Simulators"
+              "id": "2609.10540",
+              "title": "Programmable World Model"
             },
             {
-              "id": "2609.06837",
-              "title": "BinauralVAE: Spatial Audio Reconstruction For World Models"
+              "id": "2609.10464",
+              "title": "Semigroup-JEPA: Latent Dynamics Consistency for Zero-Shot Physics Generalization"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 117,
-          "updated_at": "2026-09-09"
+          "paper_count": 125,
+          "updated_at": "2026-09-10"
         }
       ]
     }
   },
-  "updated_at": "2026-09-09",
+  "updated_at": "2026-09-10",
   "version": 2
 }
