@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.09604",
-              "title": "Watermarks Without Verification: AI Text Watermarking After the EU AI Act"
+              "id": "2609.10707",
+              "title": "Architecting the Secure AI-SOC: A Neurosymbolic Framework for Pipeline Integrity and Threat Mitigation"
             },
             {
-              "id": "2609.10028",
-              "title": "Dynamical Non-compensatory Multidimensional IRT Model Using Variational Approximation"
+              "id": "2609.10817",
+              "title": "Tapes Together Strong: The Co-evolution of Computation and Cooperation"
             },
             {
-              "id": "2609.10105",
-              "title": "Beyond Training: A Feasibility Taxonomy for Inference-Time AI Governance"
+              "id": "2609.11412",
+              "title": "X-AuT: Progressive Audio-Encoder Compression for Speech LLMs with Cross-Scale Distillation"
             },
             {
-              "id": "2609.10248",
-              "title": "A-JIT: Agentic Just-In-Time Software Construction"
+              "id": "2609.11447",
+              "title": "Investigating catastrophic forgetting in sound event classification"
             },
             {
-              "id": "2609.10193",
-              "title": "Are You Learning Biological Signal or Shortcuts? Auditing and Mitigating Bias in Protein-Protein Interaction Datasets"
+              "id": "2609.11677",
+              "title": "Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 927,
-          "updated_at": "2026-09-10"
+          "paper_count": 972,
+          "updated_at": "2026-09-11"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2507.21816",
-              "title": "Control Copy-Paste: Controllable Diffusion-Based Augmentation Method for Remote Sensing Few-Shot Object Detection"
+              "id": "2609.11519",
+              "title": "Learning Interaction between Image and Layout Priors for Joint Image-Layout Generation in Design Templates"
             },
             {
-              "id": "2609.09486",
-              "title": "Efficient Fairness Auditing Across Guidance Scales in Text-to-Image Diffusion Models via Causal Abstraction"
+              "id": "2609.11639",
+              "title": "LoaDiff: Conditional Generation of Electricity Consumption Time Series for Energy Analytics"
             },
             {
-              "id": "2609.10099",
-              "title": "A Systematic Evaluation of Molecule Generation Models for De Novo Drug Design: From Benchmarks to Practical Insights"
+              "id": "2609.11648",
+              "title": "RDDMPI: Residual Denoising Diffusion Model for Probabilistic Multivariate Time Series Imputation"
             },
             {
-              "id": "2609.09799",
-              "title": "uFlowCSP: Crystal Structure Prediction using Mean flow generative models"
+              "id": "2609.11638",
+              "title": "Vidu S2: Real-Time Interactive, Editable, and Spatial Video Generation"
             },
             {
-              "id": "2609.10132",
-              "title": "Context operations to architecture modelling output from large language models and evaluation criteria for their use in systems engineering design"
+              "id": "2609.11804",
+              "title": "Logit Refiner: Improving Visual Autoregressive Models via Intra-Scale Dependency Modeling"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 324,
-          "updated_at": "2026-09-10"
+          "paper_count": 342,
+          "updated_at": "2026-09-11"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.09985",
-              "title": "VLX-VR: An Agentic-Aware Video Reasoning Model"
+              "id": "2609.11154",
+              "title": "Multi-Faceted Evaluation and Mitigation of Emotion Hallucinations in MLLMs"
             },
             {
-              "id": "2609.10321",
-              "title": "On-Policy Distillation for Vision-Language Model Adaptation, an Effective Paradigm on Low-Quality Multimodal Data"
+              "id": "2609.11315",
+              "title": "Routing by Reasoning Need: Trajectory-Aware Decoding Control for Diffusion Vision-Language Models"
             },
             {
-              "id": "2609.10410",
-              "title": "Can Foundation Models Moderate Online Content? Evaluating Instruction- vs. Example-Driven Policy Operationalization"
+              "id": "2609.11899",
+              "title": "Caption-once, Frames-on-Demand: Visual-Need Routing for Budget-Aware Agentic Long Video Understanding"
             },
             {
-              "id": "2609.10224",
-              "title": "UOT-Gap: A Variational Principle for the Modality Gap in Vision-Language Models via Unbalanced Optimal Transport"
+              "id": "2609.11929",
+              "title": "SenseNova-U1.5: Towards Native Unified Visual Intelligence"
             },
             {
-              "id": "2609.10346",
-              "title": "Beyond One-Size-Fits-All: Sample-Adaptive Strategy Routing for Vision Token Pruning in MLLMs"
+              "id": "2609.10613",
+              "title": "Understanding In-Context Multimodal Jailbreaks via Posterior Reweighting"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 463,
-          "updated_at": "2026-09-10"
+          "paper_count": 473,
+          "updated_at": "2026-09-11"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,10 +1573,6 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.10506",
-              "title": "DUET-DINO: Simultaneous Cross-View World Modeling for Latent Planning in Robot Manipulation"
-            },
-            {
               "id": "2609.09828",
               "title": "RealSimLoop: Online Real-to-Sim Adaptation via Differentiable Reduced-Order Simulation with Vision Feedback"
             },
@@ -1591,16 +1587,20 @@
             {
               "id": "2609.10464",
               "title": "Semigroup-JEPA: Latent Dynamics Consistency for Zero-Shot Physics Generalization"
+            },
+            {
+              "id": "2609.11445",
+              "title": "FARM: Reading Failure Signals from the Internal Predictive States of a Frozen Robotic World Model"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 125,
-          "updated_at": "2026-09-10"
+          "paper_count": 126,
+          "updated_at": "2026-09-11"
         }
       ]
     }
   },
-  "updated_at": "2026-09-10",
+  "updated_at": "2026-09-11",
   "version": 2
 }
