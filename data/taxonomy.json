@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.10707",
-              "title": "Architecting the Secure AI-SOC: A Neurosymbolic Framework for Pipeline Integrity and Threat Mitigation"
+              "id": "2609.12579",
+              "title": "SCOPE-OPSD: Fisher-Conditioned Privileged Subspaces for On-Policy Self-Distillation"
             },
             {
-              "id": "2609.10817",
-              "title": "Tapes Together Strong: The Co-evolution of Computation and Cooperation"
+              "id": "2609.12712",
+              "title": "InRTL: Effective Intra-Inter Interaction Learning for Relational Tables"
             },
             {
-              "id": "2609.11412",
-              "title": "X-AuT: Progressive Audio-Encoder Compression for Speech LLMs with Cross-Scale Distillation"
+              "id": "2609.12305",
+              "title": "Self-Verifying Anomaly Detection using Explainable AI for Cybersecurity of DER Networks"
             },
             {
-              "id": "2609.11447",
-              "title": "Investigating catastrophic forgetting in sound event classification"
+              "id": "2609.12024",
+              "title": "Learning the Geometry of Collider Events with Metric-Aware Deep Sets"
             },
             {
-              "id": "2609.11677",
-              "title": "Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents"
+              "id": "2609.12218",
+              "title": "BRIDGE-EEG: Bridging Self-Supervised Pretraining and Efficient Deployment for Cross-Dataset EEG Classification"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 972,
-          "updated_at": "2026-09-11"
+          "paper_count": 1002,
+          "updated_at": "2026-09-14"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.11519",
-              "title": "Learning Interaction between Image and Layout Priors for Joint Image-Layout Generation in Design Templates"
+              "id": "2609.12997",
+              "title": "SV-Cine: Diagnosis-Conditioned Segmentation of Single Ventricle Physiology via Generative Data Augmentation"
             },
             {
-              "id": "2609.11639",
-              "title": "LoaDiff: Conditional Generation of Electricity Consumption Time Series for Energy Analytics"
+              "id": "2609.13006",
+              "title": "Physics-Aware Video Generation via Agentic Planning and Graph-Guided Optimization"
             },
             {
-              "id": "2609.11648",
-              "title": "RDDMPI: Residual Denoising Diffusion Model for Probabilistic Multivariate Time Series Imputation"
+              "id": "2609.13047",
+              "title": "Diffusion Models and Concept Formation"
             },
             {
-              "id": "2609.11638",
-              "title": "Vidu S2: Real-Time Interactive, Editable, and Spatial Video Generation"
+              "id": "2609.13146",
+              "title": "SNAP3D: Physically Grounded 3D Parts for Assembly from a Single Image"
             },
             {
-              "id": "2609.11804",
-              "title": "Logit Refiner: Improving Visual Autoregressive Models via Intra-Scale Dependency Modeling"
+              "id": "2609.12079",
+              "title": "Hierarchical Prototype Emergence in Modern Hopfield Models"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 342,
-          "updated_at": "2026-09-11"
+          "paper_count": 355,
+          "updated_at": "2026-09-14"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.11154",
-              "title": "Multi-Faceted Evaluation and Mitigation of Emotion Hallucinations in MLLMs"
+              "id": "2609.12747",
+              "title": "Assisted Spatial Cognition Through Vision-Language Models"
             },
             {
-              "id": "2609.11315",
-              "title": "Routing by Reasoning Need: Trajectory-Aware Decoding Control for Diffusion Vision-Language Models"
+              "id": "2609.13012",
+              "title": "Pixel Decodability Is Not a Compression Signal: Causally Evaluating Importance Proxies for Visual KV-Cache Eviction"
             },
             {
-              "id": "2609.11899",
-              "title": "Caption-once, Frames-on-Demand: Visual-Need Routing for Budget-Aware Agentic Long Video Understanding"
+              "id": "2609.13082",
+              "title": "Embodied-BenchForge: A Closed-Loop Agentic Workflow for Embodied Benchmark Construction"
             },
             {
-              "id": "2609.11929",
-              "title": "SenseNova-U1.5: Towards Native Unified Visual Intelligence"
+              "id": "2609.12663",
+              "title": "What Did the MLLM Hear? Token-Level Spectro-Temporal Grounding for Audio MLLM Explainability"
             },
             {
-              "id": "2609.10613",
-              "title": "Understanding In-Context Multimodal Jailbreaks via Posterior Reweighting"
+              "id": "2609.12412",
+              "title": "HoliBench: A Cross-Platform Benchmarking and Deployment Toolkit for Foundation Models in CPS-IoT Applications"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 473,
-          "updated_at": "2026-09-11"
+          "paper_count": 486,
+          "updated_at": "2026-09-14"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.09828",
-              "title": "RealSimLoop: Online Real-to-Sim Adaptation via Differentiable Reduced-Order Simulation with Vision Feedback"
+              "id": "2609.12347",
+              "title": "DWMP: Leveraging Dual World Models for Humanoid Obstacle Traversal"
             },
             {
-              "id": "2609.09163",
-              "title": "World-Time Compute with Verified Code World Models"
+              "id": "2609.12090",
+              "title": "Does Video Memory Use What It Retrieves? A Causal Audit of Memory Specificity"
             },
             {
-              "id": "2609.10540",
-              "title": "Programmable World Model"
+              "id": "2609.12278",
+              "title": "Amortized Low-Rank Adaptation for Model-Based Reinforcement Learning"
             },
             {
-              "id": "2609.10464",
-              "title": "Semigroup-JEPA: Latent Dynamics Consistency for Zero-Shot Physics Generalization"
+              "id": "2609.12422",
+              "title": "Hierarchical Belief Modeling for Zero-Shot Opponent Adaptation in Partially Observable Multi-Agent Navigation"
             },
             {
-              "id": "2609.11445",
-              "title": "FARM: Reading Failure Signals from the Internal Predictive States of a Frozen Robotic World Model"
+              "id": "2609.12874",
+              "title": "VideoTok4D: A 4D-Aware Video Tokenizer for Compact World Representation"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 126,
-          "updated_at": "2026-09-11"
+          "paper_count": 133,
+          "updated_at": "2026-09-14"
         }
       ]
     }
   },
-  "updated_at": "2026-09-11",
+  "updated_at": "2026-09-14",
   "version": 2
 }

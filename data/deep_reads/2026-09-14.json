@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2609.13045",
+    "title": "Kraken: LLM-based Speech-to-Speech Translation via Low-bitrate VQ and Dual-path Source Conditioning",
+    "rank": 1,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2609.13006",
+    "title": "Physics-Aware Video Generation via Agentic Planning and Graph-Guided Optimization",
+    "rank": 2,
+    "status": "generation_failed"
+  },
+  {
+    "id": "2609.12959",
+    "title": "Distributed Stochastic Optimal Control for Pattern-Oriented Swarms",
+    "rank": 3,
+    "status": "generation_failed"
+  }
+]
