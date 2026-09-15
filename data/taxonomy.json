@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.12579",
-              "title": "SCOPE-OPSD: Fisher-Conditioned Privileged Subspaces for On-Policy Self-Distillation"
+              "id": "2609.14843",
+              "title": "A Responsive Present, a Shared Past, a Social Other: Teens' Overreliance on Companion AI Chatbots"
             },
             {
-              "id": "2609.12712",
-              "title": "InRTL: Effective Intra-Inter Interaction Learning for Relational Tables"
+              "id": "2609.14906",
+              "title": "Neural-Network Solutions to Real-Space Charge Density and Generalization"
             },
             {
-              "id": "2609.12305",
-              "title": "Self-Verifying Anomaly Detection using Explainable AI for Cybersecurity of DER Networks"
+              "id": "2609.15781",
+              "title": "When the World Lies: Backdoor Attacks on Latent World Models for Downstream Control"
             },
             {
-              "id": "2609.12024",
-              "title": "Learning the Geometry of Collider Events with Metric-Aware Deep Sets"
+              "id": "2609.15598",
+              "title": "Self-Evolving Memory for Generative Recommendation"
             },
             {
-              "id": "2609.12218",
-              "title": "BRIDGE-EEG: Bridging Self-Supervised Pretraining and Efficient Deployment for Cross-Dataset EEG Classification"
+              "id": "2609.15624",
+              "title": "Beyond AI Literacy: A Structured Review and Exploratory Meta-Analysis of Measures for Competent Generative-AI Use"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 1002,
-          "updated_at": "2026-09-14"
+          "paper_count": 1090,
+          "updated_at": "2026-09-15"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.12997",
-              "title": "SV-Cine: Diagnosis-Conditioned Segmentation of Single Ventricle Physiology via Generative Data Augmentation"
+              "id": "2609.15810",
+              "title": "VC-Attention: Value Smoothing and Softmax Casting for Low-bit Attention"
             },
             {
-              "id": "2609.13006",
-              "title": "Physics-Aware Video Generation via Agentic Planning and Graph-Guided Optimization"
+              "id": "2609.13990",
+              "title": "Diffusion-Based Multiple-Shooting Indirect Optimal Control for Fuel-Optimal Spacecraft Trajectory Generation"
             },
             {
-              "id": "2609.13047",
-              "title": "Diffusion Models and Concept Formation"
+              "id": "2609.15659",
+              "title": "Kaininja: Extending Native 3D Generators to the Part Level"
             },
             {
-              "id": "2609.13146",
-              "title": "SNAP3D: Physically Grounded 3D Parts for Assembly from a Single Image"
+              "id": "2609.14741",
+              "title": "A property-registry contract for retrieve-or-refuse thermal-mechanical lattice search"
             },
             {
-              "id": "2609.12079",
-              "title": "Hierarchical Prototype Emergence in Modern Hopfield Models"
+              "id": "2609.15897",
+              "title": "Bridging Control, Inference, Transport, and Thermodynamics: From Theory to Applications in Learning"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 355,
-          "updated_at": "2026-09-14"
+          "paper_count": 387,
+          "updated_at": "2026-09-15"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.12747",
-              "title": "Assisted Spatial Cognition Through Vision-Language Models"
+              "id": "2609.15635",
+              "title": "ModaLens: Measuring Image Sensitivity in Report-Conditioned Medical VLMs"
             },
             {
-              "id": "2609.13012",
-              "title": "Pixel Decodability Is Not a Compression Signal: Causally Evaluating Importance Proxies for Visual KV-Cache Eviction"
+              "id": "2609.15668",
+              "title": "Circuit-MLLM: Topological Logic-Guided Latent-Space Visual Reasoning for Circuit Schematic Understanding"
             },
             {
-              "id": "2609.13082",
-              "title": "Embodied-BenchForge: A Closed-Loop Agentic Workflow for Embodied Benchmark Construction"
+              "id": "2609.15671",
+              "title": "Don't Send What You Don't Need: Question-Guided Token Pruning as a Privacy Defense for Vision-Language Models"
             },
             {
-              "id": "2609.12663",
-              "title": "What Did the MLLM Hear? Token-Level Spectro-Temporal Grounding for Audio MLLM Explainability"
+              "id": "2609.14344",
+              "title": "AURA: Unified Multimodal Framework for Conversational Music Editing"
             },
             {
-              "id": "2609.12412",
-              "title": "HoliBench: A Cross-Platform Benchmarking and Deployment Toolkit for Foundation Models in CPS-IoT Applications"
+              "id": "2609.14874",
+              "title": "MedVA: An End-to-End Neuro-Symbolic Agentic System for Medical Volume Visualization"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 486,
-          "updated_at": "2026-09-14"
+          "paper_count": 534,
+          "updated_at": "2026-09-15"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.12347",
-              "title": "DWMP: Leveraging Dual World Models for Humanoid Obstacle Traversal"
+              "id": "2609.14073",
+              "title": "LPA-CWM: A Learned Physical Adjudicator for Motion Reasoning with Counterfactual World Models"
             },
             {
-              "id": "2609.12090",
-              "title": "Does Video Memory Use What It Retrieves? A Causal Audit of Memory Specificity"
+              "id": "2609.15801",
+              "title": "When Should a World Model Move? Loss-Conditioned State Execution"
             },
             {
-              "id": "2609.12278",
-              "title": "Amortized Low-Rank Adaptation for Model-Based Reinforcement Learning"
+              "id": "2609.14462",
+              "title": "AlayaVista: Streaming World Modeling from Panoramic States to Perspective Video"
             },
             {
-              "id": "2609.12422",
-              "title": "Hierarchical Belief Modeling for Zero-Shot Opponent Adaptation in Partially Observable Multi-Agent Navigation"
+              "id": "2609.13253",
+              "title": "An Evolutionary Computation Framework for Multi-Agent Q-Learning with Mean-Field Environmental Feedback"
             },
             {
-              "id": "2609.12874",
-              "title": "VideoTok4D: A 4D-Aware Video Tokenizer for Compact World Representation"
+              "id": "2609.15189",
+              "title": "Reconstructing Is Not Acting: Action-Centric Latent Dynamics Modeling"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 133,
-          "updated_at": "2026-09-14"
+          "paper_count": 145,
+          "updated_at": "2026-09-15"
         }
       ]
     }
   },
-  "updated_at": "2026-09-14",
+  "updated_at": "2026-09-15",
   "version": 2
 }
