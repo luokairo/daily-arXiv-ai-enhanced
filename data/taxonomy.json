@@ -172,30 +172,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.14843",
-              "title": "A Responsive Present, a Shared Past, a Social Other: Teens' Overreliance on Companion AI Chatbots"
+              "id": "2609.16051",
+              "title": "\"Looking for Something Weird to Happen\": How Humans Sustain AI Agent Novelty Amid Semantic Collapse"
             },
             {
-              "id": "2609.14906",
-              "title": "Neural-Network Solutions to Real-Space Charge Density and Generalization"
+              "id": "2609.16344",
+              "title": "From Momentary Emotion Inference to Sustained Emotion Support: Evaluating a Companion Agent in a Longitudinal Study"
             },
             {
-              "id": "2609.15781",
-              "title": "When the World Lies: Backdoor Attacks on Latent World Models for Downstream Control"
+              "id": "2609.16803",
+              "title": "On the disintegration of the stochastic majority vote: From PAC-Bayesian bounds to a self-bounding algorithm"
             },
             {
-              "id": "2609.15598",
-              "title": "Self-Evolving Memory for Generative Recommendation"
+              "id": "2609.17296",
+              "title": "Conformal Policy Learning with Distribution-Free Safety Guarantees"
             },
             {
-              "id": "2609.15624",
-              "title": "Beyond AI Literacy: A Structured Review and Exploratory Meta-Analysis of Measures for Competent Generative-AI Use"
+              "id": "2609.17221",
+              "title": "Grounding SWE-Agent Decisions in Architecture-0 Design: Navigating Unknown Unknowns through Physical Mapping"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 1090,
-          "updated_at": "2026-09-15"
+          "paper_count": 1153,
+          "updated_at": "2026-09-16"
         }
       ]
     },
@@ -755,30 +755,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.15810",
-              "title": "VC-Attention: Value Smoothing and Softmax Casting for Low-bit Attention"
+              "id": "2609.17169",
+              "title": "MUMINS: Metadata-conditioned Uncertainty-aware Medical Image Next-state Synthesis"
             },
             {
-              "id": "2609.13990",
-              "title": "Diffusion-Based Multiple-Shooting Indirect Optimal Control for Fuel-Optimal Spacecraft Trajectory Generation"
+              "id": "2609.17227",
+              "title": "FROD: Feature Matching Residual Denoising Oracle Bone Decipher"
             },
             {
-              "id": "2609.15659",
-              "title": "Kaininja: Extending Native 3D Generators to the Part Level"
+              "id": "2609.17450",
+              "title": "ORCA: Occlusion-Aware Refinement and Completion for Novel View Synthesis"
             },
             {
-              "id": "2609.14741",
-              "title": "A property-registry contract for retrieve-or-refuse thermal-mechanical lattice search"
+              "id": "2609.17521",
+              "title": "PhysStream: Streaming Physics-Grounded Video Generation with Structured Scene Memory and Fine-Grained Motion Control"
             },
             {
-              "id": "2609.15897",
-              "title": "Bridging Control, Inference, Transport, and Thermodynamics: From Theory to Applications in Learning"
+              "id": "2609.16266",
+              "title": "Towards Surrogate Based Dequantization of Quantum Reinforcement Learning"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 387,
-          "updated_at": "2026-09-15"
+          "paper_count": 398,
+          "updated_at": "2026-09-16"
         }
       ]
     },
@@ -1285,30 +1285,30 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.15635",
-              "title": "ModaLens: Measuring Image Sensitivity in Report-Conditioned Medical VLMs"
+              "id": "2609.17248",
+              "title": "Video-HolmesV2: Can MLLMs Reason with Spatio-Temporal Audio-Visual Evidence in Long Videos?"
             },
             {
-              "id": "2609.15668",
-              "title": "Circuit-MLLM: Topological Logic-Guided Latent-Space Visual Reasoning for Circuit Schematic Understanding"
+              "id": "2609.17269",
+              "title": "Semantic-Spatial Agreement Verification for Mitigating Object Hallucination in Multimodal Large Language Models"
             },
             {
-              "id": "2609.15671",
-              "title": "Don't Send What You Don't Need: Question-Guided Token Pruning as a Privacy Defense for Vision-Language Models"
+              "id": "2609.17443",
+              "title": "BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models"
             },
             {
-              "id": "2609.14344",
-              "title": "AURA: Unified Multimodal Framework for Conversational Music Editing"
+              "id": "2609.17458",
+              "title": "Tables Decoded: DELTA for Structure, TARQA for Understanding"
             },
             {
-              "id": "2609.14874",
-              "title": "MedVA: An End-to-End Neuro-Symbolic Agentic System for Medical Volume Visualization"
+              "id": "2609.16090",
+              "title": "MUUNRiver-Bench: Diagnosing Relation-Dependent Music Retrieval with Multimodal Instructions"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 534,
-          "updated_at": "2026-09-15"
+          "paper_count": 562,
+          "updated_at": "2026-09-16"
         },
         {
           "created_at": "2026-06-03",
@@ -1573,34 +1573,34 @@
           "description": "模型未能给出清晰定义的论文类别。",
           "examples": [
             {
-              "id": "2609.14073",
-              "title": "LPA-CWM: A Learned Physical Adjudicator for Motion Reasoning with Counterfactual World Models"
+              "id": "2609.17210",
+              "title": "FluxVLA Engine: A One-Stop VLA Engineering Platform for Embodied Intelligence"
             },
             {
-              "id": "2609.15801",
-              "title": "When Should a World Model Move? Loss-Conditioned State Execution"
+              "id": "2609.17414",
+              "title": "SlotDiT: Object-Centric Representations for Diffusion Transformers"
             },
             {
-              "id": "2609.14462",
-              "title": "AlayaVista: Streaming World Modeling from Panoramic States to Perspective Video"
+              "id": "2609.16778",
+              "title": "Unifying Semantic Priors and High-Frequency Traces: Enhancing V-JEPA with Mixture-of-Experts for Robust Synthetic Image Forensics"
             },
             {
-              "id": "2609.13253",
-              "title": "An Evolutionary Computation Framework for Multi-Agent Q-Learning with Mean-Field Environmental Feedback"
+              "id": "2609.16679",
+              "title": "AI for Games in the Foundation Model Era"
             },
             {
-              "id": "2609.15189",
-              "title": "Reconstructing Is Not Acting: Action-Centric Latent Dynamics Modeling"
+              "id": "2609.16313",
+              "title": "Cognitive Admission Control: Risk-Conditioned Assurance for Consequential Actions in Agentic Distributed Systems"
             }
           ],
           "id": "uncategorized",
           "name": "未分类",
-          "paper_count": 145,
-          "updated_at": "2026-09-15"
+          "paper_count": 153,
+          "updated_at": "2026-09-16"
         }
       ]
     }
   },
-  "updated_at": "2026-09-15",
+  "updated_at": "2026-09-16",
   "version": 2
 }
