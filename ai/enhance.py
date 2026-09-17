@@ -280,7 +280,9 @@ def build_llm(model_name: str, structure_model):
     if base_url:
         llm_kwargs["base_url"] = base_url
 
-    if model_name.startswith("deepseek-v4") and os.environ.get("DEEPSEEK_THINKING", "").lower() not in {"1", "true", "yes"}:
+    if model_name.startswith("glm-5.3"):
+        llm_kwargs["reasoning_effort"] = glm_reasoning_effort()
+    elif model_name.startswith("deepseek-v4") and not env_enabled("DEEPSEEK_THINKING"):
         llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
 
     return ChatOpenAI(**llm_kwargs).with_structured_output(structure_model, method="function_calling")
@@ -292,10 +294,23 @@ def build_plain_llm(model_name: str):
     if base_url:
         llm_kwargs["base_url"] = base_url
 
-    if model_name.startswith("deepseek-v4") and os.environ.get("DEEPSEEK_THINKING", "").lower() not in {"1", "true", "yes"}:
+    if model_name.startswith("glm-5.3"):
+        llm_kwargs["reasoning_effort"] = glm_reasoning_effort()
+    elif model_name.startswith("deepseek-v4") and not env_enabled("DEEPSEEK_THINKING"):
         llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
 
     return ChatOpenAI(**llm_kwargs)
+
+
+def env_enabled(name: str) -> bool:
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes"}
+
+
+def glm_reasoning_effort() -> str:
+    effort = (os.environ.get("GLM_REASONING_EFFORT") or "low").strip().lower()
+    if effort not in {"low", "high", "max"}:
+        raise ValueError("GLM_REASONING_EFFORT must be low, high, or max")
+    return effort
 
 
 def normalize_keyword(keyword: str) -> str:
@@ -521,7 +536,14 @@ def filter_single_item(chain, item: Dict, directions: List[Dict], prompt_directi
     return item
 
 
-def filter_all_items(data: List[Dict], filter_model_name: str, max_workers: int, directions: List[Dict], importance_config: Dict) -> List[Dict]:
+def filter_all_items(
+    data: List[Dict],
+    filter_model_name: str,
+    max_workers: int,
+    directions: List[Dict],
+    importance_config: Dict,
+    max_items: int = 0,
+) -> List[Dict]:
     filter_system = (
         "You are a fast research paper router. Decide if the paper belongs to one or more target research directions. "
         "Return only the structured fields. Do not summarize the paper."
@@ -564,7 +586,35 @@ def filter_all_items(data: List[Dict], filter_model_name: str, max_workers: int,
         f"keep={stats['keep']}, drop={stats['drop']}, uncertain={stats['uncertain']}",
         file=sys.stderr,
     )
+    if max_items > 0:
+        uncertain_indices = {idx for idx, _ in uncertain_items}
+        candidate_indices = [
+            idx for idx, item in enumerate(filtered_data) if item or idx in uncertain_indices
+        ]
+        allowed_indices = set(candidate_indices[:max_items])
+        filtered_data = [
+            item if idx in allowed_indices else {} for idx, item in enumerate(filtered_data)
+        ]
+        uncertain_items = [
+            (idx, item) for idx, item in uncertain_items if idx in allowed_indices
+        ]
+        print(
+            f"Daily cap: selected {len(allowed_indices)} of {len(candidate_indices)} local candidates.",
+            file=sys.stderr,
+        )
     if not uncertain_items:
+        return [item for item in filtered_data if item]
+
+    if not env_enabled("USE_MODEL_FILTER"):
+        for idx, item in uncertain_items:
+            item["_filter_relevance_reason"] = (
+                f"{item['_local_filter_reason']} Detail model will decide relevance."
+            )
+            filtered_data[idx] = item
+        print(
+            f"Model filter disabled; forwarded {len(uncertain_items)} uncertain papers to detail processing.",
+            file=sys.stderr,
+        )
         return [item for item in filtered_data if item]
 
     llm = build_llm(filter_model_name, FilterStructure)
@@ -818,6 +868,18 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
     if not data:
         return data
 
+    if not env_enabled("USE_MODEL_IMPORTANCE"):
+        for item in data:
+            score = heuristic_importance_score(item, importance_config)
+            ai = item["AI"]
+            ai["importance_score"] = round(score, 2)
+            ai["importance_level"] = importance_level(score)
+            ai["importance_reason"] = "Scored from configured research priorities and paper metadata."
+            ai["deep_read_selected"] = False
+            ai["deep_read_rank"] = None
+        print(f"Model importance scoring disabled; scored {len(data)} papers locally.", file=sys.stderr)
+        return data
+
     importance_system = (
         "You are a fast research paper importance rater. Score the paper for a daily personal research briefing. "
         "Respect the user's configured priorities more than generic popularity. "
@@ -959,17 +1021,30 @@ def main():
             unique_data.append(item)
 
     print("Open:", args.data, file=sys.stderr)
-    filtered_data = filter_all_items(unique_data, filter_model_name, filter_max_workers, directions, importance_config)
-    max_detail_items = int(os.environ.get("MAX_DETAIL_ITEMS") or "0")
+    max_detail_items = int(os.environ.get("MAX_DETAIL_ITEMS") or "30")
+    if max_detail_items < 0:
+        raise ValueError("MAX_DETAIL_ITEMS must be zero or greater")
+    filtered_data = filter_all_items(
+        unique_data,
+        filter_model_name,
+        filter_max_workers,
+        directions,
+        importance_config,
+        max_items=max_detail_items,
+    )
     if max_detail_items > 0:
-        filtered_data = filtered_data[:max_detail_items]
+        print(f"Detail processing limited to {max_detail_items} papers.", file=sys.stderr)
     print(f"Filtered {len(filtered_data)} relevant papers from {len(unique_data)} crawled papers.", file=sys.stderr)
 
     processed_data = process_all_items(filtered_data, detail_model_name, language, detail_max_workers, directions, taxonomy)
     taxonomy = update_taxonomy_from_items(taxonomy, processed_data, directions)
     save_taxonomy(taxonomy, args.taxonomy)
     processed_data = score_importance_for_items(processed_data, importance_model_name, importance_max_workers, importance_config)
-    daily_top_k = int(os.environ.get("DAILY_DEEP_READ_TOP_K") or importance_config.get("daily_deep_read_top_k", 5) or 5)
+    daily_top_k = (
+        int(os.environ.get("DAILY_DEEP_READ_TOP_K") or importance_config.get("daily_deep_read_top_k", 5) or 5)
+        if env_enabled("ENABLE_DEEP_READ")
+        else 0
+    )
     processed_data = mark_deep_read_selection(processed_data, daily_top_k)
 
     with open(target_file, "w", encoding="utf-8") as f:

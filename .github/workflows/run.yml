@@ -153,6 +153,10 @@ jobs:
         export FILTER_MAX_WORKERS="${{ vars.FILTER_MAX_WORKERS }}"
         export DETAIL_MAX_WORKERS="${{ vars.DETAIL_MAX_WORKERS }}"
         export IMPORTANCE_MAX_WORKERS="${{ vars.IMPORTANCE_MAX_WORKERS }}"
+        export USE_MODEL_FILTER="${{ vars.USE_MODEL_FILTER }}"
+        export USE_MODEL_IMPORTANCE="${{ vars.USE_MODEL_IMPORTANCE }}"
+        export ENABLE_DEEP_READ="${{ vars.ENABLE_DEEP_READ }}"
+        export GLM_REASONING_EFFORT="${{ vars.GLM_REASONING_EFFORT }}"
         
         python enhance.py --data ../data/${today}.jsonl
         
@@ -198,6 +202,11 @@ jobs:
     - name: Deep Read Top Papers
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
+        export ENABLE_DEEP_READ="${{ vars.ENABLE_DEEP_READ }}"
+        if [[ ! "${ENABLE_DEEP_READ,,}" =~ ^(1|true|yes)$ ]]; then
+          echo "全文精读已关闭，跳过模型调用 / Deep read disabled, skipping model calls."
+          exit 0
+        fi
         source .venv/bin/activate
         today=${{ steps.crawl_step.outputs.crawl_date }}
         echo "生成重要论文全文精读... / Generating deep reads for top papers..."
@@ -210,6 +219,7 @@ jobs:
         export DAILY_DEEP_READ_TOP_K="${{ vars.DAILY_DEEP_READ_TOP_K }}"
         export DEEP_READ_MAX_WORKERS="${{ vars.DEEP_READ_MAX_WORKERS }}"
         export DEEP_READ_THINKING="${{ vars.DEEP_READ_THINKING }}"
+        export GLM_REASONING_EFFORT="${{ vars.GLM_REASONING_EFFORT }}"
 
         language="${{ vars.LANGUAGE }}"
         if [ -z "$language" ]; then

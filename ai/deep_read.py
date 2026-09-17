@@ -190,7 +190,12 @@ def build_chat_model(model_name: str):
     if base_url:
         llm_kwargs["base_url"] = base_url
     deep_read_thinking = os.environ.get("DEEP_READ_THINKING", "").lower() in {"1", "true", "yes"}
-    if model_name.startswith("deepseek-v4") and not deep_read_thinking:
+    if model_name.startswith("glm-5.3"):
+        effort = (os.environ.get("GLM_REASONING_EFFORT") or "low").strip().lower()
+        if effort not in {"low", "high", "max"}:
+            raise ValueError("GLM_REASONING_EFFORT must be low, high, or max")
+        llm_kwargs["reasoning_effort"] = effort
+    elif model_name.startswith("deepseek-v4") and not deep_read_thinking:
         llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
     return ChatOpenAI(**llm_kwargs)
 

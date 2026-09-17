@@ -64,6 +64,20 @@ Otherwise, you can directly use this repo in https://dw-dengwei.github.io/daily-
 9. You can manually click **Run workflow** to test if it works well (it may take about one hour). By default, this action will automatically run every day. You can modify it in `.github/workflows/run.yml`
 10. Set up GitHub pages: Go to your own repo -> Settings -> Pages. In `Build and deployment`, set `Source="Deploy from a branch"`, `Branch="main", "/(root)"`. Wait for a few minutes, go to https://\<username\>.github.io/daily-arXiv-ai-enhanced/. Please see this [issue](https://github.com/dw-dengwei/daily-arXiv-ai-enhanced/issues/14) for more precise instructions.
 
+### Model usage controls
+
+The default AI pipeline uses local keyword filtering, selects at most 30 papers per day for detail generation, scores importance locally, and skips PDF deep reading. GLM-5.3-Flash requires thinking, so requests use its `low` reasoning effort instead of the model's `max` default. This limits model usage but can omit relevant papers beyond the daily cap. Set these GitHub Actions repository variables to change the behavior:
+
+| Variable | Default | Effect |
+| --- | --- | --- |
+| `MAX_DETAIL_ITEMS` | `30` | Maximum local candidates sent to any AI processing stage; `0` removes the cap. |
+| `USE_MODEL_FILTER` | `false` | Set `true` to ask a model to classify uncertain papers before detail processing. |
+| `USE_MODEL_IMPORTANCE` | `false` | Set `true` to ask a model to score each retained paper instead of using local heuristics. |
+| `ENABLE_DEEP_READ` | `false` | Set `true` to generate PDF deep reads for the selected top papers. `DAILY_DEEP_READ_TOP_K` then controls how many. |
+| `GLM_REASONING_EFFORT` | `low` | Reasoning level for GLM-5.3 and GLM-5.3-Flash: `low`, `high`, or `max`. Thinking cannot be disabled for these models. |
+
+These settings do not change Scrapy crawling. `FILTER_MAX_WORKERS`, `DETAIL_MAX_WORKERS`, and `IMPORTANCE_MAX_WORKERS` affect request concurrency, not the number of model calls.
+
 # Plans
 See https://github.com/users/dw-dengwei/projects/3
 
