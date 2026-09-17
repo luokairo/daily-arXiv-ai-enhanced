@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2609.17909",
+    "title": "Zing-0.5: Toward Playable Worlds with Real-Time Joint Action and Text Control",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2609.18430",
+    "title": "StrucPhysVideo: Learning Physical Dynamics from Structured Captions and Robot Actions",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2609.17901",
+    "title": "Walking the Score Manifold: Continuous-time Generative Dynamics on Learned Data Manifolds",
+    "rank": 3,
+    "status": "ok"
+  }
+]
