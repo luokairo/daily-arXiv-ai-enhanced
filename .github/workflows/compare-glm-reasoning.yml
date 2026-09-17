@@ -1,0 +1,46 @@
+name: Compare GLM Reasoning
+
+on:
+  workflow_dispatch:
+    inputs:
+      paper_id:
+        description: "arXiv paper ID from the selected data date"
+        required: true
+        default: "2608.17695"
+        type: string
+      data_date:
+        description: "Date of an existing raw JSONL file on the data branch"
+        required: true
+        default: "2026-08-19"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          uv sync
+      - name: Load one historical paper and taxonomy
+        env:
+          DATA_DATE: ${{ inputs.data_date }}
+        run: |
+          git fetch --depth=1 origin data
+          mkdir -p data
+          git show "FETCH_HEAD:data/${DATA_DATE}.jsonl" > "/tmp/glm-test-papers.jsonl"
+          git show "FETCH_HEAD:data/taxonomy.json" > "data/taxonomy.json"
+      - name: Compare low and max effort
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          PAPER_ID: ${{ inputs.paper_id }}
+        run: |
+          .venv/bin/python scripts/compare_glm_reasoning.py \
+            --data /tmp/glm-test-papers.jsonl \
+            --paper-id "$PAPER_ID"
