@@ -39,7 +39,7 @@ def main():
     env = dict(os.environ, AI_OUTPUT_DIR=str(args.output.resolve()),
                SELECTION_MODE="semantic",
                AI_CACHE_DIR=str(args.output.resolve() / "cache"),
-               MAX_DETAIL_ITEMS="1", SECONDARY_DETAIL_LIMIT=str(args.secondary_detail_limit),
+               MAX_AI_CANDIDATES=str(len(papers)), MAX_DETAIL_ITEMS=str(len(papers)), SECONDARY_DETAIL_LIMIT=str(args.secondary_detail_limit),
                DAILY_DEEP_READ_TOP_K=str(args.deep_read_top_k), ENABLE_DEEP_READ="true",
                USE_MODEL_FILTER="false", USE_MODEL_IMPORTANCE="false", DETAIL_MAX_WORKERS="1",
                DEEP_READ_MAX_WORKERS="1", LANGUAGE="Chinese")

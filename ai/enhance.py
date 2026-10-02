@@ -37,6 +37,8 @@ from semantic_arxiv import (
 )
 from structure import FilterStructure, Structure
 from routing import route_all_items
+from local_recall import select_candidates, normalize as normalize_recall, phrase_spans
+from progress import Progress, checkpoint, completed, install_cancellation
 from selection import allocate_details, interest_tier, make_brief, select_deep_reads
 from runtime import CachedChain, FatalAIError, atomic_write, enabled, env_value, positive_int
 
@@ -262,10 +264,15 @@ def normalize_keyword(keyword: str) -> str:
 
 
 def keyword_matches(text: str, keyword: str) -> bool:
-    keyword = normalize_keyword(keyword)
+    text, keyword = normalize_recall(text), normalize_recall(keyword)
     if not keyword:
         return False
-    return bool(re.search(r"(?<!\w)" + re.escape(keyword) + r"(?!\w)", normalize_keyword(text)))
+    if keyword in {'elf', 'cola'} and not any(phrase_spans(text, term) for term in ('language', 'text', 'embedding', 'embeddings')):
+        return False
+    variants = {keyword}
+    if keyword.endswith('model'):
+        variants.update(keyword + suffix for suffix in ('s', 'ing', 'ling'))
+    return any(phrase_spans(text, variant) for variant in variants)
 
 
 def keyword_hits(text: str, keywords: Iterable[str]) -> List[str]:
@@ -650,7 +657,7 @@ def process_single_item(chain, item: Dict, language: str, directions: List[Dict]
     return item
 
 
-def process_all_items(data: List[Dict], model_name: str, language: str, max_workers: int, directions: List[Dict], taxonomy: Dict) -> List[Dict]:
+def process_all_items(data: List[Dict], model_name: str, language: str, max_workers: int, directions: List[Dict], taxonomy: Dict, on_complete=None) -> List[Dict]:
     if not data:
         return []
     print("Detail model:", model_name, file=sys.stderr)
@@ -668,18 +675,22 @@ def process_all_items(data: List[Dict], model_name: str, language: str, max_work
 
     processed_data = [{} for _ in data]
     failures = 0
+    progress = Progress('detail', len(data))
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_idx = {
             executor.submit(process_single_item, chain, item, language, directions, prompt_directions, prompt_taxonomy): idx
             for idx, item in enumerate(data)
         }
 
-        for future in tqdm(as_completed(future_to_idx), total=len(data), desc="Processing items"):
+        for future in completed(future_to_idx, progress, chain):
             idx = future_to_idx[future]
             try:
                 processed_data[idx] = future.result()
             except FatalAIError:
                 data[idx]['_detail_status'] = 'fatal_error'
+                chain.stopped.set()
+                if on_complete:
+                    on_complete(data[idx])
                 for future in future_to_idx:
                     future.cancel()
                 raise
@@ -687,6 +698,9 @@ def process_all_items(data: List[Dict], model_name: str, language: str, max_work
                 failures += 1
                 data[idx]['_detail_status'] = 'failed'
                 print(f"Detail failed for {data[idx].get('id')}: {e}", file=sys.stderr)
+            progress.complete(data[idx].get('_detail_status') not in {'failed', 'fatal_error'})
+            if on_complete:
+                on_complete(data[idx])
 
     if failures == len(data):
         raise RuntimeError("All detail requests failed; publication stopped")
@@ -726,7 +740,7 @@ def heuristic_importance_score(item: Dict, importance_config: Dict) -> float:
             score += 4.0
 
     for keyword in importance_config.get("negative_keywords", []):
-        if keyword_matches(text, keyword):
+        if not item.get('_local_recall', {}).get('strong_evidence') and keyword_matches(text, keyword):
             score -= 10.0
 
     subtopic_name = ai.get("subtopic_name", "").lower()
@@ -748,9 +762,9 @@ def heuristic_importance_score(item: Dict, importance_config: Dict) -> float:
 
 
 def candidate_priority(item: Dict, directions: List[Dict], importance_config: Dict) -> float:
-    matches = keyword_matched_direction_ids(item, directions)
+    matches = item.get('_local_recall', {}).get('matched_direction_ids') or keyword_matched_direction_ids(item, directions)
     weights = importance_config.get("direction_weights", {})
-    primary = (item.get('_routing') or {}).get('primary_direction_id') or max(matches, key=lambda key: float(weights.get(key, 1.0)), default="")
+    primary = (item.get('_routing') or {}).get('primary_direction_id') or item.get('_local_recall', {}).get('primary_direction_id') or max(matches, key=lambda key: float(weights.get(key, 1.0)), default="")
     candidate = {**item, "AI": {"primary_direction_id": primary}}
     return heuristic_importance_score(candidate, importance_config)
 
@@ -994,6 +1008,7 @@ def update_taxonomy_from_items(taxonomy: Dict, items: List[Dict], directions: Li
 
 
 def main():
+    install_cancellation()
     args = parse_args()
     detail_model_name = env_value("DETAIL_MODEL_NAME", env_value("MODEL_NAME", "deepseek-flash"))
     filter_model_name = env_value("FILTER_MODEL_NAME", env_value("MODEL_NAME", "deepseek-flash"))
@@ -1039,6 +1054,14 @@ def main():
     selection_mode = env_value("SELECTION_MODE", "semantic")
     if selection_mode not in {"semantic", "legacy"}:
         raise ValueError("SELECTION_MODE must be semantic or legacy")
+    max_candidates = positive_int("MAX_AI_CANDIDATES", 150)
+    max_detail_items = positive_int("MAX_DETAIL_ITEMS", 50)
+    try:
+        secondary_limit = int(env_value('SECONDARY_DETAIL_LIMIT', str(importance_config.get('secondary_detail_limit', 10))))
+    except ValueError as error:
+        raise ValueError('SECONDARY_DETAIL_LIMIT must be a nonnegative integer') from error
+    if secondary_limit < 0:
+        raise ValueError('SECONDARY_DETAIL_LIMIT must be a nonnegative integer')
     audit = {}
     brief_items = []
     if selection_mode == "semantic":
@@ -1046,21 +1069,30 @@ def main():
         audit_path = audit_root / "run_metrics" / f"{Path(args.data).stem}-selection.json"
         filtered_data = []
         try:
-            # Legacy caps/flags never suppress review of an abstract in semantic mode.
-            filtered_data = route_all_items(unique_data, filter_model_name, filter_max_workers,
-                                            directions, importance_config, audit)
-            secondary_limit = int(env_value('SECONDARY_DETAIL_LIMIT', str(importance_config.get('secondary_detail_limit', 10))))
-            if secondary_limit < 0:
-                raise ValueError('SECONDARY_DETAIL_LIMIT must be zero or greater')
+            candidates, audit, candidate_quotas = select_candidates(unique_data, directions,
+                importance_config, max_candidates, Path(args.data).stem)
+            def save_audit():
+                checkpoint(audit_path, dict(mode=selection_mode, unique_papers=len(unique_data),
+                    model_candidates=len(candidates), candidate_quotas=candidate_quotas,
+                    limits=dict(candidates=max_candidates, details=max_detail_items), papers=list(audit.values())))
+            save_audit()
+            print(f"Local recall: {len(candidates)}/{len(unique_data)} candidates; limit={max_candidates}", file=sys.stderr, flush=True)
+            filtered_data = route_all_items(candidates, filter_model_name, filter_max_workers,
+                                            directions, importance_config, audit, audit_path)
             detail_items, brief_items = allocate_details(filtered_data, directions, secondary_limit,
-                lambda p: candidate_priority(p, directions, importance_config), audit)
-            print(f"Semantic routing: {len(unique_data)} reviewed; {len(detail_items)} detail requests, {len(brief_items)} briefs.", file=sys.stderr)
+                lambda p: candidate_priority(p, directions, importance_config), audit, total_limit=max_detail_items)
+            print(f"Semantic routing: {len(candidates)} reviewed; {len(detail_items)} detail requests, {len(brief_items)} briefs.", file=sys.stderr)
+            save_audit()
+            def detail_completed(item):
+                audit[item['id']].update(detail_status=item.get('_detail_status', 'pending'),
+                    detail_reason=item.get('_detail_reason', ''))
+                save_audit()
             processed_data = process_all_items(detail_items, detail_model_name, language,
-                                               detail_max_workers, directions, taxonomy)
+                                               detail_max_workers, directions, taxonomy, on_complete=detail_completed)
         finally:
             for item in filtered_data:
                 record = audit[item['id']]
-                if record.get('detail_status') != 'quota_deferred':
+                if record.get('detail_requested'):
                     record['detail_status'] = item.get('_detail_status', 'pending')
                 if item.get('_detail_reason'):
                     record['detail_reason'] = item['_detail_reason']
@@ -1074,11 +1106,8 @@ def main():
             with open(env_value('GITHUB_STEP_SUMMARY'), 'a', encoding='utf-8') as stream:
                 stream.write("\n" + summary)
     else:
-        max_detail_items = int(os.environ.get("MAX_DETAIL_ITEMS") or "30")
-        if max_detail_items < 0:
-            raise ValueError("MAX_DETAIL_ITEMS must be zero or greater")
         filtered_data = filter_all_items(unique_data, filter_model_name, filter_max_workers,
-                                        directions, importance_config, max_items=max_detail_items)
+                                        directions, importance_config, max_items=min(max_detail_items, max_candidates))
         processed_data = process_all_items(filtered_data, detail_model_name, language,
                                            detail_max_workers, directions, taxonomy)
     processed_data = score_importance_for_items(processed_data, importance_model_name, importance_max_workers, importance_config)
@@ -1100,11 +1129,15 @@ def main():
             records = [r for r in audit.values() if r.get('primary_direction_id') == key]
             published = [p for p in processed_data if p['AI'].get('primary_direction_id') == key]
             per_direction[key] = dict(routed=len(records),
-                detail_requests=sum(r.get('detail_status') not in {'not_requested', 'quota_deferred'} for r in records),
+                detail_requests=sum(r.get('detail_requested', False) for r in records),
                 detailed=sum(p.get('report_level', 'detail') == 'detail' for p in published),
                 briefs=sum(p.get('report_level') == 'brief' for p in published),
                 deep_reads=sum(p['AI'].get('deep_read_selected', False) for p in published))
         atomic_write(audit_path, json.dumps(dict(mode=selection_mode, unique_papers=len(unique_data),
+            model_candidates=len(candidates), candidate_quotas=candidate_quotas,
+            limits=dict(candidates=max_candidates, details=max_detail_items),
+            unreviewed=sum(r.get('routing_status') == 'not_reviewed' for r in audit.values()),
+            awaiting_review=[r['id'] for r in audit.values() if r.get('detail_status') == 'awaiting_review'],
             per_direction=per_direction, fallback_requests=sum(r.get('allocation_reason') == 'routing_fallback' for r in audit.values()),
             papers=list(audit.values())), ensure_ascii=False, indent=2) + '\n')
         print(json.dumps(per_direction, ensure_ascii=False), file=sys.stderr)

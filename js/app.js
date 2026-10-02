@@ -896,7 +896,7 @@ async function loadPapersByDate(date) {
   }
 }
 
-const REPORT_GROUP_LABELS = ['主要方向详细摘要', '辅助方向精选摘要', '辅助方向简讯'];
+const REPORT_GROUP_LABELS = ['主要方向详细摘要', '辅助方向精选摘要', '相关论文简讯'];
 function paperReportGroup(paper) {
   if (paper.reportLevel === 'brief') return 2;
   return paper.interestTier === 'secondary' ? 1 : 0;
@@ -1455,7 +1455,7 @@ function renderPapers() {
         </div>
       </div>
       <div class="paper-card-body">
-        ${paper.reportLevel === 'brief' ? '<p class="brief-note">简讯，未做详细分析</p>' : ''}
+        ${paper.reportLevel === 'brief' ? `<p class="brief-note">${paper.interestTier === 'primary' ? '主要方向' : paper.interestTier === 'secondary' ? '辅助方向' : '方向待确认'} · 简讯，未做详细分析</p>` : ''}
         <p class="paper-card-summary">${highlightedSummary}</p>
         <div class="paper-card-footer">
           <div class="footer-left">
@@ -1555,7 +1555,7 @@ function showPaperDetails(paper, paperIndex) {
       ${paper.classificationReason ? `<p><strong>Classification: </strong>${paper.classificationReason}</p>` : ''}
       
       
-      ${paper.reportLevel === 'brief' ? '<p class="brief-note">简讯，未做详细分析 · 保留供后续阅读</p>' : ''}
+      ${paper.reportLevel === 'brief' ? `<p class="brief-note">${paper.interestTier === 'primary' ? '主要方向' : paper.interestTier === 'secondary' ? '辅助方向' : '方向待确认'} · 简讯，未做详细分析 · 保留供后续阅读</p>` : ''}
       ${paper.relevanceStatus === 'uncertain' ? '<p class="brief-note">相关性待进一步确认</p>' : ''}
       <h3>TL;DR</h3>
       <p>${highlightedSummary}</p>

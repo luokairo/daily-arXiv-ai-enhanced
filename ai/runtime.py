@@ -5,7 +5,6 @@ import json
 import os
 import sys
 import tempfile
-import time
 from pathlib import Path
 from threading import Event, Lock
 from urllib.parse import urlparse
@@ -17,6 +16,7 @@ from openai import APIConnectionError, APITimeoutError
 
 ROOT = Path(__file__).resolve().parents[1]
 _LOCK = Lock()
+_METRICS_WRITE_LOCK = Lock()
 _METRICS = {}
 
 
@@ -96,12 +96,25 @@ def atomic_write(path, content):
             os.unlink(tmp)
 
 
+def metrics_snapshot():
+    with _LOCK:
+        return {key: dict(value) for key, value in _METRICS.items()}
+
+
+def persist_metrics():
+    output = env_value('AI_METRICS_PATH')
+    if output:
+        with _METRICS_WRITE_LOCK:
+            atomic_write(output, json.dumps(metrics_snapshot(), ensure_ascii=False, indent=2) + '\n')
+
+
 def metric(stage, **counts):
     with _LOCK:
         row = _METRICS.setdefault(stage, dict(calls=0, cache_hits=0, failures=0,
             input_tokens=0, output_tokens=0, unknown_usage=0))
         for key, value in counts.items():
             row[key] += value
+    persist_metrics()
 
 
 def record_usage(stage, raw):
@@ -145,6 +158,9 @@ class CachedChain:
         metric(stage)
 
     def invoke(self, inputs):
+        from progress import STOP
+        if STOP.is_set():
+            raise FatalAIError('Workflow cancelled before request')
         if self.stopped.is_set():
             raise FatalAIError("Stage stopped after a fatal API error")
         payload = dict(version=1, stage=self.stage, model=self.signature, paper_id=inputs.get("paper_id"),
@@ -164,7 +180,7 @@ class CachedChain:
         except (OSError, ValueError, KeyError, TypeError):
             pass
         for attempt in range(3):
-            if self.stopped.is_set():
+            if self.stopped.is_set() or STOP.is_set():
                 raise FatalAIError("Stage stopped after a fatal API error")
             metric(self.stage, calls=1)
             try:
@@ -176,7 +192,7 @@ class CachedChain:
                     metric(self.stage, failures=1)
                     raise FatalAIError(f"{self.stage}: API configuration/authentication failed (HTTP {getattr(error, 'status_code', 'unknown')})") from error
                 if transient_request(error) and attempt < 2:
-                    time.sleep(2 ** attempt)
+                    self.stopped.wait(2 ** attempt)
                     continue
                 metric(self.stage, failures=1)
                 raise
@@ -206,11 +222,12 @@ class CachedChain:
 
 
 def flush_metrics():
-    if not _METRICS:
+    snapshot = metrics_snapshot()
+    if not snapshot:
         return
     rows = ["### AI usage", "", "| Stage | Calls (including retries) | Cache hits | Failed items | Input tokens | Output tokens | Unknown usage calls |",
             "| --- | ---: | ---: | ---: | --- | --- | ---: |"]
-    for stage, row in sorted(_METRICS.items()):
+    for stage, row in sorted(snapshot.items()):
         def tokens(name):
             return f"{row[name]} + 未知" if row["unknown_usage"] else str(row[name])
         rows.append(f"| {stage} | {row['calls']} | {row['cache_hits']} | {row['failures']} | {tokens('input_tokens')} | {tokens('output_tokens')} | {row['unknown_usage']} |")
@@ -222,7 +239,7 @@ def flush_metrics():
             stream.write(report)
     output = env_value("AI_METRICS_PATH")
     if output:
-        atomic_write(output, json.dumps(_METRICS, ensure_ascii=False, indent=2) + "\n")
+        atomic_write(output, json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
 
 
 atexit.register(flush_metrics)

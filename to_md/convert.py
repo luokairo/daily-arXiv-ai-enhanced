@@ -16,7 +16,7 @@ def report_group(item):
         return "secondary_brief"
     return "secondary_detail" if item.get("interest_tier") == "secondary" else "primary_detail"
 
-REPORT_GROUPS = [("primary_detail", "主要方向详细摘要"), ("secondary_detail", "辅助方向精选摘要"), ("secondary_brief", "辅助方向简讯")]
+REPORT_GROUPS = [("primary_detail", "主要方向详细摘要"), ("secondary_detail", "辅助方向精选摘要"), ("secondary_brief", "相关论文简讯")]
 
 def paper_rank(item):
     ai = item.get("AI") or {}
@@ -86,7 +86,7 @@ def render_paper(template, item, idx, valid_directions=None):
         return (f"### [{idx}] [{item.get('title', 'Untitled')}]({item.get('abs') or item.get('pdf')})\n"
                 f"*{safe_authors(item.get('authors'))}*\n\n"
                 f"方向：{direction_name} · 相关性：{item.get('relevance_status', 'uncertain')}\n\n"
-                f"> 简讯，未做详细分析\n\n{ai.get('tldr', '')}\n\n"
+                f"> {'主要方向' if item.get('interest_tier') == 'primary' else '辅助方向' if item.get('interest_tier') == 'secondary' else '方向待确认'} · 简讯，未做详细分析\n\n{ai.get('tldr', '')}\n\n"
                 f"筛选理由：{ai.get('classification_reason', '')}\n\n"
                 f"初步阅读优先级：{ai.get('importance_score', '')}")
     return template.format(

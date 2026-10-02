@@ -4,7 +4,8 @@ import os
 import re
 import sys
 import tempfile
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
+from progress import Progress, checkpoint, completed, install_cancellation
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -16,7 +17,6 @@ from langchain.prompts import (
     SystemMessagePromptTemplate,
 )
 from runtime import CachedChain, FatalAIError, atomic_write, env_value, positive_int
-from tqdm import tqdm
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
@@ -382,6 +382,7 @@ def output_date_from_path(path: str) -> str:
 
 
 def main():
+    install_cancellation()
     args = parse_args()
     data = load_jsonl(args.data)
     importance_config = load_importance_config(args.directions)
@@ -413,6 +414,9 @@ def main():
     chain = CachedChain(prompt_template, model_name, "deep_read")
 
     results = [{} for _ in papers]
+    progress = Progress('deep_read', len(papers))
+    audit_path = Path(env_value('AI_OUTPUT_DIR', str(output_path.parent))) / 'run_metrics' / f'{date_label}-deep-read-progress.json'
+    checkpoint(audit_path, dict(total=len(papers), completed=0, results=results))
     with tempfile.TemporaryDirectory(prefix="daily_arxiv_deep_read_") as tmp:
         tmp_dir = Path(tmp)
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -420,11 +424,12 @@ def main():
                 executor.submit(run_deep_read, chain, item, idx + 1, tmp_dir): idx
                 for idx, item in enumerate(papers)
             }
-            for future in tqdm(as_completed(future_to_idx), total=len(papers), desc="Deep reading papers"):
+            for future in completed(future_to_idx, progress, chain):
                 idx = future_to_idx[future]
                 try:
                     results[idx] = future.result()
                 except FatalAIError:
+                    chain.stopped.set()
                     for future in future_to_idx:
                         future.cancel()
                     raise
@@ -436,6 +441,8 @@ def main():
                         "status": "worker_failed",
                         "report": failure_report(papers[idx], idx + 1, str(e)),
                     }
+                progress.complete(results[idx].get('status') not in {'generation_failed', 'worker_failed'})
+                checkpoint(audit_path, dict(total=len(papers), completed=progress.done, results=results))
 
     if all(result.get("status") in {"generation_failed", "worker_failed"} for result in results):
         raise RuntimeError("All deep-read requests failed; publication stopped")

@@ -26,7 +26,7 @@ class AllocationTests(IsolatedTest):
         self.importance = semantic_arxiv.load_importance_config()
 
     def paper(self, key, primary='continuous_language_multimodal', score=80, matched=None):
-        return dict(id=key, title=key, summary='Abstract evidence', authors=['Author'], categories=['cs.CL'],
+        return dict(id=key, title=key, summary='Diffusion language models generate text.', authors=['Author'], categories=['cs.CL'],
             abs='https://arxiv.org/abs/' + key,
             _routing=dict(decision='relevant', primary_direction_id=primary,
                 matched_direction_ids=matched or [primary], routing_status='ok',
@@ -54,7 +54,7 @@ class AllocationTests(IsolatedTest):
         self.assertEqual(sum(p['id'].startswith('u') for p in detail), 5)
         self.assertEqual(len(detail), 11)
         self.assertEqual(len(briefs), 6)
-        self.assertEqual(audit['main']['allocation_reason'], 'primary_full_coverage')
+        self.assertEqual(audit['main']['allocation_reason'], 'primary_selected')
         self.assertTrue(all(audit[p['id']]['detail_status'] == 'quota_deferred' for p in briefs))
 
     def test_reallocation_zero_budget_and_undetermined_fallback(self):
@@ -107,7 +107,7 @@ class AllocationTests(IsolatedTest):
         args = SimpleNamespace(data=str(source), taxonomy=str(taxonomy), directions=None, max_workers=1)
         def route(inputs):
             return RoutingStructure(**self.paper(inputs['paper_id'])['_routing'])
-        def detail(items, *args):
+        def detail(items, *args, **kwargs):
             self.assertEqual(len(items), 10)
             for p in items:
                 p['_detail_status'] = 'irrelevant'

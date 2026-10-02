@@ -1,11 +1,12 @@
-"""High-recall routing: every unique abstract is reviewed before any rejection."""
+"""High-recall semantic routing for the bounded locally selected candidate set."""
 import json
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 
 from langchain_core.prompts import ChatPromptTemplate
 
 from runtime import CachedChain, FatalAIError
+from progress import Progress, checkpoint, completed
 from structure import RoutingStructure
 
 
@@ -23,7 +24,7 @@ def validate_route(result, directions):
         raise ValueError('Routing reason is empty')
 
 
-def route_all_items(data, model, max_workers, directions, importance, audit):
+def route_all_items(data, model, max_workers, directions, importance, audit, audit_path=None):
     # No taxonomy/author list: routing needs broad interests and the full abstract.
     context = json.dumps(dict(directions=[
         dict(id=d['id'], name=d['name'], description=d.get('description', ''),
@@ -57,16 +58,21 @@ def route_all_items(data, model, max_workers, directions, importance, audit):
         return []
     papers = sorted(data, key=lambda p: str(p['id']))
     for paper in papers:
-        audit[paper['id']] = dict(id=paper['id'], title=paper.get('title', ''),
-                                  routing_status='pending', detail_status='not_requested')
+        audit.setdefault(paper['id'], dict(id=paper['id'], title=paper.get('title', '')))
+        audit[paper['id']].update(routing_status='pending', detail_status='not_requested')
     chain = CachedChain(prompt, model, 'filter', RoutingStructure,
                         validator=lambda result: validate_route(result, directions))
     failures = 0
+    progress = Progress('filter', len(papers))
+    def save():
+        if audit_path:
+            checkpoint(audit_path, dict(papers=list(audit.values()), stage='filter'))
+    save()
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(chain.invoke, dict(paper_id=p['id'],
                     title=p.get('title', ''), categories=', '.join(p.get('categories', [])),
                     abstract=p.get('summary', ''))): p for p in papers}
-        for future in as_completed(futures):
+        for future in completed(futures, progress, chain):
             paper = futures[future]
             record = audit[paper['id']]
             try:
@@ -74,6 +80,8 @@ def route_all_items(data, model, max_workers, directions, importance, audit):
                 record.update(result.model_dump(), routing_status='ok')
             except FatalAIError:
                 record['routing_status'] = 'fatal_error'
+                chain.stopped.set()
+                save()
                 for pending in futures:
                     pending.cancel()
                 raise
@@ -85,6 +93,8 @@ def route_all_items(data, model, max_workers, directions, importance, audit):
             paper['_routing'] = record.copy()
             if record['decision'] != 'irrelevant':
                 record['detail_status'] = 'pending'
+            progress.complete(record['routing_status'] == 'ok')
+            save()
     if failures == len(papers):
         raise RuntimeError('All routing requests failed; publication stopped')
     return [p for p in papers if audit[p['id']]['decision'] != 'irrelevant']

@@ -119,7 +119,7 @@ class RuntimeTests(IsolatedTest):
         for error in (HttpError(429), HttpError(503), TimeoutError()):
             responder = Mock(side_effect=error)
             chain = self.chain(responder)
-            with patch.object(runtime.time, "sleep") as sleep:
+            with patch.object(chain.stopped, "wait") as sleep:
                 with self.assertRaises(type(error)):
                     chain.invoke(dict(content="transient"))
             self.assertEqual(responder.call_count, 3)
@@ -262,7 +262,7 @@ class SemanticRoutingTests(IsolatedTest):
         for text in ['self supervision', 'off-the-shelf', 'itself']:
             self.assertFalse(enhance.keyword_matches(text, 'elf'))
         self.assertTrue(enhance.keyword_matches('ELF: embedded language flow', 'elf'))
-        self.assertTrue(enhance.keyword_matches('CoLa model', 'cola'))
+        self.assertTrue(enhance.keyword_matches('CoLa language model', 'cola'))
         self.assertFalse(enhance.keyword_matches('chocolate model', 'cola'))
         config = {'priority_subtopics': [{'name': 'worlds', 'weight': 4, 'keywords': ['world model']}],
                   'boost_keywords': ['extra']}
@@ -275,12 +275,12 @@ class SemanticRoutingTests(IsolatedTest):
         self.assertFalse(ranked[0]['AI']['deep_read_selected'])
         self.assertTrue(ranked[1]['AI']['deep_read_selected'])
 
-    def test_main_deduplicates_ignores_old_cap_and_writes_audit(self):
+    def test_main_deduplicates_applies_detail_cap_and_writes_audit(self):
         source = self.root / '2026-10-01.jsonl'
         source.write_text('\n'.join(json.dumps({**PAPER, 'id': key}) for key in ['1', '1', '2', '3']))
         args = SimpleNamespace(data=str(source), taxonomy=str(self.root / 'taxonomy.json'), directions=None, max_workers=1)
         chain = Mock(invoke=Mock(side_effect=lambda inputs: self.result('uncertain')))
-        def detail(items, *args):
+        def detail(items, *args, **kwargs):
             for p in items:
                 p['_detail_status'] = 'relevant'
                 p['AI'] = structured().model_dump()
@@ -290,7 +290,8 @@ class SemanticRoutingTests(IsolatedTest):
         self.assertEqual(chain.invoke.call_count, 3)
         audit = json.loads((self.root / 'run_metrics/2026-10-01-selection.json').read_text())
         self.assertEqual(audit['unique_papers'], 3)
-        self.assertTrue(all(p['detail_status'] == 'relevant' for p in audit['papers']))
+        self.assertEqual(sum(p['detail_status'] == 'relevant' for p in audit['papers']), 1)
+        self.assertEqual(sum(p['detail_status'] == 'quota_deferred' for p in audit['papers']), 2)
         output = list(map(json.loads, (self.root / '2026-10-01_AI_enhanced_Chinese.jsonl').read_text().splitlines()))
         self.assertEqual(len(output), 3)
         self.assertIn('70%', output[0]['AI']['importance_reason'])

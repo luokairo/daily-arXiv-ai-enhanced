@@ -1,0 +1,74 @@
+# Only used locally. These expressions are never appended to model prompts.
+version: 1
+candidate_quotas:
+  world_model: 40
+  video_generation: 40
+  audio_video_generation: 30
+  multimodal_understanding_generation: 10
+  continuous_language_multimodal: 10
+  exploration: 20
+negative_domains: [medical, clinical, financial, molecule, protein, drug discovery, remote sensing, traffic prediction, recommender system]
+weak_signals: [video, visual dynamics, simulation, multimodal generation, language diffusion, language latent, speech synthesis, audio visual, continuous tokens, latent reasoning]
+directions:
+  world_model:
+    - id: world_models
+      aliases: [world model, world models, world modeling, world modelling, world action model, world action models]
+    - id: simulators
+      aliases: [learned simulator, learned simulators, neural simulator, neural simulators, interactive simulation, interactive simulations]
+      context: [dynamics, environment, physical, physics, video, visual, action, robot, robotic]
+    - id: predictive_dynamics
+      aliases: [visual dynamics, latent dynamics, future frame prediction, future frames prediction, action conditioned video prediction, action conditioned video predictions, action conditioned video, action conditioned videos]
+      context: [video, visual, frame, frames, environment, action, robot, robotic]
+    - id: video_world
+      bonus_only: true
+      aliases: [video world model, video world models, generative world model, generative world models, world action model, world action models, action conditioned video, action conditioned videos]
+      video_world: true
+    - id: video_world_context
+      bonus_only: true
+      aliases: [world model, world models, world modeling, world modelling]
+      context: [video, videos, visual, frame, frames, pixel, pixels]
+      video_world: true
+  video_generation:
+    - id: video_synthesis
+      aliases: [video generation, video generations, video synthesis, generating video, generating videos, text to video, image to video, video to video, T2V, I2V, V2V]
+    - id: generative_video_models
+      aliases: [video diffusion, video diffusion model, video diffusion models, autoregressive video, autoregressive videos, long form video, long form videos, video generative model, video generative models]
+    - id: video_editing
+      aliases: [video editing, video inpainting, video extrapolation, video outpainting, video interpolation, frame interpolation]
+    - id: controllable_video
+      aliases: [camera controlled video, camera controllable video, motion controllable video, motion controlled video, controllable video generation, long video generation, long horizon video generation, video personalization]
+    - id: video_enabling
+      aliases: [distillation, distilling, tokenizer, tokenizers, benchmark, benchmarks, evaluation, efficient, efficiency, acceleration, compression, few step, training, alignment, data curation]
+      context: [video generation, video synthesis, text to video, image to video, video diffusion, autoregressive video, generating videos]
+  audio_video_generation:
+    - id: joint_audio_video
+      aliases: [audio video generation, audio visual generation, audiovisual generation, joint audio video synthesis, joint audio visual generation, joint audio and video generation, audio video synthesis, audio visual synthesis]
+    - id: video_sound
+      aliases: [video to audio, video to speech, video conditioned sound, video conditioned music, video conditioned speech, visual speech synthesis, silent video speech synthesis, foley generation, foley synthesis, video soundtrack, video sound generation, sound generation for videos]
+    - id: audio_driven_visual
+      aliases: [audio driven animation, audio driven video, speech driven video, speech driven animation, sound driven video, talking head generation, talking head synthesis, talking face generation, talking face synthesis, audio to video]
+    - id: generated_synchronization
+      aliases: [lip synchronization, lip sync, lip syncing, audio visual synchronization, audio video synchronization, audio visual alignment, audio video alignment]
+      context: [generation, generating, synthesis, synthesizing, animation, talking head, talking face]
+  multimodal_understanding_generation:
+    - id: unified_tasks
+      aliases: [unified understanding and generation, joint understanding and generation, understanding generation unification, understanding and generation, unifying understanding and generation]
+    - id: any_to_any
+      aliases: [any to any multimodal, any to any generation, native multimodal generation]
+    - id: unified_models
+      aliases: [unified multimodal model, unified multimodal models, unified multimodal modeling, unified multimodal modelling, shared multimodal representation, shared multimodal representations, unified vision language model, unified vision language models]
+      context: [generation, generating, synthesis, understanding and generation]
+  continuous_language_multimodal:
+    - id: language_diffusion
+      aliases: [continuous language model, continuous language models, continuous language modeling, continuous language modelling, diffusion language model, diffusion language models, diffusion language modeling, diffusion language modelling, masked diffusion language model, masked diffusion language models, text diffusion, language diffusion]
+    - id: language_latents
+      aliases: [latent space language model, latent space language models, embedding space language model, embedding space language models, embedded language flow, continuous latent language model, continuous latent language models, flow matching language model, flow matching language models]
+    - id: language_tokens
+      aliases: [continuous token, continuous tokens, soft token, soft tokens, continuous language tokens, soft language tokens, latent space, embedding space]
+      context: [language model, language models, language modeling, language modelling, text generation, language generation, diffusion language]
+    - id: non_autoregressive_language
+      aliases: [non autoregressive language generation, non autoregressive text generation, chain of continuous thought]
+    - id: named_language_flows
+      # Abbreviations require exact tokens plus language/text/embedding evidence nearby.
+      aliases: [ELF, CoLa]
+      context: [language, text, embedding, embeddings, embedded language flow]
