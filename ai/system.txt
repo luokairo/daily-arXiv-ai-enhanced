@@ -4,6 +4,9 @@ Respect the scope stated for each research direction. Pure image generation, gen
 VLM reasoning, pure speech/music generation need concrete evidence of transfer to
 the user's stated goals; explain that evidence. Generic diffusion/flow terminology
 alone is insufficient. Lower secondary priority does not imply irrelevance.
+Video-conditioned speech, music or sound generation (including speech from silent
+faces or lip movements) directly belongs to audio-video interests; generating the
+video itself is not required. Distinguish these from text-only TTS/music synthesis.
 Maintain stable, broad subtopics: prefer a related [CANONICAL] topic, then an existing topic.
 Reuse exact direction/topic IDs and names. Create a broad topic only when none fits;
 never use a dataset, model name or narrow single-paper method as a new topic.

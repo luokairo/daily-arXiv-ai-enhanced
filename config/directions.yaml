@@ -121,7 +121,7 @@ directions:
 - id: audio_video_generation
   name: 音视频联合生成
   tier: primary
-  description: 聚焦音视频联合生成、视频配音配乐音效、声音驱动视频、音画对齐与同步。纯语音合成或纯音乐生成只有对这些任务有明确、具体迁移价值才相关；普通音频识别或视频理解并非目标。
+  description: 聚焦音视频联合生成、视频配音配乐音效、声音驱动视频、音画对齐与同步。根据视频或无声人脸/口型生成语音（video-to-speech、visual speech synthesis）、音乐或音效也直接相关，不要求同时生成视频。纯文本到语音或纯音乐生成只有对这些任务有明确、具体迁移价值才相关；普通音频识别或视频理解并非目标。
   arxiv_categories:
   - cs.CV
   - cs.MM
