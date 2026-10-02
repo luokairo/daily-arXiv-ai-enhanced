@@ -1,19 +1,19 @@
 [
   {
-    "id": "2610.00722",
-    "title": "JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts",
+    "id": "2609.40222",
+    "title": "LOCI: Spatial Linear Memory for Streaming World Models",
     "rank": 1,
     "status": "ok"
   },
   {
-    "id": "2610.00706",
-    "title": "AnchorPrompt: Self-Distilled Soft Prompts for Robust Audio-Language Models",
+    "id": "2609.39763",
+    "title": "DiffWAM: A Fast and Efficient Navigation World Action Model",
     "rank": 2,
     "status": "ok"
   },
   {
-    "id": "2610.00686",
-    "title": "SemanTok: Predictable Semantic Tokens for Efficient Autoregressive Video Generation",
+    "id": "2609.40358",
+    "title": "Physis-Lang: Self-Evolving Language as a Physical Representation for Video World Model",
     "rank": 3,
     "status": "ok"
   }

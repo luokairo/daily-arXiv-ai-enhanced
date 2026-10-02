@@ -3,8 +3,8 @@
     "calls": 3,
     "cache_hits": 0,
     "failures": 0,
-    "input_tokens": 24788,
-    "output_tokens": 7297,
+    "input_tokens": 18001,
+    "output_tokens": 7905,
     "unknown_usage": 0
   }
 }

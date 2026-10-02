@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "该论文研究异步SGD的拜占庭鲁棒性，与所列研究方向无关。", "reason": "Distributed optimization and Byzantine-robust asynchronous SGD theory; no connection to world models, video/audio-video generation, or unified multimodal modeling.", "personal_relevance_score": 2.0, "research_value_score": 5.0}}

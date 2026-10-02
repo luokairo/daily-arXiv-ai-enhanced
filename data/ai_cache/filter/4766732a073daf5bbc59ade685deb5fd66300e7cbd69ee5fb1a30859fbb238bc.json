@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向多模态视频高光检测的时序-流模态丢弃鲁棒训练方法，与生成或世界模型方向无关。", "reason": "Video highlight detection with multimodal dropout robustness; no world modeling, video generation, or audio-video generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}
