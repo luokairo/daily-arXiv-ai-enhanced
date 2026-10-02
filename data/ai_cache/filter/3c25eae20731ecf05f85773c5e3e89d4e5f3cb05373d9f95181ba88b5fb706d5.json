@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向多模态大模型推理效率的模态感知宽度剪枝方法，与所列研究方向无直接关联。", "reason": "Pruning MLLM attention/FFN for inference efficiency; no world model, video generation, audio-video, or continuous-language contribution evidenced.", "personal_relevance_score": 12.0, "research_value_score": 30.0}}

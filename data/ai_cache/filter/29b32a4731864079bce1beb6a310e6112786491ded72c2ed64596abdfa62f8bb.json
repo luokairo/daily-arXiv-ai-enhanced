@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出按更新方向对齐度路由 LoRA 专家对的方法，属于参数高效微调领域，与视频/世界模型/音视频生成无直接关联。", "reason": "PEFT/MoE-LoRA routing for LLM fine-tuning; no video, world model, audio-video, or continuous-language evidence in abstract.", "personal_relevance_score": 5.0, "research_value_score": 30.0}}

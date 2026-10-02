@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于函数梯度认证的神经网络渐进增长方法，与视频/世界模型/音视频生成无直接关联。", "reason": "NAS architecture growth via certified functional gradient descent; no video, world model, audio-video, or multimodal generation evidence in abstract.", "personal_relevance_score": 5.0, "research_value_score": 15.0}}
