@@ -1,0 +1,10 @@
+{
+  "detail": {
+    "calls": 30,
+    "cache_hits": 0,
+    "failures": 0,
+    "input_tokens": 98097,
+    "output_tokens": 16928,
+    "unknown_usage": 0
+  }
+}

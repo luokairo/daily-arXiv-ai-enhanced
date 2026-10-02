@@ -1,0 +1,10 @@
+{
+  "deep_read": {
+    "calls": 3,
+    "cache_hits": 0,
+    "failures": 0,
+    "input_tokens": 24788,
+    "output_tokens": 7297,
+    "unknown_usage": 0
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "2610.00722",
+    "title": "JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts",
+    "rank": 1,
+    "status": "ok"
+  },
+  {
+    "id": "2610.00706",
+    "title": "AnchorPrompt: Self-Distilled Soft Prompts for Robust Audio-Language Models",
+    "rank": 2,
+    "status": "ok"
+  },
+  {
+    "id": "2610.00686",
+    "title": "SemanTok: Predictable Semantic Tokens for Efficient Autoregressive Video Generation",
+    "rank": 3,
+    "status": "ok"
+  }
+]
