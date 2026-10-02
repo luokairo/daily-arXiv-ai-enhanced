@@ -18,7 +18,8 @@ import semantic_arxiv
 from langchain_core.messages import AIMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableLambda
-from structure import Structure
+from structure import Structure, RoutingStructure
+import routing
 
 DIRECTIONS = [dict(id="world_model", name="世界模型", keywords=["world model"], arxiv_categories=["cs.AI"], canonical_subtopics=[])]
 PAPER = dict(id="2609.00001", title="A world model", summary="A novel world model benchmark.", categories=["cs.AI"], authors=[])
@@ -145,7 +146,7 @@ class InterestTests(IsolatedTest):
         directions = semantic_arxiv.load_directions()
         importance = semantic_arxiv.load_importance_config()
         low = {**PAPER, "id": "1", "title": "A generic study", "summary": "", "categories": ["cs.CV"]}
-        high = {**PAPER, "id": "2", "title": "Continuous vision-language model with latent flow", "summary": "continuous vlm latent flow"}
+        high = {**PAPER, "id": "2", "title": "Video world model with action-conditioned video", "summary": "video world model"}
         result = enhance.filter_all_items([low, high], "unused", 1, directions, importance, max_items=1)
         self.assertEqual([paper["id"] for paper in result], ["2"])
         papers = [{"id": str(i), "AI": {"importance_score": score}} for i, score in enumerate((20, 80, 95, 90))]
@@ -196,6 +197,7 @@ class InterestTests(IsolatedTest):
         enhance.validate_classification(structured(False), DIRECTIONS)
 
 
+    @patch.dict(os.environ, SELECTION_MODE="legacy")
     def test_main_preserves_existing_files_on_failure_and_stages_success(self):
         source = self.root / "2026-10-01.jsonl"
         source.write_text(json.dumps(PAPER) + "\n")
@@ -217,6 +219,112 @@ class InterestTests(IsolatedTest):
         self.assertTrue((stage / "taxonomy.json").exists())
         self.assertEqual(target.read_text(), "old successful report")
         self.assertEqual(taxonomy.read_text(), "{}")
+
+
+class SemanticRoutingTests(IsolatedTest):
+    def result(self, decision='relevant'):
+        return RoutingStructure(decision=decision,
+            matched_direction_ids=['world_model'] if decision == 'relevant' else [],
+            primary_direction_id='world_model' if decision == 'relevant' else '', brief='论文贡献简讯',
+            reason='Relevant abstract evidence', personal_relevance_score=90, research_value_score=80)
+
+    def test_all_abstracts_reviewed_including_local_drops_and_uncertain_forwarded(self):
+        papers = [{**PAPER, 'id': str(i), 'title': 'Unfamiliar terminology', 'categories': ['cs.RO']}
+                  for i in range(35)]
+        # These are discarded by the legacy title-only gate.
+        self.assertEqual(enhance.local_filter_item(papers[0], DIRECTIONS,
+            enhance.collect_filter_keywords(DIRECTIONS, {}))['state'], 'drop')
+        def respond(inputs):
+            return self.result({'0': 'irrelevant', '1': 'uncertain'}.get(inputs['paper_id'], 'relevant'))
+        chain = Mock(invoke=Mock(side_effect=respond))
+        audit = {}
+        with patch.dict(os.environ, MAX_DETAIL_ITEMS='1', USE_MODEL_FILTER='false'), patch.object(routing, 'CachedChain', return_value=chain):
+            selected = routing.route_all_items(papers, 'model', 2, DIRECTIONS, {}, audit)
+        self.assertEqual(chain.invoke.call_count, 35)
+        self.assertEqual(len(selected), 34)
+        self.assertIn('1', [p['id'] for p in selected])
+        self.assertEqual(audit['0']['detail_status'], 'not_requested')
+
+    def test_failures_forwarded_but_all_failures_and_auth_abort(self):
+        papers = [{**PAPER, 'id': str(i)} for i in range(2)]
+        audit = {}
+        chain = Mock(invoke=Mock(side_effect=[ValueError('invalid'), self.result('irrelevant')]))
+        with patch.object(routing, 'CachedChain', return_value=chain):
+            selected = routing.route_all_items(papers, 'model', 1, DIRECTIONS, {}, audit)
+        self.assertEqual([p['id'] for p in selected], ['0'])
+        self.assertEqual(audit['0']['routing_status'], 'failed')
+        for error in (ValueError('invalid'), runtime.FatalAIError('auth')):
+            with patch.object(routing, 'CachedChain', return_value=Mock(invoke=Mock(side_effect=error))):
+                with self.assertRaises((RuntimeError, runtime.FatalAIError)):
+                    routing.route_all_items(papers, 'model', 1, DIRECTIONS, {}, {})
+
+    def test_short_keywords_and_unclipped_ranking(self):
+        for text in ['self supervision', 'off-the-shelf', 'itself']:
+            self.assertFalse(enhance.keyword_matches(text, 'elf'))
+        self.assertTrue(enhance.keyword_matches('ELF: embedded language flow', 'elf'))
+        self.assertTrue(enhance.keyword_matches('CoLa model', 'cola'))
+        self.assertFalse(enhance.keyword_matches('chocolate model', 'cola'))
+        config = {'priority_subtopics': [{'name': 'worlds', 'weight': 4, 'keywords': ['world model']}],
+                  'boost_keywords': ['extra']}
+        low = {**PAPER, 'AI': {}}
+        high = {**PAPER, 'summary': PAPER['summary'] + ' extra', 'AI': {}}
+        self.assertGreater(enhance.heuristic_importance_score(high, config),
+                           enhance.heuristic_importance_score(low, config))
+        ranked = enhance.score_importance_for_items([low, high], 'unused', 1, config)
+        enhance.mark_deep_read_selection([{**ranked[0], 'id': '2'}, {**ranked[1], 'id': '1'}], 1)
+        self.assertFalse(ranked[0]['AI']['deep_read_selected'])
+        self.assertTrue(ranked[1]['AI']['deep_read_selected'])
+
+    def test_main_deduplicates_ignores_old_cap_and_writes_audit(self):
+        source = self.root / '2026-10-01.jsonl'
+        source.write_text('\n'.join(json.dumps({**PAPER, 'id': key}) for key in ['1', '1', '2', '3']))
+        args = SimpleNamespace(data=str(source), taxonomy=str(self.root / 'taxonomy.json'), directions=None, max_workers=1)
+        chain = Mock(invoke=Mock(side_effect=lambda inputs: self.result('uncertain')))
+        def detail(items, *args):
+            for p in items:
+                p['_detail_status'] = 'relevant'
+                p['AI'] = structured().model_dump()
+            return items
+        with patch.dict(os.environ, MAX_DETAIL_ITEMS='1', USE_MODEL_FILTER='false'), patch.object(enhance, 'parse_args', return_value=args), patch.object(routing, 'CachedChain', return_value=chain), patch.object(enhance, 'process_all_items', side_effect=detail):
+            enhance.main()
+        self.assertEqual(chain.invoke.call_count, 3)
+        audit = json.loads((self.root / 'run_metrics/2026-10-01-selection.json').read_text())
+        self.assertEqual(audit['unique_papers'], 3)
+        self.assertTrue(all(p['detail_status'] == 'relevant' for p in audit['papers']))
+        output = list(map(json.loads, (self.root / '2026-10-01_AI_enhanced_Chinese.jsonl').read_text().splitlines()))
+        self.assertEqual(len(output), 3)
+        self.assertIn('70%', output[0]['AI']['importance_reason'])
+
+    def test_invalid_routes_and_all_irrelevant(self):
+        for result in [self.result().model_copy(update={'matched_direction_ids': ['invalid']}),
+                       self.result().model_copy(update={'matched_direction_ids': []})]:
+            with self.assertRaises(ValueError):
+                routing.validate_route(result, DIRECTIONS)
+        with patch.object(routing, 'CachedChain', return_value=Mock(invoke=Mock(return_value=self.result('irrelevant')))):
+            self.assertEqual(routing.route_all_items([PAPER.copy()], 'model', 1, DIRECTIONS, {}, {}), [])
+
+    def test_previously_missed_papers_reach_model_and_failed_run_keeps_audit(self):
+        papers = [dict(id='2610.01016', title='Scaling and Distilling Text Embeddings for Better Diffusibility',
+                       categories=['cs.CL'], summary='Continuous diffusion language models use text embeddings.'),
+                  dict(id='2610.02054', title='UniWAM: Unified World-Action Model',
+                       categories=['cs.RO'], summary='Unified world generation and action prediction.')]
+        chain = Mock(invoke=Mock(return_value=self.result('uncertain')))
+        with patch.object(routing, 'CachedChain', return_value=chain):
+            selected = routing.route_all_items(papers, 'model', 1, DIRECTIONS, {}, {})
+        self.assertEqual({p['id'] for p in selected}, {'2610.01016', '2610.02054'})
+        self.assertEqual({c.args[0]['abstract'] for c in chain.invoke.call_args_list}, {p['summary'] for p in papers})
+        source = self.root / 'sample.jsonl'
+        source.write_text(json.dumps(PAPER) + '\n')
+        target = self.root / 'sample_AI_enhanced_Chinese.jsonl'
+        target.write_text('previous successful report')
+        args = SimpleNamespace(data=str(source), taxonomy=str(self.root / 'taxonomy.json'), directions=None, max_workers=1)
+        with patch.object(enhance, 'parse_args', return_value=args), patch.object(routing, 'CachedChain',
+                return_value=Mock(invoke=Mock(side_effect=ValueError('invalid')))):
+            with self.assertRaisesRegex(RuntimeError, 'All routing'):
+                enhance.main()
+        self.assertEqual(target.read_text(), 'previous successful report')
+        audit = json.loads((self.root / 'run_metrics/sample-selection.json').read_text())
+        self.assertEqual(audit['papers'][0]['routing_status'], 'failed')
 
 
 class DeepReadTests(IsolatedTest):
@@ -282,8 +390,12 @@ class SDKIntegrationTests(IsolatedTest):
             finish = "stop"
             if body.get("tools"):
                 name = body["tools"][0]["function"]["name"]
+                result = (RoutingStructure(decision='relevant', matched_direction_ids=['world_model'],
+                    primary_direction_id='world_model', brief='世界模型研究简讯',
+                    reason='World model research', personal_relevance_score=95, research_value_score=80)
+                    if name == 'RoutingStructure' else structured())
                 message = {"role": "assistant", "content": None, "tool_calls": [{"id": "call_1", "type": "function",
-                    "function": {"name": name, "arguments": structured().model_dump_json()}}]}
+                    "function": {"name": name, "arguments": result.model_dump_json()}}]}
                 finish = "tool_calls"
             return httpx.Response(200, json={"id": "fake-response", "object": "chat.completion", "created": 1,
                 "model": "deepseek-flash", "choices": [{"index": 0, "message": message, "finish_reason": finish}],
@@ -308,11 +420,12 @@ class SDKIntegrationTests(IsolatedTest):
                     enhance.main()
                 with patch.object(deep_read, "parse_args", return_value=read_args):
                     deep_read.main()
-        self.assertEqual(len(requests), 2, "Second complete run must reuse both successful results")
-        self.assertEqual([r.get("max_tokens", r.get("max_completion_tokens")) for r in requests], [2500, 6000])
+        self.assertEqual(len(requests), 3, "Second complete run must reuse routing, summary and deep-read results")
+        self.assertEqual([r.get("max_tokens", r.get("max_completion_tokens")) for r in requests], [512, 2500, 6000])
         self.assertTrue(all(r["thinking"] == {"type": "disabled"} for r in requests))
         self.assertEqual(json.loads(Path(read_args.output_json).read_text())[0]["status"], "ok")
         self.assertEqual(runtime._METRICS["detail"]["cache_hits"], 1)
+        self.assertEqual(runtime._METRICS["filter"]["cache_hits"], 1)
         self.assertEqual(runtime._METRICS["deep_read"]["cache_hits"], 1)
         self.assertEqual(runtime._METRICS["deep_read"]["input_tokens"], 100)
         self.assertEqual(taxonomy.read_text(), "{}", "Staged pipeline must not change published taxonomy")

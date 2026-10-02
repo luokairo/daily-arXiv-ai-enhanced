@@ -184,6 +184,7 @@ def load_jsonl(path: str) -> List[Dict]:
 
 
 def selected_papers(data: List[Dict], top_k: int) -> List[Dict]:
+    data = [p for p in data if p.get('report_level', 'detail') == 'detail']
     selected = [
         item
         for item in data

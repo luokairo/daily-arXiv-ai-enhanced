@@ -1,501 +1,310 @@
 directions:
-  - id: continuous_language_multimodal
-    name: 连续语言模型与连续多模态模型
-    description: 关注 ELF、CoLa 等连续语言建模思想，以及连续视觉 token、连续潜空间、多模态 latent flow 与统一连续多模态模型。
-    arxiv_categories:
-      - cs.CL
-      - cs.CV
-      - cs.AI
-      - cs.MM
-      - cs.LG
+- id: world_model
+  name: 世界模型
+  description: 重点关注视频世界模型、动作条件视频预测、长时序未来预测；同时关注物理动力学、交互仿真、具身世界模型及基于世界模型的规划。普通机器人策略或控制论文只有明确涉及世界建模才相关。
+  arxiv_categories:
+  - cs.CV
+  - cs.AI
+  - cs.LG
+  - cs.RO
+  - cs.MM
+  keywords:
+  - world model
+  - video world model
+  - generative world model
+  - physical world model
+  - neural simulator
+  - interactive world model
+  - embodied world model
+  - action-conditioned video
+  - dynamics model
+  - environment model
+  canonical_subtopics:
+  - id: video_world_model
+    name: 视频世界模型
+    description: 视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。
     keywords:
-      - continuous language model
-      - continuous multimodal model
-      - continuous vision-language model
-      - continuous vlm
-      - continuous latent
-      - continuous token
-      - continuous visual token
-      - latent flow
-      - flow matching
-      - embedded language flow
-      - cola
-      - elf
-    canonical_subtopics:
-      - id: continuous_language_flow
-        name: 连续语言模型与语言流
-        description: 连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。
-        keywords:
-          - continuous language model
-          - continuous latent language model
-          - embedded language flow
-          - diffusion language model
-          - flow matching language
-          - cola
-          - elf
-      - id: continuous_vlm_latent_flow
-        name: 连续 VLM 与视觉潜空间流
-        description: 关注连续视觉语言模型、连续视觉 token、视觉 VAE/ViT latent、flow matching 与多模态理解。
-        keywords:
-          - continuous vision-language model
-          - continuous vlm
-          - continuous visual token
-          - continuous visual tokens
-          - visual latent flow
-          - latent flow
-          - flow matching
-          - visual vae
-          - representation autoencoder
-          - multimodal latent reasoning
-      - id: continuous_visual_tokenizer
-        name: 连续视觉 Tokenizer 与表征自编码器
-        description: 面向理解与生成统一的连续视觉 token、VAE/ViT、RAE、DINO/SigLIP/MAE latent 与视觉表征重建。
-        keywords:
-          - continuous visual tokenizer
-          - continuous visual representation
-          - visual tokenizer
-          - visual vae
-          - representation autoencoder
-          - rae
-          - vit autoencoder
-          - semantic visual latent
-      - id: continuous_multimodal_reasoning
-        name: 连续多模态推理与潜空间思维
-        description: 多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。
-        keywords:
-          - multimodal latent reasoning
-          - continuous multimodal reasoning
-          - chain of continuous thought
-          - continuous vision-language thought
-          - latent visual reasoning
-          - visual thought
-
-  - id: world_model
-    name: 世界模型
-    description: 关注视频世界模型、物理世界建模、可交互模拟器、动作条件生成、具身智能环境模型与规划控制。
-    arxiv_categories:
-      - cs.CV
-      - cs.AI
-      - cs.LG
-      - cs.RO
-      - cs.MM
-    keywords:
-      - world model
-      - video world model
-      - generative world model
-      - physical world model
-      - neural simulator
-      - interactive world model
-      - embodied world model
-      - action-conditioned video
-      - dynamics model
-      - environment model
-    canonical_subtopics:
-      - id: video_world_model
-        name: 视频世界模型
-        description: 视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。
-        keywords:
-          - world model
-          - video world model
-          - generative world model
-          - action-conditioned video
-          - future prediction
-          - long-horizon video
-      - id: interactive_physical_world
-        name: 可交互与物理世界建模
-        description: 物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。
-        keywords:
-          - interactive world
-          - physical world model
-          - neural simulator
-          - physics simulation
-          - dynamics model
-          - environment model
-      - id: embodied_world_model
-        name: 具身世界模型与规划控制
-        description: 面向机器人、具身智能、动作规划和控制的世界模型。
-        keywords:
-          - embodied world model
-          - embodied ai
-          - robotics world model
-          - planning
-          - control
-          - policy learning
-      - id: spatial_3d_4d_world_model
-        name: 空间 3D/4D 世界模型
-        description: 3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。
-        keywords:
-          - 3d world model
-          - 4d world model
-          - dynamic scene
-          - spatial world model
-          - neural field
-          - 3d gaussian
-
-  - id: multimodal_generation
-    name: 多模态生成
-    description: 关注文本、图像、视频、音频、3D 等多模态条件生成方法，包括扩散模型、自回归生成、统一生成模型与生成式评测。
-    arxiv_categories:
-      - cs.CV
-      - cs.CL
-      - cs.AI
-      - cs.MM
-    keywords:
-      - multimodal generation
-      - text-to-image
-      - text-to-video
-      - image generation
-      - video generation
-      - diffusion model
-      - autoregressive generation
-      - visual generation
-      - generative model
-      - 3d generation
-      - audio generation
-    canonical_subtopics:
-      - id: text_to_image_diffusion
-        name: 文生图与图像扩散
-        description: 文本到图像生成、图像扩散模型、DiT 等基础图像生成方法。
-        keywords:
-          - text-to-image
-          - image diffusion
-          - stable diffusion
-          - diffusion transformer
-          - dit
-      - id: text_to_video_diffusion
-        name: 文生视频与视频扩散
-        description: 文本到视频生成、视频扩散模型、视频 DiT 等视频生成方法（不含自回归与世界模型）。
-        keywords:
-          - text-to-video
-          - video diffusion
-          - video dit
-          - video generation
-          - svd
-      - id: autoregressive_visual_generation
-        name: 自回归视觉生成
-        description: 自回归图像与视频生成，包括 next-token、MaskGIT、VAR、MAR、LlamaGen 等范式。
-        keywords:
-          - autoregressive image
-          - autoregressive video
-          - next-token
-          - maskgit
-          - var
-          - mar
-          - llamagen
-      - id: three_d_generation
-        name: 3D 生成与重建
-        description: 3D 物体/场景生成、3DGS、NeRF、Mesh 生成、神经渲染与重光照。
-        keywords:
-          - 3d generation
-          - 3d gaussian
-          - 3dgs
-          - nerf
-          - mesh generation
-          - neural rendering
-      - id: dynamic_4d_generation
-        name: 4D 与动态场景生成
-        description: 动态 3D/4D 场景生成与重建、4D 高斯泼溅、动态神经场。
-        keywords:
-          - 4d
-          - dynamic scene
-          - dynamic 3d
-          - 4d gaussian
-      - id: visual_editing
-        name: 图像与视频编辑
-        description: 图像编辑、视频编辑、Inpainting、可控编辑、风格化等。
-        keywords:
-          - image editing
-          - video editing
-          - inpainting
-          - controllable editing
-          - style transfer
-      - id: customization_generation
-        name: 主体与概念驱动生成
-        description: 主体驱动、概念定制、个性化生成、ID 保持、参考图引导生成。
-        keywords:
-          - subject-driven
-          - concept-driven
-          - customization
-          - personalization
-          - id preservation
-          - reference image
-      - id: avatar_motion_generation
-        name: 数字人与动作生成
-        description: 虚拟人、说话头、人体动作、肖像动画、面部重演。
-        keywords:
-          - avatar
-          - talking head
-          - portrait animation
-          - human motion
-          - face reenactment
-      - id: audio_av_generation
-        name: 音频与多模态联合生成
-        description: 音乐/语音生成、TTS、音视频联合生成、跨模态条件音频生成。
-        keywords:
-          - audio generation
-          - music generation
-          - tts
-          - speech synthesis
-          - audio-visual generation
-      - id: efficient_generation
-        name: 生成模型加速与高效化
-        description: 扩散加速、少步采样、蒸馏、量化、稀疏化等生成模型效率优化。
-        keywords:
-          - acceleration
-          - distillation
-          - few-step
-          - efficient sampling
-          - quantization
-          - sparse
-      - id: generation_alignment
-        name: 生成模型对齐与奖励
-        description: 生成模型对齐、RLHF、奖励建模、偏好优化、guidance 与可控性。
-        keywords:
-          - alignment
-          - rlhf
-          - reward
-          - preference
-          - dpo
-          - guidance
-      - id: generation_benchmark
-        name: 生成模型评测与数据集
-        description: 生成模型评测基准、新数据集、自动评测指标、人类偏好评估。
-        keywords:
-          - benchmark
-          - evaluation
-          - metric
-          - dataset
-          - human preference
-
-  - id: multimodal_understanding_generation
-    name: 多模态理解与生成
-    description: 关注视觉语言模型、统一多模态模型、理解与生成一体化、跨模态推理、指令跟随与交互式多模态系统。
-    arxiv_categories:
-      - cs.CV
-      - cs.CL
-      - cs.AI
-      - cs.MM
-      - cs.LG
-    keywords:
-      - vision-language model
-      - multimodal large language model
-      - multimodal understanding
-      - multimodal reasoning
-      - multimodal instruction
-      - unified multimodal
-      - visual question answering
-      - image captioning
-      - video understanding
-      - multimodal generation
-      - mllm
-    canonical_subtopics:
-      - id: vlm_mllm_general
-        name: 视觉语言模型与 MLLM
-        description: 通用视觉语言模型、MLLM 架构、多模态指令微调与对话。
-        keywords:
-          - vision-language model
-          - mllm
-          - vlm
-          - multimodal instruction
-      - id: unified_multimodal_model
-        name: 统一多模态模型
-        description: 理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。
-        keywords:
-          - unified multimodal
-          - any-to-any
-          - understanding generation
-          - native multimodal
-      - id: multimodal_reasoning_cot
-        name: 多模态推理与思维链
-        description: 多模态 CoT、视觉推理、数学/代码/科学推理、推理时计算扩展。
-        keywords:
-          - multimodal reasoning
-          - chain of thought
-          - visual reasoning
-          - math reasoning
-          - inference scaling
-      - id: video_understanding_temporal
-        name: 视频理解与时序推理
-        description: 视频 LLM、视频问答、时序定位、长视频理解、第一视角视频。
-        keywords:
-          - video understanding
-          - video llm
-          - temporal grounding
-          - long video
-          - ego video
-      - id: multimodal_hallucination
-        name: 多模态幻觉与可靠性
-        description: 视觉幻觉缓解、事实性、可靠性、忠实性提升。
-        keywords:
-          - hallucination
-          - factuality
-          - reliability
-          - faithfulness
-      - id: multimodal_rl_alignment
-        name: 多模态强化学习与对齐
-        description: 多模态 RL、RLHF、DPO、偏好学习、多模态对齐。
-        keywords:
-          - multimodal rl
-          - multimodal rlhf
-          - multimodal dpo
-          - preference learning
-          - multimodal alignment
-      - id: efficient_multimodal
-        name: 多模态高效化与轻量化
-        description: 高效 MLLM、PEFT、蒸馏、量化、token 压缩、稀疏推理。
-        keywords:
-          - efficient mllm
-          - peft
-          - multimodal distillation
-          - token compression
-          - quantization
-      - id: multimodal_benchmark
-        name: 多模态评测与基准
-        description: 多模态评测、新基准、评测协议、自动评估。
-        keywords:
-          - multimodal benchmark
-          - mllm evaluation
-          - vlm benchmark
-          - evaluation suite
-      - id: spatial_3d_reasoning
-        name: 空间与 3D 多模态推理
-        description: 空间推理、3D 视觉定位、具身推理、几何推理。
-        keywords:
-          - spatial reasoning
-          - 3d grounding
-          - embodied reasoning
-          - geometric reasoning
-      - id: multimodal_retrieval
-        name: 多模态检索
-        description: 跨模态检索、组合检索、文档检索、多模态搜索。
-        keywords:
-          - multimodal retrieval
-          - composed retrieval
-          - cross-modal retrieval
-          - document retrieval
-      - id: multimodal_safety_attack
-        name: 多模态安全与攻防
-        description: 多模态越狱、对抗攻击、防御、安全评测。
-        keywords:
-          - multimodal safety
-          - jailbreak
-          - adversarial
-          - defense
-          - safety benchmark
-      - id: multimodal_vqa_doc
-        name: 视觉问答与文档理解
-        description: VQA、文档/图表/表格理解、OCR-free 文档智能。
-        keywords:
-          - visual question answering
-          - vqa
-          - document understanding
-          - chart
-          - ocr-free
-
-importance:
-  daily_deep_read_top_k: 3
-  direction_weights:
-    continuous_language_multimodal: 1.6
-    world_model: 1.5
-    multimodal_generation: 1.2
-    multimodal_understanding_generation: 1.4
-  priority_subtopics:
-    - name: 连续语言模型与连续多模态模型
-      weight: 2.0
-      keywords:
-        - continuous language model
-        - continuous latent language model
-        - continuous multimodal model
-        - continuous vision-language model
-        - continuous vlm
-        - continuous token
-        - continuous visual token
-        - continuous visual tokens
-        - visual latent flow
-        - latent flow
-        - flow matching
-        - diffusion language model
-        - embedded language flow
-        - elf
-        - cola
-        - visual vae
-        - representation autoencoder
-        - multimodal latent reasoning
-        - chain of continuous vision-language thought
-        - continuous multimodal representation
-        - unified continuous tokenizer
-    - name: 自回归视频生成
-      weight: 1.6
-      keywords:
-        - autoregressive video generation
-        - video generation
-        - text-to-video
-    - name: 自回归图像生成
-      weight: 1.5
-      keywords:
-        - autoregressive image generation
-        - image generation
-        - text-to-image
-    - name: 模型高效性
-      weight: 1.2
-      keywords:
-        - efficient inference
-        - model efficiency
-        - acceleration
-        - compression
-    - name: 统一多模态模型
-      weight: 1.4
-      keywords:
-        - unified multimodal
-        - multimodal large language model
-        - mllm
-    - name: 扩散模型视频生成
-      weight: 1.6
-      keywords:
-        - diffusion video generation
-        - video diffusion
-        - diffusion-based video
-        - text-to-video diffusion
-        - video diffusion transformer
-        - video dit
-    - name: 视频生成世界模型
-      weight: 1.6
-      keywords:
-        - world model
-        - video world model
-        - generative world model
-        - neural simulator
-        - physical world model
-        - interactive world model
-  boost_keywords:
-    - autoregressive
-    - video generation
-    - image generation
-    - unified multimodal
-    - efficient inference
-    - diffusion transformer
-    - mllm
-    - controllable generation
-    - subject-driven generation
-    - video diffusion
     - world model
+    - video world model
+    - generative world model
+    - action-conditioned video
+    - future prediction
+    - long-horizon video
+  - id: interactive_physical_world
+    name: 可交互与物理世界建模
+    description: 物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。
+    keywords:
+    - interactive world
+    - physical world model
     - neural simulator
+    - physics simulation
+    - dynamics model
+    - environment model
+  - id: embodied_world_model
+    name: 具身世界模型与规划控制
+    description: 面向机器人、具身智能、动作规划和控制的世界模型。
+    keywords:
+    - embodied world model
+    - embodied ai
+    - robotics world model
+    - planning
+    - control
+    - policy learning
+  - id: spatial_3d_4d_world_model
+    name: 空间 3D/4D 世界模型
+    description: 3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。
+    keywords:
+    - 3d world model
+    - 4d world model
+    - dynamic scene
+    - spatial world model
+    - neural field
+    - 3d gaussian
+  tier: primary
+- id: video_generation
+  name: 视频生成
+  tier: primary
+  description: 关注扩散、自回归视频生成、长视频和可控生成、视频编辑，以及直接服务于视频生成的表征、训练、效率、评测和数据研究。纯图像生成只有摘要明确说明对视频生成的迁移价值才相关。
+  arxiv_categories:
+  - cs.CV
+  - cs.AI
+  - cs.LG
+  - cs.MM
+  keywords: &id001
+  - video generation
+  - text-to-video
+  - image-to-video
+  - video diffusion
+  - autoregressive video
+  - video editing
+  - long video generation
+  canonical_subtopics:
+  - id: video_diffusion
+    name: 视频扩散与流模型
+    description: 视频扩散、flow matching、视频 DiT。
+    keywords:
+    - video diffusion
+    - text-to-video
+    - video dit
+  - id: autoregressive_video
+    name: 自回归视频生成
+    description: 视频 next-token、离散或连续视频序列生成。
+    keywords:
+    - autoregressive video
+    - video token generation
+  - id: long_controllable_video
+    name: 长视频与可控生成
+    description: 长时序、一致性、镜头控制、个性化视频生成。
+    keywords:
+    - long video generation
+    - controllable video
+    - video personalization
+  - id: video_editing
+    name: 视频编辑
+    description: 视频编辑、局部重绘、风格及内容控制。
+    keywords:
+    - video editing
+    - video inpainting
+  - id: video_generation_efficiency
+    name: 视频生成效率与表征
+    description: 直接服务于视频生成的 tokenizer、蒸馏、少步采样和加速。
+    keywords:
+    - video tokenizer
+    - efficient video generation
+    - video distillation
+  - id: video_generation_evaluation
+    name: 视频生成训练与评测
+    description: 视频生成的数据、训练、对齐和评测。
+    keywords:
+    - video generation benchmark
+    - video generation alignment
+- id: audio_video_generation
+  name: 音视频联合生成
+  tier: primary
+  description: 聚焦音视频联合生成、视频配音配乐音效、声音驱动视频、音画对齐与同步。纯语音合成或纯音乐生成只有对这些任务有明确、具体迁移价值才相关；普通音频识别或视频理解并非目标。
+  arxiv_categories:
+  - cs.CV
+  - cs.MM
+  - cs.SD
+  - eess.AS
+  - cs.AI
+  - cs.LG
+  keywords: &id002
+  - audio-visual generation
+  - audio-video generation
+  - video-to-audio
+  - video-to-speech
+  - audio-to-video
+  - sound-driven video
+  - foley generation
+  - audio visual synchronization
+  canonical_subtopics:
+  - id: joint_audio_video
+    name: 联合音视频生成
+    description: 联合生成音频和视频的共享模型或协同模型。
+    keywords:
+    - joint audio video generation
+    - audio-visual generation
+    - audio-video generation
+  - id: video_soundtrack
+    name: 视频配音配乐与音效
+    description: 根据视频生成语音、音乐、环境音或 Foley 音效。
+    keywords:
+    - video-to-audio
+    - video-to-speech
+    - foley generation
+    - video soundtrack
+  - id: audio_driven_video
+    name: 声音驱动视频
+    description: 以语音、音乐或声音生成视频和数字人。
+    keywords:
+    - audio-driven video
+    - speech-driven video
+    - audio-driven animation
+    - talking head
+  - id: audio_video_synchronization
+    name: 音画同步与生成评测
+    description: 直接服务于音视频生成的时间对齐、同步、数据和评测。
+    keywords:
+    - audio-visual synchronization
+    - audio-video synchronization
+    - audio visual generation benchmark
+- id: multimodal_understanding_generation
+  name: 统一理解与生成
+  description: 辅助关注理解与生成共享模型、表征或训练目标的统一多模态研究。普通 VLM、VQA、视频理解或纯多模态推理仅在对世界模型、视频或音视频生成、统一理解生成有明确迁移价值时相关。
+  arxiv_categories:
+  - cs.CV
+  - cs.CL
+  - cs.AI
+  - cs.MM
+  - cs.LG
+  keywords: &id003
+  - unified multimodal
+  - any-to-any
+  - understanding and generation
+  - unified understanding
+  - native multimodal
+  canonical_subtopics:
+  - id: unified_multimodal_model
+    name: 统一多模态模型
+    description: 理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。
+    keywords:
+    - unified multimodal
+    - any-to-any
+    - understanding generation
+    - native multimodal
+  - id: efficient_multimodal
+    name: 统一多模态模型高效化
+    description: 直接服务于统一理解与生成模型的高效表征、蒸馏和推理。
+    keywords:
+    - efficient mllm
+    - peft
+    - multimodal distillation
+    - token compression
+    - quantization
+  tier: secondary
+  detail_quota: 5
+- id: continuous_language_multimodal
+  name: 连续语言模型
+  description: 辅助关注连续语言模型、扩散语言模型、语言 embedding/latent 空间、连续语言 token，以及直接相关的连续多模态扩展。通用 flow matching、连续控制或图像潜空间模型本身不能证明与连续语言建模有关。
+  arxiv_categories:
+  - cs.CL
+  - cs.CV
+  - cs.AI
+  - cs.MM
+  - cs.LG
+  keywords: &id004
+  - continuous language model
+  - continuous diffusion language
+  - diffusion language model
+  - embedded language flow
+  - flow matching language
+  - cola
+  - elf
+  - continuous multimodal model
+  canonical_subtopics:
+  - id: continuous_language_flow
+    name: 连续语言模型与语言流
+    description: 连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。
+    keywords:
     - continuous language model
-    - continuous multimodal model
+    - continuous latent language model
+    - embedded language flow
+    - diffusion language model
+    - flow matching language
+    - cola
+    - elf
+  - id: continuous_vlm_latent_flow
+    name: 连续 VLM 与视觉潜空间流
+    description: 与连续语言建模直接相关的连续视觉语言模型及潜空间流，不包括全部视觉 flow matching。
+    keywords:
+    - continuous vision-language model
     - continuous vlm
     - continuous visual token
+    - continuous visual tokens
     - visual latent flow
+    - latent flow
     - flow matching
+    - visual vae
     - representation autoencoder
     - multimodal latent reasoning
+  - id: continuous_multimodal_reasoning
+    name: 连续多模态推理与潜空间思维
+    description: 多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。
+    keywords:
+    - multimodal latent reasoning
+    - continuous multimodal reasoning
+    - chain of continuous thought
+    - continuous vision-language thought
+    - latent visual reasoning
+    - visual thought
+  tier: secondary
+  detail_quota: 5
+importance:
+  daily_deep_read_top_k: 3
+  primary_deep_read_min: 2
+  secondary_detail_limit: 10
+  direction_weights:
+    world_model: 1.6
+    video_generation: 1.5
+    audio_video_generation: 1.5
+    multimodal_understanding_generation: 1.1
+    continuous_language_multimodal: 1.0
+  priority_subtopics:
+  - name: 视频世界模型
+    weight: 1.8
+    keywords:
+    - video world model
+    - action-conditioned video
+    - generative world model
+    - world-action model
+  - name: 视频生成
+    weight: 1.5
+    keywords: *id001
+  - name: 音视频联合生成
+    weight: 1.5
+    keywords: *id002
+  - name: 世界模型
+    weight: 1.4
+    keywords:
+    - world model
+    - neural simulator
+    - environment model
+  - name: 统一理解与生成
+    weight: 1.1
+    keywords: *id003
+  - name: 连续语言模型
+    weight: 1.0
+    keywords: *id004
+  boost_keywords: []
   negative_keywords:
-    - molecule
-    - medical diagnosis
-    - remote sensing
-    - graph neural network
-    - recommender system
-    - clinical
-    - protein
-    - drug discovery
-    - traffic prediction
-    - financial
+  - molecule
+  - medical diagnosis
+  - remote sensing
+  - graph neural network
+  - recommender system
+  - clinical
+  - protein
+  - drug discovery
+  - traffic prediction
+  - financial

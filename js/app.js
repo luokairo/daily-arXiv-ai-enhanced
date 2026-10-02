@@ -896,6 +896,19 @@ async function loadPapersByDate(date) {
   }
 }
 
+const REPORT_GROUP_LABELS = ['主要方向详细摘要', '辅助方向精选摘要', '辅助方向简讯'];
+function paperReportGroup(paper) {
+  if (paper.reportLevel === 'brief') return 2;
+  return paper.interestTier === 'secondary' ? 1 : 0;
+}
+function compareReportPapers(a, b) {
+  return paperReportGroup(a) - paperReportGroup(b)
+    || Number(Boolean(b.isMatched)) - Number(Boolean(a.isMatched))
+    || (b.importanceScore || 0) - (a.importanceScore || 0)
+    || (b.localPriorityScore || 0) - (a.localPriorityScore || 0)
+    || String(a.id || '').localeCompare(String(b.id || ''));
+}
+
 function parseJsonlData(jsonlText, date) {
   const result = {};
   
@@ -924,6 +937,11 @@ function parseJsonlData(jsonlText, date) {
       const subtopic = paper.AI && paper.AI.subtopic_name ? paper.AI.subtopic_name : '';
       
       result[primaryCategory].push({
+        reportLevel: paper.report_level || 'detail',
+        interestTier: paper.interest_tier || (['continuous_language_multimodal', 'multimodal_understanding_generation'].includes(paper.AI && paper.AI.primary_direction_id) ? 'secondary' : 'primary'),
+        relevanceStatus: paper.relevance_status || 'relevant',
+        importanceScore: Number(paper.AI && (paper.AI.importance_rank_score ?? paper.AI.importance_score)) || 0,
+        localPriorityScore: Number(paper.AI && paper.AI.local_priority_score) || 0,
         title: paper.title,
         url: paper.abs || paper.pdf || `https://arxiv.org/abs/${paper.id}`,
         authors: Array.isArray(paper.authors) ? paper.authors.join(', ') : paper.authors,
@@ -1341,6 +1359,8 @@ function renderPapers() {
     });
   }
   
+  filteredPapers.sort(compareReportPapers);
+
   // 存储当前过滤后的论文列表，用于箭头键导航
   currentFilteredPapers = [...filteredPapers];
   
@@ -1353,7 +1373,16 @@ function renderPapers() {
     return;
   }
   
+  let previousReportGroup = -1;
   filteredPapers.forEach((paper, index) => {
+    const group = paperReportGroup(paper);
+    if (group !== previousReportGroup) {
+      const heading = document.createElement('h2');
+      heading.className = 'report-group-title';
+      heading.textContent = `${REPORT_GROUP_LABELS[group]} · ${filteredPapers.filter(p => paperReportGroup(p) === group).length} 篇`;
+      container.appendChild(heading);
+      previousReportGroup = group;
+    }
     const paperCard = document.createElement('div');
     // 添加匹配高亮类
     paperCard.className = `paper-card ${paper.isMatched ? 'matched-paper' : ''}`;
@@ -1426,12 +1455,13 @@ function renderPapers() {
         </div>
       </div>
       <div class="paper-card-body">
+        ${paper.reportLevel === 'brief' ? '<p class="brief-note">简讯，未做详细分析</p>' : ''}
         <p class="paper-card-summary">${highlightedSummary}</p>
         <div class="paper-card-footer">
           <div class="footer-left">
             <span class="paper-card-date">${formatDate(paper.date)}</span>
           </div>
-          <span class="paper-card-link">Details</span>
+          <span class="paper-card-link">${paper.reportLevel === 'brief' ? '简讯' : 'Details'}</span>
         </div>
       </div>
     `;
@@ -1525,15 +1555,17 @@ function showPaperDetails(paper, paperIndex) {
       ${paper.classificationReason ? `<p><strong>Classification: </strong>${paper.classificationReason}</p>` : ''}
       
       
+      ${paper.reportLevel === 'brief' ? '<p class="brief-note">简讯，未做详细分析 · 保留供后续阅读</p>' : ''}
+      ${paper.relevanceStatus === 'uncertain' ? '<p class="brief-note">相关性待进一步确认</p>' : ''}
       <h3>TL;DR</h3>
       <p>${highlightedSummary}</p>
       
-      <div class="paper-sections">
+      ${paper.reportLevel !== 'brief' ? `<div class="paper-sections">
         ${paper.motivation ? `<div class="paper-section"><h4>Motivation</h4><p>${highlightedMotivation}</p></div>` : ''}
         ${paper.method ? `<div class="paper-section"><h4>Method</h4><p>${highlightedMethod}</p></div>` : ''}
         ${paper.result ? `<div class="paper-section"><h4>Result</h4><p>${highlightedResult}</p></div>` : ''}
         ${paper.conclusion ? `<div class="paper-section"><h4>Conclusion</h4><p>${highlightedConclusion}</p></div>` : ''}
-      </div>
+      </div>` : ''}
       
       ${highlightedAbstract ? `<h3>Abstract</h3><p class="original-abstract">${highlightedAbstract}</p>` : ''}
       

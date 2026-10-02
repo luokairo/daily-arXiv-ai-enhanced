@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Literal
 
 from pydantic import BaseModel, Field
 
@@ -8,6 +8,16 @@ class FilterStructure(BaseModel):
     primary_direction_id: str = Field(description="id of the best matching target direction, or empty if irrelevant")
     matched_direction_ids: List[str] = Field(default_factory=list, description="ids of all matching target directions")
     relevance_reason: str = Field(description="brief reason for relevance or irrelevance")
+
+
+class RoutingStructure(BaseModel):
+    decision: Literal["relevant", "uncertain", "irrelevant"]
+    matched_direction_ids: List[str] = Field(default_factory=list)
+    primary_direction_id: str = Field(default='', description='Best matching direction, empty only when undetermined')
+    brief: str = Field(default='', max_length=400, description='One short contribution sentence in the requested language')
+    reason: str = Field(min_length=1, description="One short evidence-based sentence, at most 40 words")
+    personal_relevance_score: float = Field(ge=0, le=100)
+    research_value_score: float = Field(ge=0, le=100, description="Preliminary value supported by the abstract, not verified paper quality")
 
 
 class Structure(BaseModel):

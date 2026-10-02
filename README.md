@@ -66,12 +66,21 @@ Otherwise, you can directly use this repo in https://dw-dengwei.github.io/daily-
 
 ### 个人研究日报与 DeepSeek 配置
 
-本 fork 保留 `config/directions.yaml` 中的四个兴趣方向、稳定子主题和个人重要性权重。
-默认流水线是：本地兴趣筛选 → 按偏好排序取最多 30 篇 → 模型分类与摘要 → 本地重要性评分 → Top-3 PDF 精读。
-`MAX_DETAIL_ITEMS=0` 可取消候选数量限制；独立模型筛选与模型评分仍可选开启。
+本 fork 在 `config/directions.yaml` 集中设置五个兴趣方向、主次层级、稳定子主题、权重和名额。
+主要方向为世界模型（1.6）、视频生成（1.5）、音视频联合生成（1.5）；辅助方向为统一理解与生成（1.1）、连续语言模型（1.0）。视频世界模型是世界模型内最高优先子主题，方向权重用于排序，不是收录比例。
+默认 `SELECTION_MODE=semantic`：按 ID 去重 → 每篇完整摘要做简短语义判断 → 主要方向全部生成详细摘要、辅助方向最多 10 篇详细摘要 → 其余辅助论文保留简讯 → 综合重要性排序 → Top-3 PDF 精读。
+两个辅助方向各预留 5 篇，不足的名额转给另一方向；跨方向论文按主要归属计入一次。详细处理失败或判为不相关不自动补位。筛选失败或无法确定归属的论文另外进入详细阶段兜底，不占辅助名额。
+每天精读先取主要方向最高的 2 篇，再从剩余详细论文中取最高的 1 篇；主要方向不足时补足。简讯与处理失败论文不参与精读。
+本地关键词不再淘汰论文，也不在模型调用前截断候选。明确不相关的论文不生成详细摘要。
+轻量筛选同时给出基于摘要的初步相关性与研究价值分，默认排序采用模型分 70%＋个人启发式分 30%；这不是全文质量认证。
+内部保留未封顶的本地分数用于同分排序，ELF 等关键词按词边界匹配。
+`SELECTION_MODE=legacy` 才恢复旧的本地筛选与数量上限。
 精读保留动机、方法、启发、实验、局限与个人收获等栏目，英文概述每节最多一句。
 
-**迁移顺序：先部署本次代码，再在正常定时任务运行前统一更新以下配置；先运行诊断，再手动运行日报。**
+纯图像生成、普通 VLM 理解、纯语音或音乐生成，必须在摘要中体现对目标方向的明确迁移价值才收录，并记录依据。统一理解与生成要求共享模型、表征或训练目标，不能泛化为所有 VLM。
+抓取分类保留 `cs.CV/cs.CL/cs.AI/cs.LG/cs.MM/cs.RO`，增加 `cs.SD/eess.AS`；所有方向均参与轻量判断，辅助权重低不等于不相关。
+
+**迁移顺序：先在测试分支运行不发布诊断，再部署代码与正常运行配置。**
 只有修改 `MODEL_NAME` 不够：现有各阶段的 `*_MODEL_NAME` 会覆盖它。
 
 进入仓库 **Settings → Secrets and variables → Actions**。
@@ -88,16 +97,19 @@ Otherwise, you can directly use this repo in https://dw-dengwei.github.io/daily-
 | --- | --- | --- |
 | `MODEL_NAME` | `deepseek-flash` | 统一默认模型 |
 | `DETAIL_MODEL_NAME` | `deepseek-flash` | 将原 GLM 值替换；未设置则继承 `MODEL_NAME` |
-| `FILTER_MODEL_NAME` | `deepseek-flash` | 可选模型筛选；未设置则继承 `MODEL_NAME` |
+| `FILTER_MODEL_NAME` | `deepseek-flash` | 全量轻量筛选模型；未设置则继承 `MODEL_NAME` |
 | `IMPORTANCE_MODEL_NAME` | `deepseek-flash` | 可选模型评分；未设置则继承 `MODEL_NAME` |
 | `DEEP_READ_MODEL_NAME` | `deepseek-flash` | PDF 精读；未设置则继承 `MODEL_NAME` |
 | `DEEPSEEK_THINKING` | `false` | 常规阶段显式关闭思考 |
 | `DEEP_READ_THINKING` | `false` | 将原 `true` 改为 `false`；全文分析仍保留 |
 | `ENABLE_DEEP_READ` | `true` | 本次默认启用精读；`false` 可暂停 |
 | `DAILY_DEEP_READ_TOP_K` | `3` | 每日精读数量 |
-| `MAX_DETAIL_ITEMS` | `30` | 本地优先级排序后的候选上限，`0` 表示无限制 |
-| `USE_MODEL_FILTER` | `false` | 不确定候选直接由摘要模型判断相关性 |
-| `USE_MODEL_IMPORTANCE` | `false` | 按个人权重进行本地评分，无额外模型调用 |
+| `SELECTION_MODE` | `semantic` | 全量轻量语义筛选；`legacy` 为旧流程 |
+| `SECONDARY_DETAIL_LIMIT` | `10` | 辅助方向详细摘要总额；两方向按配置各预留 5，未入选仍有简讯 |
+| `MAX_DETAIL_ITEMS` | `30` | **仅 legacy 模式生效**；semantic 模式主要方向没有此上限 |
+| `USE_MODEL_FILTER` | `false` | 仅 legacy 模式生效；semantic 模式始终执行全量筛选 |
+| `USE_MODEL_IMPORTANCE` | `false` | 复用轻量筛选中的初步价值判断；true 则额外调用评分模型 |
+| `FILTER_MAX_OUTPUT_TOKENS` | `512` | 简短筛选决定、理由与评分的单次输出上限 |
 | `DETAIL_MAX_OUTPUT_TOKENS` | `2500` | 每次摘要输出上限 |
 | `DEEP_READ_MAX_OUTPUT_TOKENS` | `6000` | 每次精读输出上限 |
 | `DEEP_READ_MAX_CONTEXT_CHARS` | `40000` | PDF 上下文字符数，含章节标题；不等于 token 数 |
@@ -113,7 +125,9 @@ Otherwise, you can directly use this repo in https://dw-dengwei.github.io/daily-
 
 **如何节省 token**
 
-- 摘要一次调用同时完成相关性判断、分类及各摘要字段，默认不额外调用筛选和评分模型。
+- 全量轻量筛选只发送研究方向说明、子主题名称、标题、分类和完整摘要，不发送动态 taxonomy、作者列表或重复关键词。
+- 相关／不确定论文再调用详细摘要；默认复用筛选评分，不额外调用评分模型。
+- 辅助方向超出详细名额时直接复用轻量筛选的一句话简讯、理由和评分，不追加摘要请求。
 - 保留全部预设子主题，每方向最多传入 5 个常用动态子主题；不重复发送计数和关键词。
 - PDF 上下文去重并按章节分配额度，方法、实验获得较多额度，局限等章节不被前文挤掉。
 - 摘要和精读的成功结果保存在 `data/ai_cache/`，随 `data` 分支恢复；相同论文、输入、模型、
@@ -122,24 +136,32 @@ Otherwise, you can directly use this repo in https://dw-dengwei.github.io/daily-
   API 未返回用量的调用标注“未知”。成功运行的用量另存 `data/run_metrics/`，不进入网页文件列表。
 
 上下文上限和输出上限是单次预算，不是每日账单硬上限；重试也可能计费。不承诺固定节省比例。
-应在相同“30 篇摘要＋3 篇精读”下比较；从精读关闭切换到开启会增加精读开销。
+新模式成本取决于去重论文总数、主要方向保留数、最多 10 篇辅助摘要和 3 篇精读，不能沿用旧的“30 篇摘要＋3 篇精读”预算。
+已有 `MAX_DETAIL_ITEMS=30`、`USE_MODEL_FILTER=false` 不会阻止新模式生效，无需删除；可显式设置 `SELECTION_MODE=semantic`。
 
 **失败与发布**
 
 鉴权、模型和参数错误立即停止；限流、连接超时与服务器错误最多重试两次，不自动提高输出预算。
-个别摘要解析失败会记录并排除，全部请求失败则终止；正常筛选后无相关论文允许空结果。
+个别轻量筛选失败按 uncertain 转交详细阶段；全体筛选失败则终止。
+每篇论文的筛选决定、理由、评分及详细处理状态保存在 `data/run_metrics/<日期>-selection.json`。
+记录明确区分模型判定不相关、辅助名额不足（`quota_deferred`）、处理失败。Actions 摘要同时显示各方向轻量判断、详细请求、成功摘要、简讯与精读候选数量。
+失败运行的筛选记录可从 Actions `selection-audit-<run_id>` artifact 下载。部分摘要失败标记 failed，不能当作不相关；重新运行原始数据时失败请求会重试，成功请求可命中缓存。
+个别摘要解析失败不进入正常报告，全部请求失败则终止；正常筛选后无相关论文允许空结果。
 可选评分的个别失败使用本地评分，整个评分阶段失败则终止。精读全部生成失败时也终止，
 PDF 提取失败的摘要分析明确标为 `abstract_fallback`，不能当作全文精读。
 工作流和 `run.sh` 将日报与 taxonomy 写入暂存目录，通过全部阶段后才替换正式产物。
 缓存文件不含 API Key。直接运行 `ai/enhance.py` 只保证增强阶段成功后再写入；完整发布保护请使用流水线。
+方向范围变化时旧动态子主题清除，保留有效预设分类，并将迁移前 taxonomy 保存到 `data/run_metrics/taxonomy-before-<摘要值>.json`。旧日报保持原样，历史缺少 `report_level` 时按详细摘要显示。
+日报与网页分为主要方向详细摘要、辅助方向精选摘要、辅助方向简讯，组内按重要性排序；简讯明确标注“未做详细分析”，不显示空的分析栏目。
 
 **小规模验证**
 
 Actions → **DeepSeek Pipeline Diagnostic** → Run workflow：选择 `data` 分支中存在的原始论文日期，
-可指定论文 ID；未指定时选择本地优先级最高的候选。只处理一篇摘要和至多一篇精读，
-不执行独立模型筛选／评分，不提交任何分支、不发布 Pages；结果和用量下载自 `deepseek-diagnostic` artifact。
+可指定逗号分隔的论文 ID；未指定时选择本地优先级最高的候选。默认只处理 1 篇、最多 1 篇精读；可设置 `sample_limit`（1–20）、`secondary_detail_limit`（0–20）及 `deep_read_top_k`（1–3）验证主次分配，
+不执行额外模型评分，不提交任何分支、不发布 Pages；结果和用量下载自 `deepseek-diagnostic` artifact。
 若摘要模型判定该论文不相关，精读会正常跳过。首次部署后应检查摘要字段、精读来源标记及实际用量。
 该入口固定使用 `deepseek-flash`，仍需先更新官方 API 的两个 Secrets。
+这里读取的是已保存原始数据文件，不进行历史日期重新抓取。当前 `TARGET_DATE` 命名与 arXiv `/new` 抓取日期的历史问题不在本次修复范围内，指定文件日期不能证明该日期的数据抓取正确。
 
 本地无付费 API 调用的回归检查：
 
@@ -147,6 +169,7 @@ Actions → **DeepSeek Pipeline Diagnostic** → Run workflow：选择 `data` �
 uv sync --locked
 .venv/bin/python -m unittest discover -s tests -v
 node tests/test_date_range.cjs
+node tests/test_report_levels.cjs
 ```
 
 # Plans

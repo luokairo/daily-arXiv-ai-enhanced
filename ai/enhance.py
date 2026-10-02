@@ -1,5 +1,6 @@
 import argparse
 import copy
+import hashlib
 import json
 import os
 import re
@@ -35,6 +36,8 @@ from semantic_arxiv import (
     upsert_subtopic,
 )
 from structure import FilterStructure, Structure
+from routing import route_all_items
+from selection import allocate_details, interest_tier, make_brief, select_deep_reads
 from runtime import CachedChain, FatalAIError, atomic_write, enabled, env_value, positive_int
 
 if os.path.exists(".env"):
@@ -211,7 +214,7 @@ def keyword_matched_direction_ids(item: Dict, directions: Iterable[Dict]) -> Lis
     matched = []
     for direction in directions:
         keywords = [keyword.lower() for keyword in direction.get("keywords", [])]
-        if any(keyword and keyword in text for keyword in keywords):
+        if any(keyword_matches(text, keyword) for keyword in keywords):
             matched.append(direction["id"])
     return matched
 
@@ -258,11 +261,18 @@ def normalize_keyword(keyword: str) -> str:
     return re.sub(r"\s+", " ", (keyword or "").lower()).strip()
 
 
+def keyword_matches(text: str, keyword: str) -> bool:
+    keyword = normalize_keyword(keyword)
+    if not keyword:
+        return False
+    return bool(re.search(r"(?<!\w)" + re.escape(keyword) + r"(?!\w)", normalize_keyword(text)))
+
+
 def keyword_hits(text: str, keywords: Iterable[str]) -> List[str]:
     hits = []
     for keyword in keywords:
         normalized = normalize_keyword(keyword)
-        if normalized and normalized in text:
+        if keyword_matches(text, normalized):
             hits.append(normalized)
     return list(dict.fromkeys(hits))
 
@@ -339,7 +349,7 @@ def match_keyword_entries(text: str, entries: Iterable[Dict]) -> List[Dict]:
     seen = set()
     for entry in entries:
         keyword = normalize_keyword(entry.get("keyword", ""))
-        if not keyword or keyword not in text:
+        if not keyword_matches(text, keyword):
             continue
         key = (entry.get("direction_id"), entry.get("subtopic_id", ""), keyword)
         if key in seen:
@@ -602,6 +612,7 @@ def filter_all_items(
 
 def process_single_item(chain, item: Dict, language: str, directions: List[Dict], prompt_directions: str, prompt_taxonomy: str) -> Dict:
     if is_sensitive(item.get("summary", "")):
+        item['_detail_status'] = 'sensitive_excluded'
         return {}
 
     code_info = check_github_code(item.get("summary", ""))
@@ -620,15 +631,21 @@ def process_single_item(chain, item: Dict, language: str, directions: List[Dict]
             "content": item.get("summary", ""),
         }
     )
+    item['_detail_status'] = 'relevant' if response.is_relevant else 'irrelevant'
+    item['_detail_reason'] = response.classification_reason
     item = normalize_ai_result(item, response.model_dump(), directions)
     if item and item.get("_filter_relevance_reason"):
         item["AI"]["filter_reason"] = item["_filter_relevance_reason"]
 
     if not item:
         return {}
+    item['report_level'] = 'detail'
+    item['relevance_status'] = 'relevant'
+    item['interest_tier'] = interest_tier(item, directions)
 
     for value in item.get("AI", {}).values():
         if is_sensitive(str(value)):
+            item['_detail_status'] = 'sensitive_excluded'
             return {}
     return item
 
@@ -662,11 +679,13 @@ def process_all_items(data: List[Dict], model_name: str, language: str, max_work
             try:
                 processed_data[idx] = future.result()
             except FatalAIError:
+                data[idx]['_detail_status'] = 'fatal_error'
                 for future in future_to_idx:
                     future.cancel()
                 raise
             except Exception as e:
                 failures += 1
+                data[idx]['_detail_status'] = 'failed'
                 print(f"Detail failed for {data[idx].get('id')}: {e}", file=sys.stderr)
 
     if failures == len(data):
@@ -703,32 +722,35 @@ def heuristic_importance_score(item: Dict, importance_config: Dict) -> float:
     score += (float(direction_weight) - 1.0) * 35.0
 
     for keyword in importance_config.get("boost_keywords", []):
-        if keyword and keyword.lower() in text:
+        if keyword_matches(text, keyword):
             score += 4.0
 
     for keyword in importance_config.get("negative_keywords", []):
-        if keyword and keyword.lower() in text:
+        if keyword_matches(text, keyword):
             score -= 10.0
 
     subtopic_name = ai.get("subtopic_name", "").lower()
+    subtopic_bonuses = []
     for subtopic in importance_config.get("priority_subtopics", []):
         name = str(subtopic.get("name", "")).lower()
         keywords = [str(keyword).lower() for keyword in subtopic.get("keywords", [])]
-        if (name and name in subtopic_name) or any(keyword and keyword in text for keyword in keywords):
-            score += 12.0 + (float(subtopic.get("weight", 1.2)) - 1.0) * 30.0
+        if (name and name in subtopic_name) or any(keyword_matches(text, keyword) for keyword in keywords):
+            subtopic_bonuses.append(12.0 + (float(subtopic.get("weight", 1.2)) - 1.0) * 30.0)
+    # Overlapping broad and specific topics should not double-reward one concept.
+    score += max(subtopic_bonuses, default=0)
 
     if item.get("code_url"):
         score += 5.0
     if re.search(r"\b(first|novel|new|unified|state-of-the-art|sota|benchmark|dataset)\b", text):
         score += 5.0
 
-    return clamp_score(score)
+    return score
 
 
 def candidate_priority(item: Dict, directions: List[Dict], importance_config: Dict) -> float:
     matches = keyword_matched_direction_ids(item, directions)
     weights = importance_config.get("direction_weights", {})
-    primary = max(matches, key=lambda key: float(weights.get(key, 1.0)), default="")
+    primary = (item.get('_routing') or {}).get('primary_direction_id') or max(matches, key=lambda key: float(weights.get(key, 1.0)), default="")
     candidate = {**item, "AI": {"primary_direction_id": primary}}
     return heuristic_importance_score(candidate, importance_config)
 
@@ -818,7 +840,7 @@ def score_single_importance(chain, item: Dict, importance_config_text: str, heur
             clamp_score(fields.get("research_value_score", 0.0)) * 0.45
             + clamp_score(fields.get("personal_relevance_score", 0.0)) * 0.55
         )
-        final_score = clamp_score(heuristic_score * 0.65 + model_score * 0.35)
+        final_score = clamp_score(heuristic_score) * 0.30 + model_score * 0.70
         reason = fields.get("importance_reason") or "Importance scored by preference heuristic and model judgment."
         signals = fields.get("key_signals") or []
         if signals:
@@ -828,10 +850,12 @@ def score_single_importance(chain, item: Dict, importance_config_text: str, heur
     except Exception as e:
         item["_importance_failed"] = True
         print(f"Importance scoring error for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
-        final_score = heuristic_score
+        final_score = clamp_score(heuristic_score)
         reason = "Flash importance scoring failed; used configured preference heuristic fallback."
 
     ai["importance_score"] = round(final_score, 2)
+    ai['importance_rank_score'] = final_score
+    ai['local_priority_score'] = heuristic_score
     ai["importance_level"] = importance_level(final_score)
     ai["importance_reason"] = reason
     ai["deep_read_selected"] = False
@@ -840,20 +864,30 @@ def score_single_importance(chain, item: Dict, importance_config_text: str, heur
     return item
 
 
-def score_importance_for_items(data: List[Dict], model_name: str, max_workers: int, importance_config: Dict) -> List[Dict]:
+def score_importance_for_items(data: List[Dict], model_name: str, max_workers: int, importance_config: Dict, use_model=None) -> List[Dict]:
     if not data:
         return data
 
-    if not env_enabled("USE_MODEL_IMPORTANCE"):
+    if not (env_enabled("USE_MODEL_IMPORTANCE") if use_model is None else use_model):
         for item in data:
-            score = heuristic_importance_score(item, importance_config)
+            local_score = heuristic_importance_score(item, importance_config)
+            route = item.get('_routing', {})
+            if route.get('routing_status') == 'ok':
+                model_score = route['personal_relevance_score'] * 0.55 + route['research_value_score'] * 0.45
+                score = 0.70 * model_score + 0.30 * clamp_score(local_score)
+                reason = 'Preliminary abstract-based model judgment (70%) and personal heuristic (30%). ' + route['reason']
+            else:
+                score = clamp_score(local_score)
+                reason = 'Local preference fallback; no successful model importance assessment.'
             ai = item["AI"]
+            ai['importance_rank_score'] = score
+            ai['local_priority_score'] = local_score
             ai["importance_score"] = round(score, 2)
             ai["importance_level"] = importance_level(score)
-            ai["importance_reason"] = "Scored from configured research priorities and paper metadata."
+            ai["importance_reason"] = reason
             ai["deep_read_selected"] = False
             ai["deep_read_rank"] = None
-        print(f"Model importance scoring disabled; scored {len(data)} papers locally.", file=sys.stderr)
+        print(f"Extra importance calls disabled; scored {len(data)} papers from routing evidence and preferences.", file=sys.stderr)
         return data
 
     importance_system = (
@@ -910,7 +944,9 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
                 item = data[idx]
                 ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
                 fallback_score = heuristic_importance_score(item, importance_config)
-                ai["importance_score"] = round(fallback_score, 2)
+                ai["importance_score"] = round(clamp_score(fallback_score), 2)
+                ai['importance_rank_score'] = clamp_score(fallback_score)
+                ai['local_priority_score'] = fallback_score
                 ai["importance_level"] = importance_level(fallback_score)
                 ai["importance_reason"] = "Unhandled importance worker error; used configured preference heuristic fallback."
                 ai["deep_read_selected"] = False
@@ -925,23 +961,8 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
     return [item for item in scored_data if item]
 
 
-def mark_deep_read_selection(items: List[Dict], top_k: int) -> List[Dict]:
-    ranked = sorted(
-        items,
-        key=lambda item: (
-            float((item.get("AI") or {}).get("importance_score") or 0.0),
-            item.get("id", ""),
-        ),
-        reverse=True,
-    )
-    selected_ids = {item.get("id"): rank for rank, item in enumerate(ranked[:top_k], start=1)}
-    for item in items:
-        ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
-        rank = selected_ids.get(item.get("id"))
-        ai["deep_read_selected"] = rank is not None
-        ai["deep_read_rank"] = rank
-        item["AI"] = ai
-    return items
+def mark_deep_read_selection(items: List[Dict], top_k: int, directions=None, primary_min=2) -> List[Dict]:
+    return select_deep_reads(items, top_k, directions, primary_min)
 
 
 def update_taxonomy_from_items(taxonomy: Dict, items: List[Dict], directions: List[Dict]) -> Dict:
@@ -949,6 +970,8 @@ def update_taxonomy_from_items(taxonomy: Dict, items: List[Dict], directions: Li
     valid_directions = direction_map(directions)
 
     for item in items:
+        if item.get('report_level') == 'brief':
+            continue
         ai = item.get("AI", {})
         direction_id = ai.get("primary_direction_id", "")
         if direction_id not in valid_directions:
@@ -985,6 +1008,17 @@ def main():
     importance_config = load_importance_config(args.directions)
 
     taxonomy = load_taxonomy(args.taxonomy, directions)
+    output_dir = env_value('AI_OUTPUT_DIR', str(Path(args.data).parent))
+    taxonomy_source = Path(args.taxonomy)
+    if taxonomy_source.exists():
+        before = taxonomy_source.read_text(encoding='utf-8')
+        try:
+            changed = json.loads(before) != taxonomy
+        except json.JSONDecodeError:
+            changed = True
+        if changed:
+            digest = hashlib.sha256(before.encode()).hexdigest()[:16]
+            atomic_write(Path(output_dir) / 'run_metrics' / f'taxonomy-before-{digest}.json', before)
 
     target_file = args.data.replace(".jsonl", f"_AI_enhanced_{language}.jsonl")
 
@@ -1002,29 +1036,83 @@ def main():
             unique_data.append(item)
 
     print("Open:", args.data, file=sys.stderr)
-    max_detail_items = int(os.environ.get("MAX_DETAIL_ITEMS") or "30")
-    if max_detail_items < 0:
-        raise ValueError("MAX_DETAIL_ITEMS must be zero or greater")
-    filtered_data = filter_all_items(
-        unique_data,
-        filter_model_name,
-        filter_max_workers,
-        directions,
-        importance_config,
-        max_items=max_detail_items,
-    )
-    if max_detail_items > 0:
-        print(f"Detail processing limited to {max_detail_items} papers.", file=sys.stderr)
-    print(f"Filtered {len(filtered_data)} relevant papers from {len(unique_data)} crawled papers.", file=sys.stderr)
-
-    processed_data = process_all_items(filtered_data, detail_model_name, language, detail_max_workers, directions, taxonomy)
+    selection_mode = env_value("SELECTION_MODE", "semantic")
+    if selection_mode not in {"semantic", "legacy"}:
+        raise ValueError("SELECTION_MODE must be semantic or legacy")
+    audit = {}
+    brief_items = []
+    if selection_mode == "semantic":
+        audit_root = Path(env_value("AI_OUTPUT_DIR", str(Path(args.data).parent)))
+        audit_path = audit_root / "run_metrics" / f"{Path(args.data).stem}-selection.json"
+        filtered_data = []
+        try:
+            # Legacy caps/flags never suppress review of an abstract in semantic mode.
+            filtered_data = route_all_items(unique_data, filter_model_name, filter_max_workers,
+                                            directions, importance_config, audit)
+            secondary_limit = int(env_value('SECONDARY_DETAIL_LIMIT', str(importance_config.get('secondary_detail_limit', 10))))
+            if secondary_limit < 0:
+                raise ValueError('SECONDARY_DETAIL_LIMIT must be zero or greater')
+            detail_items, brief_items = allocate_details(filtered_data, directions, secondary_limit,
+                lambda p: candidate_priority(p, directions, importance_config), audit)
+            print(f"Semantic routing: {len(unique_data)} reviewed; {len(detail_items)} detail requests, {len(brief_items)} briefs.", file=sys.stderr)
+            processed_data = process_all_items(detail_items, detail_model_name, language,
+                                               detail_max_workers, directions, taxonomy)
+        finally:
+            for item in filtered_data:
+                record = audit[item['id']]
+                if record.get('detail_status') != 'quota_deferred':
+                    record['detail_status'] = item.get('_detail_status', 'pending')
+                if item.get('_detail_reason'):
+                    record['detail_reason'] = item['_detail_reason']
+            atomic_write(audit_path, json.dumps(dict(mode=selection_mode,
+                unique_papers=len(unique_data), papers=list(audit.values())), ensure_ascii=False, indent=2) + "\n")
+        counts = {state: sum(r.get('decision') == state for r in audit.values())
+                  for state in ('relevant', 'uncertain', 'irrelevant')}
+        summary = f"Semantic selection: {len(unique_data)} unique papers; {counts}; {len(processed_data)} detailed reports.\n"
+        print(summary, file=sys.stderr)
+        if env_value('GITHUB_STEP_SUMMARY'):
+            with open(env_value('GITHUB_STEP_SUMMARY'), 'a', encoding='utf-8') as stream:
+                stream.write("\n" + summary)
+    else:
+        max_detail_items = int(os.environ.get("MAX_DETAIL_ITEMS") or "30")
+        if max_detail_items < 0:
+            raise ValueError("MAX_DETAIL_ITEMS must be zero or greater")
+        filtered_data = filter_all_items(unique_data, filter_model_name, filter_max_workers,
+                                        directions, importance_config, max_items=max_detail_items)
+        processed_data = process_all_items(filtered_data, detail_model_name, language,
+                                           detail_max_workers, directions, taxonomy)
     processed_data = score_importance_for_items(processed_data, importance_model_name, importance_max_workers, importance_config)
+    briefs = [make_brief(p, directions) for p in brief_items]
+    # Brief scores reuse routing evidence; an optional extra scorer only sees detailed reports.
+    briefs = score_importance_for_items(briefs, importance_model_name, importance_max_workers, importance_config, use_model=False)
+    processed_data += briefs
     daily_top_k = (
         positive_int("DAILY_DEEP_READ_TOP_K", importance_config.get("daily_deep_read_top_k", 3) or 3)
         if enabled("ENABLE_DEEP_READ", default=True)
         else 0
     )
-    processed_data = mark_deep_read_selection(processed_data, daily_top_k)
+    processed_data = mark_deep_read_selection(processed_data, daily_top_k, directions,
+        int(importance_config.get('primary_deep_read_min', 2)))
+    if selection_mode == 'semantic':
+        per_direction = {}
+        for direction in directions:
+            key = direction['id']
+            records = [r for r in audit.values() if r.get('primary_direction_id') == key]
+            published = [p for p in processed_data if p['AI'].get('primary_direction_id') == key]
+            per_direction[key] = dict(routed=len(records),
+                detail_requests=sum(r.get('detail_status') not in {'not_requested', 'quota_deferred'} for r in records),
+                detailed=sum(p.get('report_level', 'detail') == 'detail' for p in published),
+                briefs=sum(p.get('report_level') == 'brief' for p in published),
+                deep_reads=sum(p['AI'].get('deep_read_selected', False) for p in published))
+        atomic_write(audit_path, json.dumps(dict(mode=selection_mode, unique_papers=len(unique_data),
+            per_direction=per_direction, fallback_requests=sum(r.get('allocation_reason') == 'routing_fallback' for r in audit.values()),
+            papers=list(audit.values())), ensure_ascii=False, indent=2) + '\n')
+        print(json.dumps(per_direction, ensure_ascii=False), file=sys.stderr)
+        if env_value('GITHUB_STEP_SUMMARY'):
+            with open(env_value('GITHUB_STEP_SUMMARY'), 'a', encoding='utf-8') as stream:
+                stream.write('\n| Direction | Routed | Detail requests | Detailed | Briefs | Deep reads |\n| --- | ---: | ---: | ---: | ---: | ---: |\n')
+                for key, row in per_direction.items():
+                    stream.write('| ' + key + ' | ' + ' | '.join(str(v) for v in row.values()) + ' |\n')
 
     # No persistent output is replaced until all enhancement stages validate.
     taxonomy = update_taxonomy_from_items(copy.deepcopy(taxonomy), processed_data, directions)

@@ -2342,3 +2342,17 @@ footer {
   display: flex;
   align-items: center;
 }
+
+/* Reading depth is visible alongside the interest groups. */
+.report-group-title {
+  grid-column: 1 / -1;
+  font-size: 1.1rem;
+  margin: 1rem 0 .25rem;
+  color: var(--text-color, inherit);
+}
+.brief-note {
+  font-size: .85rem;
+  font-weight: 600;
+  opacity: .8;
+  margin-bottom: .6rem;
+}

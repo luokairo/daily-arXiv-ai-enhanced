@@ -9,8 +9,20 @@ on:
         default: '2026-09-17'
         type: string
       paper_id:
-        description: Optional paper ID; otherwise use the highest-priority local candidate
+        description: Optional comma-separated paper IDs from the historical file
         required: false
+        type: string
+      sample_limit:
+        description: Maximum unique papers to review (1-20)
+        default: '1'
+        type: string
+      secondary_detail_limit:
+        description: Secondary detail budget for this diagnostic (0-20)
+        default: '10'
+        type: string
+      deep_read_top_k:
+        description: Maximum full-text deep reads (1-3)
+        default: '1'
         type: string
 
 permissions:
@@ -25,6 +37,8 @@ jobs:
       OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
       MODEL_NAME: deepseek-flash
       DETAIL_MODEL_NAME: deepseek-flash
+      FILTER_MODEL_NAME: deepseek-flash
+      FILTER_MAX_OUTPUT_TOKENS: ${{ vars.FILTER_MAX_OUTPUT_TOKENS || '512' }}
       DEEP_READ_MODEL_NAME: deepseek-flash
       DEEPSEEK_THINKING: 'false'
       DEEP_READ_THINKING: 'false'
@@ -45,14 +59,20 @@ jobs:
           if ! git show "FETCH_HEAD:data/taxonomy.json" > "$RUNNER_TEMP/taxonomy.json"; then
             echo '{}' > "$RUNNER_TEMP/taxonomy.json"
           fi
-      - name: Test one summary and at most one deep read
+      - name: Test bounded historical routing, allocation and deep reading
         env:
           PAPER_ID: ${{ inputs.paper_id }}
+          SAMPLE_LIMIT: ${{ inputs.sample_limit || '1' }}
+          SECONDARY_LIMIT: ${{ inputs.secondary_detail_limit || '10' }}
+          DEEP_READ_LIMIT: ${{ inputs.deep_read_top_k || '1' }}
         run: |
           .venv/bin/python scripts/diagnose_pipeline.py \
             --data "$RUNNER_TEMP/papers.jsonl" \
             --taxonomy "$RUNNER_TEMP/taxonomy.json" \
             --paper-id "$PAPER_ID" \
+            --sample-limit "$SAMPLE_LIMIT" \
+            --secondary-detail-limit "$SECONDARY_LIMIT" \
+            --deep-read-top-k "$DEEP_READ_LIMIT" \
             --output "$RUNNER_TEMP/deepseek-diagnostic"
       - uses: actions/upload-artifact@v4
         if: always()

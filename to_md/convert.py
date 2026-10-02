@@ -11,6 +11,18 @@ if str(ROOT_DIR) not in sys.path:
 
 from semantic_arxiv import load_directions
 
+def report_group(item):
+    if item.get("report_level", "detail") == "brief":
+        return "secondary_brief"
+    return "secondary_detail" if item.get("interest_tier") == "secondary" else "primary_detail"
+
+REPORT_GROUPS = [("primary_detail", "主要方向详细摘要"), ("secondary_detail", "辅助方向精选摘要"), ("secondary_brief", "辅助方向简讯")]
+
+def paper_rank(item):
+    ai = item.get("AI") or {}
+    return (-float(ai.get("importance_rank_score", ai.get("importance_score", 0)) or 0), -float(ai.get("local_priority_score", 0) or 0), str(item.get("id", "")))
+
+
 
 def direction_value(item, valid_directions=None):
     valid_directions = valid_directions or {}
@@ -70,6 +82,13 @@ def render_paper(template, item, idx, valid_directions=None):
     subtopic_id, subtopic_name, _ = subtopic_value(item)
     deep_read_rank = ai.get("deep_read_rank")
     deep_read_badge = f"Top {deep_read_rank} 精读候选" if ai.get("deep_read_selected") and deep_read_rank else "未入选精读"
+    if item.get('report_level', 'detail') == 'brief':
+        return (f"### [{idx}] [{item.get('title', 'Untitled')}]({item.get('abs') or item.get('pdf')})\n"
+                f"*{safe_authors(item.get('authors'))}*\n\n"
+                f"方向：{direction_name} · 相关性：{item.get('relevance_status', 'uncertain')}\n\n"
+                f"> 简讯，未做详细分析\n\n{ai.get('tldr', '')}\n\n"
+                f"筛选理由：{ai.get('classification_reason', '')}\n\n"
+                f"初步阅读优先级：{ai.get('importance_score', '')}")
     return template.format(
         title=item.get("title", "Untitled"),
         authors=safe_authors(item.get("authors")),
@@ -115,50 +134,21 @@ if __name__ == "__main__":
     direction_order = {direction["id"]: idx for idx, direction in enumerate(directions)}
     valid_directions = {direction["id"]: direction for direction in directions}
 
-    grouped = {}
+    template = Path(__file__).with_name("paper_template.md").read_text(encoding="utf-8")
+    groups = {key: [] for key, _ in REPORT_GROUPS}
     for item in data:
-        direction_id, direction_name = direction_value(item, valid_directions)
-        subtopic_id, subtopic_name, subtopic_description = subtopic_value(item)
-        direction_group = grouped.setdefault(
-            direction_id,
-            {
-                "name": direction_name,
-                "order": direction_order.get(direction_id, len(direction_order)),
-                "subtopics": {},
-            },
-        )
-        subtopic_group = direction_group["subtopics"].setdefault(
-            subtopic_id,
-            {
-                "name": subtopic_name,
-                "description": subtopic_description,
-                "papers": [],
-            },
-        )
-        subtopic_group["papers"].append(item)
-
-    template = open("paper_template.md", "r", encoding="utf-8").read()
-
+        groups[report_group(item)].append(item)
     markdown = "<div id=toc></div>\n\n# Table of Contents\n\n"
-    sorted_directions = sorted(grouped.items(), key=lambda item: (item[1]["order"], item[1]["name"]))
-
-    for direction_id, direction in sorted_directions:
-        paper_total = sum(len(subtopic["papers"]) for subtopic in direction["subtopics"].values())
-        anchor = f"direction-{direction_id}"
-        markdown += f"- [{direction['name']}](#{anchor}) [Total: {paper_total}]\n"
-        for subtopic_id, subtopic in sorted(direction["subtopics"].items(), key=lambda item: item[1]["name"]):
-            markdown += f"  - [{subtopic['name']}](#{anchor}-{subtopic_id}) [Total: {len(subtopic['papers'])}]\n"
-
+    for key, label in REPORT_GROUPS:
+        if groups[key]:
+            markdown += f"- [{label}](#report-{key}) [Total: {len(groups[key])}]\n"
     idx = count(1)
-    for direction_id, direction in sorted_directions:
-        anchor = f"direction-{direction_id}"
-        markdown += f"\n\n<div id='{anchor}'></div>\n\n# {direction['name']} [[Back]](#toc)\n\n"
-        for subtopic_id, subtopic in sorted(direction["subtopics"].items(), key=lambda item: item[1]["name"]):
-            markdown += f"\n\n<div id='{anchor}-{subtopic_id}'></div>\n\n## {subtopic['name']} [[Back]](#toc)\n\n"
-            if subtopic.get("description"):
-                markdown += f"{subtopic['description']}\n\n"
-            papers = [render_paper(template, paper, next(idx), valid_directions) for paper in subtopic["papers"]]
-            markdown += "\n\n".join(papers)
+    for key, label in REPORT_GROUPS:
+        if not groups[key]:
+            continue
+        markdown += f"\n\n<div id='report-{key}'></div>\n\n# {label} [[Back]](#toc)\n\n"
+        markdown += "\n\n".join(render_paper(template, item, next(idx), valid_directions)
+                                   for item in sorted(groups[key], key=paper_rank))
 
     data_path = Path(args.data)
     output_path = str(data_path.with_name(data_path.name.split("_")[0] + ".md"))

@@ -14,6 +14,8 @@ DEFAULT_TAXONOMY_PATH = REPO_ROOT / "data" / "taxonomy.json"
 
 DEFAULT_IMPORTANCE_CONFIG: Dict[str, Any] = {
     "daily_deep_read_top_k": 5,
+    "secondary_detail_limit": 10,
+    "primary_deep_read_min": 2,
     "direction_weights": {},
     "priority_subtopics": [],
     "boost_keywords": [],
@@ -120,6 +122,12 @@ def load_directions(config_path: Optional[str] = None) -> List[Dict[str, Any]]:
         if not isinstance(item, dict) or not item.get("id") or not item.get("name"):
             continue
         direction = deepcopy(item)
+        direction.setdefault('tier', 'primary')
+        if direction['tier'] not in {'primary', 'secondary'}:
+            raise ValueError('Direction tier must be primary or secondary')
+        direction['detail_quota'] = int(direction.get('detail_quota', 0))
+        if direction['detail_quota'] < 0:
+            raise ValueError('Direction detail_quota must not be negative')
         direction["arxiv_categories"] = list(dict.fromkeys(direction.get("arxiv_categories", [])))
         direction["keywords"] = list(dict.fromkeys(direction.get("keywords", [])))
 
@@ -204,6 +212,11 @@ def _canonical_seed_subtopic(sub: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def direction_scope_digest(direction: Dict[str, Any]) -> str:
+    scope = {key: direction.get(key) for key in ('id', 'name', 'description', 'canonical_subtopics')}
+    return hashlib.sha256(json.dumps(scope, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+
+
 def empty_taxonomy(directions: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
     return {
         "version": 2,
@@ -212,6 +225,7 @@ def empty_taxonomy(directions: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
             direction["id"]: {
                 "id": direction["id"],
                 "name": direction["name"],
+                "scope_digest": direction_scope_digest(direction),
                 "subtopics": [
                     _canonical_seed_subtopic(sub)
                     for sub in direction.get("canonical_subtopics", [])
@@ -236,9 +250,9 @@ def ensure_canonical_seeded(taxonomy: Dict[str, Any], directions: Iterable[Dict[
                 for sub in entry["subtopics"]:
                     if sub.get("id") == canonical["id"]:
                         sub["is_canonical"] = True
-                        sub["keywords"] = list(dict.fromkeys((sub.get("keywords") or []) + canonical.get("keywords", [])))
-                        if not sub.get("description"):
-                            sub["description"] = canonical.get("description", "")
+                        sub['name'] = canonical['name']
+                        sub["keywords"] = list(canonical.get("keywords", []))
+                        sub["description"] = canonical.get("description", "")
                         break
                 continue
             if canonical["name"].strip().lower() in existing_names:
@@ -283,6 +297,15 @@ def load_taxonomy(path: Optional[str], directions: List[Dict[str, Any]]) -> Dict
         )
         entry["name"] = direction["name"]
         entry.setdefault("subtopics", [])
+        scope_digest = direction_scope_digest(direction)
+        # A changed scope can make old model-created topics misleading. Keep the
+        # configured seeds; the original taxonomy is backed up by the pipeline.
+        if entry.get('scope_digest') != scope_digest:
+            entry['subtopics'] = [sub for sub in entry['subtopics'] if sub.get('is_canonical')]
+        entry['scope_digest'] = scope_digest
+        canonical_ids = {sub['id'] for sub in direction.get('canonical_subtopics', [])}
+        entry['subtopics'] = [sub for sub in entry['subtopics']
+                             if not sub.get('is_canonical') or sub.get('id') in canonical_ids]
     ensure_canonical_seeded(taxonomy, directions)
     return taxonomy
 
