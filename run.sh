@@ -75,47 +75,10 @@ echo "本地测试：爬取 $today 的arXiv论文... / Local test: Crawling $tod
 # 第一步：爬取数据 / Step 1: Crawl data
 echo "步骤1：开始爬取... / Step 1: Starting crawl..."
 
-# 检查今日文件是否已存在，如存在则删除 / Check if today's file exists, delete if found
-if [ -f "data/${today}.jsonl" ]; then
-    echo "🗑️ 发现今日文件已存在，正在删除重新生成... / Found existing today's file, deleting for fresh start..."
-    rm "data/${today}.jsonl"
-    echo "✅ 已删除现有文件：data/${today}.jsonl / Deleted existing file: data/${today}.jsonl"
-else
-    echo "📝 今日文件不存在，准备新建... / Today's file doesn't exist, ready to create new one..."
-fi
-
-cd daily_arxiv
-scrapy crawl arxiv -o ../data/${today}.jsonl
-
-if [ ! -f "../data/${today}.jsonl" ]; then
-    echo "爬取失败，未生成数据文件 / Crawling failed, no data file generated"
-    exit 1
-fi
-
-# 第二步：检查去重 / Step 2: Check duplicates  
-echo "步骤2：执行去重检查... / Step 2: Performing intelligent deduplication check..."
-python daily_arxiv/check_stats.py
-dedup_exit_code=$?
-
-case $dedup_exit_code in
-    0)
-        # check_stats.py已输出成功信息，继续处理 / check_stats.py already output success info, continue processing
-        ;;
-    1)
-        # check_stats.py已输出无新内容信息，停止处理 / check_stats.py already output no new content info, stop processing
-        exit 1
-        ;;
-    2)
-        # check_stats.py已输出错误信息，停止处理 / check_stats.py already output error info, stop processing
-        exit 2
-        ;;
-    *)
-        echo "❌ 未知退出码，停止处理... / Unknown exit code, stopping..."
-        exit 1
-        ;;
-esac
-
-cd ..
+python scripts/crawl_dated.py --date "$today" --directory data \
+    --audit-directory "$AI_OUTPUT_DIR/run_metrics" || exit 1
+# Cross-category duplicates have already been removed by the dated crawler.
+# Keep the complete announcement-day set instead of filtering against other days.
 
 # 第三步：AI处理 / Step 3: AI processing
 if [ "$PARTIAL_MODE" = "false" ]; then

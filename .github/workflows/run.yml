@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       target_date:
-        description: "Optional target date to process, format YYYY-MM-DD"
+        description: "Exact arXiv announcement date YYYY-MM-DD; blank uses latest listed day"
         required: false
         type: string
 
@@ -76,89 +76,29 @@ jobs:
           echo "data 分支不存在，跳过历史数据恢复 / Data branch does not exist, skip restore"
         fi
         
-    - name: Crawl arXiv papers
+    - name: Crawl date-verified arXiv papers
       id: crawl_step
+      env:
+        REQUESTED_DATE: ${{ inputs.target_date }}
       run: |
         source .venv/bin/activate
-        if [ -z "$TIMEZONE" ]; then
-          export TIMEZONE="Asia/Shanghai"
-        fi
-        today="${{ github.event.inputs.target_date }}"
-        if [ -z "$today" ]; then
-          today=$(TZ="$TIMEZONE" date "+%Y-%m-%d")
-        fi
-        export TARGET_DATE="$today"
-        echo "开始爬取 $today 的arXiv论文... / Starting to crawl $today arXiv papers..."
-        mkdir -p data assets
-        
-        # 检查今日文件是否已存在，如存在则删除 / Check if today's file exists, delete if found
-        if [ -f "data/${today}.jsonl" ]; then
-            echo "🗑️ 发现今日文件已存在，正在删除重新生成... / Found existing today's file, deleting for fresh start..."
-            rm "data/${today}.jsonl"
-            echo "✅ 已删除现有文件：data/${today}.jsonl / Deleted existing file: data/${today}.jsonl"
-        else
-            echo "📝 今日文件不存在，准备新建... / Today's file doesn't exist, ready to create new one..."
-        fi
-        
-        cd daily_arxiv
-        export TARGET_DATE="${today}"
-        
-        # 使用Scrapy爬取
-        # Use Scrapy to crawl
-        scrapy crawl arxiv -o ../data/${today}.jsonl
-        
-        # 检查爬取是否成功 / Check if crawling was successful
-        if [ ! -f "../data/${today}.jsonl" ]; then
-            echo "爬取失败，未生成数据文件 / Crawling failed, no data file generated"
-            exit 1
-        fi
-        
-        echo "crawl_date=$today" >> $GITHUB_OUTPUT
-        echo "爬取完成 / Crawling completed"
-        
-    - name: Check for duplicates
+        python scripts/crawl_dated.py --date "$REQUESTED_DATE" \
+          --directory data --audit-directory "$AI_OUTPUT_DIR/run_metrics"
+
+    - name: Check dated candidate snapshot
       id: dedup_check
+      env:
+        PAPER_COUNT: ${{ steps.crawl_step.outputs.paper_count }}
       run: |
-        source .venv/bin/activate
-        echo "执行去重检查... / Performing intelligent deduplication check..."
-        if [ -z "$TIMEZONE" ]; then
-          export TIMEZONE="Asia/Shanghai"
+        # The dated crawler deduplicates across categories. Cross-day ID filtering
+        # would change the verified announcement set, so do not rewrite it here.
+        if [ "$PAPER_COUNT" -gt 0 ]; then
+          echo "has_new_content=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "has_new_content=false" >> "$GITHUB_OUTPUT"
+          echo "skip_reason=no_new_content" >> "$GITHUB_OUTPUT"
         fi
-        export TARGET_DATE="${{ steps.crawl_step.outputs.crawl_date }}"
-        
-        cd daily_arxiv
-        # 执行去重检查脚本 / Execute intelligent deduplication check script
-        set +e  # 暂时允许命令失败 / Temporarily allow command failure
-        python daily_arxiv/check_stats.py
-        
-        # 获取退出码 / Get exit code
-        dedup_exit_code=$?
-        set -e  # 恢复严格模式 / Restore strict mode
-        
-        echo "去重检查退出码: $dedup_exit_code / Dedup check exit code: $dedup_exit_code"
-        echo "dedup_exit_code=$dedup_exit_code" >> $GITHUB_OUTPUT
-        
-        case $dedup_exit_code in
-            0)
-                echo "has_new_content=true" >> $GITHUB_OUTPUT
-                ;;
-            1)
-                echo "has_new_content=false" >> $GITHUB_OUTPUT
-                echo "skip_reason=no_new_content" >> $GITHUB_OUTPUT
-                ;;
-            2)
-                echo "has_new_content=false" >> $GITHUB_OUTPUT
-                echo "skip_reason=processing_error" >> $GITHUB_OUTPUT
-                exit 1
-                ;;
-            *)
-                echo "❌ 未知退出码，停止工作流 / Unknown exit code, stop workflow"
-                echo "has_new_content=false" >> $GITHUB_OUTPUT
-                echo "skip_reason=unknown_error" >> $GITHUB_OUTPUT
-                exit 1
-                ;;
-        esac
-        
+
     - name: AI Enhancement Processing
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
@@ -187,6 +127,7 @@ jobs:
         name: selection-audit-${{ github.run_id }}
         path: |
           /tmp/arxiv-stage/run_metrics/*-selection.json
+          /tmp/arxiv-stage/run_metrics/*-crawl.json
           /tmp/arxiv-stage/enhance-usage.json
         if-no-files-found: ignore
 
