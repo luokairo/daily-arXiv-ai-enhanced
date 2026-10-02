@@ -1,7 +1,7 @@
 """Crawl an exact arXiv announcement day, never relabel /new as a past day.
 
-The public pastweek lists provide daily membership; the Atom API supplies full
-abstracts for those IDs. Older dates require a previously verified snapshot.
+The official catchup pages provide dated membership and full abstracts for the
+past 90 days. Older dates require a previously verified snapshot.
 Metadata/full texts are the currently available versions, not an as-of archive.
 """
 import argparse
@@ -11,7 +11,6 @@ import os
 import re
 import sys
 import time
-import xml.etree.ElementTree as ET
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -22,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from semantic_arxiv import load_directions, recall_categories
 
 HEADER = re.compile(r"([A-Za-z]{3}, \d{1,2} [A-Za-z]{3} \d{4})\s*\((?:continued, )?showing (?:(?:first|last) )?(\d+) of (\d+) entr(?:y|ies)\s*\)")
-NS = {"a": "http://www.w3.org/2005/Atom", "x": "http://arxiv.org/schemas/atom"}
+SECTION = re.compile(r"(New|Cross|Replacement) submissions \(\s*(?:continued, )?showing (?:(?:first|last) )?(\d+) of (\d+) entr(?:y|ies)\s*\)")
 
 
 def text(value):
@@ -68,7 +67,7 @@ class Client:
 
     def get(self, url, **kwargs):
         for attempt in range(3):
-            time.sleep(max(0, 3.1 - (time.monotonic() - self.last_request)))
+            time.sleep(max(0, 15.1 - (time.monotonic() - self.last_request)))
             self.last_request = time.monotonic()
             try:
                 response = self.session.get(url, timeout=90, **kwargs)
@@ -85,54 +84,74 @@ class Client:
         raise RuntimeError("Unreachable")
 
 
-def category_days(client, category):
-    merged, urls, offset, total = {}, [], 0, None
-    while total is None or offset < total:
-        url = f"https://arxiv.org/list/{category}/pastweek?skip={offset}&show=2000"
-        current_total, groups = parse_listing(client.get(url))
+def parse_catchup(html, day, category):
+    page = Selector(text=html)
+    expected_date = date.fromisoformat(day).strftime("%a, %d %b %Y")
+    heading = text(page.css("#dlpage h1").xpath("string()").get())
+    if not heading.startswith("Catchup results for ") or not heading.endswith(" on " + expected_date):
+        raise ValueError(f"Catchup date mismatch: {heading!r}")
+    totals = re.findall(r"Total of ([\d,]+) entries for " + re.escape(expected_date), text(page.css("#dlpage").xpath("string()").get()))
+    if not totals or len(set(totals)) != 1:
+        raise ValueError("Cannot verify catchup total")
+    total, groups, papers = int(totals[0].replace(",", "")), {}, {}
+    for group in page.css("dl"):
+        match = SECTION.fullmatch(text(group.css("h3").xpath("string()").get()))
+        if not match:
+            raise ValueError("Unknown catchup section")
+        kind, shown, expected = match[1], int(match[2]), int(match[3])
+        ids = []
+        for item in group.css("dt"):
+            pid = paper_id(item.css('a[title="Abstract"]::attr(href)').get() or "")
+            ids.append(pid)
+            if kind == "Replacement":
+                continue  # Preserve the original new/cross-list scope, no replacement re-analysis.
+            dd = item.xpath("following-sibling::dd[1]")
+            title = re.sub(r"^Title:\s*", "", text(dd.css(".list-title").xpath("string()").get()))
+            abstract = text(dd.css("p.mathjax").xpath("string()").get())
+            categories = re.findall(r"\(([^)]+)\)", text(dd.css(".list-subjects").xpath("string()").get()))
+            if not title or not abstract or category not in categories or pid in papers:
+                raise ValueError(f"Incomplete or duplicate catchup metadata: {pid}")
+            papers[pid] = dict(id=pid, title=title, summary=abstract, categories=sorted(set(categories)),
+                authors=[text(author) for author in dd.css(".list-authors a").xpath("string()").getall()],
+                comment=re.sub(r"^Comments:\s*", "", text(dd.css(".list-comments").xpath("string()").get())),
+                abs=f"https://arxiv.org/abs/{pid}", pdf=f"https://arxiv.org/pdf/{pid}",
+                announcement_date=day, metadata_basis="current_available_version",
+                announcement_categories=[category])
+        if shown != len(ids) or len(ids) != len(set(ids)) or kind in groups:
+            raise ValueError("Catchup section count mismatch")
+        groups[kind] = dict(expected=expected, ids=ids)
+    if sum(len(group['ids']) for group in groups.values()) != len(page.css("dl dt")):
+        raise ValueError("Unaccounted catchup entries")
+    if not groups and total != 0:
+        raise ValueError("Missing catchup sections")
+    return total, groups, papers
+
+
+def category_catchup(client, category, day):
+    merged, papers, urls, page_number, count, total = {}, {}, [], 1, 0, None
+    while total is None or count < total:
+        url = f"https://arxiv.org/catchup/{category}/{day}?abs=True&page={page_number}"
+        current_total, groups, page_papers = parse_catchup(client.get(url), day, category)
         if total is not None and total != current_total:
-            raise ValueError(f"Listing changed during pagination: {category}")
+            raise ValueError("Catchup changed during pagination")
         total = current_total
         urls.append(url)
-        count = 0
-        for day, group in groups.items():
-            existing = merged.setdefault(day, {"expected": group["expected"], "ids": []})
-            if existing["expected"] != group["expected"] or set(existing["ids"]) & set(group["ids"]):
-                raise ValueError(f"Inconsistent pagination: {category}/{day}")
-            existing["ids"].extend(group["ids"])
-            count += len(group["ids"])
-        if not count:
-            raise ValueError(f"Pagination did not advance: {category}")
-        offset += count
-    if offset != total:
-        raise ValueError(f"Listing count mismatch: {category}")
-    for day, group in merged.items():
-        if len(group["ids"]) != group["expected"]:
-            raise ValueError(f"Incomplete day: {category}/{day}")
-    return merged, urls
-
-
-def parse_metadata(xml, requested, day, sources):
-    root = ET.fromstring(xml)
-    papers = {}
-    for entry in root.findall("a:entry", NS):
-        identity = entry.findtext("a:id", "", NS)
-        pid = paper_id(identity)
-        title = text(entry.findtext("a:title", "", NS))
-        abstract = text(entry.findtext("a:summary", "", NS))
-        if pid not in requested or pid in papers or not title or not abstract:
-            raise ValueError(f"Missing, duplicate or unexpected metadata: {pid}")
-        papers[pid] = dict(id=pid, title=title, summary=abstract,
-            authors=[text(node.text) for node in entry.findall("a:author/a:name", NS)],
-            categories=[node.attrib["term"] for node in entry.findall("a:category", NS)],
-            comment=text(entry.findtext("x:comment", "", NS)),
-            abs=f"https://arxiv.org/abs/{pid}", pdf=f"https://arxiv.org/pdf/{pid}",
-            published=entry.findtext("a:published", "", NS), updated=entry.findtext("a:updated", "", NS),
-            metadata_version=identity.rsplit("/abs/", 1)[-1], announcement_date=day,
-            announcement_categories=sorted(sources[pid]))
-    if set(papers) != set(requested):
-        raise ValueError(f"API omitted {len(set(requested) - set(papers))} requested papers")
-    return papers
+        page_count = 0
+        for kind, group in groups.items():
+            existing = merged.setdefault(kind, dict(expected=group['expected'], ids=[]))
+            if existing['expected'] != group['expected'] or set(existing['ids']) & set(group['ids']):
+                raise ValueError("Inconsistent catchup pagination")
+            existing['ids'].extend(group['ids'])
+            page_count += len(group['ids'])
+        if set(papers) & set(page_papers) or (not page_count and total):
+            raise ValueError("Repeated or empty catchup page")
+        papers.update(page_papers)
+        count += page_count
+        page_number += 1
+    if count != total or sum(g['expected'] for g in merged.values()) != total or any(len(g['ids']) != g['expected'] for g in merged.values()):
+        raise ValueError("Incomplete catchup day")
+    return papers, dict(count=len(papers), listing_urls=urls,
+                        replacements_excluded=len(merged.get('Replacement', {}).get('ids', [])))
 
 
 def atomic_write(path, content):
@@ -171,30 +190,23 @@ def crawl(day, directory, audit_directory, client=None):
         content, audit = cached
         print(f"Reusing verified announcement snapshot for {day}", flush=True)
     else:
-        listings = {}
+        if not day:
+            # Find the latest actual announcement day, including on weekends.
+            _, groups = parse_listing(client.get(f"https://arxiv.org/list/{categories[0]}/pastweek?skip=0&show=25"))
+            day = max(groups)
+        papers, counts = {}, {}
         for category in categories:
-            listings[category] = category_days(client, category)
-            print(f"Verified announcement listing: {category}", flush=True)
-        available = set.union(*(set(groups) for groups, _ in listings.values()))
-        day = day or max(available)
-        # Missing dates are ambiguous (no announcements vs outside the public window).
-        # Fail closed; never substitute today's list or a submittedDate query.
-        sources, counts = {}, {}
-        for category, (groups, urls) in listings.items():
-            if day not in groups:
-                raise ValueError(f"{day} is not verifiable in {category}/pastweek; use a verified saved snapshot. No output replaced.")
-            ids = groups[day]["ids"]
-            counts[category] = {"count": len(ids), "listing_urls": urls}
-            for pid in ids:
-                sources.setdefault(pid, []).append(category)
-        ids = sorted(sources)
-        print(f"Announcement {day}: {len(ids)} unique papers; " + json.dumps({cat: details['count'] for cat, details in counts.items()}), flush=True)
-        papers = {}
-        for start in range(0, len(ids), 100):
-            batch = ids[start:start + 100]
-            xml = client.get("https://export.arxiv.org/api/query", params={"id_list": ",".join(batch), "max_results": len(batch)})
-            papers.update(parse_metadata(xml, batch, day, sources))
-            print(f"Full abstracts: {len(papers)}/{len(ids)}", flush=True)
+            category_papers, counts[category] = category_catchup(client, category, day)
+            for pid, paper in category_papers.items():
+                if pid in papers:
+                    if papers[pid]['title'] != paper['title'] or papers[pid]['summary'] != paper['summary']:
+                        raise ValueError(f"Metadata changed across category snapshots: {pid}")
+                    papers[pid]['announcement_categories'].append(category)
+                else:
+                    papers[pid] = paper
+            print(f"Verified {day} {category}: {len(category_papers)} full abstracts", flush=True)
+        ids = sorted(papers)
+        print(f"Announcement {day}: {len(ids)} unique papers", flush=True)
         content = "".join(json.dumps(papers[pid], ensure_ascii=False) + "\n" for pid in ids)
         audit = dict(schema_version=1, status="complete", target_date=day,
             date_basis="arxiv_announcement_listing", metadata_basis="current_available_version",
