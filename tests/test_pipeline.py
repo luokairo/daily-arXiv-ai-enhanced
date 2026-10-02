@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
@@ -140,6 +141,101 @@ class RuntimeTests(IsolatedTest):
         self.assertEqual(responder.call_count, 2)
         self.assertEqual(runtime._METRICS["detail"]["unknown_usage"], 2)
 
+    def test_off_peak_block_has_no_paid_call_and_reports_reason(self):
+        summary = self.root / 'summary.md'
+        responder = Mock(return_value=AIMessage(content='should not be requested'))
+        with patch.dict(os.environ, ENFORCE_DEEPSEEK_OFF_PEAK='true', GITHUB_STEP_SUMMARY=str(summary)), \
+                patch.object(runtime, 'datetime') as clock:
+            chain = self.chain(responder)
+            clock.now.return_value = datetime(2026, 10, 5, 1, tzinfo=timezone.utc)
+            with self.assertRaisesRegex(runtime.OffPeakWindowClosed, 'off-peak protection'):
+                chain.invoke(dict(content='uncached'))
+        responder.assert_not_called()
+        self.assertTrue(chain.stopped.is_set())
+        row = runtime._METRICS['detail']
+        self.assertEqual((row['calls'], row['unknown_usage'], row['failures']), (0, 0, 0))
+        self.assertIn('incomplete reports will not be published', summary.read_text())
+
+    def test_off_peak_toggle_preserves_cache_and_busy_cache_hits_are_free(self):
+        responder = Mock(return_value=AIMessage(content='successful result'))
+        inputs = dict(paper_id='1', content='same abstract')
+        original = self.chain(responder)
+        original.invoke(inputs)
+        with patch.dict(os.environ, ENFORCE_DEEPSEEK_OFF_PEAK='true'):
+            guarded = self.chain(responder)
+        self.assertEqual(original.signature, guarded.signature)
+        with patch.object(runtime, 'datetime') as clock:
+            clock.now.return_value = datetime(2026, 10, 5, 1, tzinfo=timezone.utc)
+            self.assertEqual(guarded.invoke(inputs).content, 'successful result')
+            clock.now.assert_not_called()
+        self.assertEqual(responder.call_count, 1)
+        self.assertEqual(runtime._METRICS['detail']['cache_hits'], 1)
+
+    def test_transient_retry_checks_window_again_without_counting_blocked_call(self):
+        responder = Mock(side_effect=[TimeoutError(), AIMessage(content='must not retry')])
+        with patch.dict(os.environ, ENFORCE_DEEPSEEK_OFF_PEAK='true'):
+            chain = self.chain(responder)
+        with patch.object(runtime, 'datetime') as clock, patch.object(chain.stopped, 'wait'):
+            clock.now.side_effect = [datetime(2026, 10, 5, 0, 44, 59, tzinfo=timezone.utc),
+                                     datetime(2026, 10, 5, 0, 45, tzinfo=timezone.utc)]
+            with self.assertRaises(runtime.OffPeakWindowClosed):
+                chain.invoke(dict(content='retry crossing boundary'))
+        self.assertEqual(responder.call_count, 1)
+        self.assertEqual(runtime._METRICS['detail']['calls'], 1)
+        self.assertEqual(runtime._METRICS['detail']['unknown_usage'], 1)
+
+    def test_started_request_can_complete_and_is_cached(self):
+        responder = Mock(return_value=AIMessage(content='completed before the next check'))
+        with patch.dict(os.environ, ENFORCE_DEEPSEEK_OFF_PEAK='true'):
+            chain = self.chain(responder)
+        with patch.object(runtime, 'datetime') as clock:
+            clock.now.side_effect = [datetime(2026, 10, 5, 0, 44, 59, tzinfo=timezone.utc),
+                                     datetime(2026, 10, 5, 1, tzinfo=timezone.utc)]
+            self.assertEqual(chain.invoke(dict(content='admitted')).content, 'completed before the next check')
+            self.assertEqual(chain.invoke(dict(content='admitted')).content, 'completed before the next check')
+            with self.assertRaises(runtime.OffPeakWindowClosed):
+                chain.invoke(dict(content='next uncached request'))
+        self.assertEqual(responder.call_count, 1)
+        self.assertEqual(runtime._METRICS['detail']['cache_hits'], 1)
+        self.assertEqual(len(list((self.root / 'cache/detail').glob('*.json'))), 1)
+
+    def test_manual_default_and_other_providers_do_not_enforce_deepseek_prices(self):
+        cases = [({}, 'deepseek-flash'),
+                 ({'ENFORCE_DEEPSEEK_OFF_PEAK': 'true'}, 'gpt-test'),
+                 ({'ENFORCE_DEEPSEEK_OFF_PEAK': 'true', 'OPENAI_BASE_URL': 'https://example.com/v1'}, 'deepseek-flash')]
+        for index, (environment, model) in enumerate(cases):
+            with self.subTest(model=model, environment=environment), patch.dict(os.environ, environment):
+                responder = Mock(return_value=AIMessage(content='allowed'))
+                chain = self.chain(responder, model=model)
+                with patch.object(runtime, 'check_deepseek_off_peak') as check:
+                    chain.invoke(dict(content=str(index)))
+                check.assert_not_called()
+                responder.assert_called_once()
+
+
+class OffPeakTimeTests(unittest.TestCase):
+    def test_china_weekday_boundaries_and_utc_conversion(self):
+        china = timezone(timedelta(hours=8))
+        cases = [(0, 0, 0, True), (1, 23, 0, True), (8, 44, 59, True),
+                 (8, 45, 0, False), (9, 0, 0, False), (11, 59, 59, False),
+                 (12, 0, 0, True), (13, 44, 59, True), (13, 45, 0, False),
+                 (14, 0, 0, False), (17, 59, 59, False), (18, 0, 0, True),
+                 (23, 59, 59, True)]
+        for hour, minute, second, expected in cases:
+            with self.subTest(time=(hour, minute, second)):
+                local = datetime(2026, 10, 5, hour, minute, second, tzinfo=china)
+                self.assertEqual(runtime.deepseek_off_peak_allowed(local), expected)
+                self.assertEqual(runtime.deepseek_off_peak_allowed(local.astimezone(timezone.utc)), expected)
+
+    def test_weekends_and_conservative_holiday_policy(self):
+        for day in (3, 4):
+            for hour in range(24):
+                self.assertTrue(runtime.deepseek_off_peak_allowed(datetime(2026, 10, day, hour, tzinfo=timezone.utc)))
+        # Chinese holidays do not bypass the ordinary UTC weekday guard.
+        self.assertFalse(runtime.deepseek_off_peak_allowed(datetime(2026, 10, 1, 1, tzinfo=timezone.utc)))
+        with self.assertRaisesRegex(ValueError, 'timezone-aware'):
+            runtime.deepseek_off_peak_allowed(datetime(2026, 10, 5, 1))
+
 
 class InterestTests(IsolatedTest):
     def test_priority_cap_and_deep_read_selection(self):
@@ -227,6 +323,46 @@ class SemanticRoutingTests(IsolatedTest):
             matched_direction_ids=['world_model'] if decision == 'relevant' else [],
             primary_direction_id='world_model' if decision == 'relevant' else '', brief='论文贡献简讯',
             reason='Relevant abstract evidence', personal_relevance_score=90, research_value_score=80)
+
+    def test_off_peak_stop_preserves_reports_and_saves_success_cache_for_recovery(self):
+        from scripts.recovery import save_bundle
+        source = self.root / '2026-10-01.jsonl'
+        source.write_text(json.dumps(PAPER) + '\n')
+        target = self.root / '2026-10-01_AI_enhanced_Chinese.jsonl'
+        target.write_text('old successful report')
+        markdown = self.root / '2026-10-01.md'
+        markdown.write_text('old successful Markdown')
+        taxonomy = self.root / 'taxonomy.json'
+        taxonomy.write_text('{}')
+        stage = self.root / 'stage'
+        args = SimpleNamespace(data=str(source), taxonomy=str(taxonomy), directions=None, max_workers=1)
+        raw = AIMessage(content='route', usage_metadata=dict(input_tokens=10, output_tokens=5, total_tokens=15))
+        filter_responder = Mock(return_value=dict(raw=raw, parsed=self.result(), parsing_error=None))
+        detail_responder = Mock(return_value=dict(raw=raw, parsed=structured(), parsing_error=None))
+        def fake_model(**settings):
+            model = RunnableLambda(filter_responder if settings['max_tokens'] == 512 else detail_responder)
+            model.with_structured_output = lambda *a, **k: model
+            return model
+        environment = dict(SELECTION_MODE='semantic', ENFORCE_DEEPSEEK_OFF_PEAK='true',
+                           AI_CACHE_DIR=str(self.root / 'ai_cache'), AI_OUTPUT_DIR=str(stage))
+        with patch.dict(os.environ, environment), patch.object(enhance, 'parse_args', return_value=args), \
+                patch.object(runtime, 'ChatOpenAI', side_effect=fake_model), patch.object(runtime, 'datetime') as clock:
+            clock.now.side_effect = [datetime(2026, 10, 5, 0, 44, tzinfo=timezone.utc),
+                                     datetime(2026, 10, 5, 0, 45, tzinfo=timezone.utc)]
+            with self.assertRaises(runtime.OffPeakWindowClosed):
+                enhance.main()
+        filter_responder.assert_called_once()
+        detail_responder.assert_not_called()
+        self.assertEqual(target.read_text(), 'old successful report')
+        self.assertEqual(markdown.read_text(), 'old successful Markdown')
+        self.assertEqual(taxonomy.read_text(), '{}')
+        self.assertFalse((stage / target.name).exists())
+        self.assertTrue((stage / 'run_metrics/2026-10-01-selection.json').exists())
+        bundle = self.root / 'recovery'
+        save_bundle(self.root, stage, bundle, '2026-10-01')
+        self.assertEqual(len(list((bundle / 'data/ai_cache/filter').glob('*.json'))), 1)
+        self.assertTrue((bundle / 'data/run_metrics/2026-10-01-selection.json').exists())
+        self.assertTrue((bundle / 'recovery.json').exists())
 
     def test_all_abstracts_reviewed_including_local_drops_and_uncertain_forwarded(self):
         papers = [{**PAPER, 'id': str(i), 'title': 'Unfamiliar terminology', 'categories': ['cs.RO']}

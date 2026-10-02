@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import tempfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Event, Lock
 from urllib.parse import urlparse
@@ -21,7 +22,44 @@ _METRICS = {}
 
 
 class FatalAIError(RuntimeError):
-    """A configuration/authentication error that must stop publication."""
+    """A fatal request or configuration error that must stop publication."""
+
+
+class OffPeakWindowClosed(FatalAIError):
+    """Do not start a paid request after the guarded off-peak window closes."""
+
+
+def deepseek_off_peak_allowed(now=None):
+    """Use UTC weekday pricing, with a 15-minute buffer before peak periods.
+
+    Peak hours are Mon-Fri 01:00-04:00 and 06:00-10:00 UTC. Holidays are
+    deliberately treated as ordinary weekdays to avoid calendar dependencies.
+    """
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        raise ValueError("Off-peak checks require a timezone-aware datetime")
+    now = now.astimezone(timezone.utc)
+    if now.weekday() >= 5:
+        return True
+    minute = now.hour * 60 + now.minute
+    return not (45 <= minute < 240 or 345 <= minute < 600)
+
+
+def check_deepseek_off_peak(stage):
+    now = datetime.now(timezone.utc)
+    if deepseek_off_peak_allowed(now):
+        return
+    local = now.astimezone(timezone(timedelta(hours=8)))
+    message = (f"{stage}: DeepSeek off-peak protection stopped new paid requests at "
+               f"{local:%Y-%m-%d %H:%M:%S} Asia/Shanghai ({now:%H:%M:%S} UTC). "
+               "Weekday blocked windows: 08:45-12:00 and 13:45-18:00 Asia/Shanghai. "
+               "Successful caches are retained; incomplete reports will not be published.")
+    print(message, file=sys.stderr, flush=True)
+    summary = env_value("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as stream:
+            stream.write("\n### DeepSeek off-peak protection\n" + message + "\n")
+    raise OffPeakWindowClosed(message)
 
 
 def env_value(name, default=""):
@@ -142,6 +180,10 @@ class CachedChain:
         self.prompt, self.stage, self.schema, self.validator = prompt, stage, schema, validator
         self.stopped = Event()
         settings = model_settings(model_name, stage)
+        # A scheduling policy is not a generation parameter or part of the cache key.
+        self.enforce_off_peak = (enabled("ENFORCE_DEEPSEEK_OFF_PEAK")
+            and urlparse(settings["base_url"]).hostname == "api.deepseek.com"
+            and settings["model"].lower().startswith("deepseek-"))
         self.signature = {key: value for key, value in settings.items() if key != "api_key"}
         llm = ChatOpenAI(**settings)
         if schema:
@@ -162,7 +204,7 @@ class CachedChain:
         if STOP.is_set():
             raise FatalAIError('Workflow cancelled before request')
         if self.stopped.is_set():
-            raise FatalAIError("Stage stopped after a fatal API error")
+            raise FatalAIError("Stage stopped after a fatal error")
         payload = dict(version=1, stage=self.stage, model=self.signature, paper_id=inputs.get("paper_id"),
                        schema=self.schema.model_json_schema() if self.schema else None,
                        prompt=self.prompt.format_prompt(**inputs).to_string())
@@ -181,7 +223,13 @@ class CachedChain:
             pass
         for attempt in range(3):
             if self.stopped.is_set() or STOP.is_set():
-                raise FatalAIError("Stage stopped after a fatal API error")
+                raise FatalAIError("Stage stopped after a fatal error")
+            if self.enforce_off_peak:
+                try:
+                    check_deepseek_off_peak(self.stage)
+                except OffPeakWindowClosed:
+                    self.stopped.set()
+                    raise
             metric(self.stage, calls=1)
             try:
                 response = self.chain.invoke(inputs)

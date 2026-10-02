@@ -6,8 +6,9 @@ name: arXiv-daily-ai-enhanced
 on:
   schedule:
     # GitHub schedule uses UTC and may be delayed at busy minutes.
-    # 00:23 UTC = 08:23 Asia/Shanghai; use an off-peak minute to reduce queueing.
-    - cron: "23 0 * * *"
+    # 17:23 UTC = 01:23 Asia/Shanghai on the following day, in DeepSeek off-peak hours.
+    # Process the latest published announcement, retaining its actual date.
+    - cron: "23 17 * * *"
   workflow_dispatch:
     inputs:
       target_date:
@@ -61,6 +62,9 @@ jobs:
       OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
       TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
       AI_OUTPUT_DIR: /tmp/arxiv-stage
+      # Scheduled runs stop new paid requests outside the guarded off-peak window.
+      # Manual runs and diagnostics remain unrestricted unless explicitly enabled.
+      ENFORCE_DEEPSEEK_OFF_PEAK: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
 
     steps:
     - uses: actions/checkout@v4
