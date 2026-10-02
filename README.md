@@ -64,19 +64,90 @@ Otherwise, you can directly use this repo in https://dw-dengwei.github.io/daily-
 9. You can manually click **Run workflow** to test if it works well (it may take about one hour). By default, this action will automatically run every day. You can modify it in `.github/workflows/run.yml`
 10. Set up GitHub pages: Go to your own repo -> Settings -> Pages. In `Build and deployment`, set `Source="Deploy from a branch"`, `Branch="main", "/(root)"`. Wait for a few minutes, go to https://\<username\>.github.io/daily-arXiv-ai-enhanced/. Please see this [issue](https://github.com/dw-dengwei/daily-arXiv-ai-enhanced/issues/14) for more precise instructions.
 
-### Model usage controls
+### 个人研究日报与 DeepSeek 配置
 
-The default AI pipeline uses local keyword filtering, selects at most 30 papers per day for detail generation, scores importance locally, and skips PDF deep reading. GLM-5.3-Flash requires thinking, so requests use its `low` reasoning effort instead of the model's `max` default. This limits model usage but can omit relevant papers beyond the daily cap. Set these GitHub Actions repository variables to change the behavior:
+本 fork 保留 `config/directions.yaml` 中的四个兴趣方向、稳定子主题和个人重要性权重。
+默认流水线是：本地兴趣筛选 → 按偏好排序取最多 30 篇 → 模型分类与摘要 → 本地重要性评分 → Top-3 PDF 精读。
+`MAX_DETAIL_ITEMS=0` 可取消候选数量限制；独立模型筛选与模型评分仍可选开启。
+精读保留动机、方法、启发、实验、局限与个人收获等栏目，英文概述每节最多一句。
 
-| Variable | Default | Effect |
+**迁移顺序：先部署本次代码，再在正常定时任务运行前统一更新以下配置；先运行诊断，再手动运行日报。**
+只有修改 `MODEL_NAME` 不够：现有各阶段的 `*_MODEL_NAME` 会覆盖它。
+
+进入仓库 **Settings → Secrets and variables → Actions**。
+[Secrets 设置](https://github.com/luokairo/daily-arXiv-ai-enhanced/settings/secrets/actions)：
+
+| Secret | 值 |
+| --- | --- |
+| `OPENAI_API_KEY` | DeepSeek 官方 API Key，在 GitHub 中手动填写 |
+| `OPENAI_BASE_URL` | `https://api.deepseek.com` |
+
+[Variables 设置](https://github.com/luokairo/daily-arXiv-ai-enhanced/settings/variables/actions)：
+
+| Variable | 推荐值／默认值 | 说明 |
 | --- | --- | --- |
-| `MAX_DETAIL_ITEMS` | `30` | Maximum local candidates sent to any AI processing stage; `0` removes the cap. |
-| `USE_MODEL_FILTER` | `false` | Set `true` to ask a model to classify uncertain papers before detail processing. |
-| `USE_MODEL_IMPORTANCE` | `false` | Set `true` to ask a model to score each retained paper instead of using local heuristics. |
-| `ENABLE_DEEP_READ` | `false` | Set `true` to generate PDF deep reads for the selected top papers. `DAILY_DEEP_READ_TOP_K` then controls how many. |
-| `GLM_REASONING_EFFORT` | `low` | Reasoning level for GLM-5.3 and GLM-5.3-Flash: `low`, `high`, or `max`. Thinking cannot be disabled for these models. |
+| `MODEL_NAME` | `deepseek-flash` | 统一默认模型 |
+| `DETAIL_MODEL_NAME` | `deepseek-flash` | 将原 GLM 值替换；未设置则继承 `MODEL_NAME` |
+| `FILTER_MODEL_NAME` | `deepseek-flash` | 可选模型筛选；未设置则继承 `MODEL_NAME` |
+| `IMPORTANCE_MODEL_NAME` | `deepseek-flash` | 可选模型评分；未设置则继承 `MODEL_NAME` |
+| `DEEP_READ_MODEL_NAME` | `deepseek-flash` | PDF 精读；未设置则继承 `MODEL_NAME` |
+| `DEEPSEEK_THINKING` | `false` | 常规阶段显式关闭思考 |
+| `DEEP_READ_THINKING` | `false` | 将原 `true` 改为 `false`；全文分析仍保留 |
+| `ENABLE_DEEP_READ` | `true` | 本次默认启用精读；`false` 可暂停 |
+| `DAILY_DEEP_READ_TOP_K` | `3` | 每日精读数量 |
+| `MAX_DETAIL_ITEMS` | `30` | 本地优先级排序后的候选上限，`0` 表示无限制 |
+| `USE_MODEL_FILTER` | `false` | 不确定候选直接由摘要模型判断相关性 |
+| `USE_MODEL_IMPORTANCE` | `false` | 按个人权重进行本地评分，无额外模型调用 |
+| `DETAIL_MAX_OUTPUT_TOKENS` | `2500` | 每次摘要输出上限 |
+| `DEEP_READ_MAX_OUTPUT_TOKENS` | `6000` | 每次精读输出上限 |
+| `DEEP_READ_MAX_CONTEXT_CHARS` | `40000` | PDF 上下文字符数，含章节标题；不等于 token 数 |
+| `LANGUAGE` | `Chinese` | 摘要语言与输出文件名 |
+| `NAME` | `luokairo` | 自动提交身份；未设置时使用仓库 owner |
 
-These settings do not change Scrapy crawling. `FILTER_MAX_WORKERS`, `DETAIL_MAX_WORKERS`, and `IMPORTANCE_MAX_WORKERS` affect request concurrency, not the number of model calls.
+保留现有 `EMAIL`、`CATEGORIES` 和并发设置。`FILTER_MAX_WORKERS`、`DETAIL_MAX_WORKERS`、
+`IMPORTANCE_MAX_WORKERS`、`DEEP_READ_MAX_WORKERS` 默认均为 1；并发影响速度，不会直接减少 token。
+兴趣配置存在时，抓取分类从兴趣方向配置合并得到，优先于 `CATEGORIES`。
+`deepseek-v4*` 旧名称仍识别思考开关，推荐官方当前名称 `deepseek-flash`。
+可选开启思考时，`DEEPSEEK_REASONING_EFFORT` 默认 `low`，仅允许 `low/high/max`。
+原 GLM 配置仍兼容；切换至 DeepSeek 后无需设置 `GLM_REASONING_EFFORT`。
+
+**如何节省 token**
+
+- 摘要一次调用同时完成相关性判断、分类及各摘要字段，默认不额外调用筛选和评分模型。
+- 保留全部预设子主题，每方向最多传入 5 个常用动态子主题；不重复发送计数和关键词。
+- PDF 上下文去重并按章节分配额度，方法、实验获得较多额度，局限等章节不被前文挤掉。
+- 摘要和精读的成功结果保存在 `data/ai_cache/`，随 `data` 分支恢复；相同论文、输入、模型、
+  参数和实际提示上下文可复用。输入或配置变化会失效。失败与仅摘要降级的精读不缓存。
+- Actions Step Summary 显示实际模型调用（含重试）、缓存命中、失败条目和输入／输出 token；
+  API 未返回用量的调用标注“未知”。成功运行的用量另存 `data/run_metrics/`，不进入网页文件列表。
+
+上下文上限和输出上限是单次预算，不是每日账单硬上限；重试也可能计费。不承诺固定节省比例。
+应在相同“30 篇摘要＋3 篇精读”下比较；从精读关闭切换到开启会增加精读开销。
+
+**失败与发布**
+
+鉴权、模型和参数错误立即停止；限流、连接超时与服务器错误最多重试两次，不自动提高输出预算。
+个别摘要解析失败会记录并排除，全部请求失败则终止；正常筛选后无相关论文允许空结果。
+可选评分的个别失败使用本地评分，整个评分阶段失败则终止。精读全部生成失败时也终止，
+PDF 提取失败的摘要分析明确标为 `abstract_fallback`，不能当作全文精读。
+工作流和 `run.sh` 将日报与 taxonomy 写入暂存目录，通过全部阶段后才替换正式产物。
+缓存文件不含 API Key。直接运行 `ai/enhance.py` 只保证增强阶段成功后再写入；完整发布保护请使用流水线。
+
+**小规模验证**
+
+Actions → **DeepSeek Pipeline Diagnostic** → Run workflow：选择 `data` 分支中存在的原始论文日期，
+可指定论文 ID；未指定时选择本地优先级最高的候选。只处理一篇摘要和至多一篇精读，
+不执行独立模型筛选／评分，不提交任何分支、不发布 Pages；结果和用量下载自 `deepseek-diagnostic` artifact。
+若摘要模型判定该论文不相关，精读会正常跳过。首次部署后应检查摘要字段、精读来源标记及实际用量。
+该入口固定使用 `deepseek-flash`，仍需先更新官方 API 的两个 Secrets。
+
+本地无付费 API 调用的回归检查：
+
+```bash
+uv sync --locked
+.venv/bin/python -m unittest discover -s tests -v
+node tests/test_date_range.cjs
+```
 
 # Plans
 See https://github.com/users/dw-dengwei/projects/3

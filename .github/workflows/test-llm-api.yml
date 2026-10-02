@@ -6,7 +6,7 @@ on:
       model_name:
         description: "Model name to test"
         required: true
-        default: "gpt-5.6-luna"
+        default: "deepseek-flash"
         type: string
 
 permissions:

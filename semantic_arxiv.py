@@ -312,32 +312,18 @@ def compact_directions_for_prompt(directions: Iterable[Dict[str, Any]]) -> str:
 
 
 def compact_taxonomy_for_prompt(taxonomy: Dict[str, Any]) -> str:
+    """Keep curated topics and at most five popular dynamic topics per direction."""
     lines = []
-    for direction_id, entry in taxonomy.get("directions", {}).items():
-        lines.append(f"- direction_id: {direction_id} ({entry.get('name', direction_id)})")
+    for direction_id, entry in sorted(taxonomy.get("directions", {}).items()):
+        lines.append(f"{direction_id} ({entry.get('name', direction_id)}):")
         subtopics = entry.get("subtopics", [])
-        if not subtopics:
-            lines.append("  subtopics: none yet")
-            continue
-        sorted_subs = sorted(
-            subtopics,
-            key=lambda sub: (
-                0 if sub.get("is_canonical") else 1,
-                -int(sub.get("paper_count", 0) or 0),
-                sub.get("name", ""),
-            ),
-        )
-        for subtopic in sorted_subs:
+        canonical = sorted((sub for sub in subtopics if sub.get("is_canonical")), key=lambda sub: sub.get("id", ""))
+        dynamic = sorted((sub for sub in subtopics if not sub.get("is_canonical")),
+                         key=lambda sub: (-int(sub.get("paper_count", 0) or 0), sub.get("id", "")))[:5]
+        for subtopic in canonical + dynamic:
             tag = "[CANONICAL] " if subtopic.get("is_canonical") else ""
-            count = int(subtopic.get("paper_count", 0) or 0)
-            keywords = ", ".join(subtopic.get("keywords", [])[:8])
-            keyword_line = f"\n    keywords: {keywords}" if keywords else ""
-            lines.append(
-                f"  - {tag}id: {subtopic.get('id')} (papers: {count})\n"
-                f"    name: {subtopic.get('name')}\n"
-                f"    description: {subtopic.get('description', '')}"
-                f"{keyword_line}"
-            )
+            description = str(subtopic.get("description", ""))[:160]
+            lines.append(f"- {tag}{subtopic.get('id')}: {subtopic.get('name')} — {description}")
     return "\n".join(lines)
 
 

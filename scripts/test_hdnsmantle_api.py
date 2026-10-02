@@ -14,8 +14,8 @@ from dataclasses import dataclass
 from typing import Any
 
 
-DEFAULT_BASE_URL = "https://api.hdnsmantle.com/v1"
-DEFAULT_MODEL = "gpt-5.6-luna"
+DEFAULT_BASE_URL = "https://api.deepseek.com"
+DEFAULT_MODEL = "deepseek-flash"
 TIMEOUT_SECONDS = 60
 BODY_PREVIEW_LIMIT = 1200
 
@@ -78,6 +78,15 @@ def request_json(
     }
     data = None
     if payload is not None:
+        payload = dict(payload)
+        if endpoint.endswith("/chat/completions"):
+            payload["max_tokens"] = 256
+            if payload.get("model", "").startswith("deepseek-"):
+                payload["thinking"] = {"type": "disabled"}
+        elif endpoint.endswith("/responses"):
+            payload["max_output_tokens"] = 256
+            if payload.get("model", "").startswith("deepseek-"):
+                payload["reasoning"] = {"effort": "none"}
         headers["Content-Type"] = "application/json"
         data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
 
@@ -144,7 +153,7 @@ def has_responses_output(result: TestResult) -> bool:
 
 def main() -> int:
     args = parse_args()
-    print("HDNS Mantle / OpenAI 兼容接口诊断")
+    print("OpenAI 兼容接口诊断（默认 DeepSeek 官方）")
     print("API Key 将隐藏输入，只保存在本进程内存中，不会写入文件或打印。")
     print("测试会发送 3 个很短的模型请求，可能产生极少量费用。\n")
 

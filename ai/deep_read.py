@@ -15,7 +15,7 @@ from langchain.prompts import (
     HumanMessagePromptTemplate,
     SystemMessagePromptTemplate,
 )
-from langchain_openai import ChatOpenAI
+from runtime import CachedChain, FatalAIError, atomic_write, env_value, positive_int
 from tqdm import tqdm
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -34,6 +34,7 @@ motivation, core methodology, insight analysis, experimental design, limitations
 future work, and personal takeaways. Write in Chinese for fast reading, keep key
 technical terms in English, and include concise English summaries where requested.
 If the extracted text does not contain enough evidence for a field, say so explicitly.
+Keep each English summary to ONE sentence. Avoid repeating the Chinese analysis.
 Return Markdown only. Do not wrap the answer in code fences."""
 
 
@@ -131,8 +132,6 @@ arXiv categories: {categories}
 Primary direction: {direction}
 Subtopic: {subtopic}
 TL;DR: {tldr}
-Abstract: {abstract}
-
 Extracted PDF text:
 {paper_text}
 """
@@ -182,22 +181,6 @@ def load_jsonl(path: str) -> List[Dict]:
             if line.strip():
                 data.append(json.loads(line))
     return data
-
-
-def build_chat_model(model_name: str):
-    llm_kwargs = {"model": model_name, "temperature": 0, "timeout": 240, "max_retries": 2}
-    base_url = os.environ.get("OPENAI_BASE_URL")
-    if base_url:
-        llm_kwargs["base_url"] = base_url
-    deep_read_thinking = os.environ.get("DEEP_READ_THINKING", "").lower() in {"1", "true", "yes"}
-    if model_name.startswith("glm-5.3"):
-        effort = (os.environ.get("GLM_REASONING_EFFORT") or "low").strip().lower()
-        if effort not in {"low", "high", "max"}:
-            raise ValueError("GLM_REASONING_EFFORT must be low, high, or max")
-        llm_kwargs["reasoning_effort"] = effort
-    elif model_name.startswith("deepseek-v4") and not deep_read_thinking:
-        llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
-    return ChatOpenAI(**llm_kwargs)
 
 
 def selected_papers(data: List[Dict], top_k: int) -> List[Dict]:
@@ -298,34 +281,33 @@ def append_chunk(chunks: List[Tuple[str, str]], title: str, chunk: str, seen: se
 
 def build_reading_context(item: Dict, full_text: str) -> Tuple[str, str]:
     full_text = normalize_text(full_text)
-    max_chars = int(os.environ.get("DEEP_READ_MAX_CONTEXT_CHARS") or "70000")
+    max_chars = positive_int("DEEP_READ_MAX_CONTEXT_CHARS", 40000)
+    if len(full_text) < 2000:
+        return item.get("summary", "")[:max_chars], "PDF extraction produced too little text; this is an abstract-only fallback, not a full-text deep read."
     chunks: List[Tuple[str, str]] = []
     seen = set()
-
-    append_chunk(chunks, "Metadata abstract", item.get("summary", ""), seen)
-    append_chunk(chunks, "Front matter and early paper text", full_text[:16000], seen)
-
-    for name, patterns in SECTION_PATTERNS.items():
-        append_chunk(chunks, name, find_section(full_text, patterns), seen)
-
-    context_parts = []
-    total = 0
-    for title, chunk in chunks:
-        block = f"\n\n## {title}\n{chunk}"
-        if total + len(block) > max_chars:
-            remaining = max_chars - total
-            if remaining > 2000:
-                context_parts.append(block[:remaining])
-            break
-        context_parts.append(block)
-        total += len(block)
-
-    context = "\n".join(context_parts).strip()
-    source_note = "PDF full text extracted; high-value sections were selected for the model context."
-    if len(full_text) < 2000:
-        context = item.get("summary", "")
-        source_note = "PDF extraction produced too little text; this is an abstract-only fallback."
-    return context, source_note
+    append_chunk(chunks, "abstract", item.get("summary", ""), seen)
+    for name in ("method", "experiments", "limitations", "conclusion", "introduction", "related_work"):
+        append_chunk(chunks, name, find_section(full_text, SECTION_PATTERNS[name]), seen)
+    if len(chunks) <= 1:
+        append_chunk(chunks, "paper_text", full_text, seen)
+    # Weighted water-filling reserves room for every detected section. Short
+    # sections release their unused budget to the remaining sections.
+    headers = [f"## {name}\n" for name, _ in chunks]
+    remaining = max(0, max_chars - sum(map(len, headers)) - 2 * max(0, len(chunks) - 1))
+    allocations = [0] * len(chunks)
+    active = set(range(len(chunks)))
+    while remaining and active:
+        weights = {i: 2 if chunks[i][0] in {"method", "experiments"} else 1 for i in active}
+        total_weight = sum(weights.values())
+        budget = remaining
+        for i in sorted(active):
+            take = min(len(chunks[i][1]) - allocations[i], max(1, budget * weights[i] // total_weight), remaining)
+            allocations[i] += take
+            remaining -= take
+        active = {i for i in active if allocations[i] < len(chunks[i][1])}
+    context = "\n\n".join(header + chunk[:limit] for header, (_, chunk), limit in zip(headers, chunks, allocations))[:max_chars]
+    return context, "PDF full text extracted; selected sections were deduplicated and budgeted for the model context."
 
 
 def failure_report(item: Dict, rank: int, reason: str) -> str:
@@ -349,12 +331,14 @@ def run_deep_read(chain, item: Dict, rank: int, tmp_dir: Path) -> Dict:
         paper_text, source_note = build_reading_context(item, full_text)
     except Exception as e:
         print(f"PDF download/extraction failed for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
-        paper_text = item.get("summary", "")
-        source_note = f"PDF download or extraction failed; abstract-only fallback. Error: {e}"
+        paper_text = item.get("summary", "")[:positive_int("DEEP_READ_MAX_CONTEXT_CHARS", 40000)]
+        source_note = f"PDF download or extraction failed; abstract-only fallback, not a full-text deep read. Error: {type(e).__name__}"
 
     try:
         response = chain.invoke(
             {
+                "paper_id": item.get("id", ""),
+                "_cache_allowed": "abstract-only fallback" not in source_note,
                 "title": item.get("title", "Untitled"),
                 "authors": safe_authors(item.get("authors")),
                 "abs_url": item.get("abs") or f"https://arxiv.org/abs/{item.get('id', '')}",
@@ -372,8 +356,10 @@ def run_deep_read(chain, item: Dict, rank: int, tmp_dir: Path) -> Dict:
             }
         )
         content = response.content if hasattr(response, "content") else str(response)
-        report = f"## [{rank}] 精读报告\n\n{content.strip()}\n"
+        report = f"## [{rank}] 精读报告\n\n> Source note: {source_note}\n\n{content.strip()}\n"
         status = "ok" if "abstract-only fallback" not in source_note else "abstract_fallback"
+    except FatalAIError:
+        raise
     except Exception as e:
         print(f"Deep read generation failed for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
         report = failure_report(item, rank, str(e))
@@ -398,9 +384,9 @@ def main():
     args = parse_args()
     data = load_jsonl(args.data)
     importance_config = load_importance_config(args.directions)
-    top_k = int(os.environ.get("DAILY_DEEP_READ_TOP_K") or importance_config.get("daily_deep_read_top_k", 5) or 5)
-    model_name = os.environ.get("DEEP_READ_MODEL_NAME") or os.environ.get("MODEL_NAME", "deepseek-v4-pro")
-    max_workers = int(os.environ.get("DEEP_READ_MAX_WORKERS") or "1")
+    top_k = positive_int("DAILY_DEEP_READ_TOP_K", importance_config.get("daily_deep_read_top_k", 3) or 3)
+    model_name = env_value("DEEP_READ_MODEL_NAME", env_value("MODEL_NAME", "deepseek-flash"))
+    max_workers = positive_int("DEEP_READ_MAX_WORKERS", 1)
 
     papers = selected_papers(data, top_k)
     output_path = Path(args.output)
@@ -417,14 +403,13 @@ def main():
         print(f"No papers selected. Wrote {output_path}", file=sys.stderr)
         return
 
-    llm = build_chat_model(model_name)
     prompt_template = ChatPromptTemplate.from_messages(
         [
             SystemMessagePromptTemplate.from_template(DEEP_READ_SYSTEM),
             HumanMessagePromptTemplate.from_template(DEEP_READ_TEMPLATE),
         ]
     )
-    chain = prompt_template | llm
+    chain = CachedChain(prompt_template, model_name, "deep_read")
 
     results = [{} for _ in papers]
     with tempfile.TemporaryDirectory(prefix="daily_arxiv_deep_read_") as tmp:
@@ -438,6 +423,10 @@ def main():
                 idx = future_to_idx[future]
                 try:
                     results[idx] = future.result()
+                except FatalAIError:
+                    for future in future_to_idx:
+                        future.cancel()
+                    raise
                 except Exception as e:
                     results[idx] = {
                         "id": papers[idx].get("id", ""),
@@ -446,6 +435,9 @@ def main():
                         "status": "worker_failed",
                         "report": failure_report(papers[idx], idx + 1, str(e)),
                     }
+
+    if all(result.get("status") in {"generation_failed", "worker_failed"} for result in results):
+        raise RuntimeError("All deep-read requests failed; publication stopped")
 
     toc = "\n".join(
         f"- [{result.get('rank')}. {result.get('title')}](#paper-{result.get('rank')})"
@@ -465,7 +457,7 @@ def main():
         + "\n\n---\n\n".join(reports)
         + "\n"
     )
-    output_path.write_text(markdown, encoding="utf-8")
+    atomic_write(output_path, markdown)
 
     if args.output_json:
         json_path = Path(args.output_json)
@@ -474,7 +466,7 @@ def main():
             {key: value for key, value in result.items() if key != "report"}
             for result in results
         ]
-        json_path.write_text(json.dumps(serializable, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        atomic_write(json_path, json.dumps(serializable, ensure_ascii=False, indent=2) + "\n")
 
     print(f"Wrote {output_path}", file=sys.stderr)
 

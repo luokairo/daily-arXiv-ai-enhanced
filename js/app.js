@@ -1696,6 +1696,7 @@ function formatDate(dateString) {
 }
 
 async function loadPapersByDateRange(startDate, endDate) {
+  [startDate, endDate] = startDate <= endDate ? [startDate, endDate] : [endDate, startDate];
   // 获取日期范围内的所有有效日期
   const validDatesInRange = availableDates.filter(date => {
     return date >= startDate && date <= endDate;

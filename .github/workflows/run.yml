@@ -16,17 +16,50 @@ on:
         type: string
 
 
+concurrency:
+  group: daily-arxiv-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      MODEL_NAME: ${{ vars.MODEL_NAME || 'deepseek-flash' }}
+      DETAIL_MODEL_NAME: ${{ vars.DETAIL_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+      FILTER_MODEL_NAME: ${{ vars.FILTER_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+      IMPORTANCE_MODEL_NAME: ${{ vars.IMPORTANCE_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+      DEEP_READ_MODEL_NAME: ${{ vars.DEEP_READ_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+      DEEPSEEK_THINKING: ${{ vars.DEEPSEEK_THINKING || 'false' }}
+      DEEP_READ_THINKING: ${{ vars.DEEP_READ_THINKING || 'false' }}
+      DEEPSEEK_REASONING_EFFORT: ${{ vars.DEEPSEEK_REASONING_EFFORT || 'low' }}
+      GLM_REASONING_EFFORT: ${{ vars.GLM_REASONING_EFFORT || 'low' }}
+      MAX_DETAIL_ITEMS: ${{ vars.MAX_DETAIL_ITEMS || '30' }}
+      DAILY_DEEP_READ_TOP_K: ${{ vars.DAILY_DEEP_READ_TOP_K || '3' }}
+      DETAIL_MAX_OUTPUT_TOKENS: ${{ vars.DETAIL_MAX_OUTPUT_TOKENS || '2500' }}
+      DEEP_READ_MAX_OUTPUT_TOKENS: ${{ vars.DEEP_READ_MAX_OUTPUT_TOKENS || '6000' }}
+      DEEP_READ_MAX_CONTEXT_CHARS: ${{ vars.DEEP_READ_MAX_CONTEXT_CHARS || '40000' }}
+      USE_MODEL_FILTER: ${{ vars.USE_MODEL_FILTER || 'false' }}
+      USE_MODEL_IMPORTANCE: ${{ vars.USE_MODEL_IMPORTANCE || 'false' }}
+      ENABLE_DEEP_READ: ${{ vars.ENABLE_DEEP_READ || 'true' }}
+      FILTER_MAX_WORKERS: ${{ vars.FILTER_MAX_WORKERS || '1' }}
+      DETAIL_MAX_WORKERS: ${{ vars.DETAIL_MAX_WORKERS || '1' }}
+      IMPORTANCE_MAX_WORKERS: ${{ vars.IMPORTANCE_MAX_WORKERS || '1' }}
+      DEEP_READ_MAX_WORKERS: ${{ vars.DEEP_READ_MAX_WORKERS || '1' }}
+      LANGUAGE: ${{ vars.LANGUAGE || 'Chinese' }}
+      TIMEZONE: ${{ vars.TIMEZONE || 'Asia/Shanghai' }}
+      CATEGORIES: ${{ vars.CATEGORIES || 'cs.CV, cs.CL' }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+      AI_OUTPUT_DIR: /tmp/arxiv-stage
 
     steps:
     - uses: actions/checkout@v4
     - name: Install dependencies
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
-        uv sync
+        uv sync --locked
 
     - name: Restore previous data branch files
       run: |
@@ -44,7 +77,6 @@ jobs:
       id: crawl_step
       run: |
         source .venv/bin/activate
-        export TIMEZONE="${{ vars.TIMEZONE }}"
         if [ -z "$TIMEZONE" ]; then
           export TIMEZONE="Asia/Shanghai"
         fi
@@ -66,13 +98,6 @@ jobs:
         fi
         
         cd daily_arxiv
-        export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
-        export OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}
-        export TOKEN_GITHUB=${{ secrets.TOKEN_GITHUB }}
-        export LANGUAGE="${{ vars.LANGUAGE }}"
-        export CATEGORIES="${{ vars.CATEGORIES }}"
-        export MODEL_NAME="${{ vars.MODEL_NAME }}"
-        export TIMEZONE="${TIMEZONE}"
         export TARGET_DATE="${today}"
         
         # 使用Scrapy爬取
@@ -93,7 +118,6 @@ jobs:
       run: |
         source .venv/bin/activate
         echo "执行去重检查... / Performing intelligent deduplication check..."
-        export TIMEZONE="${{ vars.TIMEZONE }}"
         if [ -z "$TIMEZONE" ]; then
           export TIMEZONE="Asia/Shanghai"
         fi
@@ -137,26 +161,12 @@ jobs:
       run: |
         source .venv/bin/activate
         today=${{ steps.crawl_step.outputs.crawl_date }}
+        mkdir -p "$AI_OUTPUT_DIR"
+        export AI_METRICS_PATH="$AI_OUTPUT_DIR/enhance-usage.json"
         echo "开始AI增强处理... / Starting AI enhancement processing..."
         
         cd ai
-        export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
-        export OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}
-        export LANGUAGE="${{ vars.LANGUAGE }}"
-        export MODEL_NAME="${{ vars.MODEL_NAME }}"
-        export FILTER_MODEL_NAME="${{ vars.FILTER_MODEL_NAME }}"
-        export DETAIL_MODEL_NAME="${{ vars.DETAIL_MODEL_NAME }}"
-        export IMPORTANCE_MODEL_NAME="${{ vars.IMPORTANCE_MODEL_NAME }}"
         export TARGET_DATE="$today"
-        export MAX_DETAIL_ITEMS="${{ vars.MAX_DETAIL_ITEMS }}"
-        export DAILY_DEEP_READ_TOP_K="${{ vars.DAILY_DEEP_READ_TOP_K }}"
-        export FILTER_MAX_WORKERS="${{ vars.FILTER_MAX_WORKERS }}"
-        export DETAIL_MAX_WORKERS="${{ vars.DETAIL_MAX_WORKERS }}"
-        export IMPORTANCE_MAX_WORKERS="${{ vars.IMPORTANCE_MAX_WORKERS }}"
-        export USE_MODEL_FILTER="${{ vars.USE_MODEL_FILTER }}"
-        export USE_MODEL_IMPORTANCE="${{ vars.USE_MODEL_IMPORTANCE }}"
-        export ENABLE_DEEP_READ="${{ vars.ENABLE_DEEP_READ }}"
-        export GLM_REASONING_EFFORT="${{ vars.GLM_REASONING_EFFORT }}"
         
         python enhance.py --data ../data/${today}.jsonl
         
@@ -175,13 +185,12 @@ jobs:
         echo "转换为Markdown格式... / Converting to Markdown format..."
         
         # 设置环境变量 / Set environment variables
-        export LANGUAGE="${{ vars.LANGUAGE }}"
         export TARGET_DATE="$today"
         
         cd to_md
         
         # 使用AI增强文件进行转换 / Use AI enhanced file for conversion
-        AI_FILE="../data/${today}_AI_enhanced_${LANGUAGE}.jsonl"
+        AI_FILE="$AI_OUTPUT_DIR/${today}_AI_enhanced_${LANGUAGE}.jsonl"
         
         if [ -f "$AI_FILE" ]; then
             echo "使用AI增强文件进行转换... / Using AI enhanced file for conversion..."
@@ -202,7 +211,6 @@ jobs:
     - name: Deep Read Top Papers
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
-        export ENABLE_DEEP_READ="${{ vars.ENABLE_DEEP_READ }}"
         if [[ ! "${ENABLE_DEEP_READ,,}" =~ ^(1|true|yes)$ ]]; then
           echo "全文精读已关闭，跳过模型调用 / Deep read disabled, skipping model calls."
           exit 0
@@ -212,25 +220,14 @@ jobs:
         echo "生成重要论文全文精读... / Generating deep reads for top papers..."
 
         cd ai
-        export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
-        export OPENAI_BASE_URL=${{ secrets.OPENAI_BASE_URL }}
-        export MODEL_NAME="${{ vars.MODEL_NAME }}"
-        export DEEP_READ_MODEL_NAME="${{ vars.DEEP_READ_MODEL_NAME }}"
-        export DAILY_DEEP_READ_TOP_K="${{ vars.DAILY_DEEP_READ_TOP_K }}"
-        export DEEP_READ_MAX_WORKERS="${{ vars.DEEP_READ_MAX_WORKERS }}"
-        export DEEP_READ_THINKING="${{ vars.DEEP_READ_THINKING }}"
-        export GLM_REASONING_EFFORT="${{ vars.GLM_REASONING_EFFORT }}"
 
-        language="${{ vars.LANGUAGE }}"
-        if [ -z "$language" ]; then
-          language="Chinese"
-        fi
-        AI_FILE="../data/${today}_AI_enhanced_${language}.jsonl"
+        export AI_METRICS_PATH="$AI_OUTPUT_DIR/deep-read-usage.json"
+        AI_FILE="$AI_OUTPUT_DIR/${today}_AI_enhanced_${LANGUAGE}.jsonl"
         if [ -f "$AI_FILE" ]; then
           python deep_read.py \
             --data "$AI_FILE" \
-            --output "../data/deep_reads/${today}.md" \
-            --output-json "../data/deep_reads/${today}.json"
+            --output "$AI_OUTPUT_DIR/deep_reads/${today}.md" \
+            --output-json "$AI_OUTPUT_DIR/deep_reads/${today}.json"
         else
           echo "错误：未找到AI增强文件，无法生成精读 / Error: AI enhanced file not found for deep reading"
           echo "AI文件: $AI_FILE"
@@ -239,11 +236,16 @@ jobs:
 
         echo "全文精读生成完成 / Deep reads completed"
         
+    - name: Publish validated local artifacts
+      if: steps.dedup_check.outputs.has_new_content == 'true'
+      run: |
+        .venv/bin/python scripts/publish_staged.py --source "$AI_OUTPUT_DIR" --destination data
+
     - name: Update file list
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
         echo "更新文件列表... / Updating file list..."
-        find data -type f | sed 's|^data/||' | sort > assets/file-list.txt
+        find data -type f -not -path 'data/ai_cache/*' -not -path 'data/run_metrics/*' | sed 's|^data/||' | sort > assets/file-list.txt
         echo "文件列表更新完成 / File list updated"
 
     - name: Generate password hash and inject into config
@@ -327,7 +329,7 @@ jobs:
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
         git config --global user.email "${{ vars.EMAIL }}"
-        git config --global user.name "${{ vars.NAME }}"
+        git config --global user.name "${{ vars.NAME || github.repository_owner }}"
         
         # 添加所有代码文件，但排除数据文件 / Add all code files, but exclude data files
         git add js/data-config.js
@@ -335,7 +337,7 @@ jobs:
         # 添加其他可能的代码变更，但排除 data/ 目录和 assets/file-list.txt
         # Add other possible code changes, but exclude data/ directory and assets/file-list.txt
         git add -A
-        git reset -- data/* assets/file-list.txt 2>/dev/null || true
+        git reset -- data assets/file-list.txt 2>/dev/null || true
         
         # 检查是否有代码变更需要提交 / Check if there are code changes to commit
         if git diff --staged --quiet; then
@@ -388,7 +390,7 @@ jobs:
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
         git config --global user.email "${{ vars.EMAIL }}"
-        git config --global user.name "${{ vars.NAME }}"
+        git config --global user.name "${{ vars.NAME || github.repository_owner }}"
         
         echo "设置 data 分支... / Setting up data branch..."
         today=${{ steps.crawl_step.outputs.crawl_date }}
@@ -400,7 +402,7 @@ jobs:
         rm -rf data/*.jsonl 2>/dev/null || true
         rm -f data/*.md 2>/dev/null || true
         rm -f data/taxonomy.json 2>/dev/null || true
-        rm -rf data/deep_reads 2>/dev/null || true
+        rm -rf data/deep_reads data/ai_cache data/run_metrics 2>/dev/null || true
         rm -f assets/file-list.txt 2>/dev/null || true
         
         # 检查 data 分支是否存在 / Check if data branch exists

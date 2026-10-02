@@ -22,10 +22,10 @@ if [ -z "$OPENAI_API_KEY" ]; then
     echo "   export OPENAI_API_KEY=\"your-api-key-here\""
     echo ""
     echo "🔧 可选变量 / Optional variables:"
-    echo "   export OPENAI_BASE_URL=\"https://api.openai.com/v1\"  # API基础URL / API base URL"
+    echo "   export OPENAI_BASE_URL=\"https://api.deepseek.com\"  # API基础URL / API base URL"
     echo "   export LANGUAGE=\"Chinese\"                           # 语言设置 / Language setting"
     echo "   export CATEGORIES=\"cs.CV, cs.CL\"                    # 关注分类 / Categories of interest"
-    echo "   export MODEL_NAME=\"gpt-4o-mini\"                     # 模型名称 / Model name"
+    echo "   export MODEL_NAME=\"deepseek-flash\"                     # 模型名称 / Model name"
     echo ""
     echo "💡 设置后重新运行此脚本即可进行完整测试 / After setting, rerun this script for complete testing"
     echo "🚀 或者继续运行部分流程（爬取+去重检查）/ Or continue with partial workflow (crawl + dedup check)"
@@ -43,8 +43,8 @@ else
     # 设置默认值 / Set default values
     export LANGUAGE="${LANGUAGE:-Chinese}"
     export CATEGORIES="${CATEGORIES:-cs.CV, cs.CL}"
-    export MODEL_NAME="${MODEL_NAME:-gpt-4o-mini}"
-    export OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+    export MODEL_NAME="${MODEL_NAME:-deepseek-flash}"
+    export OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.deepseek.com}"
     export TIMEZONE="${TIMEZONE:-Asia/Shanghai}"
     
     echo "🔧 当前配置 / Current configuration:"
@@ -63,6 +63,12 @@ export TIMEZONE="${TIMEZONE:-Asia/Shanghai}"
 today="${TARGET_DATE:-$(TZ="$TIMEZONE" date "+%Y-%m-%d")}"
 export TARGET_DATE="$today"
 mkdir -p data assets
+export AI_OUTPUT_DIR="$(mktemp -d)"
+trap 'rm -rf "$AI_OUTPUT_DIR"' EXIT
+export ENABLE_DEEP_READ="${ENABLE_DEEP_READ:-true}"
+export DAILY_DEEP_READ_TOP_K="${DAILY_DEEP_READ_TOP_K:-3}"
+export DEEPSEEK_THINKING="${DEEPSEEK_THINKING:-false}"
+export DEEP_READ_THINKING="${DEEP_READ_THINKING:-false}"
 
 echo "本地测试：爬取 $today 的arXiv论文... / Local test: Crawling $today arXiv papers..."
 
@@ -131,9 +137,9 @@ fi
 echo "步骤4：转换为Markdown... / Step 4: Converting to Markdown..."
 cd to_md
 
-if [ "$PARTIAL_MODE" = "false" ] && [ -f "../data/${today}_AI_enhanced_${LANGUAGE}.jsonl" ]; then
+if [ "$PARTIAL_MODE" = "false" ] && [ -f "${AI_OUTPUT_DIR}/${today}_AI_enhanced_${LANGUAGE}.jsonl" ]; then
     echo "📄 使用AI增强后的数据进行转换... / Using AI enhanced data for conversion..."
-    python convert.py --data ../data/${today}_AI_enhanced_${LANGUAGE}.jsonl
+    python convert.py --data "${AI_OUTPUT_DIR}/${today}_AI_enhanced_${LANGUAGE}.jsonl"
     
     if [ $? -ne 0 ]; then
         echo "❌ Markdown转换失败 / Markdown conversion failed"
@@ -153,9 +159,18 @@ fi
 
 cd ..
 
+if [ "$PARTIAL_MODE" = "false" ]; then
+    if [[ "$(printf '%s' "$ENABLE_DEEP_READ" | tr '[:upper:]' '[:lower:]')" =~ ^(1|true|yes)$ ]]; then
+        python ai/deep_read.py --data "$AI_OUTPUT_DIR/${today}_AI_enhanced_${LANGUAGE}.jsonl" \
+            --output "$AI_OUTPUT_DIR/deep_reads/${today}.md" \
+            --output-json "$AI_OUTPUT_DIR/deep_reads/${today}.json" || exit 1
+    fi
+    python scripts/publish_staged.py --source "$AI_OUTPUT_DIR" --destination data || exit 1
+fi
+
 # 第五步：更新文件列表 / Step 5: Update file list
 echo "步骤5：更新文件列表... / Step 5: Updating file list..."
-find data -maxdepth 1 -type f | sed 's|data/||' | sort > assets/file-list.txt
+find data -type f -not -path 'data/ai_cache/*' -not -path 'data/run_metrics/*' | sed 's|data/||' | sort > assets/file-list.txt
 echo "✅ 文件列表更新完成 / File list updated"
 
 # 完成总结 / Completion summary

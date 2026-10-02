@@ -1,22 +1,21 @@
 import argparse
+import copy
 import json
 import os
 import re
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Iterable, List
 
 import dotenv
-import langchain_core.exceptions
 import requests
 from langchain.prompts import (
     ChatPromptTemplate,
     HumanMessagePromptTemplate,
     SystemMessagePromptTemplate,
 )
-from langchain_openai import ChatOpenAI
 from tqdm import tqdm
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -32,17 +31,17 @@ from semantic_arxiv import (
     load_importance_config,
     load_taxonomy,
     normalize_matched_directions,
-    save_taxonomy,
     slugify,
     upsert_subtopic,
 )
 from structure import FilterStructure, Structure
+from runtime import CachedChain, FatalAIError, atomic_write, enabled, env_value, positive_int
 
 if os.path.exists(".env"):
     dotenv.load_dotenv()
 
-template = open("template.txt", "r", encoding="utf-8").read()
-system = open("system.txt", "r", encoding="utf-8").read()
+template = Path(__file__).with_name("template.txt").read_text(encoding="utf-8")
+system = Path(__file__).with_name("system.txt").read_text(encoding="utf-8")
 
 
 STRONG_KEEP_KEYWORDS = [
@@ -217,29 +216,6 @@ def keyword_matched_direction_ids(item: Dict, directions: Iterable[Dict]) -> Lis
     return matched
 
 
-def fallback_item(item: Dict, directions: List[Dict], reason: str) -> Dict:
-    matched_ids = keyword_matched_direction_ids(item, directions)
-    if not matched_ids:
-        return {}
-
-    fields = default_ai_fields()
-    fields.update(
-        {
-            "is_relevant": True,
-            "primary_direction_id": matched_ids[0],
-            "matched_direction_ids": matched_ids,
-            "classification_reason": reason,
-            "tldr": item.get("summary", "")[:600],
-            "subtopic_id": "uncategorized",
-            "subtopic_name": "未分类",
-        }
-    )
-    item["AI"] = fields
-    item["primary_direction"] = direction_display(matched_ids[0], directions)
-    item["matched_directions"] = normalize_matched_directions(matched_ids, directions)
-    return item
-
-
 def normalize_ai_result(item: Dict, ai_fields: Dict, directions: List[Dict]) -> Dict:
     valid_directions = direction_map(directions)
     ai = {**default_ai_fields(), **ai_fields}
@@ -274,43 +250,8 @@ def normalize_ai_result(item: Dict, ai_fields: Dict, directions: List[Dict]) -> 
     return item
 
 
-def build_llm(model_name: str, structure_model):
-    llm_kwargs = {"model": model_name, "temperature": 0, "timeout": 120, "max_retries": 3}
-    base_url = os.environ.get("OPENAI_BASE_URL")
-    if base_url:
-        llm_kwargs["base_url"] = base_url
-
-    if model_name.startswith("glm-5.3"):
-        llm_kwargs["reasoning_effort"] = glm_reasoning_effort()
-    elif model_name.startswith("deepseek-v4") and not env_enabled("DEEPSEEK_THINKING"):
-        llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
-
-    return ChatOpenAI(**llm_kwargs).with_structured_output(structure_model, method="function_calling")
-
-
-def build_plain_llm(model_name: str):
-    llm_kwargs = {"model": model_name, "temperature": 0, "timeout": 120, "max_retries": 3}
-    base_url = os.environ.get("OPENAI_BASE_URL")
-    if base_url:
-        llm_kwargs["base_url"] = base_url
-
-    if model_name.startswith("glm-5.3"):
-        llm_kwargs["reasoning_effort"] = glm_reasoning_effort()
-    elif model_name.startswith("deepseek-v4") and not env_enabled("DEEPSEEK_THINKING"):
-        llm_kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
-
-    return ChatOpenAI(**llm_kwargs)
-
-
 def env_enabled(name: str) -> bool:
-    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes"}
-
-
-def glm_reasoning_effort() -> str:
-    effort = (os.environ.get("GLM_REASONING_EFFORT") or "low").strip().lower()
-    if effort not in {"low", "high", "max"}:
-        raise ValueError("GLM_REASONING_EFFORT must be low, high, or max")
-    return effort
+    return enabled(name)
 
 
 def normalize_keyword(keyword: str) -> str:
@@ -511,28 +452,30 @@ def normalize_filter_result(item: Dict, filter_fields: Dict, directions: List[Di
     return item
 
 
+def validate_classification(response, directions):
+    if not response.is_relevant:
+        return
+    valid = set(direction_map(directions))
+    if response.primary_direction_id not in valid and not valid.intersection(response.matched_direction_ids):
+        raise ValueError("Relevant result has no configured research direction")
+    if isinstance(response, Structure):
+        for field in ("tldr", "motivation", "method", "result", "conclusion"):
+            if not getattr(response, field).strip():
+                raise ValueError(f"Empty summary field: {field}")
+
+
 def filter_single_item(chain, item: Dict, directions: List[Dict], prompt_directions: str) -> Dict:
-    try:
-        response: FilterStructure = chain.invoke(
-            {
-                "directions": prompt_directions,
-                "title": item.get("title", ""),
-                "authors": ", ".join(item.get("authors", [])),
-                "categories": ", ".join(item.get("categories", [])),
-                "content": item.get("summary", ""),
-            }
-        )
-        item = normalize_filter_result(item, response.model_dump(), directions)
-    except Exception as e:
-        print(f"Filter error for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
-        item = fallback_item(item, directions, "Filter model failed; keyword fallback used.")
-        if item:
-            ai = item.pop("AI", {})
-            item["_filter_primary_direction_id"] = ai.get("primary_direction_id", "")
-            item["_filter_matched_direction_ids"] = ai.get("matched_direction_ids", [])
-            item["_filter_relevance_reason"] = ai.get("classification_reason", "")
-            item.pop("primary_direction", None)
-            item.pop("matched_directions", None)
+    response: FilterStructure = chain.invoke(
+        {
+            "directions": prompt_directions,
+            "paper_id": item.get("id", ""),
+            "title": item.get("title", ""),
+            "authors": ", ".join(item.get("authors", [])),
+            "categories": ", ".join(item.get("categories", [])),
+            "content": item.get("summary", ""),
+        }
+    )
+    item = normalize_filter_result(item, response.model_dump(), directions)
     return item
 
 
@@ -561,6 +504,9 @@ def filter_all_items(
     keyword_config = collect_filter_keywords(directions, importance_config)
     prompt_directions = compact_directions_for_prompt(directions)
 
+    if not data:
+        return []
+    data = sorted(data, key=lambda item: (-candidate_priority(item, directions, importance_config), str(item.get("id", ""))))
     filtered_data = [{} for _ in data]
     uncertain_items = []
     stats = {"keep": 0, "drop": 0, "uncertain": 0}
@@ -617,15 +563,16 @@ def filter_all_items(
         )
         return [item for item in filtered_data if item]
 
-    llm = build_llm(filter_model_name, FilterStructure)
     prompt_template = ChatPromptTemplate.from_messages(
         [
             SystemMessagePromptTemplate.from_template(filter_system),
             HumanMessagePromptTemplate.from_template(template=filter_template),
         ]
     )
-    chain = prompt_template | llm
+    chain = CachedChain(prompt_template, filter_model_name, "filter", FilterStructure,
+                        validator=lambda response: validate_classification(response, directions))
 
+    failures = 0
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_idx = {
             executor.submit(filter_single_item, chain, item, directions, prompt_directions): idx
@@ -640,9 +587,16 @@ def filter_all_items(
                         f"{result['_local_filter_reason']} Model filter: {result['_filter_relevance_reason']}"
                     )
                 filtered_data[idx] = result
+            except FatalAIError:
+                for future in future_to_idx:
+                    future.cancel()
+                raise
             except Exception as e:
+                failures += 1
                 print(f"Filter worker error at index {idx}: {e}", file=sys.stderr)
 
+    if uncertain_items and failures == len(uncertain_items):
+        raise RuntimeError("All model-filter requests failed; publication stopped")
     return [item for item in filtered_data if item]
 
 
@@ -654,27 +608,21 @@ def process_single_item(chain, item: Dict, language: str, directions: List[Dict]
     if code_info:
         item.update(code_info)
 
-    try:
-        response: Structure = chain.invoke(
-            {
-                "language": language,
-                "directions": prompt_directions,
-                "taxonomy": prompt_taxonomy,
-                "title": item.get("title", ""),
-                "authors": ", ".join(item.get("authors", [])),
-                "categories": ", ".join(item.get("categories", [])),
-                "content": item.get("summary", ""),
-            }
-        )
-        item = normalize_ai_result(item, response.model_dump(), directions)
-        if item and item.get("_filter_relevance_reason"):
-            item["AI"]["filter_reason"] = item["_filter_relevance_reason"]
-    except langchain_core.exceptions.OutputParserException as e:
-        print(f"Output parsing failed for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
-        item = fallback_item(item, directions, "Structured output parsing failed; keyword fallback used.")
-    except Exception as e:
-        print(f"Unexpected error for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
-        item = fallback_item(item, directions, "AI processing failed; keyword fallback used.")
+    response: Structure = chain.invoke(
+        {
+            "language": language,
+            "directions": prompt_directions,
+            "taxonomy": prompt_taxonomy,
+            "paper_id": item.get("id", ""),
+            "title": item.get("title", ""),
+            "authors": ", ".join(item.get("authors", [])),
+            "categories": ", ".join(item.get("categories", [])),
+            "content": item.get("summary", ""),
+        }
+    )
+    item = normalize_ai_result(item, response.model_dump(), directions)
+    if item and item.get("_filter_relevance_reason"):
+        item["AI"]["filter_reason"] = item["_filter_relevance_reason"]
 
     if not item:
         return {}
@@ -686,7 +634,8 @@ def process_single_item(chain, item: Dict, language: str, directions: List[Dict]
 
 
 def process_all_items(data: List[Dict], model_name: str, language: str, max_workers: int, directions: List[Dict], taxonomy: Dict) -> List[Dict]:
-    llm = build_llm(model_name, Structure)
+    if not data:
+        return []
     print("Detail model:", model_name, file=sys.stderr)
 
     prompt_template = ChatPromptTemplate.from_messages(
@@ -695,11 +644,13 @@ def process_all_items(data: List[Dict], model_name: str, language: str, max_work
             HumanMessagePromptTemplate.from_template(template=template),
         ]
     )
-    chain = prompt_template | llm
+    chain = CachedChain(prompt_template, model_name, "detail", Structure,
+                        validator=lambda response: validate_classification(response, directions))
     prompt_directions = compact_directions_for_prompt(directions)
     prompt_taxonomy = compact_taxonomy_for_prompt(taxonomy)
 
     processed_data = [{} for _ in data]
+    failures = 0
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_idx = {
             executor.submit(process_single_item, chain, item, language, directions, prompt_directions, prompt_taxonomy): idx
@@ -710,10 +661,16 @@ def process_all_items(data: List[Dict], model_name: str, language: str, max_work
             idx = future_to_idx[future]
             try:
                 processed_data[idx] = future.result()
+            except FatalAIError:
+                for future in future_to_idx:
+                    future.cancel()
+                raise
             except Exception as e:
-                print(f"Item at index {idx} generated an exception: {e}", file=sys.stderr)
-                processed_data[idx] = fallback_item(data[idx], directions, "Unhandled worker error; keyword fallback used.")
+                failures += 1
+                print(f"Detail failed for {data[idx].get('id')}: {e}", file=sys.stderr)
 
+    if failures == len(data):
+        raise RuntimeError("All detail requests failed; publication stopped")
     return [item for item in processed_data if item]
 
 
@@ -766,6 +723,14 @@ def heuristic_importance_score(item: Dict, importance_config: Dict) -> float:
         score += 5.0
 
     return clamp_score(score)
+
+
+def candidate_priority(item: Dict, directions: List[Dict], importance_config: Dict) -> float:
+    matches = keyword_matched_direction_ids(item, directions)
+    weights = importance_config.get("direction_weights", {})
+    primary = max(matches, key=lambda key: float(weights.get(key, 1.0)), default="")
+    candidate = {**item, "AI": {"primary_direction_id": primary}}
+    return heuristic_importance_score(candidate, importance_config)
 
 
 def importance_level(score: float) -> str:
@@ -824,12 +789,20 @@ def parse_importance_response(content: str) -> Dict:
     }
 
 
+def validate_importance_response(response):
+    for field in ("research_value_score", "personal_relevance_score"):
+        match = re.search(rf"(?im)^\s*{field}\s*:\s*(\d+(?:\.\d+)?)\s*$", response.content)
+        if not match or not 0 <= float(match.group(1)) <= 100:
+            raise ValueError(f"Missing or invalid importance field: {field}")
+
+
 def score_single_importance(chain, item: Dict, importance_config_text: str, heuristic_score: float) -> Dict:
     ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
     try:
         response = chain.invoke(
             {
                 "importance_config": importance_config_text,
+                "paper_id": item.get("id", ""),
                 "title": item.get("title", ""),
                 "authors": ", ".join(item.get("authors", [])),
                 "categories": ", ".join(item.get("categories", [])),
@@ -850,7 +823,10 @@ def score_single_importance(chain, item: Dict, importance_config_text: str, heur
         signals = fields.get("key_signals") or []
         if signals:
             reason = f"{reason} Signals: {', '.join(signals[:5])}"
+    except FatalAIError:
+        raise
     except Exception as e:
+        item["_importance_failed"] = True
         print(f"Importance scoring error for {item.get('id', 'unknown')}: {e}", file=sys.stderr)
         final_score = heuristic_score
         reason = "Flash importance scoring failed; used configured preference heuristic fallback."
@@ -902,7 +878,6 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
         "importance_reason: <one short sentence>\n"
         "key_signals: <semicolon-separated short signals>"
     )
-    llm = build_plain_llm(model_name)
     print("Importance model:", model_name, file=sys.stderr)
     prompt_template = ChatPromptTemplate.from_messages(
         [
@@ -910,7 +885,7 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
             HumanMessagePromptTemplate.from_template(template=importance_template),
         ]
     )
-    chain = prompt_template | llm
+    chain = CachedChain(prompt_template, model_name, "importance", validator=validate_importance_response)
     importance_config_text = compact_importance_config_for_prompt(importance_config)
 
     scored_data = [{} for _ in data]
@@ -925,7 +900,12 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
             idx = future_to_idx[future]
             try:
                 scored_data[idx] = future.result()
+            except FatalAIError:
+                for future in future_to_idx:
+                    future.cancel()
+                raise
             except Exception as e:
+                data[idx]["_importance_failed"] = True
                 print(f"Importance worker error at index {idx}: {e}", file=sys.stderr)
                 item = data[idx]
                 ai = item.get("AI", {}) if isinstance(item.get("AI"), dict) else {}
@@ -938,6 +918,10 @@ def score_importance_for_items(data: List[Dict], model_name: str, max_workers: i
                 item["AI"] = ai
                 scored_data[idx] = item
 
+    if all(item.get("_importance_failed") for item in scored_data):
+        raise RuntimeError("All importance requests failed; publication stopped")
+    for item in scored_data:
+        item.pop("_importance_failed", None)
     return [item for item in scored_data if item]
 
 
@@ -961,7 +945,7 @@ def mark_deep_read_selection(items: List[Dict], top_k: int) -> List[Dict]:
 
 
 def update_taxonomy_from_items(taxonomy: Dict, items: List[Dict], directions: List[Dict]) -> Dict:
-    today = os.environ.get("TARGET_DATE") or datetime.utcnow().strftime("%Y-%m-%d")
+    today = os.environ.get("TARGET_DATE") or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     valid_directions = direction_map(directions)
 
     for item in items:
@@ -988,13 +972,13 @@ def update_taxonomy_from_items(taxonomy: Dict, items: List[Dict], directions: Li
 
 def main():
     args = parse_args()
-    detail_model_name = os.environ.get("DETAIL_MODEL_NAME") or os.environ.get("MODEL_NAME", "deepseek-chat")
-    filter_model_name = os.environ.get("FILTER_MODEL_NAME") or "deepseek-v4-flash"
-    importance_model_name = os.environ.get("IMPORTANCE_MODEL_NAME") or filter_model_name
+    detail_model_name = env_value("DETAIL_MODEL_NAME", env_value("MODEL_NAME", "deepseek-flash"))
+    filter_model_name = env_value("FILTER_MODEL_NAME", env_value("MODEL_NAME", "deepseek-flash"))
+    importance_model_name = env_value("IMPORTANCE_MODEL_NAME", filter_model_name)
     filter_max_workers = int(os.environ.get("FILTER_MAX_WORKERS") or str(args.max_workers))
     detail_max_workers = int(os.environ.get("DETAIL_MAX_WORKERS") or str(args.max_workers))
     importance_max_workers = int(os.environ.get("IMPORTANCE_MAX_WORKERS") or str(filter_max_workers))
-    language = os.environ.get("LANGUAGE", "Chinese")
+    language = env_value("LANGUAGE", "Chinese")
     directions = load_directions(args.directions)
     if not directions:
         raise RuntimeError(f"No semantic directions found in {args.directions}")
@@ -1003,9 +987,6 @@ def main():
     taxonomy = load_taxonomy(args.taxonomy, directions)
 
     target_file = args.data.replace(".jsonl", f"_AI_enhanced_{language}.jsonl")
-    if os.path.exists(target_file):
-        os.remove(target_file)
-        print(f"Removed existing file: {target_file}", file=sys.stderr)
 
     data = []
     with open(args.data, "r", encoding="utf-8") as f:
@@ -1037,19 +1018,23 @@ def main():
     print(f"Filtered {len(filtered_data)} relevant papers from {len(unique_data)} crawled papers.", file=sys.stderr)
 
     processed_data = process_all_items(filtered_data, detail_model_name, language, detail_max_workers, directions, taxonomy)
-    taxonomy = update_taxonomy_from_items(taxonomy, processed_data, directions)
-    save_taxonomy(taxonomy, args.taxonomy)
     processed_data = score_importance_for_items(processed_data, importance_model_name, importance_max_workers, importance_config)
     daily_top_k = (
-        int(os.environ.get("DAILY_DEEP_READ_TOP_K") or importance_config.get("daily_deep_read_top_k", 5) or 5)
-        if env_enabled("ENABLE_DEEP_READ")
+        positive_int("DAILY_DEEP_READ_TOP_K", importance_config.get("daily_deep_read_top_k", 3) or 3)
+        if enabled("ENABLE_DEEP_READ", default=True)
         else 0
     )
     processed_data = mark_deep_read_selection(processed_data, daily_top_k)
 
-    with open(target_file, "w", encoding="utf-8") as f:
-        for item in processed_data:
-            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+    # No persistent output is replaced until all enhancement stages validate.
+    taxonomy = update_taxonomy_from_items(copy.deepcopy(taxonomy), processed_data, directions)
+    serialized = "".join(json.dumps(item, ensure_ascii=False) + "\n" for item in processed_data)
+    output_dir = env_value("AI_OUTPUT_DIR")
+    if output_dir:
+        target_file = str(Path(output_dir) / Path(target_file).name)
+    taxonomy_output = Path(output_dir) / "taxonomy.json" if output_dir else args.taxonomy
+    atomic_write(target_file, serialized)
+    atomic_write(taxonomy_output, json.dumps(taxonomy, ensure_ascii=False, indent=2) + "\n")
 
     print(f"Kept {len(processed_data)} semantically relevant papers", file=sys.stderr)
 
