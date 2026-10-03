@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 120,
+          "paper_count": 127,
           "updated_at": "2026-10-02"
         },
         {
@@ -251,7 +251,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 202,
+          "paper_count": 212,
           "updated_at": "2026-10-02"
         },
         {
@@ -290,7 +290,7 @@
             "environment model"
           ],
           "name": "可交互与物理世界建模",
-          "paper_count": 146,
+          "paper_count": 151,
           "updated_at": "2026-10-02"
         },
         {
@@ -329,7 +329,7 @@
             "policy learning"
           ],
           "name": "具身世界模型与规划控制",
-          "paper_count": 1212,
+          "paper_count": 1223,
           "updated_at": "2026-10-02"
         },
         {
@@ -395,7 +395,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-02",
-          "paper_count": 1,
+          "paper_count": 2,
           "is_canonical": true
         },
         {
@@ -445,7 +445,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-02",
-          "paper_count": 10,
+          "paper_count": 14,
           "is_canonical": true
         },
         {
@@ -504,7 +504,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-02",
-          "paper_count": 6,
+          "paper_count": 8,
           "is_canonical": true
         },
         {
@@ -539,7 +539,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-02",
-          "paper_count": 8,
+          "paper_count": 14,
           "is_canonical": true
         }
       ],
@@ -566,7 +566,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-02",
-          "paper_count": 1,
+          "paper_count": 2,
           "is_canonical": true
         },
         {
@@ -599,7 +599,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-02",
-          "paper_count": 4,
+          "paper_count": 7,
           "is_canonical": true
         },
         {
