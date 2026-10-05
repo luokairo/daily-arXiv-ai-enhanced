@@ -133,14 +133,6 @@
           "description": "理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。",
           "examples": [
             {
-              "id": "2608.20312",
-              "title": "Inter-X++: A Comprehensive Benchmark for Multimodal Human-Human Interaction Analysis"
-            },
-            {
-              "id": "2608.20382",
-              "title": "Decoupled Vision-Language System for Multimodal Understanding and Generation"
-            },
-            {
               "id": "2608.22174",
               "title": "When Does Visual Generation Help Visual Understanding in Unified Multimodal Models?"
             },
@@ -151,6 +143,14 @@
             {
               "id": "2608.26105",
               "title": "VBVR-Pro: A Scalable and Verifiable Suite for Native Visual Reasoning"
+            },
+            {
+              "id": "2608.27044",
+              "title": "Omni-Interactive Universal Embedder"
+            },
+            {
+              "id": "2608.26517",
+              "title": "HUG-VIS: A Multimodal Benchmark for Human-centered Understanding and Generation in Visual Intelligence"
             }
           ],
           "id": "unified_multimodal_model",
@@ -162,17 +162,13 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 61,
-          "updated_at": "2026-08-27"
+          "paper_count": 63,
+          "updated_at": "2026-08-28"
         },
         {
           "created_at": null,
           "description": "直接服务于统一理解与生成模型的高效表征、蒸馏和推理。",
           "examples": [
-            {
-              "id": "2608.17402",
-              "title": "MoE-ViE: Mixture of Experts Vision Encoder for Efficient Image and Video Understanding"
-            },
             {
               "id": "2608.17872",
               "title": "DistillPath: An Efficient 22M Distilled Pathology Encoder Approaching Large Foundation Model Performance"
@@ -188,6 +184,10 @@
             {
               "id": "2608.20473",
               "title": "Aggregating Visual Information with Optimal Transport for VideoLM Token Compression"
+            },
+            {
+              "id": "2608.26581",
+              "title": "Activation Outliers Matter: Robust Recovery for Quantized Multimodal LLMs"
             }
           ],
           "id": "efficient_multimodal",
@@ -200,8 +200,8 @@
             "quantization"
           ],
           "name": "统一多模态模型高效化",
-          "paper_count": 148,
-          "updated_at": "2026-08-24"
+          "paper_count": 149,
+          "updated_at": "2026-08-28"
         }
       ],
       "scope_digest": "c8e911cc425b9b38f239d88e8d4205d37f2e03f6acfe2a1c5aff4ed0f7a78d7a"
@@ -215,24 +215,24 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2608.24680",
-              "title": "Game2World Engine: Unlocking In-the-Wild Gameplay Videos for World Model Training"
+              "id": "2608.26239",
+              "title": "WALL-SS: Scaling Long-horizon World Models via Next-Scale Autoregression"
             },
             {
-              "id": "2608.24885",
-              "title": "Do Robotic World Models Really Follow Actions? Diagnosing and Aligning Action-Conditioned Generation for Policy Learning"
+              "id": "2608.27345",
+              "title": "PAWBench: How Far Are We from Probabilistically Aligned World Modeling?"
             },
             {
-              "id": "2608.25927",
-              "title": "Code World Model: Coding Agent as World Brain"
+              "id": "2608.27328",
+              "title": "R2M-Bench: Evaluating Revisit Memory via Relative Consistency in Interactive Video World Models"
             },
             {
-              "id": "2608.25017",
-              "title": "Rollout-Decoded Reconstruction for Long-Horizon Prediction in Latent World Models"
+              "id": "2608.26200",
+              "title": "GameWAM: A World Action Model for Video Games"
             },
             {
-              "id": "2608.25518",
-              "title": "Agentic Game Development as a Verifiable Trajectory Data Engine for Scaling World Models"
+              "id": "2608.26214",
+              "title": "Surgical Video Generation From Diffusion to World Models: A Survey"
             }
           ],
           "id": "video_world_model",
@@ -245,8 +245,8 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 247,
-          "updated_at": "2026-08-27"
+          "paper_count": 253,
+          "updated_at": "2026-08-28"
         },
         {
           "id": "multimodal_world_model",
@@ -330,29 +330,29 @@
           ],
           "examples": [
             {
-              "id": "2608.23850",
-              "title": "DDMS: Discriminative Distillation of Multi-view Foundational Features into Single-view Models"
-            },
-            {
-              "id": "2608.24093",
-              "title": "Joint-Embedding Prediction of Masked Point Tubes for Self-Supervised Learning on 4D Point Cloud Videos"
-            },
-            {
-              "id": "2608.23790",
-              "title": "Primate vision reveals a missing principle for robust dynamic AI"
-            },
-            {
               "id": "2608.24574",
               "title": "PhysMLLMs: Spatial Priors for Unified Referring Segmentation and Grounded Reasoning of Images and Videos"
             },
             {
               "id": "2608.24364",
               "title": "B-MIM: Biased Masked Image Modeling for Generalizable Segmentation of Fine-Grained Anatomical Structures"
+            },
+            {
+              "id": "2608.27395",
+              "title": "LeVJEPA: Efficient & Scalable Video Pretraining without the Heuristics"
+            },
+            {
+              "id": "2608.27367",
+              "title": "Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models"
+            },
+            {
+              "id": "2608.26354",
+              "title": "Cross-simulator transfer with foundation model summaries: Towards robust SKA-era reionization inference"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-26",
-          "paper_count": 15,
+          "updated_at": "2026-08-28",
+          "paper_count": 18,
           "is_canonical": true
         }
       ],
@@ -420,29 +420,29 @@
           ],
           "examples": [
             {
-              "id": "2608.20749",
-              "title": "Identity-Preserving Text-to-Video Generation via Agentic Enhancement and Semantic Repair"
-            },
-            {
-              "id": "2608.21424",
-              "title": "EditStream: A Unified Autoregressive Framework for Interactive Video Generation and Editing"
-            },
-            {
-              "id": "2608.23090",
-              "title": "Loopy: Seamless Video Loop Generation via Anchored Looping Shift of Positional Embedding"
-            },
-            {
               "id": "2608.22819",
               "title": "Direct, Parallel, or Sequential? A Comparative Study of Training-Free Multi-Subject Image-to-Video Generation"
             },
             {
               "id": "2608.25479",
               "title": "4DStreamCtrl: Interactive Video Generation with Online 4D Control"
+            },
+            {
+              "id": "2608.26794",
+              "title": "Ring Forcing: Towards Precise Long-Term Memory for Autoregressive Video Diffusion"
+            },
+            {
+              "id": "2608.26902",
+              "title": "Tether the Subject, Release the Scene: Query-Aware Memory Routing for Long-Horizon Autoregressive Video Generation"
+            },
+            {
+              "id": "2608.26671",
+              "title": "RECAP-Forcing: Retaining Content Appearances for Long Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-27",
-          "paper_count": 27,
+          "updated_at": "2026-08-28",
+          "paper_count": 30,
           "is_canonical": true
         },
         {
@@ -455,14 +455,6 @@
           ],
           "examples": [
             {
-              "id": "2608.16328",
-              "title": "GRNEdit: Efficient General Video Editing from a New Binary-Evidence Perspective in Generative Refinement Networks"
-            },
-            {
-              "id": "2608.16745",
-              "title": "VicEdit: Learning to Edit Videos from Visual In-Context Examples"
-            },
-            {
               "id": "2608.14790",
               "title": "Instruction-Based Video Editing by Repurposing an Image Editing Model"
             },
@@ -473,11 +465,19 @@
             {
               "id": "2608.26101",
               "title": "RefVideo-6M: A Reliable Reference-Based Dataset for Instructional Video Editing"
+            },
+            {
+              "id": "2608.27123",
+              "title": "EditaLive! Unified Character Video Editing for Live Streaming"
+            },
+            {
+              "id": "2608.26809",
+              "title": "Thinking on Shots: Consistent Multi-Shot Video Editing with Agentic Reasoning"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-27",
-          "paper_count": 7,
+          "updated_at": "2026-08-28",
+          "paper_count": 9,
           "is_canonical": true
         },
         {
@@ -490,10 +490,6 @@
             "video distillation"
           ],
           "examples": [
-            {
-              "id": "2608.07572",
-              "title": "BRACE: Taming Sharp Irregularities via Barycentric Rational Forecasting for Fast Diffusion Transformers Inference"
-            },
             {
               "id": "2608.16585",
               "title": "SQuad: Sub-Quadratic Attention Distillation for Efficient Video Generation"
@@ -509,11 +505,15 @@
             {
               "id": "2608.25386",
               "title": "Efficient Training with Foresight: Multi-Token Auxiliary Supervision for Autoregressive Image Generation"
+            },
+            {
+              "id": "2608.26965",
+              "title": "ClusterAttention: A training-free speedup of bidirectional attention"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-27",
-          "paper_count": 17,
+          "updated_at": "2026-08-28",
+          "paper_count": 18,
           "is_canonical": true
         },
         {
@@ -644,11 +644,19 @@
             {
               "id": "2608.18607",
               "title": "VA-Judger: Reward Modeling from Human Preference Feedback for Joint Video-Audio Generation"
+            },
+            {
+              "id": "2608.26336",
+              "title": "StreamAV-Bench: A Comprehensive Benchmark for Streaming Audio-Video Generation"
+            },
+            {
+              "id": "2608.26535",
+              "title": "Multi2AV-Safety: Benchmarking Safety in Multimodal-to-Audio-Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-20",
-          "paper_count": 2,
+          "updated_at": "2026-08-28",
+          "paper_count": 4,
           "is_canonical": true
         }
       ],
@@ -672,14 +680,6 @@
           ],
           "examples": [
             {
-              "id": "2608.19375",
-              "title": "Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control"
-            },
-            {
-              "id": "2608.20401",
-              "title": "World models of environment, agent and joint agent-environment systems"
-            },
-            {
               "id": "2608.21075",
               "title": "AudioWorldSim: Realistic Binaural Audio Datasets For World Models"
             },
@@ -690,11 +690,19 @@
             {
               "id": "2608.24199",
               "title": "NVIDIA Cosmos-H-Dreams: Real-Time Generative Physics Simulation for Surgical Robotics"
+            },
+            {
+              "id": "2608.26766",
+              "title": "MeshPriorDiT: Hierarchical Modeling for Action-Conditioned Cloth Dynamics"
+            },
+            {
+              "id": "2608.26947",
+              "title": "4DSynth: Controllable Procedural World Synthesis for Dynamic Embodied Simulation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-26",
-          "paper_count": 6,
+          "updated_at": "2026-08-28",
+          "paper_count": 8,
           "is_canonical": true
         },
         {
@@ -711,29 +719,29 @@
           ],
           "examples": [
             {
-              "id": "2608.25572",
-              "title": "ConfAL-WM: Confidence-Guided Active Learning for Action-Conditioned World Models"
-            },
-            {
-              "id": "2608.26103",
-              "title": "Zero-WAM: In-Context World-Action Modeling from Human Videos for Open-Ended Task Generalization"
-            },
-            {
-              "id": "2608.24959",
-              "title": "GaussVLA: Geometry-Aware Spatial Reasoning for Vision-Language-Action Model"
-            },
-            {
-              "id": "2608.25308",
-              "title": "V-Link: Recovering Lost Visual Representations in Action DiT for Vision-Language-Action Models"
-            },
-            {
               "id": "2608.25659",
               "title": "GaussianDream++: Efficient 3D Gaussian World Modeling for Robotic Manipulation"
+            },
+            {
+              "id": "2608.27259",
+              "title": "Making Latent Evolution Explicit: Operator-Structured Transitions for World Action Models"
+            },
+            {
+              "id": "2608.27033",
+              "title": "Riemann-1.0: An Embodied World Action Model for Physical AI"
+            },
+            {
+              "id": "2608.26190",
+              "title": "Predicting Consequences and Reinforcing Navigation Policies with Latent World Models"
+            },
+            {
+              "id": "2608.26788",
+              "title": "Decoupling Planning and Control for Instructable Agents"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-27",
-          "paper_count": 27,
+          "updated_at": "2026-08-28",
+          "paper_count": 31,
           "is_canonical": true
         },
         {
@@ -764,11 +772,15 @@
             {
               "id": "2608.25956",
               "title": "4DGS-WAM: Bridging Past and Future with an Object-Centric World Action Model based on 4D Gaussian Splatting"
+            },
+            {
+              "id": "2608.27073",
+              "title": "SpatialCrafter: Single Image World Modeling with Generative 3D Proxies"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-27",
-          "paper_count": 4,
+          "updated_at": "2026-08-28",
+          "paper_count": 5,
           "is_canonical": true
         }
       ],
@@ -803,6 +815,6 @@
       "scope_digest": "4451eb36d7e3d29acecb41b1fdc06c479a8df74e993f0dd600c26be3632f05ee"
     }
   },
-  "updated_at": "2026-08-27",
+  "updated_at": "2026-08-28",
   "version": 2
 }

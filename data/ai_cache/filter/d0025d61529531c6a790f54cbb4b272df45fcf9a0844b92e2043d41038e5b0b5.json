@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "针对图像到视频模型的时序越狱攻击框架，与视频世界模型、表征学习及生成方法本身无关。", "reason": "Jailbreak attack framework against I2V models; no contribution to world models, representation learning, or generation methods themselves.", "personal_relevance_score": 8.0, "research_value_score": 10.0}}
