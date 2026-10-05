@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出事件引导的神经视频编解码器，利用事件流提升RGB压缩效率，属于视频压缩而非生成或表征学习。", "reason": "Event-guided neural video compression for RGB coding efficiency; no contribution to world models, video generation, or visual representation learning.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向大规模 MIMO 的几何驱动虚拟基站波束管理框架，与视频/多模态世界模型及表征学习无关。", "reason": "Beam management for massive MIMO using LiDAR point clouds and DRL; no video/multimodal world model, representation learning, or generative contribution.", "personal_relevance_score": 4.0, "research_value_score": 8.0}}

@@ -9,24 +9,24 @@
           "description": "连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。",
           "examples": [
             {
-              "id": "2608.22898",
-              "title": "SelFusion: Self-distillation for Diffusion Language Models"
-            },
-            {
-              "id": "2608.22244",
-              "title": "Improving Few-Step Language Flows with Untied Self-Conditioning"
-            },
-            {
-              "id": "2608.23167",
-              "title": "Accelerating Diffusion Language Models via Structured Suffix Modeling"
-            },
-            {
               "id": "2608.25505",
               "title": "Conditional Total Correlation and the Serial Depth of Adaptive Parallel Sampling"
             },
             {
               "id": "2608.25311",
               "title": "Prefix-Denoising Consistency: Test-Time Verification for Diffusion Language Models"
+            },
+            {
+              "id": "2610.02665",
+              "title": "Large Language Continuous Diffusion Models"
+            },
+            {
+              "id": "2610.02657",
+              "title": "Context-Tower Conversion Preserves Generation While Freezing Retains Knowledge: Low-Budget AR-to-Diffusion Conversion of MoE LLMs"
+            },
+            {
+              "id": "2610.03665",
+              "title": "Pivot-SD: Efficient Self-Distillation for Masked Diffusion Language Models"
             }
           ],
           "id": "continuous_language_flow",
@@ -41,8 +41,8 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 144,
-          "updated_at": "2026-08-27"
+          "paper_count": 147,
+          "updated_at": "2026-10-05"
         },
         {
           "created_at": null,
@@ -215,24 +215,24 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2608.27345",
-              "title": "PAWBench: How Far Are We from Probabilistically Aligned World Modeling?"
+              "id": "2610.03374",
+              "title": "EVEWorld: Physical Evolution Supervision for Embodied World Models"
             },
             {
-              "id": "2608.27328",
-              "title": "R2M-Bench: Evaluating Revisit Memory via Relative Consistency in Interactive Video World Models"
+              "id": "2610.02521",
+              "title": "Spatial Memory Intelligence: Endowing World Models with Understanding-Driven Long-Term Memory"
             },
             {
-              "id": "2608.26200",
-              "title": "GameWAM: A World Action Model for Video Games"
+              "id": "2610.03047",
+              "title": "Parasitic Co-Denoising: Unlocking 3D Human Motion Generation in a Frozen Video Diffusion Model"
             },
             {
-              "id": "2608.26214",
-              "title": "Surgical Video Generation From Diffusion to World Models: A Survey"
+              "id": "2610.02660",
+              "title": "SpectralCache: Accelerating Diffusion-Based World Models via Spectral Feature Caching"
             },
             {
-              "id": "2608.28549",
-              "title": "Video Generative Models as Geometry Learner"
+              "id": "2610.03713",
+              "title": "What Should World Models Forget? Stratified Retention for Continual Adaptation"
             }
           ],
           "id": "video_world_model",
@@ -245,8 +245,8 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 254,
-          "updated_at": "2026-08-31"
+          "paper_count": 263,
+          "updated_at": "2026-10-05"
         },
         {
           "id": "multimodal_world_model",
@@ -265,11 +265,15 @@
             {
               "id": "2608.23189",
               "title": "EchoWM: Open and Enterable Omnimodal World Models"
+            },
+            {
+              "id": "2610.02542",
+              "title": "How To Train Your World Model: Fine-tuning vs RAG for LM-based World Modeling"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-25",
-          "paper_count": 2,
+          "updated_at": "2026-10-05",
+          "paper_count": 3,
           "is_canonical": true
         },
         {
@@ -330,29 +334,29 @@
           ],
           "examples": [
             {
-              "id": "2608.27367",
-              "title": "Successive Capacity Growth: Task-Complexity-Driven Width and Depth Expansion for Vision Transformer Encoders in JEPA World Models"
+              "id": "2610.02860",
+              "title": "Counterfactual Action Evaluation, Observation Bottlenecks, and Representation Geometry in Joint-Embedding Predictive World Models"
             },
             {
-              "id": "2608.26354",
-              "title": "Cross-simulator transfer with foundation model summaries: Towards robust SKA-era reionization inference"
+              "id": "2610.02597",
+              "title": "GRAFT: Growing Agglomerative Foundation Models via Continual Teacher Distillation"
             },
             {
-              "id": "2608.28216",
-              "title": "WALDO: One-Shot Exemplar-Conditioned Object Detection in Cluttered Scenes"
+              "id": "2610.03106",
+              "title": "S2S-JEPA: Predicting the Predictable at Subseasonal-to-Seasonal Timescales"
             },
             {
-              "id": "2608.28092",
-              "title": "Do Medical Vision Models Reason About Anatomy? Probing the Spatial Inductive Biases of Learned Visual Representations"
+              "id": "2610.03698",
+              "title": "Decoding the Functional Roles of Register and High-Norm Patch Tokens in Vision Transformers"
             },
             {
-              "id": "2608.28205",
-              "title": "Cut-ViT: Task-Specific Model Pruning via Gram Anchoring Subspace Consistency"
+              "id": "2610.03290",
+              "title": "Wrong Organ, Right Physics: Transferring Echocardiography Pretraining to Lung Ultrasound for Tuberculosis Screening"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-31",
-          "paper_count": 21,
+          "updated_at": "2026-10-05",
+          "paper_count": 33,
           "is_canonical": true
         }
       ],
@@ -402,11 +406,15 @@
             {
               "id": "2608.19556",
               "title": "Stream4D: 4D-Consistency for Streaming Autoregressive Diffusion Video Models"
+            },
+            {
+              "id": "2610.02914",
+              "title": "Custom Forcing: Training-Free Subject Customization for Autoregressive Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 2,
+          "updated_at": "2026-10-05",
+          "paper_count": 3,
           "is_canonical": true
         },
         {
@@ -420,29 +428,29 @@
           ],
           "examples": [
             {
-              "id": "2608.26794",
-              "title": "Ring Forcing: Towards Precise Long-Term Memory for Autoregressive Video Diffusion"
-            },
-            {
-              "id": "2608.26902",
-              "title": "Tether the Subject, Release the Scene: Query-Aware Memory Routing for Long-Horizon Autoregressive Video Generation"
-            },
-            {
-              "id": "2608.26671",
-              "title": "RECAP-Forcing: Retaining Content Appearances for Long Video Generation"
-            },
-            {
               "id": "2608.28460",
               "title": "LayerRecall: A State-Conditioned Memory Router for Long-Horizon Consistency in Video Generation"
             },
             {
               "id": "2608.27922",
               "title": "DensityKV: Density-Guided KV Cache Compression for Long Video Generation"
+            },
+            {
+              "id": "2610.03120",
+              "title": "In-Distribution Forcing for Long Video Generation at Test Time"
+            },
+            {
+              "id": "2610.03510",
+              "title": "Weave Forcing: Compositional Memory Routing for Interactive Long Video Generation"
+            },
+            {
+              "id": "2610.03636",
+              "title": "LoGo: Local-Global Rewards for Consistent Long-Horizon Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-31",
-          "paper_count": 32,
+          "updated_at": "2026-10-05",
+          "paper_count": 35,
           "is_canonical": true
         },
         {
@@ -491,29 +499,29 @@
           ],
           "examples": [
             {
-              "id": "2608.18484",
-              "title": "Partition the Support, Reconstruct the Residual: Training-Free Sparse Attention for Video Generation and World Models"
-            },
-            {
-              "id": "2608.21229",
-              "title": "Beyond Attention Masks: Instruction Anchoring for Efficient In-Context Diffusion Generation"
-            },
-            {
-              "id": "2608.25386",
-              "title": "Efficient Training with Foresight: Multi-Token Auxiliary Supervision for Autoregressive Image Generation"
-            },
-            {
-              "id": "2608.26965",
-              "title": "ClusterAttention: A training-free speedup of bidirectional attention"
-            },
-            {
               "id": "2608.28082",
               "title": "Attribute Token Arithmetic: Disentangled and Continuous Semantic Control for Visual Autoregressive Models"
+            },
+            {
+              "id": "2610.03221",
+              "title": "VDOT++: Unified Few-Step Video Generation via Unbalanced Optimal Transport Distillation"
+            },
+            {
+              "id": "2610.02779",
+              "title": "TRAC: Trajectory-aware Reuse and Adaptive Correction for Efficient Autoregressive Video Generation"
+            },
+            {
+              "id": "2610.03543",
+              "title": "DuoMatching: Joint-Marginal Distribution Matching for Few-Step Video Generation"
+            },
+            {
+              "id": "2610.03202",
+              "title": "Contextual Flow Matching: Adaptive Step Selection in Flow Models for Efficient Visual Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-31",
-          "paper_count": 19,
+          "updated_at": "2026-10-05",
+          "paper_count": 23,
           "is_canonical": true
         },
         {
@@ -680,29 +688,29 @@
           ],
           "examples": [
             {
-              "id": "2608.21075",
-              "title": "AudioWorldSim: Realistic Binaural Audio Datasets For World Models"
-            },
-            {
-              "id": "2608.23526",
-              "title": "Correcting a learned physical invariant improves world-model rollouts"
-            },
-            {
-              "id": "2608.24199",
-              "title": "NVIDIA Cosmos-H-Dreams: Real-Time Generative Physics Simulation for Surgical Robotics"
-            },
-            {
               "id": "2608.26766",
               "title": "MeshPriorDiT: Hierarchical Modeling for Action-Conditioned Cloth Dynamics"
             },
             {
               "id": "2608.26947",
               "title": "4DSynth: Controllable Procedural World Synthesis for Dynamic Embodied Simulation"
+            },
+            {
+              "id": "2610.02515",
+              "title": "IGNITE Tokamak World Model Architecture"
+            },
+            {
+              "id": "2610.02274",
+              "title": "Awomo-SimDataEngine: Agentic Simulation-ReadyWorld Generation"
+            },
+            {
+              "id": "2610.02331",
+              "title": "World Editing: Intervening on Executable Worlds at Increasing Depth"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-28",
-          "paper_count": 8,
+          "updated_at": "2026-10-05",
+          "paper_count": 11,
           "is_canonical": true
         },
         {
@@ -719,29 +727,29 @@
           ],
           "examples": [
             {
-              "id": "2608.26190",
-              "title": "Predicting Consequences and Reinforcing Navigation Policies with Latent World Models"
+              "id": "2610.02840",
+              "title": "PointWAM: 3D World Action Modeling for Dexterous Robotic Manipulation"
             },
             {
-              "id": "2608.26788",
-              "title": "Decoupling Planning and Control for Instructable Agents"
+              "id": "2610.02368",
+              "title": "Rethinking World-Action Model for Compositional and In-Context Robotic Manipulation"
             },
             {
-              "id": "2608.28491",
-              "title": "AcrossVAM1.0: Particle World Modeling for Text-Assisted Robot Video Prediction"
+              "id": "2610.02801",
+              "title": "VIGOR: Zero-Shot Visual Generalization via Latent-Space Consistency in Model-Based Reinforcement Learning"
             },
             {
-              "id": "2608.27550",
-              "title": "Beyond Data Scaling: Representation-Centric Continued Pre-training for Vision-Language-Action Models"
+              "id": "2610.02398",
+              "title": "Keep the Effect, Drop the Actor: Programmable Effect-to-Execution World-Action Models"
             },
             {
-              "id": "2608.27609",
-              "title": "PHR-VLA: Planning Horizon Reasoning for Vision-Language-Action Models"
+              "id": "2610.03079",
+              "title": "RIFAR: Reliability and Forgetting-Aware Replay for Continual Robot Learning"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-31",
-          "paper_count": 34,
+          "updated_at": "2026-10-05",
+          "paper_count": 44,
           "is_canonical": true
         },
         {
@@ -815,6 +823,6 @@
       "scope_digest": "4451eb36d7e3d29acecb41b1fdc06c479a8df74e993f0dd600c26be3632f05ee"
     }
   },
-  "updated_at": "2026-08-31",
+  "updated_at": "2026-10-05",
   "version": 2
 }
