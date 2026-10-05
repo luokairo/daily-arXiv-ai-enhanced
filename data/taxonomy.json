@@ -215,14 +215,6 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2608.23565",
-              "title": "ReWorld: An Interactive World Model with Long-Horizon Memory"
-            },
-            {
-              "id": "2608.21439",
-              "title": "WorldMind: Decoupled Game World Model for State-Aware NPC Behavior"
-            },
-            {
               "id": "2608.22750",
               "title": "MOSH-WM: Mask-Grounded Soft-Hamiltonian Dynamics for Object-Centric World Models"
             },
@@ -233,6 +225,14 @@
             {
               "id": "2608.22421",
               "title": "Where World Models Break: Natural-Input Failure Discovery"
+            },
+            {
+              "id": "2608.24680",
+              "title": "Game2World Engine: Unlocking In-the-Wild Gameplay Videos for World Model Training"
+            },
+            {
+              "id": "2608.24885",
+              "title": "Do Robotic World Models Really Follow Actions? Diagnosing and Aligning Action-Conditioned Generation for Policy Learning"
             }
           ],
           "id": "video_world_model",
@@ -245,8 +245,8 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 242,
-          "updated_at": "2026-08-25"
+          "paper_count": 244,
+          "updated_at": "2026-08-26"
         },
         {
           "id": "multimodal_world_model",
@@ -291,11 +291,27 @@
             {
               "id": "2608.22485",
               "title": "HeatTok: Enhancing Remote Sensing Image Understanding via Thermodiffusion-based Tokenization"
+            },
+            {
+              "id": "2608.23864",
+              "title": "AffineTok: Semantic Affine Consistency for Diffusion-Friendly Visual Tokenizer"
+            },
+            {
+              "id": "2608.24293",
+              "title": "Keep-or-Drop? Adaptive Tokenizer for Compact Video Representation"
+            },
+            {
+              "id": "2608.24068",
+              "title": "Representation Learning in Diffusion and Flow-based Model: An Application Aspect"
+            },
+            {
+              "id": "2608.24782",
+              "title": "Image Difference Quantification Using Autoencoder-Based Latent Representations"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-25",
-          "paper_count": 1,
+          "updated_at": "2026-08-26",
+          "paper_count": 5,
           "is_canonical": true
         },
         {
@@ -314,29 +330,29 @@
           ],
           "examples": [
             {
-              "id": "2608.20974",
-              "title": "WA-JEPA: Rethinking the Video JEPA Paradigm for World-Action Modeling in Autonomous Driving"
+              "id": "2608.23850",
+              "title": "DDMS: Discriminative Distillation of Multi-view Foundational Features into Single-view Models"
             },
             {
-              "id": "2608.21160",
-              "title": "Human-JEPA: A Human-Centric Vision Model that Perceives and Anticipates"
+              "id": "2608.24093",
+              "title": "Joint-Embedding Prediction of Masked Point Tubes for Self-Supervised Learning on 4D Point Cloud Videos"
             },
             {
-              "id": "2608.22764",
-              "title": "LpWM: A Case for Sparse Representations in World Models"
+              "id": "2608.23790",
+              "title": "Primate vision reveals a missing principle for robust dynamic AI"
             },
             {
-              "id": "2608.22358",
-              "title": "Tracing the Unlabeled Storm: Cross-Variable Transfer in a Lagrangian Atmospheric JEPA Framework"
+              "id": "2608.24574",
+              "title": "PhysMLLMs: Spatial Priors for Unified Referring Segmentation and Grounded Reasoning of Images and Videos"
             },
             {
-              "id": "2608.22665",
-              "title": "Hyperbolic Hierarchical Clustering for Visual Representation Learning"
+              "id": "2608.24364",
+              "title": "B-MIM: Biased Masked Image Modeling for Generalizable Segmentation of Fine-Grained Anatomical Structures"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-25",
-          "paper_count": 8,
+          "updated_at": "2026-08-26",
+          "paper_count": 15,
           "is_canonical": true
         }
       ],
@@ -510,10 +526,6 @@
           ],
           "examples": [
             {
-              "id": "2608.09666",
-              "title": "Open Evaluation Agent: Efficient and Promptable Evaluation of Visual Generative Models"
-            },
-            {
               "id": "2608.16717",
               "title": "PersonaShot: Benchmarking Person-Centric Narrative Continuity in Multi-Shot Video Generation"
             },
@@ -528,11 +540,15 @@
             {
               "id": "2608.21425",
               "title": "Aligning Human Sense: Calibrated Distributional Reward Learning for Video Generation"
+            },
+            {
+              "id": "2608.23664",
+              "title": "Scaling Reinforcement Learning for Diffusion Models via Velocity Matching"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-25",
-          "paper_count": 28,
+          "updated_at": "2026-08-26",
+          "paper_count": 29,
           "is_canonical": true
         }
       ],
@@ -563,11 +579,15 @@
             {
               "id": "2608.23383",
               "title": "Long-Horizon Audio-Visual Generation for Persistent Stories and Interactive Worlds"
+            },
+            {
+              "id": "2608.24674",
+              "title": "TurboT2VA: Fast Large-Scale Text-to-Video-Audio Generation via Score-Regularized Consistency Distillation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-25",
-          "paper_count": 5,
+          "updated_at": "2026-08-26",
+          "paper_count": 6,
           "is_canonical": true
         },
         {
@@ -652,10 +672,6 @@
           ],
           "examples": [
             {
-              "id": "2608.20284",
-              "title": "Towards Surgical World-Action Modeling: A Preliminary Joint Visual-Trajectory Forecasting for Surgical Motion Planning"
-            },
-            {
               "id": "2608.19375",
               "title": "Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control"
             },
@@ -670,11 +686,15 @@
             {
               "id": "2608.23526",
               "title": "Correcting a learned physical invariant improves world-model rollouts"
+            },
+            {
+              "id": "2608.24199",
+              "title": "NVIDIA Cosmos-H-Dreams: Real-Time Generative Physics Simulation for Surgical Robotics"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-25",
-          "paper_count": 5,
+          "updated_at": "2026-08-26",
+          "paper_count": 6,
           "is_canonical": true
         },
         {
@@ -691,29 +711,29 @@
           ],
           "examples": [
             {
-              "id": "2608.21414",
-              "title": "RiskWorld: Object-Centric Latent World Modeling for Autonomous Driving Risk Identification"
+              "id": "2608.24714",
+              "title": "GaussianWAM: Distilling Geometry and Semantics from 3D Gaussian Fields into World-Action Models"
             },
             {
-              "id": "2608.22294",
-              "title": "Beyond Instance Slots: Semantically Rich World Models for Physical Interaction Planning"
+              "id": "2608.24855",
+              "title": "LeFlow: Generative Latent Flow Planning for World Models"
             },
             {
-              "id": "2608.23452",
-              "title": "Reward-Free Continual Adaptation for Resilient Space Robots"
+              "id": "2608.23927",
+              "title": "GlanceWAM: Sparse Test-Time Imagination for World-Action Models"
             },
             {
-              "id": "2608.22278",
-              "title": "DreamMimic: Learning Visuomotor Whole-Body Loco-Manipulation via World Model"
+              "id": "2608.24101",
+              "title": "TrAct: Bridging Robot Control and Visual Prediction with Visual Tracks"
             },
             {
-              "id": "2608.22364",
-              "title": "WAM-OPD: Joint Video-Action Supervision for World Action Model Post-Training with On-Policy Distillation"
+              "id": "2608.24882",
+              "title": "Latent Action as Intention Enables Efficient Future Imagination for World Action Models"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-25",
-          "paper_count": 16,
+          "updated_at": "2026-08-26",
+          "paper_count": 22,
           "is_canonical": true
         },
         {
@@ -764,16 +784,21 @@
             "foley generation",
             "video soundtrack"
           ],
-          "examples": [],
+          "examples": [
+            {
+              "id": "2608.24579",
+              "title": "Visually-Guided Spatial Audio Generation for $360^\\circ$ In-the-Wild Speech Scenes"
+            }
+          ],
           "created_at": null,
-          "updated_at": null,
-          "paper_count": 0,
+          "updated_at": "2026-08-26",
+          "paper_count": 1,
           "is_canonical": true
         }
       ],
       "scope_digest": "4451eb36d7e3d29acecb41b1fdc06c479a8df74e993f0dd600c26be3632f05ee"
     }
   },
-  "updated_at": "2026-08-25",
+  "updated_at": "2026-08-26",
   "version": 2
 }

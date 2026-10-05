@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向持续学习的实例级自适应提示方法，与视频/多模态世界模型及表征学习方向无关。", "reason": "Continual learning with prompt tuning for image classification; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 5.0, "research_value_score": 10.0}}
