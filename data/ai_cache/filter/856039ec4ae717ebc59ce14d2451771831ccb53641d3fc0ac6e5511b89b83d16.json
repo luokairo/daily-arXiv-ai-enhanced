@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出学习PDE传播子（相位与振幅）的microlocal神经算子，用程函与输运方程刻画奇异传播几何。", "reason": "Learns PDE propagators via microlocal phase/amplitude operators; no video, world-model, audio-video, or multimodal generation evidence in abstract.", "personal_relevance_score": 8.0, "research_value_score": 35.0}}

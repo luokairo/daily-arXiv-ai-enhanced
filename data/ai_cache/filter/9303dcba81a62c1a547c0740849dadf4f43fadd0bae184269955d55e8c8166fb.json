@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出 EARL 库，为强化学习智能体生成反事实解释，用于自适应系统。", "reason": "Counterfactual explanation library for RL self-adaptive systems; no video world model, generation, audio-video, or unified multimodal content.", "personal_relevance_score": 5.0, "research_value_score": 20.0}}

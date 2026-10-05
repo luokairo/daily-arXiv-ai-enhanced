@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于拓扑不变流形学习的自监督盲图像质量评估框架，用于铁路图像质量参考构建。", "reason": "Self-supervised image quality assessment for railway images; no world model, video generation, audio-video, unified multimodal, or continuous language content.", "personal_relevance_score": 3.0, "research_value_score": 8.0}}
