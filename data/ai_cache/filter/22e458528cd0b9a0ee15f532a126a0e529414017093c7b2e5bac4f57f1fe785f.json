@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "基于极值搜索控制的多机器人仓库规划器参数自适应调优，与视频/多模态世界模型及表征学习无关。", "reason": "Multi-robot warehouse planner parameter tuning via extremum seeking control; no world model, video/multimodal representation, or generative contribution.", "personal_relevance_score": 3.0, "research_value_score": 5.0}}

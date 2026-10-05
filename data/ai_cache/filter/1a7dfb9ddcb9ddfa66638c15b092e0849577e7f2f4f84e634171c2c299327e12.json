@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "研究有限马尔可夫链平均核的谱划分算法，与视频/多模态世界模型及表征学习无关。", "reason": "Spectral partitioning of Markov chains for averaging kernels; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 8.0}}

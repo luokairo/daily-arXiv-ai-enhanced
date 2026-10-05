@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "研究媒体偏见标注中定义选择的影响，与所列方向无关。", "reason": "Media bias annotation study with human/LLM ratings; no video, multimodal, representation, generation, or world-model contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}

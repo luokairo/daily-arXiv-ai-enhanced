@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向具身指代定位的视觉感知稀疏专家路由方法，与视频/多模态世界模型及表征学习目标无直接关联。", "reason": "Embodied navigation and referring expression grounding with MoE routing; no world model, video/multimodal representation, or generation contribution.", "personal_relevance_score": 12.0, "research_value_score": 15.0}}
