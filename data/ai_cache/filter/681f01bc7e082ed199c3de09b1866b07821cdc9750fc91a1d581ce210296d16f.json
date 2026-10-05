@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "该论文分析语言模型句法表征的线性距离与熵因素，与视频/多模态世界模型及视觉表征学习无关。", "reason": "Studies syntactic probing of LLM text embeddings; no visual/video representation, world model, generation, or multimodal contribution.", "personal_relevance_score": 5.0, "research_value_score": 10.0}}
