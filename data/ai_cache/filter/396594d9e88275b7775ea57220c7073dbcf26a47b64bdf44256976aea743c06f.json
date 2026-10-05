@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于相位等变自监督目标的心脏周期表征学习架构 Winder，用于心电信号诊断。", "reason": "Self-supervised representation learning on ECG cardiac signals, not visual/video representation; no transfer evidence to video or multimodal world models.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}

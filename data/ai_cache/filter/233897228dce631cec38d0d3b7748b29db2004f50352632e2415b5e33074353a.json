@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "该论文研究房间脉冲响应仿真保真度对单通道语音增强训练的影响，与所列方向无关。", "reason": "Room acoustic RIR simulation for single-channel speech enhancement training; no video, multimodal, representation, or audio-video generation contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}
