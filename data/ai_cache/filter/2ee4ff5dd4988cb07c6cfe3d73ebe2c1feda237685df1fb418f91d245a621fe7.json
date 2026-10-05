@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出几何感知的3D室内无线定位基础模型，联合WiFi测量与点云场景几何进行最大似然定位。", "reason": "Wireless localization from WiFi and 3D point clouds; no video world model, video/audio generation, or unified multimodal generation evidence in abstract.", "personal_relevance_score": 8.0, "research_value_score": 30.0}}

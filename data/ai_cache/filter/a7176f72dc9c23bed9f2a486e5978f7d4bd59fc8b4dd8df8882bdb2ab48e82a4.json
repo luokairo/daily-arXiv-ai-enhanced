@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出情绪中介的多模态推理框架，用于异步视频面试中的人格评估，融合视觉与音频情绪线索。", "reason": "Multimodal emotion reasoning for personality assessment in video interviews; no world modeling, video/audio generation, or unified generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

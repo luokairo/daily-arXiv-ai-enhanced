@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出跨模态智能体策略自蒸馏框架CAPS，用文本历史策略监督视觉历史策略，降低上下文成本。", "reason": "Concerns LLM agent context compression via rendering history as images; no video world model, video/audio generation, or unified generation evidence.", "personal_relevance_score": 8.0, "research_value_score": 30.0}}

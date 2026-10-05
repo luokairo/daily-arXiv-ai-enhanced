@@ -9,24 +9,24 @@
           "description": "连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。",
           "examples": [
             {
-              "id": "2610.01275",
-              "title": "Know When to Hold 'em: Correct-Token Retention in Uniform-State Diffusion Language Models"
-            },
-            {
-              "id": "2610.02193",
-              "title": "Hierarchical Continuous Diffusion Language Models"
-            },
-            {
-              "id": "2610.00661",
-              "title": "Exploring More, Reasoning Better: Stepwise Risk-Sensitive GRPO for Diffusion Language Models"
-            },
-            {
-              "id": "2610.01296",
-              "title": "ITC-MoE: Importance-guided Token-aware Compression for MoE Diffusion Language Models"
-            },
-            {
               "id": "2610.01177",
               "title": "Temporally-Resolved Token Attribution Reveals the Generation Dynamics of Diffusion Language Models"
+            },
+            {
+              "id": "2608.08082",
+              "title": "Commitment Before Realization: When Classifier-Free Guidance Becomes Unnecessary in Masked Diffusion Language Models"
+            },
+            {
+              "id": "2608.08086",
+              "title": "Archer: Adaptive Reuse of Cached Hidden States for Efficient Rollback in Diffusion Language Models"
+            },
+            {
+              "id": "2608.08791",
+              "title": "Unsure but Certain: Uncovering the Representation-Confidence Gap in Diffusion Language Models"
+            },
+            {
+              "id": "2608.09424",
+              "title": "Reducing Pretraining-Generation Mismatch in Diffusion Language Models"
             }
           ],
           "id": "continuous_language_flow",
@@ -41,8 +41,8 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 134,
-          "updated_at": "2026-10-02"
+          "paper_count": 138,
+          "updated_at": "2026-08-11"
         },
         {
           "created_at": null,
@@ -138,10 +138,6 @@
           "description": "理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。",
           "examples": [
             {
-              "id": "2610.00576",
-              "title": "Gestalt: Large Multimodal Interplay Model"
-            },
-            {
               "id": "2609.38485",
               "title": "Beyond Layers: Position-Resolved Gradient Conflict and Position-Aware Modulation for Unified Multimodal Models"
             },
@@ -156,6 +152,10 @@
             {
               "id": "2609.39490",
               "title": "OmniReasoning: Pushing the Limits of Audio-Visual Joint Reasoning"
+            },
+            {
+              "id": "2608.08469",
+              "title": "Aero Realtime: Fully Aligned Input-Output Streams for Low-Latency Streaming Multimodal Generation"
             }
           ],
           "id": "unified_multimodal_model",
@@ -167,8 +167,8 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 53,
-          "updated_at": "2026-10-01"
+          "paper_count": 54,
+          "updated_at": "2026-08-11"
         },
         {
           "created_at": null,
@@ -220,24 +220,24 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2610.01092",
-              "title": "Ego2Act: Evaluating Goal-Directed Manipulation in Egocentric Video Generation"
+              "id": "2608.09449",
+              "title": "Sekai2: From World Exploration to Interactive World Modeling"
             },
             {
-              "id": "2610.00544",
-              "title": "Memorizon: Training World Models Beyond Their Context Window"
+              "id": "2608.07693",
+              "title": "CosmosAlign: Adapting a World Foundation Model for Generative Traffic Video Forecasting"
             },
             {
-              "id": "2610.01942",
-              "title": "Latent-Foresight: End-to-End Learning Predictable Representations for Latent World Models"
+              "id": "2608.08982",
+              "title": "Twin Rollouts: Noise-Coupled Counterfactual Branching in Interactive Video World Models"
             },
             {
-              "id": "2610.02205",
-              "title": "ROWBench: Do Video Models Render What the Program Specifies?"
+              "id": "2608.09493",
+              "title": "GeoRoute: Geometry-Aware Hybrid Inference for Traffic Future-Frame Prediction"
             },
             {
-              "id": "2610.01201",
-              "title": "iSEE: Object Permanence Through Self-Supervision"
+              "id": "2608.08553",
+              "title": "MotionCraft: Latent World Modeling with Sparse Attention for Visual Upscaling"
             }
           ],
           "id": "video_world_model",
@@ -251,32 +251,32 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 222,
-          "updated_at": "2026-10-02"
+          "paper_count": 229,
+          "updated_at": "2026-08-11"
         },
         {
           "created_at": null,
           "description": "物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。",
           "examples": [
             {
-              "id": "2610.01614",
-              "title": "Oneira: From Open-Ended Generation to Open-World Interaction in Video World Models"
-            },
-            {
-              "id": "2610.02197",
-              "title": "HiPhy: Hierarchical Alignment for Physically-Plausible Multi-Principle Video Generation"
-            },
-            {
-              "id": "2610.00280",
-              "title": "Stable and Counterfactually Robust Physical World Models from Imposed Structure and Learned Physics"
-            },
-            {
-              "id": "2610.00976",
-              "title": "Variational Streaming Flow: Probabilistic Forecasting in Physical Time"
-            },
-            {
               "id": "2610.01842",
               "title": "On the Divergence of Accuracy and Mechanism Consistency in Time Series World Models"
+            },
+            {
+              "id": "2608.08600",
+              "title": "Population-Scalable Multi-Agent World Modeling"
+            },
+            {
+              "id": "2608.08070",
+              "title": "SurgWMBench: A Vision-Based Benchmark for World-Modeling Surgical Instrument Motion Planning"
+            },
+            {
+              "id": "2608.08689",
+              "title": "A Structural Dynamics Graph World Model: Unified Modeling, Constrained Rollout, and Interpretable Calibration"
+            },
+            {
+              "id": "2608.09266",
+              "title": "Did the Grid Erase the Event? EndoClock for Auditing Medical World-Model Pipelines"
             }
           ],
           "id": "interactive_physical_world",
@@ -290,32 +290,32 @@
             "environment model"
           ],
           "name": "可交互与物理世界建模",
-          "paper_count": 156,
-          "updated_at": "2026-10-02"
+          "paper_count": 160,
+          "updated_at": "2026-08-11"
         },
         {
           "created_at": null,
           "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
           "examples": [
             {
-              "id": "2610.01373",
-              "title": "Learning Commute-Time-Preserving World Models for Planning"
+              "id": "2608.09516",
+              "title": "HarnessWAM: Bridging Prediction and Deliberation in World Action Models"
             },
             {
-              "id": "2610.00727",
-              "title": "CF-JEPA: Improving Robustness of JEPA World Models via Controllability Factorization"
+              "id": "2608.07746",
+              "title": "LUCID: Latent-Skill Unified Control via Imagined Dynamics for Long-Horizon Humanoid Loco-Manipulation"
             },
             {
-              "id": "2610.01224",
-              "title": "Supervise What Decides Success: Criterion-Aligned Auxiliary Losses for Latent World-Model Planning"
+              "id": "2608.08725",
+              "title": "WA-SpecDec: World-Aware Speculative Decoding for Vision-Language-Action Models"
             },
             {
-              "id": "2610.00638",
-              "title": "TacDyn-WAM: Learning Implicit Tactile Dynamics in a Heterogeneous Visuo-Tactile World Action Model"
+              "id": "2608.09537",
+              "title": "verdi: retrieval is not transfer for continual world model optimization"
             },
             {
-              "id": "2610.02120",
-              "title": "SkeleWAM: Skeleton World-Action Modeling for Efficient Robotic Manipulation"
+              "id": "2608.07621",
+              "title": "CMU-Drive and V2V-VLA: Cooperative Multi-agent Unified Driving with Reasoning Benchmark and Vehicle-to-Vehicle Vision-Language-Action Models"
             }
           ],
           "id": "embodied_world_model",
@@ -329,8 +329,8 @@
             "policy learning"
           ],
           "name": "具身世界模型与规划控制",
-          "paper_count": 1234,
-          "updated_at": "2026-10-02"
+          "paper_count": 1253,
+          "updated_at": "2026-08-11"
         },
         {
           "created_at": null,
@@ -423,14 +423,6 @@
           ],
           "examples": [
             {
-              "id": "2609.38689",
-              "title": "EPIC: Epipolar-Consistent 360° Immersive Stereo Video Generation"
-            },
-            {
-              "id": "2610.02153",
-              "title": "MosaiChunk: Compositing Spatio-Temporal Memory for Autoregressive Video Generation"
-            },
-            {
               "id": "2610.02180",
               "title": "Generative Cinematographer: Composing Camera and Object Motion in 3D"
             },
@@ -441,11 +433,19 @@
             {
               "id": "2610.00097",
               "title": "DramaAgent: Agentic Storytelling Video Generation"
+            },
+            {
+              "id": "2608.08820",
+              "title": "LogiShot: Logically Coherent Cross-Shot Video Generation"
+            },
+            {
+              "id": "2608.08460",
+              "title": "InstructionCrafter: Generating Consistent and High-Fidelity Visual Instructions"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-02",
-          "paper_count": 18,
+          "updated_at": "2026-08-11",
+          "paper_count": 20,
           "is_canonical": true
         },
         {
@@ -482,29 +482,29 @@
           ],
           "examples": [
             {
-              "id": "2609.40037",
-              "title": "Enhancing Autoregressive Video Generation via Representation Adversarial Distillation"
-            },
-            {
-              "id": "2609.39096",
-              "title": "DeCoPrune: Efficient KV-Cache Pruning for Autoregressive Video Diffusion via Denoising Consistency"
-            },
-            {
-              "id": "2609.38978",
-              "title": "PARK: Accurate Block Retrieval for Sparse Attention in Video Diffusion Transformers"
-            },
-            {
               "id": "2610.00686",
               "title": "SemanTok: Predictable Semantic Tokens for Efficient Autoregressive Video Generation"
             },
             {
               "id": "2610.02188",
               "title": "DMAD: Distribution Matching as Adversarial Distillation for Fast Visual Generation"
+            },
+            {
+              "id": "2608.09637",
+              "title": "DUET: A Diversity-Quality Duet of Distillation Experts for Two-Step Video Generation"
+            },
+            {
+              "id": "2608.09355",
+              "title": "Alpha as an Efficiency Signal: Visibility-Routed RGBA Image-to-Video Generation"
+            },
+            {
+              "id": "2608.07572",
+              "title": "BRACE: Taming Sharp Irregularities via Barycentric Rational Forecasting for Fast Diffusion Transformers Inference"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-02",
-          "paper_count": 10,
+          "updated_at": "2026-08-11",
+          "paper_count": 13,
           "is_canonical": true
         },
         {
@@ -517,29 +517,29 @@
           ],
           "examples": [
             {
-              "id": "2610.01052",
-              "title": "Towards Subject Consistency over Dynamic Subject Sets in Video Generation"
-            },
-            {
-              "id": "2610.01973",
-              "title": "Token-Level Video Reinforcement Learning"
-            },
-            {
-              "id": "2610.01499",
-              "title": "VTR-Bench: A Systematic Benchmark for Evaluating Visual Text Rendering in Video Generation"
-            },
-            {
-              "id": "2610.01039",
-              "title": "Bootstrapping Video Interaction Generation with Synthetic State Transitions"
-            },
-            {
               "id": "2610.01661",
               "title": "DiVid: Diagnosing Dimension-Specific Diversity Collapse in Video Generation Models"
+            },
+            {
+              "id": "2608.09873",
+              "title": "Sci-VBench: Evaluating Knowledge- and Reasoning-Intensive Video Generation in Science Domains"
+            },
+            {
+              "id": "2608.09111",
+              "title": "RAVEN-Eval: Rubric-Guided Automatic Evaluation for AI Video Generation Models Based on LMM Preference Judgement"
+            },
+            {
+              "id": "2608.09594",
+              "title": "Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation"
+            },
+            {
+              "id": "2608.09666",
+              "title": "Open Evaluation Agent: Efficient and Promptable Evaluation of Visual Generative Models"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-02",
-          "paper_count": 20,
+          "updated_at": "2026-08-11",
+          "paper_count": 24,
           "is_canonical": true
         }
       ],
@@ -637,6 +637,6 @@
       "scope_digest": "78fb455e4918236000a1631552392c6cf77442f8b5f0db56c0e536d7ff617204"
     }
   },
-  "updated_at": "2026-10-02",
+  "updated_at": "2026-08-11",
   "version": 2
 }

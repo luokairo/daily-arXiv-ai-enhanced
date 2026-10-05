@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "该工作为音视频分割挑战赛方案，结合语音识别与掩码跟踪，与音视频生成、世界模型等方向无直接关联。", "reason": "Audio-visual segmentation challenge using ASR plus mask tracking; no generation, world modeling, or unified understanding-generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}
