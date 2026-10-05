@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出免训练的统计颜色匹配数据增强方法，提升医学图像分类的域泛化鲁棒性。", "reason": "Statistical RGB color matching for medical image domain generalization; no video, world model, audio-video, or unified generation evidence in abstract.", "personal_relevance_score": 8.0, "research_value_score": 30.0}}

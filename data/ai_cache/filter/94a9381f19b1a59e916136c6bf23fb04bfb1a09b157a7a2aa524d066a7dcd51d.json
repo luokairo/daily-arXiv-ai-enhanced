@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出轻量UNet-Transformer混合分割网络用于眼底视盘视杯分割，与所列研究方向无关。", "reason": "Medical image segmentation (optic disc/cup) with UNet-Transformer hybrid; no video, world model, audio-video, or unified generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 10.0}}

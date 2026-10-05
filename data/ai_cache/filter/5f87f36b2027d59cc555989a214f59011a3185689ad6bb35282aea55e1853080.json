@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出统一多语言词级与句级对齐模型，与所列研究方向无关。", "reason": "Cross-lingual word/sentence alignment for parallel corpora; no video, world model, audio-video, or unified generation content despite \"unified\" in title.", "personal_relevance_score": 3.0, "research_value_score": 12.0}}
