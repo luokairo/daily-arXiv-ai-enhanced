@@ -46,7 +46,7 @@
         },
         {
           "created_at": null,
-          "description": "与连续语言建模直接相关的连续视觉语言模型和语言潜空间流；普通视觉自编码器、RAE 和视觉表征学习归主要世界模型与表征方向。",
+          "description": "与连续语言建模直接相关的连续视觉语言模型及潜空间流，不包括全部视觉 flow matching。",
           "examples": [
             {
               "id": "2605.31503",
@@ -74,8 +74,13 @@
           "keywords": [
             "continuous vision-language model",
             "continuous vlm",
-            "continuous language tokens",
-            "language latent flow",
+            "continuous visual token",
+            "continuous visual tokens",
+            "visual latent flow",
+            "latent flow",
+            "flow matching",
+            "visual vae",
+            "representation autoencoder",
             "multimodal latent reasoning"
           ],
           "name": "连续 VLM 与视觉潜空间流",
@@ -122,7 +127,7 @@
           "updated_at": "2026-08-17"
         }
       ],
-      "scope_digest": "c85c4978f347a9b2c41f6b6f55b452cf8fba266c8fa5400f060d9425db031d63"
+      "scope_digest": "80c1e08e105d2f5fddca656fa4e6fef6d02c7bb421161e3d13bc2e7705279bfd"
     },
     "multimodal_understanding_generation": {
       "id": "multimodal_understanding_generation",
@@ -132,6 +137,10 @@
           "created_at": null,
           "description": "理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。",
           "examples": [
+            {
+              "id": "2609.38465",
+              "title": "Does Gradient Conflict Predict the Understanding--Generation Trade-off? A Controlled Audit of Conflict-Metric Validity in Unified Multimodal Models"
+            },
             {
               "id": "2609.39490",
               "title": "OmniReasoning: Pushing the Limits of Audio-Visual Joint Reasoning"
@@ -147,10 +156,6 @@
             {
               "id": "2608.18937",
               "title": "MedUAG: Unified Understanding and Generation for Medical Multimodal Models"
-            },
-            {
-              "id": "2608.20312",
-              "title": "Inter-X++: A Comprehensive Benchmark for Multimodal Human-Human Interaction Analysis"
             }
           ],
           "id": "unified_multimodal_model",
@@ -162,8 +167,8 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 57,
-          "updated_at": "2026-08-21"
+          "paper_count": 56,
+          "updated_at": "2026-08-20"
         },
         {
           "created_at": null,
@@ -204,11 +209,11 @@
           "updated_at": "2026-09-17"
         }
       ],
-      "scope_digest": "c8e911cc425b9b38f239d88e8d4205d37f2e03f6acfe2a1c5aff4ed0f7a78d7a"
+      "scope_digest": "b4ec43d800199cefb6ff14f801a383cfac5a9b8915574c110b4ceeedf1afe5ca"
     },
     "world_model": {
       "id": "world_model",
-      "name": "视频/多模态世界模型与表征学习",
+      "name": "世界模型",
       "subtopics": [
         {
           "created_at": null,
@@ -238,10 +243,11 @@
           "id": "video_world_model",
           "is_canonical": true,
           "keywords": [
+            "world model",
             "video world model",
             "generative world model",
             "action-conditioned video",
-            "future frame prediction",
+            "future prediction",
             "long-horizon video"
           ],
           "name": "视频世界模型",
@@ -249,81 +255,124 @@
           "updated_at": "2026-08-20"
         },
         {
-          "id": "multimodal_world_model",
-          "name": "多模态基础世界模型",
-          "description": "建模视频、语言、声音或动作等多模态观测与未来的通用基础世界模型。",
-          "keywords": [
-            "multimodal world model",
-            "multi-modal world model",
-            "world-action model"
-          ],
+          "created_at": null,
+          "description": "物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。",
           "examples": [
             {
-              "id": "2608.19492",
-              "title": "Beyond Multimodal Alignment: Shared Physical Representations Across Sensors and Action Orders"
+              "id": "2608.09266",
+              "title": "Did the Grid Erase the Event? EndoClock for Auditing Medical World-Model Pipelines"
+            },
+            {
+              "id": "2608.15156",
+              "title": "Low-Rank Dynamics-Effective Latent Carriers for Counterfactual Rollout in Learned World Models"
+            },
+            {
+              "id": "2608.16324",
+              "title": "LaGSplat: Inferring Physics-Governed Interactive Simulation from Monocular Video Using Latent Lagrangian Gaussian Splatting"
+            },
+            {
+              "id": "2608.14952",
+              "title": "Evidence of Absence: Cross-Modal Abductive Risk Perception to Sustain World Models When Vision Fails"
+            },
+            {
+              "id": "2608.18079",
+              "title": "Position: Profiling Game Worlds by Transition Complexity"
             }
           ],
-          "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 1,
-          "is_canonical": true
+          "id": "interactive_physical_world",
+          "is_canonical": true,
+          "keywords": [
+            "interactive world",
+            "physical world model",
+            "neural simulator",
+            "physics simulation",
+            "dynamics model",
+            "environment model"
+          ],
+          "name": "可交互与物理世界建模",
+          "paper_count": 164,
+          "updated_at": "2026-08-20"
         },
         {
-          "id": "representation_autoencoder",
-          "name": "RAE 与生成潜空间",
-          "description": "RAE/VideoRAE、视觉与视频自编码器、tokenizer、语义潜空间和生成表征对齐；图像侧基础研究同样直接相关。",
-          "keywords": [
-            "representation autoencoder",
-            "representation autoencoders",
-            "VideoRAE",
-            "visual autoencoder",
-            "video autoencoder",
-            "visual tokenizer",
-            "video tokenizer",
-            "semantic latent space",
-            "representation alignment"
-          ],
-          "examples": [],
           "created_at": null,
-          "updated_at": null,
-          "paper_count": 0,
-          "is_canonical": true
-        },
-        {
-          "id": "visual_video_representation",
-          "name": "视觉与视频表征学习",
-          "description": "DINO、JEPA、MAE 类自监督视觉/视频表征、掩码建模和预测表征；不要求生成实验，仅使用已有编码器的识别应用不属于此主题。",
-          "keywords": [
-            "visual representation learning",
-            "video representation learning",
-            "self-supervised visual representation",
-            "masked image modeling",
-            "masked video modeling",
-            "DINO",
-            "JEPA",
-            "MAE"
-          ],
+          "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
           "examples": [
             {
-              "id": "2608.20065",
-              "title": "Orthogonal JEPA: Factorized Predictive States for Latent World Models"
+              "id": "2608.19085",
+              "title": "DA-WAM: Decision-Aligned Future Latents for Driving World Models"
             },
             {
-              "id": "2608.19766",
-              "title": "Far from the Crowd: Scalable Self-Supervised Learning via Geographic Isolation"
+              "id": "2608.18234",
+              "title": "GigaBrain-WBC-0.5: A Behavior World Model for Robust Humanoid Whole-Body Tracking with Environment Interaction"
             },
             {
-              "id": "2608.20104",
-              "title": "Structured Affinity for Unsupervised Visual Class-Incremental Memory in Deep Artificial Immune Networks"
+              "id": "2608.18948",
+              "title": "RoboEdit: Turning Human Manipulation Videos into Scalable Robot Experience"
+            },
+            {
+              "id": "2608.18647",
+              "title": "Progressive Experience Fusion for Multi-Task World Model Control in Endovascular Navigation"
+            },
+            {
+              "id": "2608.18184",
+              "title": "Human-Centric Intelligence in the Era of Foundation Models: A Survey"
             }
           ],
+          "id": "embodied_world_model",
+          "is_canonical": true,
+          "keywords": [
+            "embodied world model",
+            "embodied ai",
+            "robotics world model",
+            "planning",
+            "control",
+            "policy learning"
+          ],
+          "name": "具身世界模型与规划控制",
+          "paper_count": 1265,
+          "updated_at": "2026-08-20"
+        },
+        {
           "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 3,
-          "is_canonical": true
+          "description": "3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。",
+          "examples": [
+            {
+              "id": "2608.17389",
+              "title": "GeoWeaver: Accurate Long-Sequence 3D Reconstruction via Hierarchical Geometric Assembly"
+            },
+            {
+              "id": "2608.17535",
+              "title": "GroupForward: Building Referable 3D Scenes via Instance-Grouped Feed-Forward Gaussian Splatting"
+            },
+            {
+              "id": "2608.16234",
+              "title": "GaussianDWM++: Language-Grounded 3D Gaussian Driving World Model for Unified Scene Understanding, Editing, and Multi-Modal Generation"
+            },
+            {
+              "id": "2608.18388",
+              "title": "Depth Anything V4: Dynamic 4D Scene Reconstruction via Riemannian Flow Matching on 4D Gaussian Splatting"
+            },
+            {
+              "id": "2608.18285",
+              "title": "QuARC-GS: Quantized Anchored Residual Coding for Compact Dynamic Scene Streaming with Gaussian Splatting"
+            }
+          ],
+          "id": "spatial_3d_4d_world_model",
+          "is_canonical": true,
+          "keywords": [
+            "3d world model",
+            "4d world model",
+            "dynamic scene",
+            "spatial world model",
+            "neural field",
+            "3d gaussian"
+          ],
+          "name": "空间 3D/4D 世界模型",
+          "paper_count": 39,
+          "updated_at": "2026-08-20"
         }
       ],
-      "scope_digest": "8d8198c16fd23692d5579e40705bee6ade67a9f9a8c639d1a4f660d15cb7ddca"
+      "scope_digest": "ed047b457f29eee24cf0e1a522d656f44f39bab686cc1c8651bb5ac958980082"
     },
     "video_generation": {
       "id": "video_generation",
@@ -361,15 +410,11 @@
             {
               "id": "2608.14706",
               "title": "Equilibrium Forcing: Adaptive Video Generation Without Noise Conditioning"
-            },
-            {
-              "id": "2608.19556",
-              "title": "Stream4D: 4D-Consistency for Streaming Autoregressive Diffusion Video Models"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 2,
+          "updated_at": "2026-08-18",
+          "paper_count": 1,
           "is_canonical": true
         },
         {
@@ -489,6 +534,10 @@
           ],
           "examples": [
             {
+              "id": "2608.09873",
+              "title": "Sci-VBench: Evaluating Knowledge- and Reasoning-Intensive Video Generation in Science Domains"
+            },
+            {
               "id": "2608.09111",
               "title": "RAVEN-Eval: Rubric-Guided Automatic Evaluation for AI Video Generation Models Based on LMM Preference Judgement"
             },
@@ -503,15 +552,11 @@
             {
               "id": "2608.16717",
               "title": "PersonaShot: Benchmarking Person-Centric Narrative Continuity in Multi-Shot Video Generation"
-            },
-            {
-              "id": "2608.19583",
-              "title": "VGI-Bench: Probing Visual Intelligence in Video Generation Models"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 26,
+          "updated_at": "2026-08-18",
+          "paper_count": 25,
           "is_canonical": true
         }
       ],
@@ -519,7 +564,7 @@
     },
     "audio_video_generation": {
       "id": "audio_video_generation",
-      "name": "音视频联合生成与声音驱动视频",
+      "name": "音视频联合生成",
       "subtopics": [
         {
           "id": "joint_audio_video",
@@ -543,6 +588,43 @@
           "created_at": null,
           "updated_at": "2026-08-18",
           "paper_count": 4,
+          "is_canonical": true
+        },
+        {
+          "id": "video_soundtrack",
+          "name": "视频配音配乐与音效",
+          "description": "根据视频生成语音、音乐、环境音或 Foley 音效。",
+          "keywords": [
+            "video-to-audio",
+            "video-to-speech",
+            "foley generation",
+            "video soundtrack"
+          ],
+          "examples": [
+            {
+              "id": "2609.38444",
+              "title": "Audible World Models: Spatially Aware Sound Generation for 3D Worlds"
+            },
+            {
+              "id": "2610.01012",
+              "title": "Watch Your Speech: Text-aware Video-to-Speech Synthesis with Textual Conditioning"
+            },
+            {
+              "id": "2610.00630",
+              "title": "PLACE: Positional Latent Adaptation via Conditioned Embeddings for Binaural Audio Generation"
+            },
+            {
+              "id": "2610.00726",
+              "title": "Where the Body Keeps the Beat: Structured Motion Conditioning and Music Dynamics Supervision for Dance-to-Music Generation"
+            },
+            {
+              "id": "2608.15734",
+              "title": "CineDub: Scaling End-to-End Video Dubbing to Multi-Speaker Dialogues with Coherent Sound Effects"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-08-18",
+          "paper_count": 11,
           "is_canonical": true
         },
         {
@@ -585,7 +667,7 @@
         {
           "id": "audio_video_synchronization",
           "name": "音画同步与生成评测",
-          "description": "直接服务于联合音视频生成、声音驱动视频或数字人的时间对齐、同步、数据和评测。",
+          "description": "直接服务于音视频生成的时间对齐、同步、数据和评测。",
           "keywords": [
             "audio-visual synchronization",
             "audio-video synchronization",
@@ -607,124 +689,9 @@
           "is_canonical": true
         }
       ],
-      "scope_digest": "88ccc5972e236fb2e38ffa506d7c981abe86d1a3aad9d60537871734926e2fca"
-    },
-    "world_model_applications": {
-      "id": "world_model_applications",
-      "name": "世界模型应用与仿真",
-      "subtopics": [
-        {
-          "id": "interactive_physical_world",
-          "name": "可交互与物理世界建模",
-          "description": "物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。",
-          "keywords": [
-            "interactive world",
-            "physical world model",
-            "neural simulator",
-            "physics simulation",
-            "dynamics model",
-            "environment model"
-          ],
-          "examples": [
-            {
-              "id": "2608.20284",
-              "title": "Towards Surgical World-Action Modeling: A Preliminary Joint Visual-Trajectory Forecasting for Surgical Motion Planning"
-            },
-            {
-              "id": "2608.19375",
-              "title": "Learning the Right Abstraction: Neural Reduced Dynamics for Complex Robot Control"
-            }
-          ],
-          "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 2,
-          "is_canonical": true
-        },
-        {
-          "id": "embodied_world_model",
-          "name": "具身世界模型与规划控制",
-          "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
-          "keywords": [
-            "embodied world model",
-            "embodied ai",
-            "robotics world model",
-            "planning",
-            "control",
-            "policy learning"
-          ],
-          "examples": [
-            {
-              "id": "2608.20114",
-              "title": "DECOWAM: Decoupled Whole-Body World-Action Model for Legged Mobile Manipulation"
-            },
-            {
-              "id": "2608.19574",
-              "title": "HiTac-WAM: A Hierarchical Tactile World Action Model for Contact-Rich Robot Manipulation"
-            },
-            {
-              "id": "2608.19661",
-              "title": "World-Model-Grounded LLM Planning for AUV and ASV Navigation Near Offshore Wind Farms"
-            }
-          ],
-          "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 3,
-          "is_canonical": true
-        },
-        {
-          "id": "spatial_3d_4d_world_model",
-          "name": "空间 3D/4D 世界模型",
-          "description": "3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。",
-          "keywords": [
-            "3d world model",
-            "4d world model",
-            "dynamic scene",
-            "spatial world model",
-            "neural field",
-            "3d gaussian"
-          ],
-          "examples": [
-            {
-              "id": "2608.20308",
-              "title": "ACE-Ego-Hand: Repurposing Video Diffusion Models for Occlusion-Robust Egocentric 3D Hand Motion Recovery"
-            },
-            {
-              "id": "2608.19900",
-              "title": "AvatarDynamizer: From Static to Dynamic Human Avatars via Generative Dynamic Textures"
-            }
-          ],
-          "created_at": null,
-          "updated_at": "2026-08-21",
-          "paper_count": 2,
-          "is_canonical": true
-        }
-      ],
-      "scope_digest": "5e2d5e78e01e410614010eff9139ce048e05096191eaa07500318acdc18dfa0d"
-    },
-    "video_audio_generation": {
-      "id": "video_audio_generation",
-      "name": "视频相关音频生成",
-      "subtopics": [
-        {
-          "id": "video_soundtrack",
-          "name": "视频配音配乐与音效",
-          "description": "根据视频生成语音、音乐、环境音或 Foley 音效。",
-          "keywords": [
-            "video-to-audio",
-            "video-to-speech",
-            "foley generation",
-            "video soundtrack"
-          ],
-          "examples": [],
-          "created_at": null,
-          "updated_at": null,
-          "paper_count": 0,
-          "is_canonical": true
-        }
-      ],
-      "scope_digest": "4451eb36d7e3d29acecb41b1fdc06c479a8df74e993f0dd600c26be3632f05ee"
+      "scope_digest": "78fb455e4918236000a1631552392c6cf77442f8b5f0db56c0e536d7ff617204"
     }
   },
-  "updated_at": "2026-08-21",
+  "updated_at": "2026-08-20",
   "version": 2
 }
