@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出面向离散随机反应网络的直通梯度估计器，与视频/多模态世界模型及表征学习无直接关联。", "reason": "Gradient estimator for continuous-time Markov chain simulation; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 5.0, "research_value_score": 15.0}}

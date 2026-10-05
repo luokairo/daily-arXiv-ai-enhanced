@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出自适应工具调用与反思的视频深度研究智能体，用于复杂视频问答与外部检索。", "reason": "Agentic video question answering with tool use and retrieval; no contribution to world models, video representation learning, or generation.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}
