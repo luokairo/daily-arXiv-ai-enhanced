@@ -33,52 +33,56 @@ class AllocationTests(IsolatedTest):
                 personal_relevance_score=score, research_value_score=score,
                 brief='一句话论文贡献', reason='Concrete evidence in abstract'))
 
-    def allocate(self, papers, limit=10):
+    def allocate(self, papers, limit=15):
         audit = {p['id']: dict(detail_status='pending') for p in papers}
         detail, briefs = selection.allocate_details(papers, self.directions, limit,
             lambda p: enhance.candidate_priority(p, self.directions, self.importance), audit)
         return detail, briefs, audit
 
     def test_configuration_covers_new_interests_and_audio_categories(self):
-        self.assertEqual([d['tier'] for d in self.directions], ['primary'] * 3 + ['secondary'] * 2)
-        self.assertEqual(len(self.directions), 5)
+        self.assertEqual([d['tier'] for d in self.directions], ['primary'] * 4 + ['secondary'] * 3)
+        self.assertEqual(len(self.directions), 7)
         self.assertTrue({'cs.CV', 'cs.CL', 'cs.AI', 'cs.LG', 'cs.MM', 'cs.RO', 'cs.SD', 'eess.AS'} <= set(semantic_arxiv.recall_categories(self.directions)))
         self.assertGreater(self.importance['direction_weights']['world_model'], self.importance['direction_weights']['continuous_language_multimodal'])
 
     def test_five_each_with_primary_overlap_processed_once(self):
         papers = [self.paper('c' + str(i), score=99) for i in range(8)]
+        papers += [self.paper('a' + str(i), 'video_audio_generation', 80) for i in range(8)]
+        papers += [self.paper('w' + str(i), 'world_model_applications', 80) for i in range(8)]
         papers += [self.paper('u' + str(i), 'multimodal_understanding_generation', 20) for i in range(8)]
         papers += [self.paper('main', 'continuous_language_multimodal', matched=['continuous_language_multimodal', 'world_model'])]
         detail, briefs, audit = self.allocate(papers)
         self.assertEqual(sum(p['id'].startswith('c') for p in detail), 5)
-        self.assertEqual(sum(p['id'].startswith('u') for p in detail), 5)
-        self.assertEqual(len(detail), 11)
-        self.assertEqual(len(briefs), 6)
+        self.assertEqual(sum(p['id'].startswith('u') for p in detail), 8)
+        self.assertEqual(sum(p['id'].startswith('a') for p in detail), 5)
+        self.assertEqual(sum(p['id'].startswith('w') for p in detail), 5)
+        self.assertEqual(len(detail), 24)
+        self.assertEqual(len(briefs), 9)
         self.assertEqual(audit['main']['allocation_reason'], 'primary_selected')
         self.assertTrue(all(audit[p['id']]['detail_status'] == 'quota_deferred' for p in briefs))
 
     def test_reallocation_zero_budget_and_undetermined_fallback(self):
-        papers = [self.paper('c' + str(i)) for i in range(12)]
-        papers += [self.paper('u', 'multimodal_understanding_generation')]
+        papers = [self.paper('c' + str(i)) for i in range(20)]
+        papers += [self.paper('u', 'video_audio_generation')]
         detail, briefs, _ = self.allocate(papers)
-        self.assertEqual(len(detail), 10)
+        self.assertEqual(len(detail), 15)
         self.assertIn('u', {p['id'] for p in detail})
-        self.assertEqual(len(briefs), 3)
+        self.assertEqual(len(briefs), 6)
         failed = self.paper('failed'); failed['_routing']['routing_status'] = 'failed'
         unknown = self.paper('unknown', primary=''); unknown['_routing']['matched_direction_ids'] = []
         detail, briefs, audit = self.allocate(papers + [failed, unknown], 0)
         self.assertEqual({p['id'] for p in detail}, {'failed', 'unknown'})
-        self.assertEqual(len(briefs), 13)
+        self.assertEqual(len(briefs), 21)
         self.assertEqual(audit['unknown']['allocation_reason'], 'routing_fallback')
 
     def test_secondary_dual_match_counted_once_and_stable_order(self):
-        papers = [self.paper(key, matched=['continuous_language_multimodal', 'multimodal_understanding_generation']) for key in ['3', '1', '2']]
+        papers = [self.paper(key, matched=['continuous_language_multimodal', 'video_audio_generation']) for key in ['3', '1', '2']]
         detail, briefs, _ = self.allocate(papers, 2)
         self.assertEqual({p['id'] for p in detail}, {'1', '2'})
         self.assertEqual([p['id'] for p in briefs], ['3'])
 
     def test_deep_reads_reserve_primary_and_exclude_briefs(self):
-        papers = [self.paper('c', score=99), self.paper('u', 'multimodal_understanding_generation', 98),
+        papers = [self.paper('c', score=99), self.paper('u', 'video_audio_generation', 98),
                   self.paper('w', 'world_model', 20), self.paper('v', 'video_generation', 10)]
         for p in papers:
             p['AI'] = dict(primary_direction_id=p['_routing']['primary_direction_id'],
@@ -100,7 +104,7 @@ class AllocationTests(IsolatedTest):
         self.assertEqual(score, 45 + 12 + .8 * 30)
 
     def test_primary_and_brief_pipeline_failures_do_not_refill_quota(self):
-        papers = [self.paper('c' + str(i)) for i in range(13)]
+        papers = [self.paper('c' + str(i)) for i in range(18)]
         source = self.root / '2026-10-01.jsonl'
         source.write_text(''.join(json.dumps(p) + '\n' for p in papers))
         taxonomy = self.root / 'taxonomy.json'; taxonomy.write_text('{}')
@@ -108,7 +112,7 @@ class AllocationTests(IsolatedTest):
         def route(inputs):
             return RoutingStructure(**self.paper(inputs['paper_id'])['_routing'])
         def detail(items, *args, **kwargs):
-            self.assertEqual(len(items), 10)
+            self.assertEqual(len(items), 15)
             for p in items:
                 p['_detail_status'] = 'irrelevant'
             items[0]['_detail_status'] = 'failed'
@@ -119,7 +123,7 @@ class AllocationTests(IsolatedTest):
         self.assertEqual(len(output), 3)
         self.assertTrue(all(p['report_level'] == 'brief' and not p['AI']['deep_read_selected'] for p in output))
         audit = json.loads((self.root / 'run_metrics/2026-10-01-selection.json').read_text())
-        self.assertEqual(audit['per_direction']['continuous_language_multimodal']['detail_requests'], 10)
+        self.assertEqual(audit['per_direction']['continuous_language_multimodal']['detail_requests'], 15)
         self.assertEqual(audit['per_direction']['continuous_language_multimodal']['briefs'], 3)
         self.assertTrue(list((self.root / 'run_metrics').glob('taxonomy-before-*.json')))
 

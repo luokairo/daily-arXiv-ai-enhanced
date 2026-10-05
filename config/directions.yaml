@@ -1,7 +1,7 @@
 directions:
 - id: world_model
-  name: 世界模型
-  description: 重点关注视频世界模型、动作条件视频预测、长时序未来预测；同时关注物理动力学、交互仿真、具身世界模型及基于世界模型的规划。普通机器人策略或控制论文只有明确涉及世界建模才相关。
+  name: 视频/多模态世界模型与表征学习
+  description: 重点关注视频与多模态基础世界模型、通用动作条件视频预测、长时序未来预测，以及视觉和视频表征学习。RAE/VideoRAE、视觉自编码器、tokenizer、语义潜空间、表征对齐、DINO/JEPA/MAE 类自监督视觉或视频表征属于直接相关，不要求已有生成或世界模型实验。论文必须对模型或表征本身有贡献，仅引用或使用这些模型作工具或基线不构成表征贡献。以机器人策略、规划控制、物理动力学、交互仿真、3D/4D 环境应用为主要贡献时归辅助方向；仅背景提及世界模型不匹配主要方向。
   arxiv_categories:
   - cs.CV
   - cs.AI
@@ -9,57 +9,69 @@ directions:
   - cs.RO
   - cs.MM
   keywords:
-  - world model
   - video world model
+  - multimodal world model
   - generative world model
-  - physical world model
-  - neural simulator
-  - interactive world model
-  - embodied world model
   - action-conditioned video
-  - dynamics model
-  - environment model
+  - representation autoencoder
+  - representation autoencoders
+  - VideoRAE
+  - video representation learning
+  - visual representation learning
+  - self-supervised visual representation
+  - masked image modeling
+  - masked video modeling
+  - DINO
+  - DINOv2
+  - DINOv3
+  - JEPA
+  - I-JEPA
+  - V-JEPA
+  - MAE
+  - visual tokenizer
+  - video tokenizer
   canonical_subtopics:
   - id: video_world_model
     name: 视频世界模型
     description: 视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。
     keywords:
-    - world model
     - video world model
     - generative world model
     - action-conditioned video
-    - future prediction
+    - future frame prediction
     - long-horizon video
-  - id: interactive_physical_world
-    name: 可交互与物理世界建模
-    description: 物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。
+  - id: multimodal_world_model
+    name: 多模态基础世界模型
+    description: 建模视频、语言、声音或动作等多模态观测与未来的通用基础世界模型。
     keywords:
-    - interactive world
-    - physical world model
-    - neural simulator
-    - physics simulation
-    - dynamics model
-    - environment model
-  - id: embodied_world_model
-    name: 具身世界模型与规划控制
-    description: 面向机器人、具身智能、动作规划和控制的世界模型。
-    keywords:
-    - embodied world model
-    - embodied ai
-    - robotics world model
-    - planning
-    - control
-    - policy learning
-  - id: spatial_3d_4d_world_model
-    name: 空间 3D/4D 世界模型
-    description: 3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。
-    keywords:
-    - 3d world model
-    - 4d world model
-    - dynamic scene
-    - spatial world model
-    - neural field
-    - 3d gaussian
+    - multimodal world model
+    - multi-modal world model
+    - world-action model
+  - id: representation_autoencoder
+    name: RAE 与生成潜空间
+    description: RAE/VideoRAE、视觉与视频自编码器、tokenizer、语义潜空间和生成表征对齐；图像侧基础研究同样直接相关。
+    keywords: &id001
+    - representation autoencoder
+    - representation autoencoders
+    - VideoRAE
+    - visual autoencoder
+    - video autoencoder
+    - visual tokenizer
+    - video tokenizer
+    - semantic latent space
+    - representation alignment
+  - id: visual_video_representation
+    name: 视觉与视频表征学习
+    description: DINO、JEPA、MAE 类自监督视觉/视频表征、掩码建模和预测表征；不要求生成实验，仅使用已有编码器的识别应用不属于此主题。
+    keywords: &id002
+    - visual representation learning
+    - video representation learning
+    - self-supervised visual representation
+    - masked image modeling
+    - masked video modeling
+    - DINO
+    - JEPA
+    - MAE
   tier: primary
 - id: video_generation
   name: 视频生成
@@ -70,7 +82,7 @@ directions:
   - cs.AI
   - cs.LG
   - cs.MM
-  keywords: &id001
+  keywords: &id004
   - video generation
   - text-to-video
   - image-to-video
@@ -118,60 +130,9 @@ directions:
     keywords:
     - video generation benchmark
     - video generation alignment
-- id: audio_video_generation
-  name: 音视频联合生成
-  tier: primary
-  description: 聚焦音视频联合生成、视频配音配乐音效、声音驱动视频、音画对齐与同步。根据视频或无声人脸/口型生成语音（video-to-speech、visual speech synthesis）、音乐或音效也直接相关，不要求同时生成视频。纯文本到语音或纯音乐生成只有对这些任务有明确、具体迁移价值才相关；普通音频识别或视频理解并非目标。
-  arxiv_categories:
-  - cs.CV
-  - cs.MM
-  - cs.SD
-  - eess.AS
-  - cs.AI
-  - cs.LG
-  keywords: &id002
-  - audio-visual generation
-  - audio-video generation
-  - video-to-audio
-  - video-to-speech
-  - audio-to-video
-  - sound-driven video
-  - foley generation
-  - audio visual synchronization
-  canonical_subtopics:
-  - id: joint_audio_video
-    name: 联合音视频生成
-    description: 联合生成音频和视频的共享模型或协同模型。
-    keywords:
-    - joint audio video generation
-    - audio-visual generation
-    - audio-video generation
-  - id: video_soundtrack
-    name: 视频配音配乐与音效
-    description: 根据视频生成语音、音乐、环境音或 Foley 音效。
-    keywords:
-    - video-to-audio
-    - video-to-speech
-    - foley generation
-    - video soundtrack
-  - id: audio_driven_video
-    name: 声音驱动视频
-    description: 以语音、音乐或声音生成视频和数字人。
-    keywords:
-    - audio-driven video
-    - speech-driven video
-    - audio-driven animation
-    - talking head
-  - id: audio_video_synchronization
-    name: 音画同步与生成评测
-    description: 直接服务于音视频生成的时间对齐、同步、数据和评测。
-    keywords:
-    - audio-visual synchronization
-    - audio-video synchronization
-    - audio visual generation benchmark
 - id: multimodal_understanding_generation
   name: 统一理解与生成
-  description: 辅助关注理解与生成共享模型、表征或训练目标的统一多模态研究。普通 VLM、VQA、视频理解或纯多模态推理仅在对世界模型、视频或音视频生成、统一理解生成有明确迁移价值时相关。
+  description: 主要关注理解与生成共享模型、表征或训练目标的统一多模态研究、Any-to-Any 模型，以及直接服务于这些模型的表征、训练、蒸馏和推理高效化。普通 VLM、VQA、视频理解或纯多模态推理不能因多模态属性自动收录，只有对目标方向有明确贡献或具体迁移价值才相关。
   arxiv_categories:
   - cs.CV
   - cs.CL
@@ -202,8 +163,132 @@ directions:
     - multimodal distillation
     - token compression
     - quantization
+  tier: primary
+- id: audio_video_generation
+  name: 音视频联合生成与声音驱动视频
+  tier: primary
+  description: 主要关注同时生成音频和视频的联合模型，以及声音/语音/音乐驱动的视频、动画、数字人或 talking head 生成；包括直接服务于这些任务的音画同步、表征、数据和评测。仅以视频为输入而只生成语音、音乐或音效的论文归辅助视频相关音频生成方向。普通音频识别、视频理解和无视频关联的纯 TTS/音乐生成不因音频属性收录。
+  arxiv_categories:
+  - cs.CV
+  - cs.MM
+  - cs.SD
+  - eess.AS
+  - cs.AI
+  - cs.LG
+  keywords: &id005
+  - audio-visual generation
+  - audio-video generation
+  - joint audio video generation
+  - audio-to-video
+  - sound-driven video
+  - audio-driven video
+  - talking head generation
+  - audio visual synchronization
+  canonical_subtopics:
+  - id: joint_audio_video
+    name: 联合音视频生成
+    description: 联合生成音频和视频的共享模型或协同模型。
+    keywords:
+    - joint audio video generation
+    - audio-visual generation
+    - audio-video generation
+  - id: audio_driven_video
+    name: 声音驱动视频
+    description: 以语音、音乐或声音生成视频和数字人。
+    keywords:
+    - audio-driven video
+    - speech-driven video
+    - audio-driven animation
+    - talking head
+  - id: audio_video_synchronization
+    name: 音画同步与生成评测
+    description: 直接服务于联合音视频生成、声音驱动视频或数字人的时间对齐、同步、数据和评测。
+    keywords:
+    - audio-visual synchronization
+    - audio-video synchronization
+    - audio visual generation benchmark
+- id: world_model_applications
+  name: 世界模型应用与仿真
   tier: secondary
   detail_quota: 5
+  description: 辅助关注以机器人策略、具身规划控制、物理动力学、神经与交互仿真、3D/4D 环境建模或空间记忆应用为主要贡献的世界模型研究，以及尚未明确属于视频/多模态基础模型的世界建模。必须涉及世界建模或学习的环境/物理动力学，普通机器人策略、控制和场景重建本身不自动相关。通用视频/多模态基础世界模型或视觉表征创新归主要方向，应用论文仅使用或背景提及它们不提升主要层级。
+  arxiv_categories:
+  - cs.CV
+  - cs.AI
+  - cs.LG
+  - cs.RO
+  - cs.MM
+  keywords:
+  - world model
+  - physical world model
+  - neural simulator
+  - interactive world model
+  - embodied world model
+  - dynamics model
+  - environment model
+  - 3d world model
+  - 4d world model
+  canonical_subtopics:
+  - id: interactive_physical_world
+    name: 可交互与物理世界建模
+    description: 物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。
+    keywords:
+    - interactive world
+    - physical world model
+    - neural simulator
+    - physics simulation
+    - dynamics model
+    - environment model
+  - id: embodied_world_model
+    name: 具身世界模型与规划控制
+    description: 面向机器人、具身智能、动作规划和控制的世界模型。
+    keywords:
+    - embodied world model
+    - embodied ai
+    - robotics world model
+    - planning
+    - control
+    - policy learning
+  - id: spatial_3d_4d_world_model
+    name: 空间 3D/4D 世界模型
+    description: 3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。
+    keywords:
+    - 3d world model
+    - 4d world model
+    - dynamic scene
+    - spatial world model
+    - neural field
+    - 3d gaussian
+- id: video_audio_generation
+  name: 视频相关音频生成
+  tier: secondary
+  detail_quota: 5
+  description: 辅助收录与视频直接相关且输出只有音频的生成研究：视频到语音、音乐、环境音、Foley 音效、视频配音配乐，以及无声人脸/口型到语音（visual speech synthesis）。不要求生成视频。无视频关联的纯文本到语音、纯音乐/声音生成和普通音频识别不相关；摘要需体现具体视频关联。联合生成音视频或声音驱动视频归主要音视频方向。
+  arxiv_categories:
+  - cs.CV
+  - cs.MM
+  - cs.SD
+  - eess.AS
+  - cs.AI
+  - cs.LG
+  keywords:
+  - video-to-audio
+  - video-to-speech
+  - video-conditioned sound
+  - video-conditioned music
+  - video-conditioned speech
+  - visual speech synthesis
+  - foley generation
+  - video soundtrack
+  canonical_subtopics:
+  - id: video_soundtrack
+    name: 视频配音配乐与音效
+    description: 根据视频生成语音、音乐、环境音或 Foley 音效。
+    keywords:
+    - video-to-audio
+    - video-to-speech
+    - foley generation
+    - video soundtrack
 - id: continuous_language_multimodal
   name: 连续语言模型
   description: 辅助关注连续语言模型、扩散语言模型、语言 embedding/latent 空间、连续语言 token，以及直接相关的连续多模态扩展。通用 flow matching、连续控制或图像潜空间模型本身不能证明与连续语言建模有关。
@@ -213,7 +298,7 @@ directions:
   - cs.AI
   - cs.MM
   - cs.LG
-  keywords: &id004
+  keywords: &id006
   - continuous language model
   - continuous diffusion language
   - diffusion language model
@@ -236,17 +321,12 @@ directions:
     - elf
   - id: continuous_vlm_latent_flow
     name: 连续 VLM 与视觉潜空间流
-    description: 与连续语言建模直接相关的连续视觉语言模型及潜空间流，不包括全部视觉 flow matching。
+    description: 与连续语言建模直接相关的连续视觉语言模型和语言潜空间流；普通视觉自编码器、RAE 和视觉表征学习归主要世界模型与表征方向。
     keywords:
     - continuous vision-language model
     - continuous vlm
-    - continuous visual token
-    - continuous visual tokens
-    - visual latent flow
-    - latent flow
-    - flow matching
-    - visual vae
-    - representation autoencoder
+    - continuous language tokens
+    - language latent flow
     - multimodal latent reasoning
   - id: continuous_multimodal_reasoning
     name: 连续多模态推理与潜空间思维
@@ -263,39 +343,41 @@ directions:
 importance:
   daily_deep_read_top_k: 3
   primary_deep_read_min: 2
-  secondary_detail_limit: 10
+  secondary_detail_limit: 15
   direction_weights:
-    world_model: 1.6
+    world_model: 1.8
     video_generation: 1.5
-    audio_video_generation: 1.5
-    multimodal_understanding_generation: 1.1
+    multimodal_understanding_generation: 1.5
+    audio_video_generation: 1.4
+    world_model_applications: 1.0
+    video_audio_generation: 1.0
     continuous_language_multimodal: 1.0
   priority_subtopics:
-  - name: 视频世界模型
-    weight: 1.8
+  - name: 视频与多模态基础世界模型
+    weight: 1.9
     keywords:
     - video world model
+    - multimodal world model
     - action-conditioned video
     - generative world model
-    - world-action model
+  - name: RAE 与生成潜空间
+    weight: 1.9
+    keywords: *id001
+  - name: 视觉与视频表征学习
+    weight: 1.7
+    keywords: *id002
+  - name: 统一理解与生成
+    weight: 1.6
+    keywords: *id003
   - name: 视频生成
     weight: 1.5
-    keywords: *id001
-  - name: 音视频联合生成
-    weight: 1.5
-    keywords: *id002
-  - name: 世界模型
+    keywords: *id004
+  - name: 音视频联合生成与声音驱动视频
     weight: 1.4
-    keywords:
-    - world model
-    - neural simulator
-    - environment model
-  - name: 统一理解与生成
-    weight: 1.1
-    keywords: *id003
+    keywords: *id005
   - name: 连续语言模型
     weight: 1.0
-    keywords: *id004
+    keywords: *id006
   boost_keywords: []
   negative_keywords:
   - molecule

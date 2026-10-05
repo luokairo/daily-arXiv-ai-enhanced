@@ -34,11 +34,13 @@ class RecallTests(unittest.TestCase):
     def match(self, title='', summary=''):
         return recall.match_paper(dict(title=title, summary=summary), self.directions, self.importance, self.config)
 
-    def test_five_directions_inflections_and_full_abstract(self):
+    def test_seven_directions_inflections_and_full_abstract(self):
         positives = {
-            'world_model': ['World Models', 'World Modelling', 'Action-conditioned video prediction'],
+            'world_model': ['Video World Models', 'Video World Modelling', 'Action-conditioned video prediction', 'Representation Autoencoders', 'VideoRAE visual latents'],
             'video_generation': ['Text-to-Video', 'I2V', 'Generating Videos', 'Video-to-video editing'],
-            'audio_video_generation': ['Video-to-Speech', 'Joint audio/video synthesis', 'Foley Generation'],
+            'audio_video_generation': ['Joint audio/video synthesis', 'Audio-driven video'],
+            'video_audio_generation': ['Video-to-Speech', 'Foley Generation'],
+            'world_model_applications': ['World Models', 'Learned simulator for physics'],
             'multimodal_understanding_generation': ['Unified understanding and generation', 'Any-to-any multimodal'],
             'continuous_language_multimodal': ['Masked diffusion language models', 'Embedding-space language models', 'ELF: embedded language flow'],
         }
@@ -65,8 +67,8 @@ class RecallTests(unittest.TestCase):
         self.assertIsNotNone(recall.evidence('Tokenizer for faster video generation.', group))
 
     def test_aliases_dedup_and_domain_penalties(self):
-        one = self.match('World model')
-        repeated = self.match('World model; world models; world modeling; world modelling')
+        one = self.match('Video world model')
+        repeated = self.match('Video world model; video world models; video world modeling; video world modelling')
         self.assertEqual(one['score'], repeated['score'])
         self.assertEqual(self.match('Clinical video generation')['score'], self.match('Video generation')['score'])
         self.assertLess(self.match('Medical learned simulator for physics')['score'], self.match('Learned simulator for physics')['score'])
@@ -74,12 +76,12 @@ class RecallTests(unittest.TestCase):
     def test_quotas_dedup_stability_transfer_exploration(self):
         papers = [dict(id=f'{i:03}', title='Video generation', summary='') for i in range(190)]
         papers += [dict(id='both', title='Video world models for video generation', summary='')]
-        selected, audit, quotas = recall.select_candidates(papers + papers[:2], self.directions, self.importance, 150, '2026-09-30')
-        other, other_audit, _ = recall.select_candidates(list(reversed(papers)), self.directions, self.importance, 150, '2026-09-30')
-        self.assertEqual(len(selected), 150)
+        selected, audit, quotas = recall.select_candidates(papers + papers[:2], self.directions, self.importance, 180, '2026-09-30')
+        other, other_audit, _ = recall.select_candidates(list(reversed(papers)), self.directions, self.importance, 180, '2026-09-30')
+        self.assertEqual(len(selected), 180)
         self.assertEqual([p['id'] for p in selected], [p['id'] for p in other])
         self.assertEqual(len(audit), 191)
-        self.assertEqual(quotas['world_model'], 40)
+        self.assertEqual(quotas['world_model'], 60)
         self.assertEqual(audit['both']['local_recall']['primary_direction_id'], 'world_model')
         reasons = [a['selection_reason'] for a in audit.values()]
         self.assertEqual(sum(r == 'exploration_hash' for r in reasons), 10)
@@ -87,8 +89,9 @@ class RecallTests(unittest.TestCase):
         self.assertTrue(any(a['routing_status'] == 'not_reviewed' for a in audit.values()))
         self.assertEqual(sum(recall.scaled_quotas(self.config['candidate_quotas'], 100).values()), 100)
         self.assertEqual(recall.scaled_quotas(self.config['candidate_quotas'], 100),
-            dict(world_model=27, video_generation=27, audio_video_generation=20,
-                 multimodal_understanding_generation=7, continuous_language_multimodal=6, exploration=13))
+            dict(world_model=33, video_generation=17, multimodal_understanding_generation=14,
+                 audio_video_generation=11, world_model_applications=6, video_audio_generation=5,
+                 continuous_language_multimodal=3, exploration=11))
         for limit in [0, -1]:
             with self.assertRaises(ValueError):
                 recall.select_candidates(papers, self.directions, self.importance, limit)
@@ -102,8 +105,15 @@ class BudgetTests(IsolatedTest):
         self.importance = semantic_arxiv.load_importance_config()
 
     def paper(self, number, primary='world_model', status='ok'):
-        return dict(id=f'{number:04}', title='Video world models' if primary == 'world_model' else 'Diffusion language models',
-            summary='Unified understanding and generation with video diffusion and language models.',
+        return dict(id=f'{number:04}', title={
+                'world_model': 'VideoRAE learns video representations',
+                'video_generation': 'Video diffusion generation',
+                'multimodal_understanding_generation': 'Unified understanding and generation',
+                'audio_video_generation': 'Joint audio video generation',
+                'world_model_applications': 'Learned simulator for physics',
+                'video_audio_generation': 'Video-to-Speech',
+                'continuous_language_multimodal': 'Diffusion language models',
+            }[primary], summary='We introduce a new method for this task.',
             categories=['cs.CV'], authors=['Author'], abs='https://arxiv.org/abs/example',
             _local_recall=dict(score=number % 40 + 1),
             _routing=dict(decision='relevant', routing_status=status,
@@ -111,32 +121,34 @@ class BudgetTests(IsolatedTest):
                 matched_direction_ids=[primary] if status == 'ok' else [],
                 personal_relevance_score=80, research_value_score=80, brief='贡献简讯', reason='Evidence'))
 
-    def allocate(self, papers, limit=10):
+    def allocate(self, papers, limit=15):
         audit = {p['id']: dict(detail_status='pending') for p in papers}
         detail, briefs = selection.allocate_details(papers, self.directions, limit,
-            lambda p: 80, audit, total_limit=50)
+            lambda p: 80, audit, total_limit=60)
         return detail, briefs, audit
 
-    def test_50_10_reservations_primary_brief_failed_queue(self):
+    def test_60_15_reservations_primary_brief_failed_queue(self):
         papers = [self.paper(i) for i in range(80)]
         papers += [self.paper(i, 'continuous_language_multimodal') for i in range(80, 100)]
-        papers += [self.paper(i, 'multimodal_understanding_generation') for i in range(100, 120)]
+        papers += [self.paper(i, 'video_audio_generation') for i in range(100, 120)]
+        papers += [self.paper(i, 'world_model_applications') for i in range(150, 170)]
         papers += [self.paper(i, status='failed') for i in range(120, 150)]
         detail, briefs, audit = self.allocate(papers)
-        self.assertEqual(len(detail), 50)
-        self.assertEqual(sum(p['interest_tier'] == 'secondary' for p in detail), 10)
+        self.assertEqual(len(detail), 60)
+        self.assertEqual(sum(p['interest_tier'] == 'secondary' for p in detail), 15)
         self.assertEqual(sum(p['_routing']['primary_direction_id'] == 'continuous_language_multimodal' for p in detail), 5)
         self.assertTrue(any(p['interest_tier'] == 'primary' for p in briefs))
         self.assertTrue(any(a.get('detail_status') == 'awaiting_review' for a in audit.values()))
         self.assertTrue(all(p['_routing']['routing_status'] == 'ok' for p in briefs))
         brief = selection.make_brief(next(p for p in briefs if p['interest_tier'] == 'primary'), self.directions)
         self.assertEqual(brief['interest_tier'], 'primary')
-        # No secondary demand: all fifty slots can transfer to the primary pool.
-        self.assertEqual(len(self.allocate([self.paper(i) for i in range(60)])[0]), 50)
-        self.assertEqual(len(self.allocate([self.paper(i, 'continuous_language_multimodal') for i in range(20)], 99)[0]), 10)
+        # No secondary demand: all sixty slots can transfer to the primary pool.
+        self.assertEqual(len(self.allocate([self.paper(i) for i in range(80)])[0]), 60)
+        self.assertEqual(len(self.allocate([self.paper(i, 'continuous_language_multimodal') for i in range(80)], 99)[0]), 60)
 
-    def test_mock_end_to_end_150_50_10_3_no_paid_requests(self):
-        papers = [self.paper(i, 'continuous_language_multimodal' if i % 4 == 0 else 'world_model') for i in range(240)]
+    def test_mock_end_to_end_180_60_15_3_no_paid_requests(self):
+        direction_ids = [d['id'] for d in self.directions]
+        papers = [self.paper(i, direction_ids[i % 7]) for i in range(280)]
         source = self.root / '2026-09-30.jsonl'
         source.write_text(''.join(json.dumps(p) + '\n' for p in papers))
         args = SimpleNamespace(data=str(source), taxonomy=str(self.root / 'taxonomy.json'), directions=None, max_workers=1)
@@ -144,13 +156,13 @@ class BudgetTests(IsolatedTest):
             number = int(inputs['paper_id'])
             if number % 17 == 0:
                 raise ValueError('Routing parsing failure')
-            primary = 'continuous_language_multimodal' if number % 4 == 0 else 'world_model'
+            primary = direction_ids[number % 7]
             return RoutingStructure(decision='relevant', primary_direction_id=primary,
                 matched_direction_ids=[primary], personal_relevance_score=80, research_value_score=80,
                 brief='研究贡献', reason='Abstract evidence')
         def detail(items, *args, **kwargs):
-            self.assertEqual(len(items), 50)
-            self.assertLessEqual(sum(p['interest_tier'] == 'secondary' for p in items), 10)
+            self.assertEqual(len(items), 60)
+            self.assertEqual(sum(p['interest_tier'] == 'secondary' for p in items), 15)
             for p in items:
                 p['_detail_status'] = 'relevant'
                 p['report_level'] = 'detail'
@@ -162,16 +174,17 @@ class BudgetTests(IsolatedTest):
         chain = Mock(invoke=Mock(side_effect=route))
         with patch.object(enhance, 'parse_args', return_value=args), patch.object(routing, 'CachedChain', return_value=chain), patch.object(enhance, 'process_all_items', side_effect=detail):
             enhance.main()
-        self.assertEqual(chain.invoke.call_count, 150)
+        self.assertEqual(chain.invoke.call_count, 180)
         output = [json.loads(line) for line in (self.root / '2026-09-30_AI_enhanced_Chinese.jsonl').read_text().splitlines()]
-        self.assertEqual(sum(p['report_level'] == 'detail' for p in output), 50)
+        self.assertEqual(sum(p['report_level'] == 'detail' for p in output), 60)
         deep = [p for p in output if p['AI']['deep_read_selected']]
         self.assertEqual(len(deep), 3)
         self.assertGreaterEqual(sum(selection.interest_tier(p, self.directions) == 'primary' for p in deep), 2)
         self.assertTrue(all(p['report_level'] == 'detail' for p in deep))
         audit = json.loads((self.root / 'run_metrics/2026-09-30-selection.json').read_text())
-        self.assertEqual(audit['unreviewed'], 90)
-        self.assertEqual(sum(p.get('detail_requested', False) for p in audit['papers']), 50)
+        self.assertEqual(audit['unreviewed'], 100)
+        self.assertEqual(audit['limits'], dict(candidates=180, details=60, secondary_details=15))
+        self.assertEqual(sum(p.get('detail_requested', False) for p in audit['papers']), 60)
         self.assertTrue(any(p['report_level'] == 'brief' and p['interest_tier'] == 'primary' for p in output))
         import deep_read
         read_args = SimpleNamespace(data=str(self.root / '2026-09-30_AI_enhanced_Chinese.jsonl'),

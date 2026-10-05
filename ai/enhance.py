@@ -1054,10 +1054,10 @@ def main():
     selection_mode = env_value("SELECTION_MODE", "semantic")
     if selection_mode not in {"semantic", "legacy"}:
         raise ValueError("SELECTION_MODE must be semantic or legacy")
-    max_candidates = positive_int("MAX_AI_CANDIDATES", 150)
-    max_detail_items = positive_int("MAX_DETAIL_ITEMS", 50)
+    max_candidates = positive_int("MAX_AI_CANDIDATES", 180)
+    max_detail_items = positive_int("MAX_DETAIL_ITEMS", 60)
     try:
-        secondary_limit = int(env_value('SECONDARY_DETAIL_LIMIT', str(importance_config.get('secondary_detail_limit', 10))))
+        secondary_limit = int(env_value('SECONDARY_DETAIL_LIMIT', str(importance_config.get('secondary_detail_limit', 15))))
     except ValueError as error:
         raise ValueError('SECONDARY_DETAIL_LIMIT must be a nonnegative integer') from error
     if secondary_limit < 0:
@@ -1074,7 +1074,7 @@ def main():
             def save_audit():
                 checkpoint(audit_path, dict(mode=selection_mode, unique_papers=len(unique_data),
                     model_candidates=len(candidates), candidate_quotas=candidate_quotas,
-                    limits=dict(candidates=max_candidates, details=max_detail_items), papers=list(audit.values())))
+                    limits=dict(candidates=max_candidates, details=max_detail_items, secondary_details=secondary_limit), papers=list(audit.values())))
             save_audit()
             print(f"Local recall: {len(candidates)}/{len(unique_data)} candidates; limit={max_candidates}", file=sys.stderr, flush=True)
             filtered_data = route_all_items(candidates, filter_model_name, filter_max_workers,
@@ -1135,7 +1135,7 @@ def main():
                 deep_reads=sum(p['AI'].get('deep_read_selected', False) for p in published))
         atomic_write(audit_path, json.dumps(dict(mode=selection_mode, unique_papers=len(unique_data),
             model_candidates=len(candidates), candidate_quotas=candidate_quotas,
-            limits=dict(candidates=max_candidates, details=max_detail_items),
+            limits=dict(candidates=max_candidates, details=max_detail_items, secondary_details=secondary_limit),
             unreviewed=sum(r.get('routing_status') == 'not_reviewed' for r in audit.values()),
             awaiting_review=[r['id'] for r in audit.values() if r.get('detail_status') == 'awaiting_review'],
             per_direction=per_direction, fallback_requests=sum(r.get('allocation_reason') == 'routing_fallback' for r in audit.values()),

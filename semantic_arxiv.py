@@ -13,8 +13,8 @@ DEFAULT_TAXONOMY_PATH = REPO_ROOT / "data" / "taxonomy.json"
 
 
 DEFAULT_IMPORTANCE_CONFIG: Dict[str, Any] = {
-    "daily_deep_read_top_k": 5,
-    "secondary_detail_limit": 10,
+    "daily_deep_read_top_k": 3,
+    "secondary_detail_limit": 15,
     "primary_deep_read_min": 2,
     "direction_weights": {},
     "priority_subtopics": [],
@@ -157,7 +157,7 @@ def load_importance_config(config_path: Optional[str] = None) -> Dict[str, Any]:
     config = deepcopy(DEFAULT_IMPORTANCE_CONFIG)
     config.update(raw)
 
-    config["daily_deep_read_top_k"] = int(config.get("daily_deep_read_top_k") or 5)
+    config["daily_deep_read_top_k"] = int(config.get("daily_deep_read_top_k") or 3)
     config["direction_weights"] = {
         str(key): float(value)
         for key, value in dict(config.get("direction_weights") or {}).items()

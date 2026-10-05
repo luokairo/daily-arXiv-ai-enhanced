@@ -34,10 +34,10 @@ def secondary_reservations(directions, limit):
     return quotas
 
 
-def allocate_details(papers, directions, limit, priority, audit, total_limit=50):
+def allocate_details(papers, directions, limit, priority, audit, total_limit=60):
     if total_limit <= 0 or limit < 0:
         raise ValueError('Detail limit must be positive; secondary limit must be nonnegative')
-    limit = min(limit, 10, total_limit)
+    limit = min(limit, total_limit)
     primary, secondary = [], []
     max_local = max((p.get('_local_recall', {}).get('score', 0) for p in papers), default=0) or 1
     def key(p):

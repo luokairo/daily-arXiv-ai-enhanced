@@ -18,7 +18,7 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--paper-id", default="")
     parser.add_argument('--sample-limit', type=int, default=1)
-    parser.add_argument('--secondary-detail-limit', type=int, default=10)
+    parser.add_argument('--secondary-detail-limit', type=int, default=15)
     parser.add_argument('--deep-read-top-k', type=int, default=1)
     args = parser.parse_args()
     if not 1 <= args.sample_limit <= 20 or not 0 <= args.secondary_detail_limit <= 20 or not 1 <= args.deep_read_top_k <= 3:

@@ -18,7 +18,7 @@ on:
         type: string
       secondary_detail_limit:
         description: Secondary detail budget for this diagnostic (0-20)
-        default: '10'
+        default: '15'
         type: string
       deep_read_top_k:
         description: Maximum full-text deep reads (1-3)
@@ -63,7 +63,7 @@ jobs:
         env:
           PAPER_ID: ${{ inputs.paper_id }}
           SAMPLE_LIMIT: ${{ inputs.sample_limit || '1' }}
-          SECONDARY_LIMIT: ${{ inputs.secondary_detail_limit || '10' }}
+          SECONDARY_LIMIT: ${{ inputs.secondary_detail_limit || '15' }}
           DEEP_READ_LIMIT: ${{ inputs.deep_read_top_k || '1' }}
         run: |
           .venv/bin/python scripts/diagnose_pipeline.py \
