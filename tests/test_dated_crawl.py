@@ -66,8 +66,8 @@ class DatedCrawlTests(unittest.TestCase):
         client.session.get = Mock(return_value=response)
         with self.assertRaises(crawl.requests.HTTPError):
             client.get('https://arxiv.org/catchup/cs.CV/2026-09-30')
-        self.assertEqual(client.session.get.call_count, 3)
-        self.assertIn(unittest.mock.call(45), sleep.call_args_list)
+        self.assertEqual(client.session.get.call_count, 5)
+        self.assertTrue(any(call.args[0] >= 60 for call in sleep.call_args_list))
         response.status_code = 404
         client.session.get.reset_mock()
         with self.assertRaises(crawl.requests.HTTPError):
@@ -101,7 +101,9 @@ class DatedCrawlTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'date mismatch'):
                 crawl.crawl("2026-09-29", root, root / "audit", client)
             self.assertEqual(previous.read_text(), "old good output\n")
-            self.assertFalse((root / "audit").exists())
+            self.assertFalse((root / "audit/2026-09-29-crawl.json").exists())
+            progress = json.loads((root / "audit/2026-09-29-crawl-progress.json").read_text())
+            self.assertEqual(progress['status'], 'failed')
             for day in ["2026-09-31", "2026-9-30", "2999-09-30", "../../invalid"]:
                 with self.assertRaises(ValueError):
                     crawl.crawl(day, root, root / "audit", client)

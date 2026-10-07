@@ -1,4 +1,4 @@
-"""Save/restore successful AI cache and dated raw snapshots, never partial reports."""
+"""Save/restore verified crawl pages, AI cache and raw snapshots, never partial reports."""
 import argparse
 import hashlib
 import json
@@ -18,9 +18,10 @@ def copy_tree(source, destination):
 
 def save_bundle(data, stage, output, date):
     if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', date):
-        raise ValueError('Recovery needs a verified YYYY-MM-DD date')
+        raise ValueError('Recovery needs a selected YYYY-MM-DD date')
     output.mkdir(parents=True, exist_ok=True)
     copy_tree(data / 'ai_cache', output / 'data/ai_cache')
+    copy_tree(data / 'crawl_cache' / date, output / 'data/crawl_cache' / date)
     raw = data / f'{date}.jsonl'
     if raw.exists():
         (output / 'data').mkdir(exist_ok=True)
@@ -52,8 +53,9 @@ def restore_zip(archive, data):
             content = bundle.read(name)
             if hashlib.sha256(content).hexdigest() != digest:
                 raise ValueError('Recovery checksum mismatch')
-            # Cache keys/schema are validated again by CachedChain before use.
-            if name.startswith('data/ai_cache/') or name.startswith('data/run_metrics/') or re.fullmatch(r'data/\d{4}-\d{2}-\d{2}\.jsonl', name):
+            # Both AI signatures and crawl page identity/date/hash/TTL are
+            # validated again before use. Partial reports are never restored.
+            if name.startswith(('data/ai_cache/', 'data/crawl_cache/', 'data/run_metrics/')) or re.fullmatch(r'data/\d{4}-\d{2}-\d{2}\.jsonl', name):
                 destination = data / path.relative_to('data')
                 if destination.exists():
                     continue
@@ -79,7 +81,7 @@ def restore_remote(data, repository, date=''):
                     subprocess.run(['gh', 'api', f'repos/{repository}/actions/artifacts/{artifact["id"]}/zip'], stdout=stream, check=True)
                 recovered_date = restore_zip(archive, data)
                 restored += 1
-                print(f'Restored successful cache/snapshot from {artifact["name"]} ({recovered_date})', flush=True)
+                print(f'Restored crawl pages and successful cache/snapshot from {artifact["name"]} ({recovered_date})', flush=True)
         except (ValueError, KeyError, OSError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
             print(f'Skipped unusable recovery artifact: {type(error).__name__}', flush=True)
     print(f'Recovery artifacts restored: {restored}', flush=True)

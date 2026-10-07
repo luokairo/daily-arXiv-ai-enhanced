@@ -18,3 +18,4 @@ yarn.lock
 .DS_Store
 package.json
 local_reports/
+data/crawl_cache/

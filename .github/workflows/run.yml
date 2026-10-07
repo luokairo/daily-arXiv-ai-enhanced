@@ -85,7 +85,7 @@ jobs:
           echo "data 分支不存在，跳过历史数据恢复 / Data branch does not exist, skip restore"
         fi
         
-    - name: Restore successful cache from recovery artifacts
+    - name: Restore verified crawl pages and successful AI cache
       continue-on-error: true
       env:
         GH_TOKEN: ${{ github.token }}
@@ -144,6 +144,7 @@ jobs:
         path: |
           /tmp/arxiv-stage/run_metrics/*-selection.json
           /tmp/arxiv-stage/run_metrics/*-crawl.json
+          /tmp/arxiv-stage/run_metrics/*-crawl-progress.json
           /tmp/arxiv-stage/enhance-usage.json
         if-no-files-found: ignore
 
@@ -214,7 +215,7 @@ jobs:
         RECOVERY_DATE: ${{ steps.crawl_step.outputs.crawl_date }}
       run: .venv/bin/python scripts/recovery.py save --date "$RECOVERY_DATE"
 
-    - name: Upload successful cache and partial audit for recovery
+    - name: Upload crawl progress and successful cache for recovery
       continue-on-error: true
       if: always() && steps.crawl_step.outputs.crawl_date != ''
       uses: actions/upload-artifact@v4
@@ -233,7 +234,7 @@ jobs:
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
         echo "更新文件列表... / Updating file list..."
-        find data -type f -not -path 'data/ai_cache/*' -not -path 'data/run_metrics/*' | sed 's|^data/||' | sort > assets/file-list.txt
+        find data -type f -not -path 'data/ai_cache/*' -not -path 'data/crawl_cache/*' -not -path 'data/run_metrics/*' | sed 's|^data/||' | sort > assets/file-list.txt
         echo "文件列表更新完成 / File list updated"
 
     - name: Generate password hash and inject into config
@@ -370,6 +371,8 @@ jobs:
         
         # 复制数据文件到临时目录 / Copy data files to temporary directory
         cp -r data/* /tmp/data_files/data/ 2>/dev/null || true
+        # Crawl HTML is short-lived recovery state, not published report data.
+        rm -rf /tmp/data_files/data/crawl_cache
         cp assets/file-list.txt /tmp/data_files/assets/ 2>/dev/null || true
         
         echo "数据文件已保存到临时目录 / Data files saved to temporary directory"
@@ -390,7 +393,7 @@ jobs:
         rm -rf data/*.jsonl 2>/dev/null || true
         rm -f data/*.md 2>/dev/null || true
         rm -f data/taxonomy.json 2>/dev/null || true
-        rm -rf data/deep_reads data/ai_cache data/run_metrics 2>/dev/null || true
+        rm -rf data/deep_reads data/ai_cache data/crawl_cache data/run_metrics 2>/dev/null || true
         rm -f assets/file-list.txt 2>/dev/null || true
         
         # 检查 data 分支是否存在 / Check if data branch exists
