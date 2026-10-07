@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 149,
+          "paper_count": 151,
           "updated_at": "2026-10-07"
         },
         {
@@ -118,7 +118,7 @@
             "visual thought"
           ],
           "name": "连续多模态推理与潜空间思维",
-          "paper_count": 23,
+          "paper_count": 24,
           "updated_at": "2026-10-07"
         }
       ],
@@ -162,7 +162,7 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 65,
+          "paper_count": 66,
           "updated_at": "2026-10-07"
         },
         {
@@ -200,7 +200,7 @@
             "quantization"
           ],
           "name": "统一多模态模型高效化",
-          "paper_count": 150,
+          "paper_count": 151,
           "updated_at": "2026-10-07"
         }
       ],
@@ -245,7 +245,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 268,
+          "paper_count": 273,
           "updated_at": "2026-10-07"
         },
         {
@@ -315,7 +315,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 9,
+          "paper_count": 12,
           "is_canonical": true
         },
         {
@@ -356,7 +356,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 41,
+          "paper_count": 49,
           "is_canonical": true
         }
       ],
@@ -450,7 +450,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 36,
+          "paper_count": 37,
           "is_canonical": true
         },
         {
@@ -485,7 +485,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 10,
+          "paper_count": 11,
           "is_canonical": true
         },
         {
@@ -521,7 +521,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 24,
+          "paper_count": 25,
           "is_canonical": true
         },
         {
@@ -710,7 +710,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 15,
+          "paper_count": 19,
           "is_canonical": true
         },
         {
@@ -749,7 +749,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 53,
+          "paper_count": 62,
           "is_canonical": true
         },
         {
@@ -788,7 +788,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 6,
+          "paper_count": 7,
           "is_canonical": true
         }
       ],
@@ -820,7 +820,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-07",
-          "paper_count": 2,
+          "paper_count": 3,
           "is_canonical": true
         }
       ],
