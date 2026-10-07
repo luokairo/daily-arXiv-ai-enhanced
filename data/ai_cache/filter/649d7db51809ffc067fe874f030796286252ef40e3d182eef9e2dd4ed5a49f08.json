@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "基于音素后验图的芬兰语发音编辑语音合成，与所列方向无关。", "reason": "TTS pronunciation editing for L2 Finnish speech; no video, world model, representation learning, or video-related audio generation contribution.", "personal_relevance_score": 5.0, "research_value_score": 10.0}}

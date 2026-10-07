@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "该工作面向机器人导航DNN的鲁棒性测试与仿真到实物迁移，不涉及世界模型或视觉表征学习。", "reason": "Robustness testing of DNN robotic navigation via XAI-guided adversarial search; no world model, representation learning, or generative contribution.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

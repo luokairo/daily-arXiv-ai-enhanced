@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "该论文研究云 IAM 策略风险评分的可解释模型，与视频/多模态世界模型、表征学习及生成方向无关。", "reason": "Cloud IAM policy risk scoring with explainable boosting machines; no video, multimodal, representation learning, or generative modeling contribution.", "personal_relevance_score": 2.0, "research_value_score": 5.0}}

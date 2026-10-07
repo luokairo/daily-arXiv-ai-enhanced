@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "变形双翼无人机的设计与扑翼/电机推进悬停控制，属机器人控制，与所列方向无关。", "reason": "Metamorphic UAV design and hover propulsion control; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 3.0, "research_value_score": 5.0}}

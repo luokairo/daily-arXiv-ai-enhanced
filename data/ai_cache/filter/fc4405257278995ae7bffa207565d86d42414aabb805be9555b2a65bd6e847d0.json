@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出遥感场景分类的一次性多模态判别决策框架，用候选条件概率替代自回归生成。", "reason": "Remote sensing scene classification with MLLM discriminative decision; no video/world model, representation learning, generation, or audio-video contribution.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

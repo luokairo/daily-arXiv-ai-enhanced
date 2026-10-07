@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "量子处理器上的多模态组合泛化框架，与视频/世界模型及视觉表征学习无直接关联。", "reason": "Quantum-processor compositional generalization via DisCoCat/VQC; no video, world-model, or visual representation contribution despite image-text pairs.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}
