@@ -9,24 +9,24 @@
           "description": "连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。",
           "examples": [
             {
-              "id": "2610.02665",
-              "title": "Large Language Continuous Diffusion Models"
-            },
-            {
-              "id": "2610.02657",
-              "title": "Context-Tower Conversion Preserves Generation While Freezing Retains Knowledge: Low-Budget AR-to-Diffusion Conversion of MoE LLMs"
-            },
-            {
-              "id": "2610.03665",
-              "title": "Pivot-SD: Efficient Self-Distillation for Masked Diffusion Language Models"
-            },
-            {
               "id": "2610.08108",
               "title": "Enhancing Diffusion Language Models with Autoregressive Post-Training Weights"
             },
             {
               "id": "2610.08738",
               "title": "Denoising Hierarchical Representations: Joint Continuous Diffusion for Language Modeling"
+            },
+            {
+              "id": "2610.04198",
+              "title": "ALoDLM: Adaptively Looped Diffusion Language Models"
+            },
+            {
+              "id": "2610.06648",
+              "title": "Representation-Space MMD for Diffusion Language Models"
+            },
+            {
+              "id": "2610.05125",
+              "title": "Bayesian Entropy-based Reordering for Calibrated Diffusion Language Models"
             }
           ],
           "id": "continuous_language_flow",
@@ -41,8 +41,8 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 151,
-          "updated_at": "2026-10-07"
+          "paper_count": 154,
+          "updated_at": "2026-10-06"
         },
         {
           "created_at": null,
@@ -215,24 +215,24 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2610.08780",
-              "title": "DepthWorld: 3D World Model for Robot Manipulation"
+              "id": "2610.05483",
+              "title": "FLEX-WAM: Flexible Block-Causal World-Action Models for Long-Horizon Imagination and Planning"
             },
             {
-              "id": "2610.08777",
-              "title": "CtrlCache: Accelerating Interactive Video World Models with Control-Aware Caching"
+              "id": "2610.05135",
+              "title": "How Does Geometry Enter Generated Motion?"
             },
             {
-              "id": "2610.07031",
-              "title": "Artemis: Geometry-Grounded Multi-Agent Driving World Models with Shared 3D State and Progressive Memory Update"
+              "id": "2610.04920",
+              "title": "PWM: Personalized World Models with Online Reinforcement Learning"
             },
             {
-              "id": "2610.08791",
-              "title": "World Models' Last Exam in Physics"
+              "id": "2610.06349",
+              "title": "KineWorld: Action-Induced Transport Fields for Embodied World Modeling"
             },
             {
-              "id": "2610.08627",
-              "title": "Parallel Predictive World Models for Accurate and Efficient Long-Horizon Planning"
+              "id": "2610.05349",
+              "title": "Learning Conditional Source Distribution via Flow Reversal for Temporal Flow Matching"
             }
           ],
           "id": "video_world_model",
@@ -245,8 +245,8 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 273,
-          "updated_at": "2026-10-07"
+          "paper_count": 284,
+          "updated_at": "2026-10-06"
         },
         {
           "id": "multimodal_world_model",
@@ -269,11 +269,19 @@
             {
               "id": "2610.02542",
               "title": "How To Train Your World Model: Fine-tuning vs RAG for LM-based World Modeling"
+            },
+            {
+              "id": "2609.38123",
+              "title": "HelixWorld: A Real-time Interactive Audio-Visual World Model"
+            },
+            {
+              "id": "2610.05240",
+              "title": "Pythia: Toward Foundation World Models for Multimodal Time Series"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-05",
-          "paper_count": 3,
+          "updated_at": "2026-10-06",
+          "paper_count": 5,
           "is_canonical": true
         },
         {
@@ -293,14 +301,6 @@
           ],
           "examples": [
             {
-              "id": "2608.24782",
-              "title": "Image Difference Quantification Using Autoencoder-Based Latent Representations"
-            },
-            {
-              "id": "2608.25138",
-              "title": "Drift Variation Autoencoder: Unifying Generation and Representation Learning through Conditional Posterior Flow Matching"
-            },
-            {
               "id": "2610.07028",
               "title": "Identifiable World Models from Pretrained Diffusion Representations"
             },
@@ -311,11 +311,19 @@
             {
               "id": "2610.07072",
               "title": "On Color Alignment in VAE Latent Spaces and Its Applications"
+            },
+            {
+              "id": "2610.05711",
+              "title": "From Pixels, Without Pre-training: Joint Generative and Self-Supervised Representation Learning in One Model"
+            },
+            {
+              "id": "2610.03959",
+              "title": "LatentQuant: Preserving the Policy-Facing Latent Contract under NVFP4 VAE Quantization"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-07",
-          "paper_count": 12,
+          "updated_at": "2026-10-06",
+          "paper_count": 14,
           "is_canonical": true
         },
         {
@@ -334,29 +342,29 @@
           ],
           "examples": [
             {
-              "id": "2610.07689",
-              "title": "Unlocking Fine-Grained Perception in CLIP via Structurally-Aware Latent Masked Modeling"
+              "id": "2610.05409",
+              "title": "BeliefGraph-JEPA: Structured Latent World Models for Action-Conditioned Time Series"
             },
             {
-              "id": "2610.08433",
-              "title": "HuC-VideoMAE: Human-Centric Video Masked Autoencoding from synthetic data"
+              "id": "2610.06226",
+              "title": "LeAVJEPA: A Minimalist Architecture for Audio-Visual Self-Supervised Learning"
             },
             {
-              "id": "2610.06928",
-              "title": "Metonymic Circuits for Abstract Concept Grounding in Vision Transformers"
+              "id": "2610.05043",
+              "title": "CI-JEPA: A Counterfactual Analysis of Latent Representations in Joint-Embedding Predictive Architectures for Self-Supervised Learning"
             },
             {
-              "id": "2610.07576",
-              "title": "CETUS: How Far Do Representations Trained on Earth Transfer to Cassini SAR of Titan?"
+              "id": "2610.04864",
+              "title": "Enhancing Long-Video VLM Embeddings with Query-Aware Streaming Latent Reasoning"
             },
             {
-              "id": "2610.08183",
-              "title": "Compact Robot Policies Need Fine-Grained Visual Representations"
+              "id": "2610.05603",
+              "title": "EchoDino: A pediatric foundation model for transferable echocardiographic analysis across the lifespan"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-07",
-          "paper_count": 49,
+          "updated_at": "2026-10-06",
+          "paper_count": 58,
           "is_canonical": true
         }
       ],
@@ -383,11 +391,15 @@
             {
               "id": "2608.20534",
               "title": "Grounded-Exo2Ego: Structured Semantic Grounding for Robust Exocentric-to-Egocentric Video Generation"
+            },
+            {
+              "id": "2610.06847",
+              "title": "S2PD: Serial-to-Parallel Diffusion for Physically and Logically Consistent Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-24",
-          "paper_count": 4,
+          "updated_at": "2026-10-06",
+          "paper_count": 5,
           "is_canonical": true
         },
         {
@@ -428,10 +440,6 @@
           ],
           "examples": [
             {
-              "id": "2608.27922",
-              "title": "DensityKV: Density-Guided KV Cache Compression for Long Video Generation"
-            },
-            {
               "id": "2610.03120",
               "title": "In-Distribution Forcing for Long Video Generation at Test Time"
             },
@@ -446,11 +454,15 @@
             {
               "id": "2610.07911",
               "title": "Diverse Motion Customization via Control-based Dynamic Optimization"
+            },
+            {
+              "id": "2610.05141",
+              "title": "SemCam: Semantic Camera Motion Control for Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-07",
-          "paper_count": 37,
+          "updated_at": "2026-10-06",
+          "paper_count": 38,
           "is_canonical": true
         },
         {
@@ -499,10 +511,6 @@
           ],
           "examples": [
             {
-              "id": "2610.03221",
-              "title": "VDOT++: Unified Few-Step Video Generation via Unbalanced Optimal Transport Distillation"
-            },
-            {
               "id": "2610.02779",
               "title": "TRAC: Trajectory-aware Reuse and Adaptive Correction for Efficient Autoregressive Video Generation"
             },
@@ -517,11 +525,15 @@
             {
               "id": "2610.08772",
               "title": "Backend-Agnostic Sparse Attention for Fast High-Resolution Visual Generation"
+            },
+            {
+              "id": "2610.05816",
+              "title": "Level-of-Token Diffusion"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-07",
-          "paper_count": 25,
+          "updated_at": "2026-10-06",
+          "paper_count": 26,
           "is_canonical": true
         },
         {
@@ -534,29 +546,29 @@
           ],
           "examples": [
             {
-              "id": "2608.21839",
-              "title": "FIRM-Video: Check Before You Score for Reliable Text-to-Video Reward Modeling"
-            },
-            {
-              "id": "2608.21425",
-              "title": "Aligning Human Sense: Calibrated Distributional Reward Learning for Video Generation"
-            },
-            {
-              "id": "2608.23664",
-              "title": "Scaling Reinforcement Learning for Diffusion Models via Velocity Matching"
-            },
-            {
               "id": "2608.25452",
               "title": "VGA-BenchV2: An Expanded Unified Benchmark and Multi-Model Framework for Evaluating Video Aesthetics and Generation Quality"
             },
             {
               "id": "2608.28404",
               "title": "How Far Can 5,500 Hours of Driving Take You? A Scaling Law Analysis of Video Diffusion Models"
+            },
+            {
+              "id": "2610.05587",
+              "title": "Generating the Wild: Individual-Consistent Image-to-Video Generation for Wildlife"
+            },
+            {
+              "id": "2610.03980",
+              "title": "FADE: Frame-Aware Diffusion-Transformer-based Multi-Concept Erasure for Video Unlearning"
+            },
+            {
+              "id": "2610.05896",
+              "title": "TasteRoute: Personalized Routing for Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-31",
-          "paper_count": 31,
+          "updated_at": "2026-10-06",
+          "paper_count": 34,
           "is_canonical": true
         }
       ],
@@ -577,10 +589,6 @@
           ],
           "examples": [
             {
-              "id": "2610.00691",
-              "title": "Soundwich: Video Generation with Layered and Controllable Audio"
-            },
-            {
               "id": "2608.15690",
               "title": "Adding Voice Cloning to Text-to-Audio-Video Models with a Single Zero-Initialised Layer"
             },
@@ -591,11 +599,19 @@
             {
               "id": "2608.24674",
               "title": "TurboT2VA: Fast Large-Scale Text-to-Video-Audio Generation via Score-Regularized Consistency Distillation"
+            },
+            {
+              "id": "2610.05608",
+              "title": "Kandinsky 6.0 Video: Foundation Models for Synchronized Video and Audio Generation"
+            },
+            {
+              "id": "2610.05416",
+              "title": "Prism: Dynamic Sparse Attention for Native 2K Joint Video-Audio Generation Model Training"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-26",
-          "paper_count": 6,
+          "updated_at": "2026-10-06",
+          "paper_count": 8,
           "is_canonical": true
         },
         {
@@ -610,14 +626,6 @@
           ],
           "examples": [
             {
-              "id": "2608.16220",
-              "title": "SingDance: Compositional Zero-Shot Singing-and-Dancing Video Generation with Role-Aware Audio Conditioning"
-            },
-            {
-              "id": "2608.15818",
-              "title": "FlowDance: Music-Driven Dance Video Generation with Parallel Pose and RGB Streams"
-            },
-            {
               "id": "2608.16143",
               "title": "AnyTalk: Speech Animation for Arbitrary Characters Leveraging a Video Generation Model"
             },
@@ -628,11 +636,19 @@
             {
               "id": "2608.18832",
               "title": "EfficientSync: Real-Time Lip Synchronization via Deformation-Based Reference Texture Mixing"
+            },
+            {
+              "id": "2610.05233",
+              "title": "PixReenact: Pixel-Conditioned Causal Video Diffusion for Streaming Head-Avatar Reenactment"
+            },
+            {
+              "id": "2610.06658",
+              "title": "Talk Like You: Imitating How You Speak in Real-Time Talking Head Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-08-20",
-          "paper_count": 5,
+          "updated_at": "2026-10-06",
+          "paper_count": 7,
           "is_canonical": true
         },
         {
@@ -688,29 +704,29 @@
           ],
           "examples": [
             {
-              "id": "2610.02331",
-              "title": "World Editing: Intervening on Executable Worlds at Increasing Depth"
+              "id": "2610.06100",
+              "title": "From Traces to Agentic Worlds: Agentic Language World Models for Interactive Environment Simulation"
             },
             {
-              "id": "2610.07609",
-              "title": "PhysLDM: Latent Diffusion for High-Fidelity Deformable Simulation"
+              "id": "2610.04336",
+              "title": "A differentiable Lagrangian-coupled 3D Gaussian Splatting-SPH model for forward simulation and inverse analysis in solid mechanics"
             },
             {
-              "id": "2610.08033",
-              "title": "Learning in Dreams, Winning in Reality: A Continuous Dyna Loop for a Ten-Hero MOBA"
+              "id": "2610.06250",
+              "title": "Generative World Models Enable Predictive Control of Laser Melt Pool Dynamics"
             },
             {
-              "id": "2610.08469",
-              "title": "A Belief-State World Model for Catheter Navigation under Sparse Fluoroscopy: A Planar Proof of Concept"
+              "id": "2610.04301",
+              "title": "EnvDreamer: Large-Scale Multimodal-to-Environment Generation for Embodied AI"
             },
             {
-              "id": "2610.06877",
-              "title": "When Can World Models Recover Physical Laws?"
+              "id": "2610.04432",
+              "title": "Video2World: Benchmarking Coding Agents for Interactive World Modeling from Embodied Videos"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-07",
-          "paper_count": 19,
+          "updated_at": "2026-10-06",
+          "paper_count": 26,
           "is_canonical": true
         },
         {
@@ -727,29 +743,29 @@
           ],
           "examples": [
             {
-              "id": "2610.08150",
-              "title": "ViDAL: A Visual Dynamics-Grounded Action Latent Space for Vision-Language-Action Models"
+              "id": "2610.04767",
+              "title": "Flow Policies as Actions of Skill-Level World Models: Learned and Symbolic Abstractions for Long-Horizon Planning"
             },
             {
-              "id": "2610.08119",
-              "title": "AutodidactWAM: Cross-Modal Self-Distillation from Generated Video to Robot Actions"
+              "id": "2610.06582",
+              "title": "Mind the Execution Gap: Action-Semantic Mismatch in World-Model Control"
             },
             {
-              "id": "2610.07599",
-              "title": "Modeling Latent Disturbances for Robust Decision-Making in World Models"
+              "id": "2610.06280",
+              "title": "Future Anchored Verification and Online Recovery for World Action Models"
             },
             {
-              "id": "2610.08350",
-              "title": "How Much Planning Is Enough? Reducing Search and Computation in World-Model Planning"
+              "id": "2610.05324",
+              "title": "CoDance: Learning Reactive and Compliant Human-Humanoid Interaction from Video"
             },
             {
-              "id": "2610.07949",
-              "title": "Commit While Futures Agree: Consequence-Aware Adaptive Action Chunking for Robot Manipulation"
+              "id": "2610.06651",
+              "title": "Considering Context: When World Models Need Context Encoders"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-07",
-          "paper_count": 62,
+          "updated_at": "2026-10-06",
+          "paper_count": 78,
           "is_canonical": true
         },
         {
@@ -827,6 +843,6 @@
       "scope_digest": "4451eb36d7e3d29acecb41b1fdc06c479a8df74e993f0dd600c26be3632f05ee"
     }
   },
-  "updated_at": "2026-10-07",
+  "updated_at": "2026-10-06",
   "version": 2
 }

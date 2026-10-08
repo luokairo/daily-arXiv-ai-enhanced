@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出无掩码多尺度伪源分离自监督语音表征框架，用于说话人日志与语音分离。", "reason": "Speech-only SSL for speaker diarization and separation; no video, visual representation, or multimodal contribution, and no concrete transfer to the stated goals.", "personal_relevance_score": 5.0, "research_value_score": 20.0}}

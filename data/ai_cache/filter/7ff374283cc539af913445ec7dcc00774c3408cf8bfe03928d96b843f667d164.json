@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向强化学习策略的动作扰动鲁棒性形式化认证，与世界模型或视频表征学习无关。", "reason": "Certifies RL policy robustness against action perturbations via barrier conditions; no world model, video/multimodal representation, or generative contribution.", "personal_relevance_score": 5.0, "research_value_score": 10.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向生物细胞扰动响应的虚拟细胞世界模型，与视频/多模态表征学习无关。", "reason": "Virtual cell perturbation-response modeling in biology; latent mechanism units are not visual/video representations or world models of the stated kind.", "personal_relevance_score": 5.0, "research_value_score": 10.0}}

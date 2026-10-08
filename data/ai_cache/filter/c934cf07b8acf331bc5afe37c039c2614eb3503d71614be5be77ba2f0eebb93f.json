@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向非完整约束车辆的优化运动规划，与视频/多模态世界模型及表征学习无关。", "reason": "Optimization-based nonholonomic motion planning for car-like vehicles; no world model, video/multimodal representation, or generation contribution.", "personal_relevance_score": 3.0, "research_value_score": 5.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出多尺度对数签名压缩与选择性状态空间模型结合的时间序列建模方法，与所列视频/多模态方向无直接关联。", "reason": "Time-series SSM with log-signature compression; no video/multimodal world model, visual representation, generation, or audio-video contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}

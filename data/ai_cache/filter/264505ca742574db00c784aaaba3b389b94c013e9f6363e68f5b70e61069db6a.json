@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "研究连续博弈中基于成对偏好反馈的序数遗憾与均衡学习，与视频/多模态世界模型及表征学习无关。", "reason": "Game-theoretic regret and equilibrium learning from pairwise preferences; no video, multimodal, representation, or generative modeling contribution.", "personal_relevance_score": 3.0, "research_value_score": 5.0}}

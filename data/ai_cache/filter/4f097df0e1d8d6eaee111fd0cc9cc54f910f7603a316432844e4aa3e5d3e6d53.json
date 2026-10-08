@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向音频深伪检测的剪枝与蒸馏压缩框架，与所列方向无关。", "reason": "Audio deepfake detection compression via pruning and distillation; no video/multimodal world model, representation learning, generation, or audio-video link.", "personal_relevance_score": 3.0, "research_value_score": 5.0}}
