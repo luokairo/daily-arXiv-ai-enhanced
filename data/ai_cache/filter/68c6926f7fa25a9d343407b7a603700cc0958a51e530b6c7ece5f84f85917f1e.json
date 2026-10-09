@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于蒙特卡洛树搜索与结构经验蒸馏的PDE符号解发现方法，与所列方向无关。", "reason": "Symbolic PDE solution discovery via MCTS; no video/multimodal world model, representation learning, generation, or audio-video contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}

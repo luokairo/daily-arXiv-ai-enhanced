@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出多问题共享工具调用轨迹的视频智能体推理框架，用于长视频问答，与视频/多模态世界模型及表征学习无直接关联。", "reason": "Agentic multi-question reasoning for long-form video QA; no contribution to world models, video representation learning, or generation.", "personal_relevance_score": 12.0, "research_value_score": 20.0}}
