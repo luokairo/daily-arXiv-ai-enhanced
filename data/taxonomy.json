@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 160,
+          "paper_count": 161,
           "updated_at": "2026-10-09"
         },
         {
@@ -162,7 +162,7 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 71,
+          "paper_count": 73,
           "updated_at": "2026-10-09"
         },
         {
@@ -245,7 +245,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 303,
+          "paper_count": 315,
           "updated_at": "2026-10-09"
         },
         {
@@ -281,7 +281,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 7,
+          "paper_count": 9,
           "is_canonical": true
         },
         {
@@ -301,10 +301,6 @@
           ],
           "examples": [
             {
-              "id": "2610.03959",
-              "title": "LatentQuant: Preserving the Policy-Facing Latent Contract under NVFP4 VAE Quantization"
-            },
-            {
               "id": "2610.09242",
               "title": "Pooling Representation Autoencoders for Efficient Diffusion"
             },
@@ -319,11 +315,15 @@
             {
               "id": "2610.11105",
               "title": "TKCAM: Text and Keyframe to Camera Trajectory Generation"
+            },
+            {
+              "id": "2610.05711",
+              "title": "From Pixels, Without Pre-training: Joint Generative and Self-Supervised Representation Learning in One Model"
             }
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 19,
+          "paper_count": 22,
           "is_canonical": true
         },
         {
@@ -364,7 +364,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 71,
+          "paper_count": 77,
           "is_canonical": true
         }
       ],
@@ -407,7 +407,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 7,
+          "paper_count": 9,
           "is_canonical": true
         },
         {
@@ -442,7 +442,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 6,
+          "paper_count": 8,
           "is_canonical": true
         },
         {
@@ -478,7 +478,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 41,
+          "paper_count": 43,
           "is_canonical": true
         },
         {
@@ -513,7 +513,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 13,
+          "paper_count": 15,
           "is_canonical": true
         },
         {
@@ -549,7 +549,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 31,
+          "paper_count": 33,
           "is_canonical": true
         },
         {
@@ -584,7 +584,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 39,
+          "paper_count": 42,
           "is_canonical": true
         }
       ],
@@ -627,7 +627,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 10,
+          "paper_count": 11,
           "is_canonical": true
         },
         {
@@ -746,7 +746,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 29,
+          "paper_count": 30,
           "is_canonical": true
         },
         {
@@ -785,7 +785,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 107,
+          "paper_count": 122,
           "is_canonical": true
         },
         {
@@ -824,7 +824,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-09",
-          "paper_count": 9,
+          "paper_count": 11,
           "is_canonical": true
         }
       ],
