@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "说话人验证跨场景评测基准，与所列研究方向无直接关联。", "reason": "Speaker verification benchmark for cross-scenario generalization; no video/multimodal world model, representation learning, generation, or audio-video link.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}
