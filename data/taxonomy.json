@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 166,
+          "paper_count": 169,
           "updated_at": "2026-10-12"
         },
         {
@@ -215,10 +215,6 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2610.11723",
-              "title": "MultiWorldBench: Do Independently Controlled Views Describe One Shared World?"
-            },
-            {
               "id": "2610.12468",
               "title": "DreamTrue: Action-Faithful Robot World Model with Counterfactual Post-Training"
             },
@@ -233,6 +229,10 @@
             {
               "id": "2610.13706",
               "title": "GLIMPSE: Global-Local Indexing with Multi-Precision Spectral Encoding for Explorable Video World Models"
+            },
+            {
+              "id": "2610.12575",
+              "title": "Mind the Temporal Gap: Evaluating Video Models for Temporal Understanding in Driving"
             }
           ],
           "id": "video_world_model",
@@ -245,7 +245,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 329,
+          "paper_count": 332,
           "updated_at": "2026-10-12"
         },
         {
@@ -258,10 +258,6 @@
             "world-action model"
           ],
           "examples": [
-            {
-              "id": "2609.38123",
-              "title": "HelixWorld: A Real-time Interactive Audio-Visual World Model"
-            },
             {
               "id": "2610.05240",
               "title": "Pythia: Toward Foundation World Models for Multimodal Time Series"
@@ -277,11 +273,15 @@
             {
               "id": "2610.13912",
               "title": "RSI-Anything: Unlocking Recursive Self-Improvement with World Models"
+            },
+            {
+              "id": "2610.12495",
+              "title": "Kairos: Toward a Byte-Level Foundation Model for Every Modality"
             }
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 12,
+          "paper_count": 14,
           "is_canonical": true
         },
         {
@@ -323,7 +323,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 29,
+          "paper_count": 33,
           "is_canonical": true
         },
         {
@@ -364,7 +364,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 88,
+          "paper_count": 92,
           "is_canonical": true
         }
       ],
@@ -456,10 +456,6 @@
           ],
           "examples": [
             {
-              "id": "2610.07911",
-              "title": "Diverse Motion Customization via Control-based Dynamic Optimization"
-            },
-            {
               "id": "2610.05141",
               "title": "SemCam: Semantic Camera Motion Control for Video Generation"
             },
@@ -474,11 +470,15 @@
             {
               "id": "2610.11023",
               "title": "Expression-Diverse References for Identity-Preserving Video Generation"
+            },
+            {
+              "id": "2610.13187",
+              "title": "Destination-Conditioned Adaptation with Semantic-Geometric Alignment for Generative Inbetweening"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-10-09",
-          "paper_count": 45,
+          "updated_at": "2026-10-12",
+          "paper_count": 46,
           "is_canonical": true
         },
         {
@@ -513,7 +513,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 18,
+          "paper_count": 19,
           "is_canonical": true
         },
         {
@@ -549,7 +549,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 40,
+          "paper_count": 44,
           "is_canonical": true
         },
         {
@@ -584,7 +584,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 49,
+          "paper_count": 50,
           "is_canonical": true
         },
         {
@@ -595,11 +595,27 @@
             {
               "id": "2610.13338",
               "title": "VideoAWR: Reinforcing Video Flow Models with Decoupled-Timestep Advantage-Weighted Rectification"
+            },
+            {
+              "id": "2610.12572",
+              "title": "DiffusionART: Efficient, Stable and Scalable Reinforcement of Diffusion Models"
+            },
+            {
+              "id": "2610.13217",
+              "title": "Golden Anchor for Video Generation"
+            },
+            {
+              "id": "2610.13174",
+              "title": "PreCoG: Preview-Edit for Efficient Video Correction in Generation-Time"
+            },
+            {
+              "id": "2610.13941",
+              "title": "Images Talk Back: Guiding MMDiTs by Suppressing Image-to-Text Feedback"
             }
           ],
           "created_at": "2026-10-12",
           "updated_at": "2026-10-12",
-          "paper_count": 1
+          "paper_count": 6
         }
       ],
       "scope_digest": "01cb83a8f2e455f12dd3e8fbe2c2171ae6a3c39ef3089920dec20e09c5523a80"
@@ -641,7 +657,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 13,
+          "paper_count": 14,
           "is_canonical": true
         },
         {
@@ -678,7 +694,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 8,
+          "paper_count": 9,
           "is_canonical": true
         },
         {
@@ -714,7 +730,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 7,
+          "paper_count": 8,
           "is_canonical": true
         }
       ],
@@ -799,7 +815,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 148,
+          "paper_count": 159,
           "is_canonical": true
         },
         {
@@ -838,7 +854,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-12",
-          "paper_count": 14,
+          "paper_count": 15,
           "is_canonical": true
         }
       ],
