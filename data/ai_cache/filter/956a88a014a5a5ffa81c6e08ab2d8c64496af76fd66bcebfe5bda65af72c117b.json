@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出无人机第一视角视频的坠机时刻定位数据集与热图参考模型，属视频时序定位任务。", "reason": "Dataset and benchmark for temporal crash-moment localization in drone FPV video; no contribution to world models, representation learning, or generation.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}

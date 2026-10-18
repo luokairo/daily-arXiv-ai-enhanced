@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "对冻结神经音频编解码器的残差量化索引做无损重编码以降低存储，不涉及表征学习或生成建模。", "reason": "Lossless storage recoding of frozen audio codec indices; no visual/video representation, tokenizer learning, or generative modeling contribution.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

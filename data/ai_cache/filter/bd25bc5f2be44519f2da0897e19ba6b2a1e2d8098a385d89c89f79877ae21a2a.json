@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向系统发育树的离散扩散条件生成模型，用于复杂进化过程下的树后验推断。", "reason": "Conditional generative models over phylogenetic trees via discrete diffusion; no video, visual representation, or multimodal world-model contribution.", "personal_relevance_score": 4.0, "research_value_score": 12.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出可微EPR谱模拟框架TorchSpin，支持物理层反传与无标签训练。", "reason": "Differentiable EPR spectroscopy simulator in PyTorch; no video, visual representation, world model, or multimodal generation contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}
