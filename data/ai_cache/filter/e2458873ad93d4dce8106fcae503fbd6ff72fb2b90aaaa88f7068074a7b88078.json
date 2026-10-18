@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向沃洛夫语的开源权重语言模型适配（指令微调、偏好对齐与模型合并），与视频/多模态世界模型无关。", "reason": "Low-resource Wolof LLM instruction tuning and merging; no video, world model, representation, or multimodal contribution.", "personal_relevance_score": 4.0, "research_value_score": 15.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于 Transformer 的自动缝纫与裁片排布模型，从二维纸样自动生成可仿真的数字服装。", "reason": "Garment CAD sewing/panel assembly from 2D patterns; no video, world model, representation learning, or generative modeling contribution.", "personal_relevance_score": 5.0, "research_value_score": 10.0}}

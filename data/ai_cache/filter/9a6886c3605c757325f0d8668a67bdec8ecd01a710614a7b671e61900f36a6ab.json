@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于 FastAPI 的深度展开自适应控制服务化平台，与视频/多模态表征及生成方向无关。", "reason": "A FastAPI service for deep-unfolded adaptive optimization control; no video/multimodal world model, representation learning, or generative contribution.", "personal_relevance_score": 4.0, "research_value_score": 8.0}}

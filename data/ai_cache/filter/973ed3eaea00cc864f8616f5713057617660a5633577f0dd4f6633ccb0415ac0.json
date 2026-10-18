@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "构建五种欧洲语言、可商用许可的多语言指令微调数据集，并验证其微调效果。", "reason": "Multilingual instruction-following SFT dataset for LLMs; no video, visual representation, world model, or generation contribution.", "personal_relevance_score": 3.0, "research_value_score": 12.0}}
