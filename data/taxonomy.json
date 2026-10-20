@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 194,
+          "paper_count": 200,
           "updated_at": "2026-10-20"
         },
         {
@@ -118,7 +118,7 @@
             "visual thought"
           ],
           "name": "连续多模态推理与潜空间思维",
-          "paper_count": 25,
+          "paper_count": 26,
           "updated_at": "2026-10-20"
         }
       ],
@@ -162,7 +162,7 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 85,
+          "paper_count": 87,
           "updated_at": "2026-10-20"
         },
         {
@@ -245,7 +245,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 367,
+          "paper_count": 377,
           "updated_at": "2026-10-20"
         },
         {
@@ -281,7 +281,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 21,
+          "paper_count": 22,
           "is_canonical": true
         },
         {
@@ -323,7 +323,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 46,
+          "paper_count": 47,
           "is_canonical": true
         },
         {
@@ -364,7 +364,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 111,
+          "paper_count": 115,
           "is_canonical": true
         }
       ],
@@ -407,7 +407,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 14,
+          "paper_count": 15,
           "is_canonical": true
         },
         {
@@ -478,7 +478,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 65,
+          "paper_count": 75,
           "is_canonical": true
         },
         {
@@ -513,7 +513,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 22,
+          "paper_count": 23,
           "is_canonical": true
         },
         {
@@ -549,7 +549,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 58,
+          "paper_count": 63,
           "is_canonical": true
         },
         {
@@ -584,7 +584,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 55,
+          "paper_count": 56,
           "is_canonical": true
         },
         {
@@ -615,7 +615,7 @@
           ],
           "created_at": "2026-10-12",
           "updated_at": "2026-10-20",
-          "paper_count": 11
+          "paper_count": 12
         }
       ],
       "scope_digest": "01cb83a8f2e455f12dd3e8fbe2c2171ae6a3c39ef3089920dec20e09c5523a80"
@@ -776,7 +776,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 44,
+          "paper_count": 46,
           "is_canonical": true
         },
         {
@@ -815,7 +815,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 212,
+          "paper_count": 221,
           "is_canonical": true
         },
         {
@@ -854,7 +854,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 20,
+          "paper_count": 21,
           "is_canonical": true
         }
       ],
@@ -898,7 +898,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-20",
-          "paper_count": 6,
+          "paper_count": 7,
           "is_canonical": true
         }
       ],
