@@ -1,0 +1,31 @@
+name: Temporary Schedule Canary
+
+on:
+  schedule:
+    # Temporary diagnostic: every 10 minutes, away from the start of the hour.
+    # Remove this workflow after the daily schedule is verified to recover.
+    - cron: "7,17,27,37,47,57 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  report-trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Report trigger and current time
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          CRON_SCHEDULE: ${{ github.event.schedule }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo '## Temporary schedule diagnostic'
+            echo "Event: $EVENT_NAME"
+            echo "Cron: ${CRON_SCHEDULE:-manual dispatch}"
+            echo "UTC: $(date -u '+%Y-%m-%d %H:%M:%S %Z')"
+            echo "Asia/Shanghai: $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S %Z')"
+            echo "Run: $RUN_URL"
+            echo 'Only event=schedule confirms automatic scheduling; manual dispatch is a smoke test.'
+          } | tee -a "$GITHUB_STEP_SUMMARY"

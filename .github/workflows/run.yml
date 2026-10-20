@@ -6,9 +6,10 @@ name: arXiv-daily-ai-enhanced
 on:
   schedule:
     # GitHub schedule uses UTC and may be delayed at busy minutes.
-    # 17:23 UTC = 01:23 Asia/Shanghai on the following day, in DeepSeek off-peak hours.
+    # 17:37 UTC = 01:37 Asia/Shanghai on the following day, in DeepSeek off-peak hours.
+    # Refresh the cron entry after scheduled runs stopped appearing in October 2026.
     # Process the latest published announcement, retaining its actual date.
-    - cron: "23 17 * * *"
+    - cron: "37 17 * * *"
   workflow_dispatch:
     inputs:
       target_date:
