@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向非独立同分布数据的联邦恶意软件图像分类与客户端选择策略，与视频/多模态表征及生成方向无关。", "reason": "Federated learning for malware image classification; \"image\" refers to binary-to-image conversion, not visual representation learning or generation.", "personal_relevance_score": 4.0, "research_value_score": 10.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出面向掩码扩散语言模型的增强遗忘方法，用锚点优先KL散度改进遗忘效果。", "reason": "Masked diffusion language model unlearning via KL divergence; no visual/video representation, generation, or continuous-latent language modeling contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}

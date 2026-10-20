@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向离散扩散语言模型的置信度驱动渐进验证投机解码，降低前向次数。", "reason": "Speculative decoding efficiency for discrete diffusion language models; no visual/video representation, world model, or continuous-latent language contribution.", "personal_relevance_score": 12.0, "research_value_score": 30.0}}

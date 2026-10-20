@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出在用户输入过程中即开始生成并随输入增量修订的流式解码机制，以缩短端到端响应时延。", "reason": "Pure LLM inference latency work on streaming decoding from partial prompts; no visual/video representation, world model, or multimodal contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

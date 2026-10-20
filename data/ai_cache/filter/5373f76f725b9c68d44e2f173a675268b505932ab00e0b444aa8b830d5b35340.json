@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出三智能体技能演化系统，通过有状态编码智能体重写智能体指令以提升基准通过率，与视觉表征或生成无关。", "reason": "Agent skill/instruction optimization for benchmark tasks; no video, multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 12.0}}

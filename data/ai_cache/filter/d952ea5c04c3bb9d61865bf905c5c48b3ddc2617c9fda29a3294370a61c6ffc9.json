@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出递归式视频语言摘要模型，通过语义时序分解与自适应工具调用提升长视频摘要质量。", "reason": "Recursive VideoLLM pipeline for long-video summarization with tool calling; no contribution to world models, representation learning, or generation.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

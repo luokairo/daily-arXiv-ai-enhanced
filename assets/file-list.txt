@@ -265,6 +265,9 @@
 2026-10-19.jsonl
 2026-10-19.md
 2026-10-19_AI_enhanced_Chinese.jsonl
+2026-10-20.jsonl
+2026-10-20.md
+2026-10-20_AI_enhanced_Chinese.jsonl
 deep_reads/2026-05-27.json
 deep_reads/2026-05-27.md
 deep_reads/2026-05-28.json
