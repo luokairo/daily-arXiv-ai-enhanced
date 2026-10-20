@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "用物理标注提示让LLM为工程仿真器校准提供参数更新，并与无导数优化器混合使用。", "reason": "LLM-guided parameter calibration for engineering simulators; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 6.0, "research_value_score": 18.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "对 WavLM 语音自监督表征做逐层可解释性分析，用于欺骗检测，与视觉/视频表征及生成无关。", "reason": "Layer-wise interpretability of WavLM for audio spoofing detection; no visual/video representation, generation, or world-model contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

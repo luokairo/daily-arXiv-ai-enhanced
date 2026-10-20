@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于可验证子结果的强化学习信用分配方法，用于多轮检索智能体的证据检索与答案生成。", "reason": "RL credit assignment for multi-turn search agents; no contribution to video/multimodal world models, representation learning, or generation.", "personal_relevance_score": 6.0, "research_value_score": 12.0}}

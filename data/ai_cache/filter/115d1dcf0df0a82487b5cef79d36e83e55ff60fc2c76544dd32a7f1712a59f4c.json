@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出毫米波雷达空中手写识别系统，将3D轨迹映射为视觉表示供视觉语言模型识别。", "reason": "mmWave radar in-air handwriting recognition mapped to VLMs; no contribution to video/multimodal world models, visual representation learning, or generation.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

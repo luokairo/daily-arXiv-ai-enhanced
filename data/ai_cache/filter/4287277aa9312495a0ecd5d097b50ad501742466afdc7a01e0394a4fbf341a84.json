@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于离散扩散（CTMC）的互信息与KL散度估计方法，用于离散数据的信息论分析。", "reason": "Discrete diffusion for mutual information/KL estimation on discrete data; no video, visual representation, world model, or unified generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出 D-VAE 反事实推断框架，用于归因营销标签对 LLM 生成广告效果的因果贡献。", "reason": "Causal attribution of marketing labels in LLM-generated ad text; VAE used for causal deconfounding, not visual/video representation or generation.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

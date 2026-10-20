@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出沿因果图路径积分的特征归因方法（CIG/CEG），用于识别上游驱动因子。", "reason": "Feature attribution/explainability method for causal graphs; no video, multimodal, representation learning, or generative modeling contribution.", "personal_relevance_score": 5.0, "research_value_score": 20.0}}

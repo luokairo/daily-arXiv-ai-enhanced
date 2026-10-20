@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出求解器充分的符号化概念，为混合离散-连续机器人规划自动发明符号。", "reason": "Robotics hybrid discrete-continuous planning with invented symbols; no world model, video/visual representation, or generative modeling contribution.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}
