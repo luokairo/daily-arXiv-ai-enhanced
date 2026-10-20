@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出针对文档理解VLM的可见水印对抗攻击方法，与所列研究方向无直接关联。", "reason": "Adversarial watermark attack on document VLMs; no contribution to video/multimodal world models, representation learning, generation, or unified models.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

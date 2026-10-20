@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出用小型世界模型推测工具输出以加速智能体强化学习 rollout，属系统效率优化。", "reason": "World model here is a text/tool-output predictor for agentic RL latency, not video/multimodal world modeling or visual representation learning.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

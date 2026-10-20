@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出频域路由低秩适配与共享身份条件的参数高效热红外到可见光人脸翻译框架。", "reason": "Thermal-to-visible face image translation via LoRA frequency routing; no video, world model, or transferable representation-learning contribution stated.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出可编辑的改进动力学模型，在评估前预测修改效果并指导自我进化智能体的修订。", "reason": "Self-evolving LLM agents with an improvement-dynamics predictor; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出面向数值表格记录的两阶段后训练策略（稠密下一词预测加同记录视图一致性，再做下游微调），提升数值敏感性与目标预测。", "reason": "Tabular numerical record post-training for decoder LMs; no video/multimodal world model, visual representation, or generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}

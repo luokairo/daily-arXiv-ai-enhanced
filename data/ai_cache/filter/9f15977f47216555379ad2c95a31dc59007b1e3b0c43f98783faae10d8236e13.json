@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出以物理参数（材质、几何、接触）为控制条件的接触音/Foley 生成模型，并支持数值描述输入与真实录音目标对齐。", "reason": "Controllable Foley/contact-sound synthesis from physical parameters; no video input, no visual representation or world-model contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

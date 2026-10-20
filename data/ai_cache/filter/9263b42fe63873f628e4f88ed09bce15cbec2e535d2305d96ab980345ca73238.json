@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于证据扰动的可泛化人脸伪造检测与文本解释框架，属取证任务。", "reason": "Face forgery detection with CLIP/LLaVA robustness; no contribution to video/world models, generative latent representation, or unified generation.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

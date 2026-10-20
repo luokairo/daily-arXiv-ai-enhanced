@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出面向不平衡IMU跌倒检测的双域数据集蒸馏方法，生成类平衡合成训练集。", "reason": "Dataset condensation for wearable IMU fall detection; no video/multimodal world model, visual representation, or generation contribution despite cs.CV listing.", "personal_relevance_score": 6.0, "research_value_score": 18.0}}

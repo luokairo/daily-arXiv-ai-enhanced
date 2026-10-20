@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出状态-意图感知图多智能体强化学习框架，用于不完美V2X下的协同驾驶决策。", "reason": "Multi-agent RL policy for cooperative driving in SUMO; no world model, representation learning, or generative contribution despite graph attention.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

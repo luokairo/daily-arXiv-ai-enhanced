@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出单码本音系语音 tokenizer，统一语音理解与生成的语音语言模型。", "reason": "Speech-only tokenizer and speech LM for ASR/synthesis; no video, visual representation, or audio-video link, so no concrete transfer to the stated goals.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

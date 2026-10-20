@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出双模态槽注意力竞争绑定框架，用于音视频分割中的多声源解耦。", "reason": "Audio-visual segmentation with slot attention for pixel masks; no video/world model, representation learning, generation, or audio generation contribution.", "personal_relevance_score": 12.0, "research_value_score": 30.0}}
