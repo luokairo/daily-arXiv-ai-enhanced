@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "分析文本嵌入模型量化校准的剂量效应与验证门控弃权策略，与视觉/视频表征及世界模型无关。", "reason": "Study of PTQ calibration dose and abstention for text embedders; no visual/video representation, generative latent, or world-model contribution.", "personal_relevance_score": 8.0, "research_value_score": 22.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于VLM的异常检测器集成融合框架，与所列方向无关。", "reason": "Post-hoc fusion of pretrained anomaly detectors via VLM action selection; no contribution to video/multimodal world models, representation learning, or generation.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

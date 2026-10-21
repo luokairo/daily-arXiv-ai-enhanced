@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出融合言语化分布与对数概率分布的可学习组合，用于对齐人类意见分布。", "reason": "Pure LLM opinion-distribution calibration study on survey text; no video, multimodal, representation, or continuous-latent contribution.", "personal_relevance_score": 4.0, "research_value_score": 12.0}}

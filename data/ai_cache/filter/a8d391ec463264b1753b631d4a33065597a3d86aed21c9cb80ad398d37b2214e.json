@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出双色条纹标记与曲率基线分析，用于单目圆柱物体位姿测量。", "reason": "Fiducial marker pose estimation for cylindrical objects via curvature; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 10.0}}

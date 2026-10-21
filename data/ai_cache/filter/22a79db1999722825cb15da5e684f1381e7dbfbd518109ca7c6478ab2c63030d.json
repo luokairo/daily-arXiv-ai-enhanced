@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向大语言模型配置VASP计算参数的基准，与视频/多模态表征及生成方向无关。", "reason": "Benchmark for LLM configuration of VASP DFT inputs; no video/multimodal world model, representation learning, generation, or continuous-language contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}
