@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出LTEM表格标记格式与复杂度基准，用于LLM表格理解与生成。", "reason": "Table serialization format for LLM table QA/generation; no visual, video, or multimodal representation contribution.", "personal_relevance_score": 5.0, "research_value_score": 25.0}}

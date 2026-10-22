@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出统一的大模型电路发现与功能解释框架，与视觉表征或世界模型无关。", "reason": "Mechanistic interpretability of LLM circuits; no visual/video representation, world model, generation, or multimodal contribution.", "personal_relevance_score": 5.0, "research_value_score": 20.0}}

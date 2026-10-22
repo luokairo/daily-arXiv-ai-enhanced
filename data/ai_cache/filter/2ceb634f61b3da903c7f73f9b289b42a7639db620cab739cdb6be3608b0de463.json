@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "构建昆曲唱词音节级对齐与押韵检索语料库及基准，属音乐信息检索方向。", "reason": "Kunqu opera lyrics alignment and rhyme retrieval corpus for MIR; no video, world model, visual representation, or audio-video generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 18.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出 PCLA-Bridge 工具，将 CARLA 驾驶智能体跨仿真器与真实数据部署，属工程集成框架。", "reason": "Deployment middleware for running CARLA driving agents across simulators; no world model, representation learning, or generative contribution.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

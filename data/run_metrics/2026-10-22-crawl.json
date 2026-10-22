@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "target_date": "2026-10-22",
+  "date_basis": "arxiv_announcement_listing",
+  "metadata_basis": "current_available_version",
+  "retrieved_at": "2026-10-22T20:47:18.178686+00:00",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "category_counts": {
+    "cs.AI": {
+      "count": 211,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.AI/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 159
+    },
+    "cs.CL": {
+      "count": 137,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CL/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 84
+    },
+    "cs.CV": {
+      "count": 138,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CV/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 74
+    },
+    "cs.LG": {
+      "count": 240,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.LG/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 139
+    },
+    "cs.MM": {
+      "count": 6,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.MM/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 1
+    },
+    "cs.RO": {
+      "count": 78,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.RO/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 42
+    },
+    "cs.SD": {
+      "count": 21,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.SD/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 4
+    },
+    "eess.AS": {
+      "count": 13,
+      "listing_urls": [
+        "https://arxiv.org/catchup/eess.AS/2026-10-22?abs=True&page=1"
+      ],
+      "replacements_excluded": 4
+    }
+  },
+  "unique_papers": 605,
+  "raw_sha256": "671a111a6cea7c7fb4ae4b0b8307e1cf64e1964e7bf876c7528530462127d620"
+}
