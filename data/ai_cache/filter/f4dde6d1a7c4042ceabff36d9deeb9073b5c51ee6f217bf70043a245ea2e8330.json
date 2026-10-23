@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "用神经网络替代晶体管紧凑模型以加速SPICE仿真与标准单元库表征，与视频/多模态表征学习无关。", "reason": "Neural-network transistor compact models for SPICE/EDA simulation; no video, multimodal world model, or visual representation contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}

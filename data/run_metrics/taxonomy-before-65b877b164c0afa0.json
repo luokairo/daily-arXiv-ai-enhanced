@@ -1,0 +1,910 @@
+{
+  "directions": {
+    "continuous_language_multimodal": {
+      "id": "continuous_language_multimodal",
+      "name": "连续语言模型",
+      "subtopics": [
+        {
+          "created_at": null,
+          "description": "连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。",
+          "examples": [
+            {
+              "id": "2610.27580",
+              "title": "Factual Access States in Diffusion Language Models: From Mechanism to Knowledge Editing and Retrieval"
+            },
+            {
+              "id": "2610.30068",
+              "title": "Loopholing All the Way: Language Modeling with pure Self-Conditioning"
+            },
+            {
+              "id": "2610.28905",
+              "title": "Hidden Messages Between Diffusion Language Model Agents: Causal Evidence for Latent Communication"
+            },
+            {
+              "id": "2610.29136",
+              "title": "GRAFT: Restoring the Missing Sampling Interface in Continuous Diffusion Language Models"
+            },
+            {
+              "id": "2610.29255",
+              "title": "Hierarchical Masked Diffusion Language Models"
+            }
+          ],
+          "id": "continuous_language_flow",
+          "is_canonical": true,
+          "keywords": [
+            "continuous language model",
+            "continuous latent language model",
+            "embedded language flow",
+            "diffusion language model",
+            "flow matching language",
+            "cola",
+            "elf"
+          ],
+          "name": "连续语言模型与语言流",
+          "paper_count": 207,
+          "updated_at": "2026-10-22"
+        },
+        {
+          "created_at": null,
+          "description": "与连续语言建模直接相关的连续视觉语言模型和语言潜空间流；普通视觉自编码器、RAE 和视觉表征学习归主要世界模型与表征方向。",
+          "examples": [
+            {
+              "id": "2605.31503",
+              "title": "How can embedding models bind concepts?"
+            },
+            {
+              "id": "2606.22424",
+              "title": "FlowDec: Temporal Conditional Flow Decorruptor for Robust Continuous Vision-Language Navigation"
+            },
+            {
+              "id": "2607.21371",
+              "title": "DINOde: Continuous Vision-Text Alignment for Open-Vocabulary Semantic Segmentation"
+            },
+            {
+              "id": "2608.05103",
+              "title": "Multimodal Spatiotemporal Atmospheric Data Assimilation with Latent Flow-matching"
+            },
+            {
+              "id": "2608.10198",
+              "title": "Post-Hoc Sparse Coding of Latent Communication Between Vision-Language Model Agents"
+            }
+          ],
+          "id": "continuous_vlm_latent_flow",
+          "is_canonical": true,
+          "keywords": [
+            "continuous vision-language model",
+            "continuous vlm",
+            "continuous language tokens",
+            "language latent flow",
+            "multimodal latent reasoning"
+          ],
+          "name": "连续 VLM 与视觉潜空间流",
+          "paper_count": 6,
+          "updated_at": "2026-08-12"
+        },
+        {
+          "created_at": null,
+          "description": "多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。",
+          "examples": [
+            {
+              "id": "2608.04124",
+              "title": "Perception Before Reasoning: Dynamic Latent Reasoning for Video Understanding and Question Answering"
+            },
+            {
+              "id": "2608.13244",
+              "title": "Localize, Then Reason: Visual Latent Structural Reasoning for Molecular Properties and Edits"
+            },
+            {
+              "id": "2608.13570",
+              "title": "Think in Latent, Explain in Language: Self-Explainable Latent Reasoning"
+            },
+            {
+              "id": "2610.07175",
+              "title": "CALR: Continuous Anchored Latent Reasoning via Render-of-Thought Compression"
+            },
+            {
+              "id": "2610.25247",
+              "title": "Visual Scaffolding: Toward Native Multimodal Reasoning"
+            }
+          ],
+          "id": "continuous_multimodal_reasoning",
+          "is_canonical": true,
+          "keywords": [
+            "multimodal latent reasoning",
+            "continuous multimodal reasoning",
+            "chain of continuous thought",
+            "continuous vision-language thought",
+            "latent visual reasoning",
+            "visual thought"
+          ],
+          "name": "连续多模态推理与潜空间思维",
+          "paper_count": 26,
+          "updated_at": "2026-10-20"
+        }
+      ],
+      "scope_digest": "c85c4978f347a9b2c41f6b6f55b452cf8fba266c8fa5400f060d9425db031d63"
+    },
+    "multimodal_understanding_generation": {
+      "id": "multimodal_understanding_generation",
+      "name": "统一理解与生成",
+      "subtopics": [
+        {
+          "created_at": null,
+          "description": "理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。",
+          "examples": [
+            {
+              "id": "2610.15227",
+              "title": "Understanding Unified VLMs: From Attention Probing to Guidance Tuning for Multimodal Generation"
+            },
+            {
+              "id": "2610.22682",
+              "title": "FlexUMM: Flexible Representation Learning for Unified Multimodal Models"
+            },
+            {
+              "id": "2610.23987",
+              "title": "What Generation Knows: Unlocking Fine-Grained Understanding in Unified Multimodal Models"
+            },
+            {
+              "id": "2610.25533",
+              "title": "Modaliff: A Unified Token Diffusion Model for Any-to-Any Generation"
+            },
+            {
+              "id": "2610.27049",
+              "title": "VitronEdit: Universal Visual Editing across Images, Videos, and 3D Scenes"
+            }
+          ],
+          "id": "unified_multimodal_model",
+          "is_canonical": true,
+          "keywords": [
+            "unified multimodal",
+            "any-to-any",
+            "understanding generation",
+            "native multimodal"
+          ],
+          "name": "统一多模态模型",
+          "paper_count": 88,
+          "updated_at": "2026-10-21"
+        },
+        {
+          "created_at": null,
+          "description": "直接服务于统一理解与生成模型的高效表征、蒸馏和推理。",
+          "examples": [
+            {
+              "id": "2609.18084",
+              "title": "Not All Layers Need Tuning: Diagnosing and Directing Adaptation in Vision-Language-Action Models"
+            },
+            {
+              "id": "2609.19104",
+              "title": "rMuscle: Robotic Muscle Memory for Efficient Vision-Language-Action Model Inference"
+            },
+            {
+              "id": "2608.20473",
+              "title": "Aggregating Visual Information with Optimal Transport for VideoLM Token Compression"
+            },
+            {
+              "id": "2608.26581",
+              "title": "Activation Outliers Matter: Robust Recovery for Quantized Multimodal LLMs"
+            },
+            {
+              "id": "2610.07987",
+              "title": "VisionWeave: Weaving Elastic Visual Representations as a Native Capability of MLLMs"
+            }
+          ],
+          "id": "efficient_multimodal",
+          "is_canonical": true,
+          "keywords": [
+            "efficient mllm",
+            "peft",
+            "multimodal distillation",
+            "token compression",
+            "quantization"
+          ],
+          "name": "统一多模态模型高效化",
+          "paper_count": 151,
+          "updated_at": "2026-10-07"
+        }
+      ],
+      "scope_digest": "c8e911cc425b9b38f239d88e8d4205d37f2e03f6acfe2a1c5aff4ed0f7a78d7a"
+    },
+    "world_model": {
+      "id": "world_model",
+      "name": "视频/多模态世界模型与表征学习",
+      "subtopics": [
+        {
+          "created_at": null,
+          "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
+          "examples": [
+            {
+              "id": "2610.29408",
+              "title": "LiveAct: Towards Real-Time Multi-Agent World Models with Heterogeneous Action Interfaces"
+            },
+            {
+              "id": "2610.29915",
+              "title": "CausalAlign: Causal Alignment of Video Generation Models for Consistent Ego-Motion"
+            },
+            {
+              "id": "2610.30125",
+              "title": "PhysiCalWorld: In-Context Physics Calibration for World Models"
+            },
+            {
+              "id": "2610.29435",
+              "title": "Events, Not Pixels: Where World Models Get the Return Wrong"
+            },
+            {
+              "id": "2610.28771",
+              "title": "Motion Equivariant Convolutional LSTM: When Motion Becomes a Gauge Symmetry"
+            }
+          ],
+          "id": "video_world_model",
+          "is_canonical": true,
+          "keywords": [
+            "video world model",
+            "generative world model",
+            "action-conditioned video",
+            "future frame prediction",
+            "long-horizon video"
+          ],
+          "name": "视频世界模型",
+          "paper_count": 388,
+          "updated_at": "2026-10-22"
+        },
+        {
+          "id": "multimodal_world_model",
+          "name": "多模态基础世界模型",
+          "description": "建模视频、语言、声音或动作等多模态观测与未来的通用基础世界模型。",
+          "keywords": [
+            "multimodal world model",
+            "multi-modal world model",
+            "world-action model"
+          ],
+          "examples": [
+            {
+              "id": "2610.18447",
+              "title": "Thinker-WM: A Unified World Model with Shared Multimodal Representations for Embodied Intelligence"
+            },
+            {
+              "id": "2610.22708",
+              "title": "GlobeBench: Evaluating Text-Based World Model Capabilities for Scalable Environment Simulations"
+            },
+            {
+              "id": "2610.26855",
+              "title": "Ropedia W0: Scaling Loco-Manipulation World Models across Embodiments with Human Experience"
+            },
+            {
+              "id": "2610.28594",
+              "title": "Learning the 4D World through Point Trajectory Forecasting"
+            },
+            {
+              "id": "2610.28631",
+              "title": "AEON: Unifying Video and 3D World Models"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-21",
+          "paper_count": 24,
+          "is_canonical": true
+        },
+        {
+          "id": "representation_autoencoder",
+          "name": "RAE 与生成潜空间",
+          "description": "RAE/VideoRAE、视觉与视频自编码器、tokenizer、语义潜空间和生成表征对齐；图像侧基础研究同样直接相关。",
+          "keywords": [
+            "representation autoencoder",
+            "representation autoencoders",
+            "VideoRAE",
+            "visual autoencoder",
+            "video autoencoder",
+            "visual tokenizer",
+            "video tokenizer",
+            "semantic latent space",
+            "representation alignment"
+          ],
+          "examples": [
+            {
+              "id": "2610.22957",
+              "title": "Query-adaptive Recurrent Tokenization"
+            },
+            {
+              "id": "2610.26216",
+              "title": "RoAR-VAE: Improving Latent Diffusability through Robust Prediction"
+            },
+            {
+              "id": "2610.28521",
+              "title": "Latent Bridge: From Video Latents to 3D Geometry via Feature Alignment"
+            },
+            {
+              "id": "2610.26881",
+              "title": "Exploring Representation Autoencoders for Text-to-Audio Generation"
+            },
+            {
+              "id": "2610.30129",
+              "title": "Rethinking Video Autoencoders for Interactive World Models"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 50,
+          "is_canonical": true
+        },
+        {
+          "id": "visual_video_representation",
+          "name": "视觉与视频表征学习",
+          "description": "DINO、JEPA、MAE 类自监督视觉/视频表征、掩码建模和预测表征；不要求生成实验，仅使用已有编码器的识别应用不属于此主题。",
+          "keywords": [
+            "visual representation learning",
+            "video representation learning",
+            "self-supervised visual representation",
+            "masked image modeling",
+            "masked video modeling",
+            "DINO",
+            "JEPA",
+            "MAE"
+          ],
+          "examples": [
+            {
+              "id": "2610.28555",
+              "title": "Learning Computational Structure for Sample-Efficient Prediction"
+            },
+            {
+              "id": "2610.30120",
+              "title": "ALPS: Visual State Encoders for World Models"
+            },
+            {
+              "id": "2610.29246",
+              "title": "DepState-JEPA: Learning Depth-Grounded State Representation for Visual Perception and Manipulation"
+            },
+            {
+              "id": "2610.29061",
+              "title": "OccJEPA: Occlusion as Masking for Amodal Video Segmentation"
+            },
+            {
+              "id": "2610.29168",
+              "title": "How Representational Priors Shape Generalization in World Action Models"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 129,
+          "is_canonical": true
+        }
+      ],
+      "scope_digest": "8d8198c16fd23692d5579e40705bee6ade67a9f9a8c639d1a4f660d15cb7ddca"
+    },
+    "video_generation": {
+      "id": "video_generation",
+      "name": "视频生成",
+      "subtopics": [
+        {
+          "id": "video_diffusion",
+          "name": "视频扩散与流模型",
+          "description": "视频扩散、flow matching、视频 DiT。",
+          "keywords": [
+            "video diffusion",
+            "text-to-video",
+            "video dit"
+          ],
+          "examples": [
+            {
+              "id": "2610.11791",
+              "title": "Phase-aware video generation for physics-grounded dynamics and interactions"
+            },
+            {
+              "id": "2610.13187",
+              "title": "Destination-Conditioned Adaptation with Semantic-Geometric Alignment for Generative Inbetweening"
+            },
+            {
+              "id": "2610.23854",
+              "title": "Rethinking the design space of Vanilla Pixel Diffusion Transformers"
+            },
+            {
+              "id": "2610.24750",
+              "title": "CorrFlow: Self-Correcting Flow Matching"
+            },
+            {
+              "id": "2610.29200",
+              "title": "NeuralSRender: G-Buffer Guided Video Diffusion for Sim-to-Real Rendering"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 16,
+          "is_canonical": true
+        },
+        {
+          "id": "autoregressive_video",
+          "name": "自回归视频生成",
+          "description": "视频 next-token、离散或连续视频序列生成。",
+          "keywords": [
+            "autoregressive video",
+            "video token generation"
+          ],
+          "examples": [
+            {
+              "id": "2610.11479",
+              "title": "Conditional Residual Prediction: Improving Autoregressive Video Diffusion without a Bidirectional Teacher"
+            },
+            {
+              "id": "2610.12156",
+              "title": "Connected Self Forcing: Beyond Local Learning in Video Autoregression"
+            },
+            {
+              "id": "2610.14654",
+              "title": "Prospective Forcing: Learning to Look Ahead for Autoregressive Long Video Diffusion"
+            },
+            {
+              "id": "2610.14553",
+              "title": "Adversarial Gradient Forcing for Robust Few-Step Autoregressive Video Generation"
+            },
+            {
+              "id": "2610.29989",
+              "title": "Looking Ahead: Modeling Future Evolution in Autoregressive Video Generation"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 13,
+          "is_canonical": true
+        },
+        {
+          "id": "long_controllable_video",
+          "name": "长视频与可控生成",
+          "description": "长时序、一致性、镜头控制、个性化视频生成。",
+          "keywords": [
+            "long video generation",
+            "controllable video",
+            "video personalization"
+          ],
+          "examples": [
+            {
+              "id": "2610.27986",
+              "title": "Recast the Past: Stable Long Video Generation with Full Context Memory"
+            },
+            {
+              "id": "2610.28632",
+              "title": "Joints, Camera, Action! Co-Generating 3D Motion and Video for Arbitrary Rigs"
+            },
+            {
+              "id": "2610.28630",
+              "title": "SolarRenderer: Few-Step Generative Reference Rendering"
+            },
+            {
+              "id": "2610.30036",
+              "title": "Attn-Forcing: Learning Full-Context Attention Proxies for Streaming Video Generation"
+            },
+            {
+              "id": "2610.29590",
+              "title": "CineEvolve: An Agentic Self-Evolution Framework for Cinematic Multi-Shot Video Generation"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 80,
+          "is_canonical": true
+        },
+        {
+          "id": "video_editing",
+          "name": "视频编辑",
+          "description": "视频编辑、局部重绘、风格及内容控制。",
+          "keywords": [
+            "video editing",
+            "video inpainting"
+          ],
+          "examples": [
+            {
+              "id": "2610.12963",
+              "title": "MotionCoach: Constructing Multimodal Guidance for Video Professional Motion Editing"
+            },
+            {
+              "id": "2610.20137",
+              "title": "StreamErase: Towards Ultra-Fast Streaming Video Erasing"
+            },
+            {
+              "id": "2610.22744",
+              "title": "OmniXRef: A Unified Framework for Multimodal Multi-Reference Video Editing"
+            },
+            {
+              "id": "2610.24965",
+              "title": "Meta Inverse Prompting for Video Generative Models"
+            },
+            {
+              "id": "2610.28829",
+              "title": "HorizonComposer: Spatiotemporally Consistent Driving Video Editing with Enriched Traffic Semantics"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 24,
+          "is_canonical": true
+        },
+        {
+          "id": "video_generation_efficiency",
+          "name": "视频生成效率与表征",
+          "description": "直接服务于视频生成的 tokenizer、蒸馏、少步采样和加速。",
+          "keywords": [
+            "video tokenizer",
+            "efficient video generation",
+            "video distillation"
+          ],
+          "examples": [
+            {
+              "id": "2610.26837",
+              "title": "SpecKCast: Spectral Kalman Forecasting for Diffusion Acceleration"
+            },
+            {
+              "id": "2610.25664",
+              "title": "PoSTCache: From Forecasting to Postdictive Smoothing for Revisable Diffusion Caching"
+            },
+            {
+              "id": "2610.28086",
+              "title": "MoDDiT: Simple Token Routing in Diffusion Transformers"
+            },
+            {
+              "id": "2610.28192",
+              "title": "Offline Makes Online Better: Calibrated Cache Compression for Video Generation"
+            },
+            {
+              "id": "2610.29441",
+              "title": "Sparsity Should Be ALLOTted by Output: Training-Free Allocation of Block-Sparse Attention for Video Diffusion Transformers"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 66,
+          "is_canonical": true
+        },
+        {
+          "id": "video_generation_evaluation",
+          "name": "视频生成训练与评测",
+          "description": "视频生成的数据、训练、对齐和评测。",
+          "keywords": [
+            "video generation benchmark",
+            "video generation alignment"
+          ],
+          "examples": [
+            {
+              "id": "2610.14020",
+              "title": "LabInstruct: Benchmarking Situated Instructional Video Generation for Lab Procedures"
+            },
+            {
+              "id": "2610.23287",
+              "title": "I2V-DETACH: Source Grounding Detachment for Unauthorized Image-to-Video Generation"
+            },
+            {
+              "id": "2610.26711",
+              "title": "PVBench: Quantifying Physical Plausibility in Video Generation with Object-Level Physical Measurements"
+            },
+            {
+              "id": "2610.28402",
+              "title": "StreamEval: Evaluating Interactive Streaming Video Generation Models"
+            },
+            {
+              "id": "2610.28416",
+              "title": "Code2Video-Compass: A Comprehensive Benchmark for General-Purpose Code-Based Video Generation across T2V, I2V, and V2V"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-21",
+          "paper_count": 58,
+          "is_canonical": true
+        },
+        {
+          "id": "video_generation_training",
+          "name": "视频生成训练与对齐",
+          "description": "直接服务于视频生成的训练方法、强化学习/奖励对齐、采样与优化策略及评测。",
+          "examples": [
+            {
+              "id": "2610.22282",
+              "title": "Routing Policy Optimization for Online Diffusion Reinforcement Learning"
+            },
+            {
+              "id": "2610.16482",
+              "title": "MiMaAlign: Hierarchical Micro-Macro Alignment for Physically Plausible Video Generation"
+            },
+            {
+              "id": "2610.23677",
+              "title": "Agentic Physics-Grounded Video Generation via Memory-Augmented In-Context Reasoning"
+            },
+            {
+              "id": "2610.25660",
+              "title": "FluidGen: Physics-Aware Fluid Video Generation via Motion-Guided Post-Training"
+            },
+            {
+              "id": "2610.28954",
+              "title": "Pair-Free Coarse-to-Real Video Generation via Real-to-Coarse Image Supervision"
+            }
+          ],
+          "created_at": "2026-10-12",
+          "updated_at": "2026-10-22",
+          "paper_count": 13
+        }
+      ],
+      "scope_digest": "01cb83a8f2e455f12dd3e8fbe2c2171ae6a3c39ef3089920dec20e09c5523a80"
+    },
+    "audio_video_generation": {
+      "id": "audio_video_generation",
+      "name": "音视频联合生成与声音驱动视频",
+      "subtopics": [
+        {
+          "id": "joint_audio_video",
+          "name": "联合音视频生成",
+          "description": "联合生成音频和视频的共享模型或协同模型。",
+          "keywords": [
+            "joint audio video generation",
+            "audio-visual generation",
+            "audio-video generation"
+          ],
+          "examples": [
+            {
+              "id": "2610.05416",
+              "title": "Prism: Dynamic Sparse Attention for Native 2K Joint Video-Audio Generation Model Training"
+            },
+            {
+              "id": "2610.10343",
+              "title": "Real-Time Joint Audio-Video Generation by Parallel Adapter Composition"
+            },
+            {
+              "id": "2610.11361",
+              "title": "SepGen: Multi-Stem Audio-Video Separation and Generation in a Single Model"
+            },
+            {
+              "id": "2610.13072",
+              "title": "AV-FlowEdit: Training-Free Prompt-Driven Audio-Visual Editing with Event-Aware Spectral Trajectory Preservation"
+            },
+            {
+              "id": "2610.15512",
+              "title": "Structured Stateful Relational Scripts with a High-Quality Dataset for Multi-Shot Audio-Visual Video Generation"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-14",
+          "paper_count": 15,
+          "is_canonical": true
+        },
+        {
+          "id": "audio_driven_video",
+          "name": "声音驱动视频",
+          "description": "以语音、音乐或声音生成视频和数字人。",
+          "keywords": [
+            "audio-driven video",
+            "speech-driven video",
+            "audio-driven animation",
+            "talking head"
+          ],
+          "examples": [
+            {
+              "id": "2608.18832",
+              "title": "EfficientSync: Real-Time Lip Synchronization via Deformation-Based Reference Texture Mixing"
+            },
+            {
+              "id": "2610.05233",
+              "title": "PixReenact: Pixel-Conditioned Causal Video Diffusion for Streaming Head-Avatar Reenactment"
+            },
+            {
+              "id": "2610.06658",
+              "title": "Talk Like You: Imitating How You Speak in Real-Time Talking Head Generation"
+            },
+            {
+              "id": "2610.13301",
+              "title": "PAGE: Parts-Aware Guidance for Co-Speech Gesture Portrait Video Generation"
+            },
+            {
+              "id": "2610.19290",
+              "title": "Kandinsky S2V 1.0: Audio-Driven Avatar Video Generation"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-15",
+          "paper_count": 10,
+          "is_canonical": true
+        },
+        {
+          "id": "audio_video_synchronization",
+          "name": "音画同步与生成评测",
+          "description": "直接服务于联合音视频生成、声音驱动视频或数字人的时间对齐、同步、数据和评测。",
+          "keywords": [
+            "audio-visual synchronization",
+            "audio-video synchronization",
+            "audio visual generation benchmark"
+          ],
+          "examples": [
+            {
+              "id": "2610.10264",
+              "title": "CrossEdit: Cross-Modal Training Enables Rich Audio-Visual Editing"
+            },
+            {
+              "id": "2610.12811",
+              "title": "Spend Where It Matters: Particle Search with MH Refinement for Budget-Constrained Audio-Visual Alignment"
+            },
+            {
+              "id": "2610.22321",
+              "title": "AVC-Reward: Event-Centric Audio-Video Consistency Evaluation"
+            },
+            {
+              "id": "2610.16338",
+              "title": "SyncReward: Human-Aligned Synchronization Reward for Audio-Visual Generation"
+            },
+            {
+              "id": "2610.29407",
+              "title": "VideoGen Model 1: Prompt Expansion Versus Formatting in Audiovisual Generation"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 11,
+          "is_canonical": true
+        }
+      ],
+      "scope_digest": "88ccc5972e236fb2e38ffa506d7c981abe86d1a3aad9d60537871734926e2fca"
+    },
+    "world_model_applications": {
+      "id": "world_model_applications",
+      "name": "世界模型应用与仿真",
+      "subtopics": [
+        {
+          "id": "interactive_physical_world",
+          "name": "可交互与物理世界建模",
+          "description": "物理一致的世界模型、交互式模拟器、神经仿真器与环境动力学建模。",
+          "keywords": [
+            "interactive world",
+            "physical world model",
+            "neural simulator",
+            "physics simulation",
+            "dynamics model",
+            "environment model"
+          ],
+          "examples": [
+            {
+              "id": "2610.26923",
+              "title": "CaMeWM: A Causal Medical World Model for Generative Tumor Evolution and Treatment Planning"
+            },
+            {
+              "id": "2610.27045",
+              "title": "Physical AI: Concepts, Techniques, and Challenges"
+            },
+            {
+              "id": "2610.29088",
+              "title": "Causal world models under physical parameter shifts"
+            },
+            {
+              "id": "2610.28827",
+              "title": "WorldStream: Streaming Interactive 3D Worlds with Hierarchical Planning and Persistent State"
+            },
+            {
+              "id": "2610.29587",
+              "title": "Guess and Send: World-Model-Guided Semantic Packet Transmission for Robust Video Perception"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 51,
+          "is_canonical": true
+        },
+        {
+          "id": "embodied_world_model",
+          "name": "具身世界模型与规划控制",
+          "description": "面向机器人、具身智能、动作规划和控制的世界模型。",
+          "keywords": [
+            "embodied world model",
+            "embodied ai",
+            "robotics world model",
+            "planning",
+            "control",
+            "policy learning"
+          ],
+          "examples": [
+            {
+              "id": "2610.29282",
+              "title": "Relational Geometry Forcing for World Action Models"
+            },
+            {
+              "id": "2610.30136",
+              "title": "Agentic World Action Models"
+            },
+            {
+              "id": "2610.30117",
+              "title": "CW-WAM: A Structured Contact-Wrench World Action Model for Force-Sensitive Manipulation"
+            },
+            {
+              "id": "2610.28779",
+              "title": "Second Thoughts: Exploring and Planning through Comparative Imagination in World Models"
+            },
+            {
+              "id": "2610.28945",
+              "title": "Self-Improving Agents with World Model Predictive Paths"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 239,
+          "is_canonical": true
+        },
+        {
+          "id": "spatial_3d_4d_world_model",
+          "name": "空间 3D/4D 世界模型",
+          "description": "3D/4D 场景、空间记忆、神经场与动态场景中的世界建模。",
+          "keywords": [
+            "3d world model",
+            "4d world model",
+            "dynamic scene",
+            "spatial world model",
+            "neural field",
+            "3d gaussian"
+          ],
+          "examples": [
+            {
+              "id": "2610.22450",
+              "title": "DriveWorld3D Evidence Constrained 3D World Modeling and Generative Simulation for Real-World Autonomous Driving"
+            },
+            {
+              "id": "2610.23732",
+              "title": "ESC: Escaping 2D Diffusion Ambiguity with Geometric Constraints for Consistent Novel View Synthesis"
+            },
+            {
+              "id": "2610.25245",
+              "title": "GeoV2V: Geometry-Grounded Video Diffusion Model for Driving Scene Generation"
+            },
+            {
+              "id": "2610.27594",
+              "title": "Causal Spatiotemporal State Evolution for Monocular 4D Reconstruction"
+            },
+            {
+              "id": "2610.30023",
+              "title": "RealMe: Immersive Volumetric Video from Minimal Captures"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-22",
+          "paper_count": 23,
+          "is_canonical": true
+        }
+      ],
+      "scope_digest": "5e2d5e78e01e410614010eff9139ce048e05096191eaa07500318acdc18dfa0d"
+    },
+    "video_audio_generation": {
+      "id": "video_audio_generation",
+      "name": "视频相关音频生成",
+      "subtopics": [
+        {
+          "id": "video_soundtrack",
+          "name": "视频配音配乐与音效",
+          "description": "根据视频生成语音、音乐、环境音或 Foley 音效。",
+          "keywords": [
+            "video-to-audio",
+            "video-to-speech",
+            "foley generation",
+            "video soundtrack"
+          ],
+          "examples": [
+            {
+              "id": "2608.24579",
+              "title": "Visually-Guided Spatial Audio Generation for $360^\\circ$ In-the-Wild Speech Scenes"
+            },
+            {
+              "id": "2610.08760",
+              "title": "WorldSonus: Bringing Sound to Worlds"
+            },
+            {
+              "id": "2610.15575",
+              "title": "Self-Representation Alignment in Diffusion Models for Video Background Music Generation"
+            },
+            {
+              "id": "2610.23021",
+              "title": "Semantic-Critical Regions for Video-to-Audio Generation"
+            },
+            {
+              "id": "2610.25259",
+              "title": "VoxDub: A Bilingual Lip-Synchronized Audio-Visual Dataset for Automatic Video Dubbing"
+            }
+          ],
+          "created_at": null,
+          "updated_at": "2026-10-20",
+          "paper_count": 7,
+          "is_canonical": true
+        }
+      ],
+      "scope_digest": "4451eb36d7e3d29acecb41b1fdc06c479a8df74e993f0dd600c26be3632f05ee"
+    }
+  },
+  "updated_at": "2026-10-22",
+  "version": 2
+}

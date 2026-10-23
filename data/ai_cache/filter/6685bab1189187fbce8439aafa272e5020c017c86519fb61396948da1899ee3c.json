@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "综述遥感领域视觉语言数据集构建与微调评测流程，与视频世界模型及表征学习无直接关联。", "reason": "Survey of remote-sensing vision-language datasets and VLM fine-tuning; no contribution to video/world models, representation learning, or generation.", "personal_relevance_score": 12.0, "research_value_score": 20.0}}

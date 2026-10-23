@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出将自回归越狱攻击经有害回复掩码模板迁移至扩散语言模型的攻击框架。", "reason": "Paper studies jailbreak attacks on diffusion language models; no contribution to continuous language modeling, representation learning, or multimodal generation.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}
