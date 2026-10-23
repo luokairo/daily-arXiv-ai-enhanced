@@ -110,7 +110,7 @@ def scaled_quotas(weights, limit):
     return quotas
 
 
-def select_candidates(papers, directions, importance, limit=180, date='', config=None):
+def select_candidates(papers, directions, importance, limit=200, date='', config=None):
     config = config or load_config()
     unique = {str(p['id']): p for p in papers}
     audit, selected = {}, []

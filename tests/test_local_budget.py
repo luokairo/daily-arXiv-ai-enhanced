@@ -74,13 +74,13 @@ class RecallTests(unittest.TestCase):
         self.assertLess(self.match('Medical learned simulator for physics')['score'], self.match('Learned simulator for physics')['score'])
 
     def test_quotas_dedup_stability_transfer_exploration(self):
-        papers = [dict(id=f'{i:03}', title='Video generation', summary='') for i in range(190)]
+        papers = [dict(id=f'{i:03}', title='Video generation', summary='') for i in range(210)]
         papers += [dict(id='both', title='Video world models for video generation', summary='')]
-        selected, audit, quotas = recall.select_candidates(papers + papers[:2], self.directions, self.importance, 180, '2026-09-30')
-        other, other_audit, _ = recall.select_candidates(list(reversed(papers)), self.directions, self.importance, 180, '2026-09-30')
-        self.assertEqual(len(selected), 180)
+        selected, audit, quotas = recall.select_candidates(papers + papers[:2], self.directions, self.importance, 200, '2026-09-30')
+        other, other_audit, _ = recall.select_candidates(list(reversed(papers)), self.directions, self.importance, 200, '2026-09-30')
+        self.assertEqual(len(selected), 200)
         self.assertEqual([p['id'] for p in selected], [p['id'] for p in other])
-        self.assertEqual(len(audit), 191)
+        self.assertEqual(len(audit), 211)
         self.assertEqual(quotas['world_model'], 60)
         self.assertEqual(audit['both']['local_recall']['primary_direction_id'], 'world_model')
         reasons = [a['selection_reason'] for a in audit.values()]
@@ -89,12 +89,32 @@ class RecallTests(unittest.TestCase):
         self.assertTrue(any(a['routing_status'] == 'not_reviewed' for a in audit.values()))
         self.assertEqual(sum(recall.scaled_quotas(self.config['candidate_quotas'], 100).values()), 100)
         self.assertEqual(recall.scaled_quotas(self.config['candidate_quotas'], 100),
-            dict(world_model=33, video_generation=17, multimodal_understanding_generation=14,
-                 audio_video_generation=11, world_model_applications=6, video_audio_generation=5,
-                 continuous_language_multimodal=3, exploration=11))
+            dict(world_model=30, video_generation=15, multimodal_understanding_generation=13,
+                 audio_video_generation=10, world_model_applications=5, video_audio_generation=5,
+                 continuous_language_multimodal=12, exploration=10))
         for limit in [0, -1]:
             with self.assertRaises(ValueError):
                 recall.select_candidates(papers, self.directions, self.importance, limit)
+
+    def test_language_reservation_survives_competing_direction_demand(self):
+        titles = {
+            'world_model': 'Video world models',
+            'video_generation': 'Video generation',
+            'multimodal_understanding_generation': 'Unified understanding and generation',
+            'audio_video_generation': 'Joint audio-video generation',
+            'world_model_applications': 'Robot planning with an embodied world model',
+            'video_audio_generation': 'Video-to-speech',
+            'continuous_language_multimodal': 'Diffusion language models',
+        }
+        papers = [dict(id=f'{direction}-{i:03}', title=title, summary='')
+                  for direction, title in titles.items() for i in range(65)]
+        selected, audit, quotas = recall.select_candidates(papers, self.directions, self.importance)
+        self.assertEqual(len(selected), 200)
+        self.assertEqual(quotas['continuous_language_multimodal'], 25)
+        for direction, quota in quotas.items():
+            if direction != 'exploration':
+                self.assertEqual(sum(row['selection_reason'] == 'direction_quota:' + direction
+                                     for row in audit.values()), quota)
 
 
 class BudgetTests(IsolatedTest):
@@ -136,7 +156,8 @@ class BudgetTests(IsolatedTest):
         detail, briefs, audit = self.allocate(papers)
         self.assertEqual(len(detail), 60)
         self.assertEqual(sum(p['interest_tier'] == 'secondary' for p in detail), 15)
-        self.assertEqual(sum(p['_routing']['primary_direction_id'] == 'continuous_language_multimodal' for p in detail), 5)
+        self.assertTrue(all(p['interest_tier'] == 'primary' for p in detail + briefs
+                            if p['_routing']['primary_direction_id'] == 'continuous_language_multimodal'))
         self.assertTrue(any(p['interest_tier'] == 'primary' for p in briefs))
         self.assertTrue(any(a.get('detail_status') == 'awaiting_review' for a in audit.values()))
         self.assertTrue(all(p['_routing']['routing_status'] == 'ok' for p in briefs))
@@ -146,7 +167,7 @@ class BudgetTests(IsolatedTest):
         self.assertEqual(len(self.allocate([self.paper(i) for i in range(80)])[0]), 60)
         self.assertEqual(len(self.allocate([self.paper(i, 'continuous_language_multimodal') for i in range(80)], 99)[0]), 60)
 
-    def test_mock_end_to_end_180_60_15_3_no_paid_requests(self):
+    def test_mock_end_to_end_200_60_15_3_no_paid_requests(self):
         direction_ids = [d['id'] for d in self.directions]
         papers = [self.paper(i, direction_ids[i % 7]) for i in range(280)]
         source = self.root / '2026-09-30.jsonl'
@@ -174,7 +195,7 @@ class BudgetTests(IsolatedTest):
         chain = Mock(invoke=Mock(side_effect=route))
         with patch.object(enhance, 'parse_args', return_value=args), patch.object(routing, 'CachedChain', return_value=chain), patch.object(enhance, 'process_all_items', side_effect=detail):
             enhance.main()
-        self.assertEqual(chain.invoke.call_count, 180)
+        self.assertEqual(chain.invoke.call_count, 200)
         output = [json.loads(line) for line in (self.root / '2026-09-30_AI_enhanced_Chinese.jsonl').read_text().splitlines()]
         self.assertEqual(sum(p['report_level'] == 'detail' for p in output), 60)
         deep = [p for p in output if p['AI']['deep_read_selected']]
@@ -182,8 +203,8 @@ class BudgetTests(IsolatedTest):
         self.assertGreaterEqual(sum(selection.interest_tier(p, self.directions) == 'primary' for p in deep), 2)
         self.assertTrue(all(p['report_level'] == 'detail' for p in deep))
         audit = json.loads((self.root / 'run_metrics/2026-09-30-selection.json').read_text())
-        self.assertEqual(audit['unreviewed'], 100)
-        self.assertEqual(audit['limits'], dict(candidates=180, details=60, secondary_details=15))
+        self.assertEqual(audit['unreviewed'], 80)
+        self.assertEqual(audit['limits'], dict(candidates=200, details=60, secondary_details=15))
         self.assertEqual(sum(p.get('detail_requested', False) for p in audit['papers']), 60)
         self.assertTrue(any(p['report_level'] == 'brief' and p['interest_tier'] == 'primary' for p in output))
         import deep_read

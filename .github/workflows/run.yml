@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SELECTION_MODE: ${{ vars.SELECTION_MODE || 'semantic' }}
-      MAX_AI_CANDIDATES: ${{ vars.MAX_AI_CANDIDATES || '180' }}
+      MAX_AI_CANDIDATES: ${{ vars.MAX_AI_CANDIDATES || '200' }}
       SECONDARY_DETAIL_LIMIT: ${{ vars.SECONDARY_DETAIL_LIMIT || '15' }}
       FILTER_MAX_OUTPUT_TOKENS: ${{ vars.FILTER_MAX_OUTPUT_TOKENS || '512' }}
       MODEL_NAME: ${{ vars.MODEL_NAME || 'deepseek-flash' }}

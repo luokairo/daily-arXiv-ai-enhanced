@@ -1054,7 +1054,7 @@ def main():
     selection_mode = env_value("SELECTION_MODE", "semantic")
     if selection_mode not in {"semantic", "legacy"}:
         raise ValueError("SELECTION_MODE must be semantic or legacy")
-    max_candidates = positive_int("MAX_AI_CANDIDATES", 180)
+    max_candidates = positive_int("MAX_AI_CANDIDATES", 200)
     max_detail_items = positive_int("MAX_DETAIL_ITEMS", 60)
     try:
         secondary_limit = int(env_value('SECONDARY_DETAIL_LIMIT', str(importance_config.get('secondary_detail_limit', 15))))

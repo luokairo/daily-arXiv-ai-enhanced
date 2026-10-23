@@ -291,7 +291,7 @@ directions:
     - video soundtrack
 - id: continuous_language_multimodal
   name: 连续语言模型
-  description: 辅助关注连续语言模型、扩散语言模型、语言 embedding/latent 空间、连续语言 token，以及直接相关的连续多模态扩展。通用 flow matching、连续控制或图像潜空间模型本身不能证明与连续语言建模有关。
+  description: 主要关注连续语言模型、扩散语言模型、语言 embedding/latent 空间、连续语言 token，以及直接相关的连续多模态扩展。通用 flow matching、连续控制或图像潜空间模型本身不能证明与连续语言建模有关。
   arxiv_categories:
   - cs.CL
   - cs.CV
@@ -338,8 +338,7 @@ directions:
     - continuous vision-language thought
     - latent visual reasoning
     - visual thought
-  tier: secondary
-  detail_quota: 5
+  tier: primary
 importance:
   daily_deep_read_top_k: 3
   primary_deep_read_min: 2
@@ -351,7 +350,7 @@ importance:
     audio_video_generation: 1.4
     world_model_applications: 1.0
     video_audio_generation: 1.0
-    continuous_language_multimodal: 1.0
+    continuous_language_multimodal: 1.4
   priority_subtopics:
   - name: 视频与多模态基础世界模型
     weight: 1.9
@@ -376,7 +375,7 @@ importance:
     weight: 1.4
     keywords: *id005
   - name: 连续语言模型
-    weight: 1.0
+    weight: 1.4
     keywords: *id006
   boost_keywords: []
   negative_keywords:

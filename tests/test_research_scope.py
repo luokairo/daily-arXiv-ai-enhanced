@@ -133,9 +133,9 @@ class ResearchScopeTests(IsolatedTest):
             self.assertEqual(len(detail), expected)
             self.assertEqual(len(detail) + len(briefs), len(papers))
         self.assertEqual(selection.secondary_reservations(self.directions, 15),
-            dict(world_model_applications=5, video_audio_generation=5, continuous_language_multimodal=5))
+            dict(world_model_applications=8, video_audio_generation=7))
         self.assertEqual(selection.secondary_reservations(self.directions, 2),
-            dict(world_model_applications=1, video_audio_generation=1, continuous_language_multimodal=0))
+            dict(world_model_applications=1, video_audio_generation=1))
 
     def test_moved_topics_are_seeded_and_original_taxonomy_is_preserved(self):
         old_directions = copy.deepcopy(self.directions[:4] + [self.directions[-1]])
@@ -175,7 +175,7 @@ class ResearchScopeTests(IsolatedTest):
         self.assertEqual(responder.call_count, 2)
         self.assertEqual(len(list((self.root / 'cache/detail').glob('*.json'))), 2)
 
-    def test_offline_evaluation_has_dynamic_columns_and_180_budget(self):
+    def test_offline_evaluation_has_dynamic_columns_and_200_budget(self):
         source = self.root / 'sample.jsonl'
         source.write_text(json.dumps(dict(id='rae', title='Representation Autoencoders', summary='')) + '\n')
         output = self.root / 'evaluation'
@@ -189,7 +189,7 @@ class ResearchScopeTests(IsolatedTest):
         tables = [line for line in report.splitlines() if line.startswith('|')]
         for line in tables[:6]:
             self.assertEqual(line.count('|'), 11)
-        audit = json.loads((output / 'candidates-180.json').read_text())
+        audit = json.loads((output / 'candidates-200.json').read_text())
         self.assertEqual(audit['model_calls'], 0)
         self.assertEqual(audit['quotas'], self.config['candidate_quotas'])
 

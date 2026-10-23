@@ -7,7 +7,7 @@ candidate_quotas:
   audio_video_generation: 20
   world_model_applications: 10
   video_audio_generation: 10
-  continuous_language_multimodal: 5
+  continuous_language_multimodal: 25
   exploration: 20
 negative_domains: [medical, clinical, financial, molecule, protein, drug discovery, remote sensing, traffic prediction, recommender system]
 weak_signals: [video, visual dynamics, simulation, multimodal generation, language diffusion, language latent, speech synthesis, audio visual, continuous tokens, latent reasoning, representation learning, self supervised, autoencoder, visual latent, masked modeling]
