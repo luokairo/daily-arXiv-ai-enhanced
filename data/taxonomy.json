@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 212,
+          "paper_count": 217,
           "updated_at": "2026-10-23"
         },
         {
@@ -200,7 +200,7 @@
             "quantization"
           ],
           "name": "统一多模态模型高效化",
-          "paper_count": 152,
+          "paper_count": 153,
           "updated_at": "2026-10-23"
         }
       ],
@@ -281,7 +281,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 27,
+          "paper_count": 30,
           "is_canonical": true
         },
         {
@@ -364,7 +364,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 133,
+          "paper_count": 137,
           "is_canonical": true
         },
         {
@@ -379,7 +379,7 @@
           ],
           "created_at": "2026-10-23",
           "updated_at": "2026-10-23",
-          "paper_count": 1
+          "paper_count": 2
         }
       ],
       "scope_digest": "8d8198c16fd23692d5579e40705bee6ade67a9f9a8c639d1a4f660d15cb7ddca"
@@ -456,7 +456,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 14,
+          "paper_count": 15,
           "is_canonical": true
         },
         {
@@ -492,7 +492,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 84,
+          "paper_count": 87,
           "is_canonical": true
         },
         {
@@ -527,7 +527,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 26,
+          "paper_count": 28,
           "is_canonical": true
         },
         {
@@ -576,10 +576,6 @@
           ],
           "examples": [
             {
-              "id": "2610.23287",
-              "title": "I2V-DETACH: Source Grounding Detachment for Unauthorized Image-to-Video Generation"
-            },
-            {
               "id": "2610.26711",
               "title": "PVBench: Quantifying Physical Plausibility in Video Generation with Object-Level Physical Measurements"
             },
@@ -594,11 +590,15 @@
             {
               "id": "2610.31121",
               "title": "RGraph-Eval: Task-Grounded Scene Graphs for Evaluating Robot Video Generation"
+            },
+            {
+              "id": "2610.30866",
+              "title": "Verus-Insight: Towards Explainable Artifact Detection in AI-Generated Videos"
             }
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 59,
+          "paper_count": 61,
           "is_canonical": true
         },
         {
@@ -606,10 +606,6 @@
           "name": "视频生成训练与对齐",
           "description": "直接服务于视频生成的训练方法、强化学习/奖励对齐、采样与优化策略及评测。",
           "examples": [
-            {
-              "id": "2610.22282",
-              "title": "Routing Policy Optimization for Online Diffusion Reinforcement Learning"
-            },
             {
               "id": "2610.16482",
               "title": "MiMaAlign: Hierarchical Micro-Macro Alignment for Physically Plausible Video Generation"
@@ -625,11 +621,15 @@
             {
               "id": "2610.28954",
               "title": "Pair-Free Coarse-to-Real Video Generation via Real-to-Coarse Image Supervision"
+            },
+            {
+              "id": "2610.30717",
+              "title": "PhyEvolve: Multi-Agent State-Evolution Planning for Physics-Aware Video Generation"
             }
           ],
           "created_at": "2026-10-12",
-          "updated_at": "2026-10-22",
-          "paper_count": 13
+          "updated_at": "2026-10-23",
+          "paper_count": 14
         }
       ],
       "scope_digest": "01cb83a8f2e455f12dd3e8fbe2c2171ae6a3c39ef3089920dec20e09c5523a80"
@@ -744,7 +744,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 12,
+          "paper_count": 13,
           "is_canonical": true
         }
       ],
@@ -790,7 +790,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 53,
+          "paper_count": 54,
           "is_canonical": true
         },
         {
@@ -807,16 +807,16 @@
           ],
           "examples": [
             {
-              "id": "2610.31474",
-              "title": "Skeleton-Grounded Latent Action Model for Robot World Models"
-            },
-            {
               "id": "2610.30991",
               "title": "UniFlowWAM: A Unified World-Action Model with Visual Semantics and 4D Geometry"
             },
             {
               "id": "2610.30789",
               "title": "An Introduction to World Models for Generalist Agents"
+            },
+            {
+              "id": "2610.31066",
+              "title": "Dual Exam: Controlled Evaluation of Multimodal Agents and World Models"
             },
             {
               "id": "2610.30988",
@@ -829,7 +829,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 247,
+          "paper_count": 256,
           "is_canonical": true
         },
         {
@@ -868,7 +868,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-23",
-          "paper_count": 24,
+          "paper_count": 25,
           "is_canonical": true
         }
       ],
