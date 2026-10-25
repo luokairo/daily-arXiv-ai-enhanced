@@ -8,11 +8,11 @@
     "unknown_usage": 0
   },
   "detail": {
-    "calls": 37,
-    "cache_hits": 0,
+    "calls": 0,
+    "cache_hits": 37,
     "failures": 0,
-    "input_tokens": 135311,
-    "output_tokens": 20055,
+    "input_tokens": 0,
+    "output_tokens": 0,
     "unknown_usage": 0
   }
 }
