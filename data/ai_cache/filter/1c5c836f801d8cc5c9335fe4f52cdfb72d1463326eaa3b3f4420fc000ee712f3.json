@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出以文本属性为特权信息的多模态教师-图像学生蒸馏框架，用于细粒度图像分类。", "reason": "Multimodal distillation for fine-grained image classification; no video/multimodal world model, generative latent, or unified generation contribution.", "personal_relevance_score": 18.0, "research_value_score": 25.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出一种LoRA初始化方案，通过缩放A的方差抑制初始化噪声，稳定非对称学习率训练。", "reason": "LoRA initialization and asymmetric learning rates for LLM fine-tuning; no visual/video representation, world model, generation, or multimodal contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

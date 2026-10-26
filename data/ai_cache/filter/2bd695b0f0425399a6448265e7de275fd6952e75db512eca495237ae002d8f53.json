@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出抽象概念可视化能力基准与视觉-语义细粒度评测方法，用于评估文生图模型。", "reason": "Benchmark for abstract-concept visualization in T2I models; no video/world-model, representation-learning, or unified understanding-generation contribution.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

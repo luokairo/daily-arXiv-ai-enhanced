@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出早期修复注入，将修复骨干中间特征回注自监督语音编码器以缓解感知相关性崩塌，用于语音修复。", "reason": "Speech restoration with SSL speech features; no video/multimodal world model, visual representation, or video-audio generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

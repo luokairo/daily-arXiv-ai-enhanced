@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出SEIR与TFT结合的疫情预测框架，并用SHAP做可解释分析，与视频/多模态世界模型及表征学习无关。", "reason": "Epidemiological SEIR-TFT forecasting with SHAP explanations; no video, multimodal, representation, or generative modeling contribution.", "personal_relevance_score": 3.0, "research_value_score": 8.0}}

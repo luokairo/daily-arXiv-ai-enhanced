@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向接触丰富操作的力感知编程智能体，用视觉与力/力矩反馈生成并修正机器人程序。", "reason": "Coding agent writing robot programs from vision and force/torque; no world model, representation learning, or generative contribution.", "personal_relevance_score": 8.0, "research_value_score": 15.0}}

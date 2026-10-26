@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出稀疏运动 token 词表，用运动学轨迹量化与语言模型实现机器人演示分段。", "reason": "Kinematic motion tokenization and LLM-based segmentation of robot demonstrations; no visual/video representation, world model, or generation contribution.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

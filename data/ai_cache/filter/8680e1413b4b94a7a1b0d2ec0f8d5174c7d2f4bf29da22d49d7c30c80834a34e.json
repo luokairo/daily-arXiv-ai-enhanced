@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出分割到聚类的无标注Ki67细胞分型框架，分析冻结预训练表征的方差结构。", "reason": "Applies frozen pretrained encoders as tools for Ki67 cell typing in pathology; no contribution to visual representation learning, world models, or generation.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

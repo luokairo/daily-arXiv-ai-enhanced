@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出面向上下文感知、多轮多说话人语音生成的评测基准，与视频/表征方向无直接关联。", "reason": "Benchmark for multi-turn multi-speaker TTS evaluation; no video association, no visual/video representation or world-model contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}
