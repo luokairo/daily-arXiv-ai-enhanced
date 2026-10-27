@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出跨层防御策略自动合成的红蓝对抗框架，用于抵御反序列化攻击，与视频/多模态表征学习无关。", "reason": "Paper addresses web deserialization security defense synthesis; no contribution to video/multimodal world models, representation learning, or generation.", "personal_relevance_score": 2.0, "research_value_score": 5.0}}

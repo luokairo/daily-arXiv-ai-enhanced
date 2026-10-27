@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "构建手术视觉语言数据集与手术 VLM 基准，用于空间定位与多步推理评测。", "reason": "Surgical VQA dataset and LLaVA-style medical VLM benchmark; no contribution to video/world models, generative latent representations, or unified generation.", "personal_relevance_score": 18.0, "research_value_score": 30.0}}

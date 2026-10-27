@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "将位姿图优化与学习式场景坐标回归结合，提升无位姿图像的相机位姿精度。", "reason": "Pose graph optimization for unposed-image SfM camera pose refinement; no world model, representation learning, or generation contribution.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

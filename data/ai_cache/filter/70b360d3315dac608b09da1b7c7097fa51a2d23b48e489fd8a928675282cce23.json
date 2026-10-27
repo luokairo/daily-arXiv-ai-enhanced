@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出类别查询条件下的目标声源空间化方法，从360°视频与单声道混合音频生成指定声源的FOA空间音频。", "reason": "Generates spatial audio (FOA) from 360° video; output is audio only, not video, and no video/audio joint generation or speech from faces.", "personal_relevance_score": 12.0, "research_value_score": 20.0}}

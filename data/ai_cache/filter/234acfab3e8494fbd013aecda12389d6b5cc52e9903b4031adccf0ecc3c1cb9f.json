@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出人类反馈引导的多智能体逆强化学习框架，用于交互驾驶行为建模与奖励恢复。", "reason": "Multi-agent inverse RL for driving behavior reward modeling; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}

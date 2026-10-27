@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出广告剪辑镜头选择基准 AdShot，评测多模态大模型的编辑能力。", "reason": "Benchmark of MLLM shot selection for ad clipping; no contribution to world models, representation learning, generation, or unified understanding-generation.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

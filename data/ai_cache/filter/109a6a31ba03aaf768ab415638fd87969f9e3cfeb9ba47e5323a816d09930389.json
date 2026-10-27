@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向手机双摄平滑变焦的中间帧合成与数据生成框架，属图像/视频插值应用。", "reason": "Dual-camera zoom frame interpolation with 3D scene data synthesis; no video world model, representation learning, or generative video modeling contribution.", "personal_relevance_score": 12.0, "research_value_score": 20.0}}

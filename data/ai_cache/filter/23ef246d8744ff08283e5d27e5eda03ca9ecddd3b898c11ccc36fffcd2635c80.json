@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出代码驱动视频生成智能体评测基准，含239个任务与分层评分体系。", "reason": "Benchmark for multimodal agents writing code to render videos; no contribution to video world models, representation learning, or generative video modeling itself.", "personal_relevance_score": 18.0, "research_value_score": 30.0}}
