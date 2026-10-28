@@ -1,0 +1,18 @@
+{
+  "filter": {
+    "calls": 67,
+    "cache_hits": 0,
+    "failures": 0,
+    "input_tokens": 163250,
+    "output_tokens": 13886,
+    "unknown_usage": 0
+  },
+  "detail": {
+    "calls": 43,
+    "cache_hits": 0,
+    "failures": 0,
+    "input_tokens": 157438,
+    "output_tokens": 22950,
+    "unknown_usage": 0
+  }
+}

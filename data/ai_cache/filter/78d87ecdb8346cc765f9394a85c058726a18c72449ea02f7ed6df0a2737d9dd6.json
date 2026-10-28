@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向大语言模型权重的低比特向量量化方法，联合优化码字索引与共享尺度以降低显存。", "reason": "LLM weight quantization via vector quantization for memory efficiency; no visual/video representation, generative latent, or multimodal contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

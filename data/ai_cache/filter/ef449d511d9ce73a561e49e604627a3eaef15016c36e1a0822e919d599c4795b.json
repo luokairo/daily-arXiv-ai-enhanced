@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "重型机械臂结构与驱动协同设计的双层多目标优化框架，与所列方向无关。", "reason": "Robot hardware co-design of manipulator geometry and actuation; no world model, representation learning, video, or multimodal contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}

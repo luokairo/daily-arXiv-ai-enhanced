@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向个体肌肉骨骼模型的形态条件化运动控制策略，与视频/多模态世界模型及表征学习无直接关联。", "reason": "Muscle-driven control policy for musculoskeletal models; no world model, video/multimodal representation, or generative contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}

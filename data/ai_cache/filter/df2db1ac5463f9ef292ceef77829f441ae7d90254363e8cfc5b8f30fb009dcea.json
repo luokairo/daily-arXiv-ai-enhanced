@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出三阶段课程强化学习框架，实现远距离火箭垂直着陆的高精度控制。", "reason": "Curriculum RL for rocket landing control; no world model, representation learning, or generative contribution despite landing visualizations.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}

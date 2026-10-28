@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出将物品间关系融入语义ID预训练与生成的推荐框架，与视觉/视频表征及世界模型无关。", "reason": "Generative recommendation with semantic IDs and item relations; no visual/video representation, world model, or generation-modality contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}
