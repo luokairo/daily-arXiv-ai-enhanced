@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "target_date": "2026-10-30",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "completed_categories": {
+    "cs.AI": {
+      "count": 394,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.AI/2026-10-30?abs=True&page=1"
+      ],
+      "replacements_excluded": 213
+    }
+  },
+  "failed_url": "https://arxiv.org/catchup/cs.CL/2026-10-30?abs=True&page=1",
+  "error_type": "HTTPError",
+  "error": "429 Client Error: Unknown Error for url: https://arxiv.org/catchup/cs.CL/2026-10-30?abs=True&page=1",
+  "recorded_at": "2026-10-31T20:47:55.113192+00:00"
+}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "基于FlexSim数字孪生与强化学习的仓储货位优化框架，与视频/多模态世界模型及表征学习无关。", "reason": "Warehouse slotting RL in a FlexSim digital twin; no video/multimodal world model, representation learning, or generative modeling contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}

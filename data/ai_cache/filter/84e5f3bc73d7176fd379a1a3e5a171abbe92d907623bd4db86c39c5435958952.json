@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于结构分解与图压缩的图对比学习视图生成框架，用于图分类。", "reason": "Graph contrastive learning with structural compression for graph classification; no visual/video representation, world model, or generative modeling contribution.", "personal_relevance_score": 5.0, "research_value_score": 20.0}}

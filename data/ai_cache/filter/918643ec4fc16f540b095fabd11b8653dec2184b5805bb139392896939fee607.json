@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出机器人混合技能演示数据筛选的评测框架，比较多种打分选择策略与随机/全量基线。", "reason": "Benchmark of demonstration curation for robot imitation learning; no world model, representation learning, or generative modeling contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}
