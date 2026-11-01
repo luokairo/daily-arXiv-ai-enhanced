@@ -68,6 +68,19 @@ class RetryTests(unittest.TestCase):
             client.get(URL)
         self.assertEqual(client.session.get.call_count, 1)
         self.assertFalse(any(call.args[0] > 0 for call in self.sleep.call_args_list))
+        self.assertGreater(client.retry_not_before, crawl.time.time() + 1190)
+
+    def test_cooldown_survives_the_immediate_retry_budget(self):
+        client = crawl.Client()
+        client.session.get = Mock(return_value=response(429, '7200'))
+        with tempfile.TemporaryDirectory() as temp, patch.object(crawl, 'recall_categories', return_value=['cs.CV']):
+            root = Path(temp)
+            with self.assertRaises(crawl.requests.HTTPError):
+                crawl.crawl(DAY, root, root / 'audit', client)
+            audit = json.loads((root / f'audit/{DAY}-crawl-progress.json').read_text())
+            self.assertTrue(audit['retryable'])
+            self.assertEqual(audit['http_status'], 429)
+            self.assertGreater(audit['retry_not_before'], crawl.time.time() + 7190)
 
     def test_timeouts_consume_retry_budget_and_keep_failed_url(self):
         client = crawl.Client(retry_budget=300)
@@ -122,7 +135,9 @@ class CrawlRecoveryTests(unittest.TestCase):
             restore_zip(archive, restored)
             self.assertFalse((restored / f'{DAY}.md').exists())
             client.get = Mock(return_value=catchup(ids=('2609.10002',), expected=2, total=2))
-            result = crawl.crawl(DAY, restored, restored / 'run_metrics', client)
+            # The next daily run must resume, even several days after failure.
+            with patch.object(crawl.time, 'time', return_value=crawl.time.time() + 3 * 86400):
+                result = crawl.crawl(DAY, restored, restored / 'run_metrics', client)
             self.assertEqual(result['unique_papers'], 2)
             client.get.assert_called_once_with(URL.replace('page=1', 'page=2'))
 
@@ -144,6 +159,39 @@ class CrawlRecoveryTests(unittest.TestCase):
                     client.get.assert_called_once_with(URL)
             cache.save(1, URL, catchup(day='2026-09-29'))
             self.assertIsNone(cache.load(1, URL))  # Valid hash alone is insufficient.
+
+    def test_cache_expiry_is_bounded_to_recovery_retention(self, _):
+        with tempfile.TemporaryDirectory() as temp:
+            cache = crawl.PageCache(Path(temp), DAY, 'cs.CV')
+            cache.save(1, URL, catchup())
+            now = crawl.time.time()
+            with patch.object(crawl.time, 'time', return_value=now + 13 * 86400):
+                self.assertIsNotNone(cache.load(1, URL))
+            with patch.object(crawl.time, 'time', return_value=now + 15 * 86400):
+                self.assertIsNone(cache.load(1, URL))
+
+    def test_recovery_prefers_newest_page_over_existing_or_older_bundle(self, _):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            data, restored = root / 'data', root / 'restored'
+            cache = crawl.PageCache(data / 'crawl_cache', DAY, 'cs.CV')
+            archives = []
+            for index, retrieved_at in enumerate((1000, 2000)):
+                with patch.object(crawl.time, 'time', return_value=retrieved_at):
+                    cache.save(1, URL, catchup(summary=f'version {index}'))
+                bundle = root / f'bundle-{index}'
+                save_bundle(data, root / 'stage', bundle, DAY)
+                archive = root / f'bundle-{index}.zip'
+                with zipfile.ZipFile(archive, 'w') as stream:
+                    for path in bundle.rglob('*'):
+                        if path.is_file():
+                            stream.write(path, str(path.relative_to(bundle)))
+                archives.append(archive)
+            for archive in (archives[0], archives[1], archives[0]):
+                restore_zip(archive, restored)
+            page = json.loads((restored / f'crawl_cache/{DAY}/cs.CV/page-1.json').read_text())
+            self.assertEqual(page['retrieved_at'], 2000)
+            self.assertIn('version 1', page['html'])
 
     def test_changed_pagination_discards_cache_and_fetches_fresh_once(self, _):
         with tempfile.TemporaryDirectory() as temp:

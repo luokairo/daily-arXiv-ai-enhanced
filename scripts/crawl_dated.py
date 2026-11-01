@@ -25,6 +25,7 @@ from semantic_arxiv import load_directions, recall_categories
 
 HEADER = re.compile(r"([A-Za-z]{3}, \d{1,2} [A-Za-z]{3} \d{4})\s*\((?:continued, )?showing (?:(?:first|last) )?(\d+) of (\d+) entr(?:y|ies)\s*\)")
 SECTION = re.compile(r"(New|Cross|Replacement) submissions \(\s*(?:continued, )?showing (?:(?:first|last) )?(\d+) of (\d+) entr(?:y|ies)\s*\)")
+CACHE_MAX_AGE = 14 * 24 * 3600
 
 
 def text(value):
@@ -70,6 +71,7 @@ class Client:
         self.max_attempts = max_attempts
         self.retry_budget = retry_budget
         self.current_url = None
+        self.retry_not_before = 0.0
 
     def get(self, url, **kwargs):
         started = time.monotonic()
@@ -91,6 +93,9 @@ class Client:
                 # Never shorten the server's cooldown to fit our budget. Leave
                 # room for the next connection/read timeout, then fail cleanly.
                 if not transient or attempt + 1 == self.max_attempts or delay + 110 > remaining:
+                    if transient:
+                        # Persist the server cooldown for a later workflow, too.
+                        self.retry_not_before = time.time() + max(1800, delay)
                     print(f"arXiv fetch failed: {url}; {status or type(exc).__name__}; "
                           f"attempts={attempt + 1}, elapsed={time.monotonic() - started:.0f}s; "
                           "no further retries within policy/budget", flush=True)
@@ -115,7 +120,11 @@ def retry_after_seconds(value):
 
 
 class PageCache:
-    """Short-lived official HTML, revalidated before use; never a report."""
+    """Dated official HTML retained across daily retries; never a report.
+
+    Identity, checksum, date, counts and metadata are revalidated on every use.
+    Pagination or cross-category metadata conflicts invalidate the cached pages.
+    """
     def __init__(self, directory, day, category):
         self.directory = directory / day / category
         self.day, self.category, self.hits = day, category, 0
@@ -132,7 +141,7 @@ class PageCache:
             age = time.time() - entry["retrieved_at"]
             if (entry["schema_version"] != 1 or entry["day"] != self.day or
                     entry["category"] != self.category or entry["url"] != url or
-                    entry["page"] != number or not 0 <= age <= 6 * 3600 or
+                    entry["page"] != number or not 0 <= age <= CACHE_MAX_AGE or
                     hashlib.sha256(html.encode()).hexdigest() != entry["sha256"]):
                 raise ValueError("Cache identity, checksum or freshness mismatch")
             parsed = parse_catchup(html, self.day, self.category)
@@ -316,10 +325,17 @@ def crawl(day, directory, audit_directory, client=None):
     except Exception as exc:
         if isinstance(exc, ValueError) and day:
             shutil.rmtree(cache_directory / day, ignore_errors=True)
+        status = getattr(getattr(exc, "response", None), "status_code", None)
+        retryable = (isinstance(exc, (requests.Timeout, requests.ConnectionError)) or
+                     status == 429 or (status is not None and 500 <= status < 600))
+        retry_not_before = max(time.time() + 1800,
+                               client.retry_not_before if isinstance(client, Client) else 0)
         progress = dict(schema_version=1, status="failed", target_date=day or None,
                         categories=categories, completed_categories=counts,
                         failed_url=getattr(client, "current_url", None) if isinstance(client, Client) else None,
                         error_type=type(exc).__name__, error=str(exc),
+                        http_status=status, retryable=retryable,
+                        retry_not_before=retry_not_before if retryable else None,
                         recorded_at=datetime.now(timezone.utc).isoformat())
         atomic_write(audit_directory / f"{day or 'latest'}-crawl-progress.json",
                      json.dumps(progress, ensure_ascii=False, indent=2) + "\n")

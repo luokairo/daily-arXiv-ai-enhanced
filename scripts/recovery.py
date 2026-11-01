@@ -58,7 +58,19 @@ def restore_zip(archive, data):
             if name.startswith(('data/ai_cache/', 'data/crawl_cache/', 'data/run_metrics/')) or re.fullmatch(r'data/\d{4}-\d{2}-\d{2}\.jsonl', name):
                 destination = data / path.relative_to('data')
                 if destination.exists():
-                    continue
+                    if not name.startswith('data/crawl_cache/'):
+                        continue
+                    # The data directory or an earlier bundle may contain an
+                    # older page. Never let it mask a fresher verified download.
+                    incoming = json.loads(content)
+                    try:
+                        existing = json.loads(destination.read_text())
+                        if (existing.get('retrieved_at', 0) >= incoming['retrieved_at']
+                                and hashlib.sha256(existing['html'].encode()).hexdigest()
+                                == existing['sha256']):
+                            continue
+                    except (ValueError, KeyError, TypeError):
+                        pass
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 destination.write_bytes(content)
     return manifest['date']
