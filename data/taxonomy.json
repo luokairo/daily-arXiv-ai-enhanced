@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 236,
+          "paper_count": 237,
           "updated_at": "2026-10-30"
         },
         {
@@ -162,7 +162,7 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 102,
+          "paper_count": 105,
           "updated_at": "2026-10-30"
         },
         {
@@ -200,7 +200,7 @@
             "quantization"
           ],
           "name": "统一多模态模型高效化",
-          "paper_count": 155,
+          "paper_count": 156,
           "updated_at": "2026-10-30"
         }
       ],
@@ -245,7 +245,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 415,
+          "paper_count": 423,
           "updated_at": "2026-10-30"
         },
         {
@@ -281,7 +281,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 36,
+          "paper_count": 37,
           "is_canonical": true
         },
         {
@@ -323,7 +323,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 64,
+          "paper_count": 65,
           "is_canonical": true
         },
         {
@@ -364,7 +364,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 167,
+          "paper_count": 171,
           "is_canonical": true
         },
         {
@@ -375,11 +375,15 @@
             {
               "id": "2610.31429",
               "title": "PhysTrace: Interpretable Temporal Evaluation of Physical Consistency in Video Generative Models"
+            },
+            {
+              "id": "2610.39721",
+              "title": "WorldProbe: When Video World Models Fall Apart under Long-Horizon Spatial Exploration"
             }
           ],
           "created_at": "2026-10-23",
-          "updated_at": "2026-10-23",
-          "paper_count": 3
+          "updated_at": "2026-10-30",
+          "paper_count": 4
         },
         {
           "id": "embodied_world_model",
@@ -506,7 +510,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 99,
+          "paper_count": 102,
           "is_canonical": true
         },
         {
@@ -577,7 +581,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 72,
+          "paper_count": 73,
           "is_canonical": true
         },
         {
@@ -612,7 +616,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 64,
+          "paper_count": 65,
           "is_canonical": true
         },
         {
@@ -804,7 +808,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 62,
+          "paper_count": 64,
           "is_canonical": true
         },
         {
@@ -843,7 +847,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 320,
+          "paper_count": 334,
           "is_canonical": true
         },
         {
@@ -882,7 +886,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-10-30",
-          "paper_count": 30,
+          "paper_count": 32,
           "is_canonical": true
         }
       ],

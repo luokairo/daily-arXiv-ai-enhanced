@@ -23,7 +23,7 @@
     "world_model": {
       "routed": 21,
       "detail_requests": 21,
-      "detailed": 16,
+      "detailed": 15,
       "briefs": 0,
       "deep_reads": 0
     },
@@ -51,7 +51,7 @@
     "world_model_applications": {
       "routed": 17,
       "detail_requests": 15,
-      "detailed": 17,
+      "detailed": 18,
       "briefs": 0,
       "deep_reads": 0
     },
@@ -182,7 +182,7 @@
       "research_value_score": 68.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "主要贡献是机器人策略（VLA）与潜空间世界模型结合的控制方法，属具身世界模型应用；其潜动作世界模型与视觉特征预测对表征学习有贡献，故同时匹配主要方向。"
+      "detail_reason": "主要贡献是机器人策略与潜空间世界模型结合，属具身世界模型应用；其潜动作条件潜世界模型对表征有贡献，故同时匹配主要世界模型方向。"
     },
     {
       "id": "2607.03487",
@@ -238,7 +238,7 @@
       "research_value_score": 45.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "仿真到真实图像/视频翻译（域适应），非世界模型、表征学习或视频生成贡献；仅用VLM规划器作评测指标。"
+      "detail_reason": "论文为仿真到真实的图像/视频域翻译（小波相位扩散），属图像翻译与数据增强，未提出视觉/视频表征、tokenizer 或世界模型贡献；CARLA 视频翻译仅作下游增强，VLM 规划指标为应用评测，不构成世界模型或表征创新。"
     },
     {
       "id": "2610.22731",
@@ -1759,7 +1759,7 @@
       "research_value_score": 35.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "该文是食物图像检索/相似度分析的应用研究，仅把七种预训练视觉表征当作工具做评测，未对表征或模型本身提出贡献，故不属视觉表征学习方向。"
+      "detail_reason": "该文是食物检索/相似度分析，仅把七种预训练视觉表征当作工具做评测，未对表征或模型本身提出贡献，属于应用型分析，不匹配任何目标方向。"
     },
     {
       "id": "2610.37868",
@@ -1954,7 +1954,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "论文研究潜空间世界模型上的规划器与动作更新器（PushT 任务），主要贡献是规划/控制方法而非世界模型或表征本身，故归辅助应用方向具身世界模型与规划控制。"
+      "detail_reason": "论文研究潜空间世界模型上的规划器/动作更新器与规划预算对任务成功率的影响，属具身世界模型规划控制应用；未提出新的世界模型或表征。"
     },
     {
       "id": "2610.37896",
@@ -2610,7 +2610,7 @@
       "research_value_score": 45.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "核心贡献是 JEPA 式自监督潜空间预测表征与潜动作条件世界模型，属表征学习；但对象为时间序列而非视觉/视频，故归入最接近的 JEPA 表征主题。"
+      "detail_reason": "核心贡献是 JEPA 式自监督潜空间预测表征与潜动作条件世界模型，属表征学习；但对象为时间序列而非视觉/视频，故按最接近的 JEPA 表征主题归类，视觉相关性有限。"
     },
     {
       "id": "2610.37965",
@@ -2840,7 +2840,7 @@
       "research_value_score": 72.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "单图长视频相机控制生成，属长视频与可控生成；无表征或世界模型建模贡献。"
+      "detail_reason": "单图条件的长视频相机控制生成，属长时序与可控视频生成；无表征/世界模型创新主张。"
     },
     {
       "id": "2610.37986",
@@ -5252,7 +5252,7 @@
       "research_value_score": 68.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "论文核心贡献是面向长镜头文本到视频生成的数据集、标注流程与事件级评测协议，属视频生成的数据与评测研究。"
+      "detail_reason": "论文提出面向长镜头文本到视频生成的多事件数据集与标注/评测协议，属于直接服务视频生成的数据与评测研究，故归视频生成方向。"
     },
     {
       "id": "2610.38243",
@@ -5508,7 +5508,7 @@
       "research_value_score": 45.0,
       "detail_requested": true,
       "allocation_reason": "secondary_selected",
-      "detail_reason": "综述聚焦具身系统从部署经验更新策略/世界模型/技能与递归自我改进，属具身世界模型应用，非表征或生成模型创新。"
+      "detail_reason": "综述具身系统从部署经验更新策略、世界模型与技能并递归自我改进，属具身世界模型应用，非表征或生成模型创新。"
     },
     {
       "id": "2610.38267",
@@ -5759,7 +5759,7 @@
       "research_value_score": 45.0,
       "detail_requested": true,
       "allocation_reason": "secondary_selected",
-      "detail_reason": "摘要核心是异步多模态状态估计、递归动力学模拟与受限规划，属应用型世界建模（临床动力学），非视频/视觉表征贡献，故归辅助方向。"
+      "detail_reason": "主要贡献是面向肺炎纵向病程的异步多模态状态估计、递归模拟与证据约束规划，属于特定领域（医学）动力学/环境建模与规划应用，故归辅助应用方向；其多模态潜状态世界模型设计也与主要世界模型方向相关。"
     },
     {
       "id": "2610.38291",
@@ -6880,7 +6880,7 @@
       "research_value_score": 68.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "面向统一多模态模型的交错图文生成数据集与评测基准，属统一理解与生成方向。"
+      "detail_reason": "面向统一多模态模型的图文交错生成数据集与评测基准，属统一理解与生成方向。"
     },
     {
       "id": "2610.38426",
@@ -7450,7 +7450,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "主要贡献是 VLA 策略的闭环控制评估，属具身世界模型应用；仅使用冻结 V-JEPA 编码器作条件，不构成表征贡献。"
+      "detail_reason": "主要贡献是 VLA 策略的闭环控制评估（LIBERO-Plus 成功率），属具身世界模型与规划控制；仅使用冻结 V-JEPA 编码器与辅助未来表征预测头，未提出新的表征方法，故世界模型仅作次要匹配。"
     },
     {
       "id": "2610.38509",
@@ -8611,7 +8611,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "secondary_selected",
-      "detail_reason": "主要贡献是火星车部署时在线自适应与 MPC 探索，属机器人策略/控制应用；世界模型仅作为被适配的仿真模型，无表征创新。"
+      "detail_reason": "以行星漫游车部署时世界模型自适应与 MPC 探索为主要贡献，属具身世界模型与规划控制应用；无视觉表征或基础世界模型创新。"
     },
     {
       "id": "2610.38661",
@@ -9738,7 +9738,7 @@
       "research_value_score": 68.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "论文研究部分可观测世界模型的潜空间几何归纳偏置并以规划成功率评估，属世界模型表征设计；因核心目标是控制/规划，主要归世界模型，同时匹配应用方向。"
+      "detail_reason": "论文以部分可观测世界模型的潜空间几何设计为核心，评测指标为规划成功率，属具身世界模型与规划控制；潜表征结构设计亦触及主要表征方向。"
     },
     {
       "id": "2610.38911",
@@ -10175,7 +10175,7 @@
       "research_value_score": 74.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "研究生成式世界模型的长程上下文检索与一致性，属视频世界模型的长时序建模问题，非表征或应用类贡献。"
+      "detail_reason": "研究生成式世界模型在重访区域时的一致性/上下文检索，属世界模型长时序建模，非机器人策略或仿真应用。"
     },
     {
       "id": "2610.38981",
@@ -11144,7 +11144,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "以离线策略改进为核心，用冻结潜空间世界模型生成合成经验，属具身世界模型应用而非表征创新。"
+      "detail_reason": "以离线强化学习策略改进为主要贡献，将冻结潜空间世界模型作为局部转移生成器，属具身世界模型与规划控制应用；未提出新的世界模型或表征。"
     },
     {
       "id": "2610.39109",
@@ -11547,7 +11547,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "secondary_selected",
-      "detail_reason": "以第一视角视频数据评测操作先验与接触点预测，并用于机器人抓取策略，属具身应用而非表征或世界模型本身创新。"
+      "detail_reason": "以第一视角视频数据评估操作先验与未来接触点预测，并用于机器人抓取策略，属具身应用而非表征或世界模型本身创新。"
     },
     {
       "id": "2610.39168",
@@ -11661,7 +11661,7 @@
       "research_value_score": 68.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "研究图像到视频生成中编辑端点图像的条件控制方式，属视频生成的可控条件研究，归 long_controllable_video。"
+      "detail_reason": "研究图像到视频生成中的端点条件控制与时间伪影，属视频可控生成，非表征或世界模型贡献。"
     },
     {
       "id": "2610.39180",
@@ -12070,7 +12070,7 @@
       "research_value_score": 82.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "统一视频扩散 Transformer 同时做未来视频生成与稠密 4D 感知，属多模态基础世界模型；具身操作数据应用为辅助方向，共享表征的统一建模亦与统一理解生成相关。"
+      "detail_reason": "以统一视频扩散 Transformer 同时做未来视频生成与稠密 4D 感知，属多模态基础世界模型；训练于具身操作数据，兼涉应用方向；共享表征与统一预测空间亦与统一理解生成相关。"
     },
     {
       "id": "2610.39234",
@@ -12411,7 +12411,7 @@
       "research_value_score": 80.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "提出联合预测未来视频与3D轨迹的生成式世界模型，属视频世界模型；具身/物理动力学应用为辅助方向。"
+      "detail_reason": "提出联合预测未来视频与3D轨迹的生成式世界模型，属通用视频世界模型；具身/物理动力学为应用背景，故列辅助方向。"
     },
     {
       "id": "2610.39279",
@@ -12663,7 +12663,7 @@
       "research_value_score": 85.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "论文对 JEPA 类自监督表征做理论与实证分析（与 DINOv2/CLIP 对齐），属视觉表征学习，直接归主要世界模型与表征方向。"
+      "detail_reason": "论文从理论与实验上研究 JEPA 类自监督表征的跨模态对齐（Platonic 表征），属视觉/视频表征学习，直接归主要世界模型与表征方向。"
     },
     {
       "id": "2610.39305",
@@ -13210,7 +13210,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "核心贡献是修正世界动作模型（WAM）未来条件化下的机器人动作，属具身世界模型应用；仅使用已有 WAM 作冻结基座，不构成表征贡献。"
+      "detail_reason": "论文以机器人操作策略与未来条件动作校正为主要贡献，属世界模型应用；未提出新的视频/表征模型，故仅辅助匹配世界模型主方向。"
     },
     {
       "id": "2610.39371",
@@ -13276,7 +13276,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "论文研究掩码扩散语言模型（dLLM）的解码策略，属于扩散语言模型范畴，归连续语言模型方向下的扩散语言模型主题。"
+      "detail_reason": "论文研究掩码扩散语言模型（dLLM）的解码顺序策略，属于扩散语言模型范畴，归连续语言模型方向的语言流主题；无视觉/视频或多模态证据。"
     },
     {
       "id": "2610.39373",
@@ -14207,7 +14207,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "在冻结视频 DiT 上做多物体运动迁移的可控视频生成，属视频生成方向的可控生成主题；无表征学习或世界模型贡献。"
+      "detail_reason": "基于冻结视频 DiT 的多物体运动迁移与可控生成，属视频生成的可控性方向；无表征学习或世界模型贡献。"
     },
     {
       "id": "2610.39483",
@@ -14614,7 +14614,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "主要贡献是 VLA 机器人操作策略，世界模型仅作为子目标图像预测的条件模块，故归辅助具身世界模型方向。"
+      "detail_reason": "主要贡献是 VLA 机器人操作策略，世界模型仅作为子目标图像预测的条件模块，故归辅助应用方向；DINOv2 仅作历史帧语义桥接工具，不构成表征贡献。"
     },
     {
       "id": "2610.39530",
@@ -15423,7 +15423,7 @@
       "research_value_score": 74.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "研究统一多模态模型中扩散生成分支表征回流至理解路径，属统一模型内部表征共享，归统一多模态模型。"
+      "detail_reason": "研究统一多模态模型中扩散生成分支表征向理解路径的复用，属统一理解与生成模型的共享表征贡献。"
     },
     {
       "id": "2610.39614",
@@ -15645,7 +15645,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "纯图像一步/少步生成蒸馏方法（DMD 改进），摘要未说明对视频生成或世界模型表征的迁移价值；DINOv2 仅作对比基线，不构成表征贡献。"
+      "detail_reason": "纯图像一步/少步生成蒸馏方法（DMD 改进），摘要未说明对视频生成或统一理解生成的迁移价值；DINOv2 仅作对比基线，不构成表征贡献。"
     },
     {
       "id": "2610.39639",
@@ -15818,7 +15818,7 @@
       "research_value_score": 68.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "面向视频扩散 Transformer 的免训练稀疏注意力加速，直接服务视频生成推理效率，归视频生成效率主题。"
+      "detail_reason": "面向视频扩散 Transformer 的免训练稀疏注意力加速，直接服务于视频生成推理效率，归视频生成效率主题。"
     },
     {
       "id": "2610.39664",
@@ -16304,7 +16304,7 @@
       "research_value_score": 74.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "直接评测视频世界模型在长时序空间探索下的持久世界一致性，属视频世界模型；其评测性质亦与视频生成评测相关。"
+      "detail_reason": "面向视频世界模型长时序空间探索的诊断基准与评测，属世界模型评测；同时服务视频生成评测。"
     },
     {
       "id": "2610.39727",
@@ -16947,7 +16947,7 @@
       "research_value_score": 78.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "面向视频世界模型的长时序一致性记忆机制，属视频世界模型；其长时序可控生成亦与视频生成相关。"
+      "detail_reason": "为视频世界模型设计长时序记忆机制，属视频世界模型的长时序建模，非策略/仿真应用。"
     },
     {
       "id": "2610.39813",
@@ -17026,7 +17026,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "研究世界动作模型内部视觉表征到动作生成通路的脆弱性与闭环攻击，属具身世界模型鲁棒性分析，主归应用方向；涉及世界表征但无表征学习创新，故仅次要匹配 world_model。"
+      "detail_reason": "研究世界动作模型（WAM）内部视觉表征到动作生成通路的对抗鲁棒性，并在真实机器人上验证闭环控制失效，属具身世界模型/控制应用；未提出新的世界模型或表征学习目标，故不列为主要方向。"
     },
     {
       "id": "2610.39821",
@@ -17882,7 +17882,7 @@
       "research_value_score": 85.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "提出表征空间 tokenizer 与 REPA 对齐的统一框架，属 RAE/表征对齐核心；共享潜空间同时提升生成与理解，故兼列统一理解与生成。"
+      "detail_reason": "核心贡献是表征空间 tokenizer 与 REPA 表征对齐的统一，属 RAE/生成潜空间主题；共享对齐潜空间同时提升生成与理解，故兼属统一理解与生成。"
     },
     {
       "id": "2610.39954",
@@ -18284,7 +18284,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "提出并预训练领域特化的 DINOv2 自监督视觉表征模型，属 DINO 类自监督视觉表征贡献，归视觉与视频表征学习。"
+      "detail_reason": "提出并评测 PET 领域自监督 DINOv2 预训练编码器，属 DINO 类自监督视觉表征学习，归视觉与视频表征学习。"
     },
     {
       "id": "2610.40023",
@@ -18905,7 +18905,7 @@
       "research_value_score": 68.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "利用统一多模态模型的生成通路自我进化理解能力，属统一理解与生成模型研究。"
+      "detail_reason": "基于统一多模态模型（BAGEL/ThinkMorph）用生成通路产生视觉思维监督理解通路，属统一理解与生成；视觉思维作为连续潜空间推理，弱匹配连续多模态推理。"
     },
     {
       "id": "2610.40119",
@@ -19449,7 +19449,7 @@
       "research_value_score": 62.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "综述报告以视频世界模型（动作条件观测与未来预测）与智能体化视频生成为核心，属视频世界模型主题；同时涉及视频生成与交互环境应用。"
+      "detail_reason": "综述报告以视频世界模型（动作条件观测与未来预测）与智能体化视频生成为核心，属视频世界模型主题；同时涉及视频生成与交互式环境应用。"
     },
     {
       "id": "2610.40192",
@@ -19996,7 +19996,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "JEPA 仅作为工具用于 fMRI 脑信号编码与跨被试对齐，贡献在神经解码而非视觉/视频表征或世界模型本身，不属于任何目标方向。"
+      "detail_reason": "JEPA 仅作为工具用于 fMRI 脑信号编码与跨被试对齐，贡献在神经科学解码，非视觉/视频表征或世界模型创新。"
     },
     {
       "id": "2610.40283",
@@ -20069,7 +20069,7 @@
       "research_value_score": 55.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "提出新的掩码图像建模自监督框架学习跨模态表征，属 MAE 类视觉表征学习，归视觉与视频表征学习主题；医学影像应用不改变其表征贡献性质。"
+      "detail_reason": "提出掩码图像建模自监督框架学习医学多模态表征，属 MAE 类自监督视觉表征贡献，归视觉与视频表征学习。"
     },
     {
       "id": "2610.40285",
@@ -20495,7 +20495,7 @@
       "research_value_score": 74.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "以视频世界模型生成可交互游戏环境为核心，属视频世界模型；同时涉及交互式环境/游戏状态维护，故匹配应用方向。"
+      "detail_reason": "以视频生成世界模型为核心，用骨架/几何代理条件实现角色动作可控的交互式游戏世界模拟，属视频世界模型；其交互式环境应用亦匹配辅助方向。"
     },
     {
       "id": "2610.40345",
@@ -20607,7 +20607,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "主要贡献是机器人上下文模仿学习的演示压缩与策略适配，属具身应用；仅将冻结 video-JEPA 作为预测目标空间使用，不构成表征贡献。"
+      "detail_reason": "主要贡献是机器人上下文模仿学习的演示压缩与策略适配，仅将冻结 video-JEPA 作为预测目标空间，属具身应用方向。"
     },
     {
       "id": "2610.40362",
@@ -20736,7 +20736,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "主要贡献是面向机器人操作的 VLA 策略，用分层未来预测与潜世界检索引导动作生成，属具身世界模型应用；未来预测/潜世界建模与主方向相关但非通用基础世界模型或表征创新。"
+      "detail_reason": "主要贡献是面向机器人操作的VLA策略，用分层未来预测与潜空间世界检索引导动作生成，属具身世界模型应用；其潜空间世界建模与未来预测亦触及主要世界模型方向。"
     },
     {
       "id": "2610.40379",
@@ -20934,7 +20934,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "核心贡献是跨具身机器人动作生成与共享动力学先验，属具身世界模型应用；虽称 world-model backbone，但未提出通用视频/多模态基础世界模型或视觉表征创新。"
+      "detail_reason": "核心贡献是跨具身机器人动作生成的潜函数空间与世界模型骨干，属具身世界模型应用；其共享潜动作表征亦与主要方向表征学习相关。"
     },
     {
       "id": "2610.40407",
@@ -21501,7 +21501,7 @@
       "research_value_score": 35.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "贡献为空间音视频实例分割/跟踪基准与基线，属音视频理解与分割，不涉及音视频生成、声音驱动视频、世界模型或表征学习。"
+      "detail_reason": "论文是空间音视频实例分割/跟踪的基准数据集与基线，属于音视频理解与声源定位，不涉及音视频联合生成、声音驱动视频、视频生成、世界模型或表征学习贡献。"
     },
     {
       "id": "2610.40482",
@@ -21720,7 +21720,7 @@
       "research_value_score": 60.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "主要贡献是前馈生成式 3D 场景重建与可查询语义/实例，属 3D/4D 环境应用；蒸馏视频扩散与 2D 基础模型仅作工具，不构成表征创新。"
+      "detail_reason": "主要贡献是前馈生成式 3D 场景重建与语义/实例可查询化，属 3D/4D 环境应用；视频扩散模型仅作蒸馏教师，非表征创新。"
     },
     {
       "id": "2610.40499",
@@ -21808,7 +21808,7 @@
       "research_value_score": 45.0,
       "detail_requested": true,
       "allocation_reason": "secondary_selected",
-      "detail_reason": "论文用符号化数学假设与 Lean 4 形式化证明建模未知环境，属形式化推理/程序综合，不涉及视频、多模态或视觉表征学习，也无神经世界模型或仿真动力学贡献。"
+      "detail_reason": "论文用符号化数学假设、范畴论化简与 Lean 4 形式化证明建模未知环境，属符号/形式化推理与程序合成，不涉及视频、多模态或视觉表征学习，也无学习的环境/物理动力学模型，故不匹配任何目标方向。"
     },
     {
       "id": "2610.40505",
@@ -22600,7 +22600,7 @@
       "research_value_score": 74.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "提出可交互、可编程的游戏视频世界模型，属动作条件视频世界模型；规则引擎与交互代理偏交互仿真应用，故同时匹配辅助方向。"
+      "detail_reason": "提出可交互游戏视频世界模型，以规则引擎+交互代理条件驱动渲染，属动作条件视频世界模型；游戏交互仿真为应用侧。"
     },
     {
       "id": "2610.40611",
@@ -22713,7 +22713,7 @@
       "research_value_score": 82.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "提出以潜空间3D高斯记忆驱动的交互式视频世界模型，属通用视频世界模型；3D记忆与实时渲染为应用侧，DiT生成属视频生成。"
+      "detail_reason": "以动作条件交互式世界生成为核心，用潜空间3D高斯记忆驱动视频DiT实现长时程空间一致生成，属视频世界模型；3D记忆与实时渲染为应用侧，视频DiT生成亦涉视频生成。"
     },
     {
       "id": "2610.40616",
@@ -22911,7 +22911,7 @@
       "research_value_score": 70.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "核心贡献是从观测与动作学习忠实潜动力学并用于控制与系统辨识，属物理/环境动力学世界建模应用；非通用视频基础世界模型或表征创新。"
+      "detail_reason": "从观测与动作学习潜动力学并用于控制与系统辨识，属环境动力学建模，主归应用方向；潜动力学学习亦触及世界模型表征。"
     },
     {
       "id": "2610.40640",
@@ -22947,7 +22947,7 @@
       "research_value_score": 58.0,
       "detail_requested": true,
       "allocation_reason": "primary_selected",
-      "detail_reason": "主要贡献是从单目视频构建可探索的 4D 音视频场景（背景、轨迹、空间声场），属 3D/4D 环境世界建模应用；同时涉及空间音频与视觉场景的联合生成，故匹配音视频方向。"
+      "detail_reason": "主要贡献是从单视频构建可探索的 4D 音视频场景（背景、轨迹、空间声场），属 3D/4D 环境世界建模应用；同时涉及空间音频与视觉同步，弱匹配音视频方向。"
     },
     {
       "id": "2610.40641",
