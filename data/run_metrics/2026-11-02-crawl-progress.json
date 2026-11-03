@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "target_date": "2026-11-02",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "completed_categories": {},
+  "failed_url": "https://arxiv.org/catchup/cs.AI/2026-11-02?abs=True&page=1",
+  "error_type": "ValueError",
+  "error": "Incomplete catchup day",
+  "http_status": null,
+  "retryable": false,
+  "retry_not_before": null,
+  "recorded_at": "2026-11-03T00:02:29.207425+00:00"
+}

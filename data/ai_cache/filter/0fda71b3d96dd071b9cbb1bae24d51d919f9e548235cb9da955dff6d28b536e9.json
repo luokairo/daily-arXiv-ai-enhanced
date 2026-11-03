@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "用编码模型自动迭代设计冻结策略外围的机器人智能体框架与持久记忆，无需更新权重。", "reason": "Automates robot agent harness code and memory around a frozen policy; no world model, representation, or generative contribution.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

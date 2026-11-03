@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出树状分层索引的次二次稀疏注意力，降低长上下文注意力开销。", "reason": "Efficient long-context attention via hierarchical tree indexer for LLMs; no visual/video representation, world model, generation, or continuous-language contribution.", "personal_relevance_score": 12.0, "research_value_score": 45.0}}
