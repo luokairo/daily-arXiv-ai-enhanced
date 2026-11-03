@@ -108,6 +108,56 @@ class RetryTests(unittest.TestCase):
 
 @patch.object(crawl, 'recall_categories', return_value=['cs.CV'])
 class CrawlRecoveryTests(unittest.TestCase):
+    def test_count_failure_preserves_html_counts_and_requires_delayed_retry(self, _):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            # Page total and actual entries agree; section expected count does not.
+            html = catchup(expected=2, total=1)
+            client = Mock(get=Mock(return_value=html))
+            with patch.dict(os.environ, GITHUB_OUTPUT=str(root / 'output')):
+                with self.assertRaises(crawl.CountMismatchError):
+                    crawl.crawl(DAY, root / 'data', root / 'stage/run_metrics', client)
+            client.get.assert_called_once()  # No immediate retry loop on fresh bad HTML.
+            progress = json.loads((root / f'stage/run_metrics/{DAY}-crawl-progress.json').read_text())
+            self.assertTrue(progress['retryable'])
+            self.assertEqual(progress['count_details']['total'], 1)
+            self.assertEqual(progress['count_details']['actual'], 1)
+            self.assertEqual(progress['count_details']['expected_sum'], 2)
+            self.assertGreater(progress['retry_not_before'], crawl.time.time() + 1790)
+            diagnostic = json.loads(Path(progress['diagnostic_path']).read_text())
+            self.assertEqual(diagnostic['pages'][0]['counts']['sections']['New'], dict(expected=2, actual=1))
+            self.assertEqual(Path(progress['diagnostic_path']).with_name('page-1.html').read_text(), html)
+            self.assertEqual((root / 'output').read_text(), f'crawl_date={DAY}\n')
+            self.assertFalse((root / f'data/{DAY}.jsonl').exists())
+            self.assertFalse((root / f'data/crawl_cache/{DAY}/cs.CV').exists())
+            # A later run re-fetches the failed category and succeeds fully.
+            client.get = Mock(return_value=catchup())
+            result = crawl.crawl(DAY, root / 'data', root / 'stage/run_metrics', client)
+            self.assertEqual(result['unique_papers'], 1)
+            client.get.assert_called_once()
+            self.assertTrue(Path(progress['diagnostic_path']).exists())
+
+    def test_section_mismatch_has_declared_and_actual_counts(self, _):
+        html = catchup().replace('showing 1 of 1', 'showing 2 of 2')
+        with self.assertRaises(crawl.CountMismatchError) as caught:
+            crawl.parse_catchup(html, DAY, 'cs.CV')
+        self.assertEqual(caught.exception.counts,
+                         dict(section='New', declared_shown=2, declared_expected=2, actual=1, total=1))
+
+    def test_cached_failure_diagnostics_survive_successful_fresh_pass(self, _):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            cache = crawl.PageCache(root / 'cache', DAY, 'cs.CV')
+            html = catchup(expected=2, total=1)
+            cache.save(1, URL, html)
+            client = Mock(get=Mock(return_value=catchup()))
+            papers, _ = crawl.category_catchup(client, 'cs.CV', DAY, root / 'cache', root / 'diagnostics')
+            self.assertEqual(len(papers), 1)
+            saved = list((root / 'diagnostics').rglob('diagnostic.json'))
+            self.assertEqual(len(saved), 1)
+            self.assertTrue(json.loads(saved[0].read_text())['pages'][0]['cached'])
+            self.assertEqual(saved[0].with_name('page-1.html').read_text(), html)
+
     def test_interrupted_crawl_roundtrip_resumes_only_missing_page(self, _):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

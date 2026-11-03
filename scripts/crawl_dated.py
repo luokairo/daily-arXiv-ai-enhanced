@@ -28,6 +28,13 @@ SECTION = re.compile(r"(New|Cross|Replacement) submissions \(\s*(?:continued, )?
 CACHE_MAX_AGE = 14 * 24 * 3600
 
 
+class CountMismatchError(ValueError):
+    """An official page's declared counts disagree with its parsed entries."""
+    def __init__(self, message, counts):
+        self.counts = counts
+        super().__init__(f"{message}: {json.dumps(counts, sort_keys=True)}")
+
+
 def text(value):
     return re.sub(r"\s+", " ", value or "").strip()
 
@@ -149,6 +156,7 @@ class PageCache:
             print(f"Ignoring invalid/expired crawl page cache: {url}", flush=True)
             return None
         self.hits += 1
+        self.last_html = html
         print(f"Reusing verified crawl page: {url}", flush=True)
         return parsed
 
@@ -195,32 +203,57 @@ def parse_catchup(html, day, category):
                 abs=f"https://arxiv.org/abs/{pid}", pdf=f"https://arxiv.org/pdf/{pid}",
                 announcement_date=day, metadata_basis="current_available_version",
                 announcement_categories=[category])
-        if shown != len(ids) or len(ids) != len(set(ids)) or kind in groups:
+        if len(ids) != len(set(ids)) or kind in groups:
             raise ValueError("Catchup section count mismatch")
+        if shown != len(ids):
+            raise CountMismatchError("Catchup section count mismatch",
+                                     dict(section=kind, declared_shown=shown,
+                                          declared_expected=expected, actual=len(ids), total=total))
         groups[kind] = dict(expected=expected, ids=ids)
     if sum(len(group['ids']) for group in groups.values()) != len(page.css("dl dt")):
-        raise ValueError("Unaccounted catchup entries")
+        raise CountMismatchError("Unaccounted catchup entries", dict(
+            grouped=sum(len(group['ids']) for group in groups.values()),
+            actual=len(page.css("dl dt")), total=total))
     if not groups and total != 0:
         raise ValueError("Missing catchup sections")
     return total, groups, papers
 
 
-def category_catchup(client, category, day, cache_directory=None):
+def save_failed_pages(directory, day, category, observations, exc):
+    destination = directory / day / category / str(time.time_ns())
+    pages = []
+    for number, entry in enumerate(observations, 1):
+        filename = f"page-{number}.html"
+        atomic_write(destination / filename, entry['html'])
+        pages.append({key: value for key, value in entry.items() if key != 'html'} | dict(file=filename))
+    report = dict(target_date=day, category=category, error_type=type(exc).__name__,
+                  error=str(exc), counts=getattr(exc, 'counts', None), pages=pages,
+                  recorded_at=datetime.now(timezone.utc).isoformat())
+    atomic_write(destination / 'diagnostic.json', json.dumps(report, indent=2) + '\n')
+    exc.diagnostic_path = str(destination / 'diagnostic.json')
+    print(f"Saved failed crawl pages and counts: {exc.diagnostic_path}", flush=True)
+
+
+def category_catchup(client, category, day, cache_directory=None, diagnostic_directory=None):
     cache = PageCache(cache_directory, day, category) if cache_directory else None
-    try:
-        return _category_catchup(client, category, day, cache)
-    except ValueError:
-        had_cached_pages = cache is not None and cache.hits > 0
-        if cache:
-            cache.invalidate()
-        if not had_cached_pages:
-            raise
-        print(f"Cached pagination changed for {day} {category}; fetching category afresh", flush=True)
-        # One fresh pass only; date/count errors must never become a partial day.
-        return _category_catchup(client, category, day, cache)
+    for attempt in range(2):
+        observations = []
+        try:
+            return _category_catchup(client, category, day, cache, observations)
+        except ValueError as exc:
+            if diagnostic_directory is not None:
+                save_failed_pages(diagnostic_directory, day, category, observations, exc)
+            had_cached_pages = cache is not None and cache.hits > 0
+            if cache:
+                cache.invalidate()
+                cache.hits = 0
+            if attempt or not had_cached_pages:
+                raise
+            print(f"Cached pagination changed for {day} {category}; fetching category afresh", flush=True)
+            # One fresh pass only. Persistent count mismatches are retried later.
 
 
-def _category_catchup(client, category, day, cache):
+def _category_catchup(client, category, day, cache, observations=None):
     merged, papers, urls, page_number, count, total = {}, {}, [], 1, 0, None
     while total is None or count < total:
         url = f"https://arxiv.org/catchup/{category}/{day}?abs=True&page={page_number}"
@@ -228,16 +261,28 @@ def _category_catchup(client, category, day, cache):
         html = None
         if parsed is None:
             html = client.get(url)
+        if observations is not None:
+            observations.append(dict(url=url, page=page_number, cached=parsed is not None,
+                                     html=html if html is not None else cache.last_html))
+        if parsed is None:
             parsed = parse_catchup(html, day, category)
         current_total, groups, page_papers = parsed
+        if observations is not None:
+            observations[-1]['counts'] = dict(total=current_total, sections={
+                kind: dict(expected=group['expected'], actual=len(group['ids']))
+                for kind, group in groups.items()})
         if total is not None and total != current_total:
-            raise ValueError("Catchup changed during pagination")
+            raise CountMismatchError("Catchup changed during pagination",
+                                     dict(previous_total=total, current_total=current_total, page=page_number))
         total = current_total
         urls.append(url)
         page_count = 0
         for kind, group in groups.items():
             existing = merged.setdefault(kind, dict(expected=group['expected'], ids=[]))
-            if existing['expected'] != group['expected'] or set(existing['ids']) & set(group['ids']):
+            if existing['expected'] != group['expected']:
+                raise CountMismatchError("Inconsistent catchup pagination", dict(
+                    section=kind, previous_expected=existing['expected'], current_expected=group['expected']))
+            if set(existing['ids']) & set(group['ids']):
                 raise ValueError("Inconsistent catchup pagination")
             existing['ids'].extend(group['ids'])
             page_count += len(group['ids'])
@@ -249,7 +294,10 @@ def _category_catchup(client, category, day, cache):
         count += page_count
         page_number += 1
     if count != total or sum(g['expected'] for g in merged.values()) != total or any(len(g['ids']) != g['expected'] for g in merged.values()):
-        raise ValueError("Incomplete catchup day")
+        raise CountMismatchError("Incomplete catchup day", dict(total=total, actual=count,
+            expected_sum=sum(g['expected'] for g in merged.values()), sections={
+                kind: dict(expected=group['expected'], actual=len(group['ids']))
+                for kind, group in merged.items()}))
     return papers, dict(count=len(papers), listing_urls=urls,
                         replacements_excluded=len(merged.get('Replacement', {}).get('ids', [])))
 
@@ -313,7 +361,8 @@ def crawl(day, directory, audit_directory, client=None):
         if not cached:
             papers = {}
             for category in categories:
-                category_papers, counts[category] = category_catchup(client, category, day, cache_directory)
+                category_papers, counts[category] = category_catchup(
+                    client, category, day, cache_directory, audit_directory.parent / 'crawl_diagnostics')
                 for pid, paper in category_papers.items():
                     if pid in papers:
                         if papers[pid]['title'] != paper['title'] or papers[pid]['summary'] != paper['summary']:
@@ -323,10 +372,10 @@ def crawl(day, directory, audit_directory, client=None):
                         papers[pid] = paper
                 print(f"Verified {day} {category}: {len(category_papers)} full abstracts", flush=True)
     except Exception as exc:
-        if isinstance(exc, ValueError) and day:
+        if isinstance(exc, ValueError) and not isinstance(exc, CountMismatchError) and day:
             shutil.rmtree(cache_directory / day, ignore_errors=True)
         status = getattr(getattr(exc, "response", None), "status_code", None)
-        retryable = (isinstance(exc, (requests.Timeout, requests.ConnectionError)) or
+        retryable = (isinstance(exc, (CountMismatchError, requests.Timeout, requests.ConnectionError)) or
                      status == 429 or (status is not None and 500 <= status < 600))
         retry_not_before = max(time.time() + 1800,
                                client.retry_not_before if isinstance(client, Client) else 0)
@@ -335,6 +384,8 @@ def crawl(day, directory, audit_directory, client=None):
                         failed_url=getattr(client, "current_url", None) if isinstance(client, Client) else None,
                         error_type=type(exc).__name__, error=str(exc),
                         http_status=status, retryable=retryable,
+                        count_details=getattr(exc, 'counts', None),
+                        diagnostic_path=getattr(exc, 'diagnostic_path', None),
                         retry_not_before=retry_not_before if retryable else None,
                         recorded_at=datetime.now(timezone.utc).isoformat())
         atomic_write(audit_directory / f"{day or 'latest'}-crawl-progress.json",

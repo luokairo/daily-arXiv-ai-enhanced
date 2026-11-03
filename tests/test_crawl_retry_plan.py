@@ -30,6 +30,29 @@ class RetryPlanTests(unittest.TestCase):
                                          retrieved_at='2026-10-30T00:00:00Z')]}
         self.assertIsNone(self.select([artifact(1, '2026-10-31'), artifact(2)], audits))
 
+    def test_count_mismatch_allows_three_delayed_retries_then_stops(self):
+        artifacts = [dict(artifact(i), created_at=f'2026-11-01T0{i}:00:00Z') for i in range(1, 5)]
+        audits = {i: [dict(status='failed', target_date='2026-10-30',
+                          error_type='CountMismatchError', retryable=True)] for i in range(1, 5)}
+        for failures in (1, 2, 3):
+            self.assertEqual(self.select(artifacts[:failures], audits), '2026-10-30')
+        self.assertIsNone(self.select(artifacts, audits))
+
+    def test_legacy_count_failure_is_eligible_even_with_old_false_flag(self):
+        audit = dict(status='failed', target_date='2026-10-30', error_type='ValueError',
+                     error='Incomplete catchup day', retryable=False)
+        self.assertEqual(self.select([artifact(1)], {1: [audit]}), '2026-10-30')
+
+    def test_count_budget_stops_at_previous_success_and_does_not_block_other_date(self):
+        artifacts = [dict(artifact(i), created_at=f'2026-11-01T0{i}:00:00Z') for i in range(1, 7)]
+        mismatch = dict(status='failed', target_date='2026-10-30', error_type='CountMismatchError')
+        audits = {i: [dict(mismatch)] for i in range(1, 7)}
+        audits[5] = [dict(status='complete', target_date='2026-10-30')]
+        self.assertEqual(self.select(artifacts, audits), '2026-10-30')
+        audits[5] = [dict(mismatch)]
+        audits[6] = [failed('2026-10-31')]
+        self.assertEqual(self.select(artifacts, audits), '2026-10-31')
+
     def test_oldest_unresolved_day_survives_success_of_newer_day(self):
         audits = {1: [failed()], 2: [dict(status='complete', target_date='2026-10-31')]}
         self.assertEqual(self.select([artifact(1, '2026-10-31'), artifact(2)], audits), '2026-10-30')

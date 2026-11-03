@@ -167,6 +167,15 @@ jobs:
           /tmp/arxiv-stage/enhance-usage.json
         if-no-files-found: ignore
 
+    - name: Save failed crawl pages and count diagnostics
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: crawl-diagnostics-${{ github.run_id }}
+        path: /tmp/arxiv-stage/crawl_diagnostics/
+        if-no-files-found: ignore
+        retention-days: 14
+
     - name: Convert to Markdown
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
