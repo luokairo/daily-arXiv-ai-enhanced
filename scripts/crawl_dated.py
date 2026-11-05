@@ -74,6 +74,51 @@ def discard_stale_pages(directory, day, fresh_after):
         path.unlink(missing_ok=True)
 
 
+def reconcile_metadata(client, previous, current, verified, diagnostics):
+    """Accept a conflicting version only if the official /abs page confirms it."""
+    pid = current['id']
+    evidence_path = diagnostics / 'metadata' / f'{pid}.json'
+    versions = dict(previous=previous, current=current)
+    atomic_write(evidence_path, json.dumps(versions, ensure_ascii=False, indent=2) + '\n')
+    if pid not in verified:
+        if len(verified) >= 20:
+            raise MetadataConflictError(previous, current)
+        url = f'https://arxiv.org/abs/{pid}'
+        html = client.get(url)
+        atomic_write(evidence_path.with_suffix('.html'), html)
+        page = Selector(text=html)
+        identity = page.css('meta[name="citation_arxiv_id"]::attr(content)').get() or ''
+        title = re.sub(r'^Title:\s*', '', text(page.css('h1.title').xpath('string()').get()))
+        summary = re.sub(r'^Abstract:\s*', '', text(page.css('blockquote.abstract').xpath('string()').get()))
+        citation_title = text(page.css('meta[name="citation_title"]::attr(content)').get())
+        try:
+            valid_identity = paper_id(re.sub(r'^arXiv:', '', identity)) == pid
+        except ValueError:
+            valid_identity = False
+        canonical = dict(id=identity, title=title, summary=summary, source=url,
+                         retrieved_at=datetime.now(timezone.utc).isoformat(),
+                         html_sha256=hashlib.sha256(html.encode()).hexdigest())
+        versions['canonical'] = canonical
+        atomic_write(evidence_path, json.dumps(versions, ensure_ascii=False, indent=2) + '\n')
+        if not valid_identity or not title or not summary or citation_title != title:
+            error = MetadataConflictError(previous, current)
+            error.versions = versions
+            raise error
+        verified[pid] = canonical
+    canonical = verified[pid]
+    versions['canonical'] = canonical
+    for candidate in (current, previous):
+        if candidate['title'] == canonical['title'] and candidate['summary'] == canonical['summary']:
+            versions['resolved'] = True
+            atomic_write(evidence_path, json.dumps(versions, ensure_ascii=False, indent=2) + '\n')
+            print(f'Canonical arXiv metadata verified for {pid}: {canonical["source"]}', flush=True)
+            return {**candidate, 'announcement_categories': list(previous['announcement_categories']),
+                    'metadata_source': canonical['source'], 'metadata_verified_at': canonical['retrieved_at']}
+    error = MetadataConflictError(previous, current)
+    error.versions = versions
+    raise error
+
+
 def text(value):
     return re.sub(r"\s+", " ", value or "").strip()
 
@@ -418,6 +463,7 @@ def crawl(day, directory, audit_directory, client=None):
     client = client or Client()
     counts = {}
     refresh = {}
+    verified_metadata = {}
     cache_directory = directory / "crawl_cache"
     try:
         if not day:
@@ -443,7 +489,8 @@ def crawl(day, directory, audit_directory, client=None):
                 for pid, paper in category_papers.items():
                     if pid in papers:
                         if papers[pid]['title'] != paper['title'] or papers[pid]['summary'] != paper['summary']:
-                            raise MetadataConflictError(papers[pid], paper)
+                            papers[pid] = reconcile_metadata(client, papers[pid], paper, verified_metadata,
+                                audit_directory.parent / 'crawl_diagnostics' / day)
                         papers[pid]['announcement_categories'].append(category)
                     else:
                         papers[pid] = paper
@@ -487,6 +534,7 @@ def crawl(day, directory, audit_directory, client=None):
             date_basis="arxiv_announcement_listing", metadata_basis="current_available_version",
             retrieved_at=datetime.now(timezone.utc).isoformat(), categories=categories,
             category_counts=counts, unique_papers=len(ids),
+            metadata_reconciliations=verified_metadata,
             raw_sha256=hashlib.sha256(content.encode()).hexdigest())
     atomic_write(directory / f"{day}.jsonl", content)
     atomic_write(audit_directory / f"{day}-crawl.json", json.dumps(audit, ensure_ascii=False, indent=2) + "\n")

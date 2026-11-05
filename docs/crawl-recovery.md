@@ -34,7 +34,16 @@ count warning. The original retrieval time is preserved. Incomplete categories,
 wrong dates and invalid metadata are never promoted or published.
 
 If overlapping categories disagree on a paper's title or abstract, both versions
-are saved in `metadata-conflict.json`. The failure audit records a freshness
+are saved under `metadata/<id>.json`. The crawler requests the paper's official
+`https://arxiv.org/abs/<id>` page, verifies its citation ID and title, and accepts
+only an observed version whose title and abstract both exactly match that page.
+The official HTML, hash, retrieval time and selected version are retained in the
+diagnostic artifact and reconciliation audit. Announcement membership still comes
+from the fully verified dated categories. At most 20 distinct conflicts per run
+are checked; each official page is requested once through the rate-limited client.
+Missing identity, incomplete metadata or a canonical page matching neither version
+remains fatal. Unresolved versions are also saved in `metadata-conflict.json`.
+The failure audit records a freshness
 boundary; subsequent recovery drops older HTML and cannot re-promote stale
 diagnostics. Pages fetched after that boundary remain reusable through network
 interruptions. Failure audits themselves are restored newest-first by recorded

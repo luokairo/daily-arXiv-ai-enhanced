@@ -131,7 +131,7 @@ class CrawlRecoveryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             with patch.object(crawl, 'recall_categories', return_value=['cs.AI', 'cs.CV']):
-                client = Mock(get=Mock(side_effect=[catchup(summary='old'), catchup(summary='new')]))
+                client = Mock(get=Mock(side_effect=[catchup(summary='old'), catchup(summary='new'), '<html></html>']))
                 with self.assertRaises(crawl.MetadataConflictError):
                     crawl.crawl(DAY, root, root / 'run_metrics', client)
                 progress = json.loads((root / f'run_metrics/{DAY}-crawl-progress.json').read_text())
@@ -153,7 +153,7 @@ class CrawlRecoveryTests(unittest.TestCase):
             root = Path(temp)
             with patch.object(crawl, 'recall_categories', return_value=['cs.AI', 'cs.CV']):
                 for attempt in (1, 2):
-                    client = Mock(get=Mock(side_effect=[catchup(summary='one'), catchup(summary='two')]))
+                    client = Mock(get=Mock(side_effect=[catchup(summary='one'), catchup(summary='two'), '<html></html>']))
                     with self.assertRaises(crawl.MetadataConflictError):
                         crawl.crawl(DAY, root, root / 'run_metrics', client)
                     progress = json.loads((root / f'run_metrics/{DAY}-crawl-progress.json').read_text())
@@ -367,7 +367,7 @@ class CrawlRecoveryTests(unittest.TestCase):
             root = Path(temp)
             previous = root / f'{DAY}.jsonl'
             previous.write_text('previous successful output')
-            client = Mock(get=Mock(side_effect=[catchup(), catchup(summary='Changed abstract')]))
+            client = Mock(get=Mock(side_effect=[catchup(), catchup(summary='Changed abstract'), '<html></html>']))
             with patch.object(crawl, 'recall_categories', return_value=['cs.AI', 'cs.CV']):
                 with self.assertRaisesRegex(ValueError, 'Metadata changed across category'):
                     crawl.crawl(DAY, root, root / 'run_metrics', client)
