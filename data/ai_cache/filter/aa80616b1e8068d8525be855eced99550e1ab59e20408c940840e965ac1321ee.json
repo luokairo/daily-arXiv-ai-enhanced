@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出顺序敏感的跨分支交互模块用于图像篡改定位，与所列方向无直接关联。", "reason": "Image forgery/manipulation localization with cross-attention fusion; no video/world-model, representation-learning, generation, or unified model contribution.", "personal_relevance_score": 6.0, "research_value_score": 12.0}}

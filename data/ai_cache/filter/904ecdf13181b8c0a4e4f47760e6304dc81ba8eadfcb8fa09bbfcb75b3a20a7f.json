@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出免训练的流式视频问答澄清框架，结合熵不确定性判断与分层KV缓存记忆。", "reason": "Training-free streaming video QA framework with uncertainty gating and KV-cache memory; no contribution to world models, representation learning, or generation.", "personal_relevance_score": 12.0, "research_value_score": 30.0}}

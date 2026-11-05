@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "构建超长电视剧视频问答基准，含约2万QA对与多级时间结构，用于评测MLLM长时记忆。", "reason": "Benchmark for ultra-long video QA with MLLMs; no contribution to world models, representation learning, generation, or unified understanding-generation.", "personal_relevance_score": 18.0, "research_value_score": 30.0}}

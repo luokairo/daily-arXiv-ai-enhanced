@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出 Lean4 形式化证明搜索框架与 1.7B 策略价值模型，与所列方向无关。", "reason": "Formal theorem proving in Lean4 with MCTS and policy-value models; no video, multimodal world model, or visual representation contribution.", "personal_relevance_score": 4.0, "research_value_score": 30.0}}

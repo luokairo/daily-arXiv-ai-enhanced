@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出张量域保持结构的限价订单簿预测模型，与视频/多模态表征无关。", "reason": "Tensor decomposition for limit order book financial forecasting; no video, multimodal, generative, or visual representation contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "target_date": "2026-11-03",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "completed_categories": {
+    "cs.AI": {
+      "count": 76,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.AI/2026-11-03?abs=True&page=1"
+      ],
+      "warnings": [
+        {
+          "reason": "Replacement total count mismatch",
+          "expected": 36,
+          "actual": 37,
+          "declared_total": 112,
+          "actual_total": 113
+        }
+      ],
+      "replacements_excluded": 37
+    },
+    "cs.CL": {
+      "count": 253,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CL/2026-11-03?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 131
+    },
+    "cs.CV": {
+      "count": 395,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CV/2026-11-03?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 174
+    }
+  },
+  "failed_url": "https://arxiv.org/catchup/cs.CV/2026-11-03?abs=True&page=1",
+  "error_type": "ValueError",
+  "error": "Metadata changed across category snapshots: 2611.00177",
+  "http_status": null,
+  "retryable": false,
+  "cooldown_scope": "host",
+  "count_details": null,
+  "diagnostic_path": null,
+  "retry_not_before": null,
+  "recorded_at": "2026-11-05T03:55:21.586215+00:00"
+}

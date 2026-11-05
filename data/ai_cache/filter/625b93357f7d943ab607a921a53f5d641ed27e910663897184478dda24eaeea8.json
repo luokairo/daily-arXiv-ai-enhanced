@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "构建合成式真实视频非模态分割评测数据集，提供精确非模态真值。", "reason": "Dataset/benchmark for amodal video object segmentation via compositing; no contribution to world models, representation learning, or generation.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

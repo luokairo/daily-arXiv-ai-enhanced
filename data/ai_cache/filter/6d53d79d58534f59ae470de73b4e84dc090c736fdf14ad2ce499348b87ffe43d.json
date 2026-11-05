@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向 LLM 评分标准优化的预测式“世界模型”，与视频/多模态世界模型及视觉表征无关。", "reason": "\"World model\" here predicts rubric-edit effects for LLM grading; no video/multimodal world model, visual representation, or generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 12.0}}
