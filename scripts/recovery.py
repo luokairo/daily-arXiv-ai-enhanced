@@ -8,7 +8,12 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
+import time
+import sys
+from datetime import datetime
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
 def copy_tree(source, destination):
@@ -76,15 +81,67 @@ def restore_zip(archive, data):
     return manifest['date']
 
 
+def restore_diagnostic_zip(archive, data, day):
+    # Only a fully revalidated category with a Replacement-only warning can be
+    # promoted. Raw diagnostic HTML is otherwise never treated as recovery data.
+    from scripts.crawl_dated import CACHE_MAX_AGE, PageCache, category_catchup
+    restored = 0
+    with zipfile.ZipFile(archive) as bundle:
+        for name in bundle.namelist():
+            if not name.endswith('/diagnostic.json'):
+                continue
+            report = json.loads(bundle.read(name))
+            category = report.get('category', '')
+            if (report.get('target_date') != day or report.get('error_type') != 'CountMismatchError'
+                    or not re.fullmatch(r'[a-z]+\.[A-Za-z]+', category)):
+                continue
+            retrieved_at = datetime.fromisoformat(report['recorded_at']).timestamp()
+            if not 0 <= time.time() - retrieved_at <= CACHE_MAX_AGE:
+                continue
+            pages = {}
+            for entry in report['pages']:
+                filename = Path(entry['file'])
+                number = entry['page']
+                url = f'https://arxiv.org/catchup/{category}/{day}?abs=True&page={number}'
+                if (filename.is_absolute() or '..' in filename.parts or len(filename.parts) != 1
+                        or type(number) is not int or not 1 <= number <= 100 or entry['url'] != url):
+                    raise ValueError('Invalid diagnostic page identity')
+                pages[url] = (number, bundle.read(str(Path(name).parent / filename)).decode('utf-8'))
+
+            class ArchivedClient:
+                def get(self, url):
+                    if url not in pages:
+                        raise ValueError('Diagnostic category has missing pages')
+                    return pages[url][1]
+
+            try:
+                _, counts = category_catchup(ArchivedClient(), category, day)
+            except ValueError:
+                continue
+            if not counts['warnings']:
+                continue
+            cache = PageCache(data / 'crawl_cache', day, category)
+            for url, (number, html) in pages.items():
+                destination = cache.directory / f'page-{number}.json'
+                if destination.exists() and cache.load(number, url) is not None:
+                    if json.loads(destination.read_text())['retrieved_at'] >= retrieved_at:
+                        continue
+                cache.save(number, url, html, retrieved_at=retrieved_at)
+                restored += 1
+    return restored
+
+
 def restore_remote(data, repository, date=''):
     if date and not re.fullmatch(r'\d{4}-\d{2}-\d{2}', date):
         raise ValueError('Invalid recovery date')
     response = subprocess.check_output(['gh', 'api', '--paginate', '--slurp',
         f'repos/{repository}/actions/artifacts?per_page=100'], text=True)
-    artifacts = [a for page in json.loads(response) for a in page['artifacts']
+    all_artifacts = [a for page in json.loads(response) for a in page['artifacts'] if not a['expired']]
+    artifacts = [a for a in all_artifacts
                  if not a['expired'] and a['name'].startswith('ai-recovery-' + (date + '-' if date else ''))]
     artifacts.sort(key=lambda a: a['created_at'], reverse=True)
     restored = 0
+    recovered_runs = {}
     for artifact in artifacts[:3]:
         try:
             with tempfile.TemporaryDirectory() as tmp:
@@ -92,11 +149,26 @@ def restore_remote(data, repository, date=''):
                 with archive.open('wb') as stream:
                     subprocess.run(['gh', 'api', f'repos/{repository}/actions/artifacts/{artifact["id"]}/zip'], stdout=stream, check=True)
                 recovered_date = restore_zip(archive, data)
+                recovered_runs[artifact['workflow_run']['id']] = recovered_date
                 restored += 1
                 print(f'Restored crawl pages and successful cache/snapshot from {artifact["name"]} ({recovered_date})', flush=True)
         except (ValueError, KeyError, OSError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
             print(f'Skipped unusable recovery artifact: {type(error).__name__}', flush=True)
     print(f'Recovery artifacts restored: {restored}', flush=True)
+    for artifact in all_artifacts:
+        recovered_date = recovered_runs.get(artifact.get('workflow_run', {}).get('id'))
+        if not recovered_date or not artifact['name'].startswith('crawl-diagnostics-'):
+            continue
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                archive = Path(tmp) / 'diagnostics.zip'
+                with archive.open('wb') as stream:
+                    subprocess.run(['gh', 'api', f'repos/{repository}/actions/artifacts/{artifact["id"]}/zip'],
+                                   stdout=stream, check=True)
+                count = restore_diagnostic_zip(archive, data, recovered_date)
+                print(f'Revalidated diagnostic pages restored for {recovered_date}: {count}', flush=True)
+        except (ValueError, KeyError, TypeError, OSError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
+            print(f'Skipped unusable diagnostic artifact: {type(error).__name__}', flush=True)
 
 
 def main():

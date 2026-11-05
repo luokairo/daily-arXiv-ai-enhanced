@@ -49,7 +49,7 @@ def transient(audit):
                 and re.search(r'\b(?:429|5\d\d)\b', audit.get('error', '')) is not None))
 
 
-def choose_retry(artifacts, load_audits, now):
+def choose_retry(artifacts, load_audits, now, requested_date=None):
     seen, pending = set(), []
     count_failures, closed, count_candidates = {}, set(), set()
     cooldown = 0
@@ -83,31 +83,40 @@ def choose_retry(artifacts, load_audits, now):
             if audit.get('status') != 'failed' or not transient(audit):
                 continue
             deadline = audit.get('retry_not_before') or timestamp(artifact['created_at']) + 1800
-            cooldown = max(cooldown, deadline)
-            pending.append(day)
+            if audit.get('cooldown_scope', 'date' if count_mismatch(audit) else 'host') == 'host':
+                cooldown = max(cooldown, deadline)
+            pending.append((day, timestamp(artifact['created_at']), deadline))
             if count_mismatch(audit):
                 count_candidates.add(day)
     # A server cooldown applies to the host, including retries for other dates.
     if cooldown > now:
+        print(f'arXiv host cooldown active until {datetime.fromtimestamp(cooldown, timezone.utc).isoformat()}; deferring crawl.')
         return None
-    eligible = [day for day in pending if day not in count_candidates
-                or count_failures.get(day, 0) <= MAX_COUNT_RETRIES]
-    for day in sorted(count_candidates - set(eligible)):
+    if requested_date is not None:
+        if any(day == requested_date and deadline > now for day, _, deadline in pending):
+            print(f'Announcement cooldown active for {requested_date}; deferring crawl.')
+            return None
+        return requested_date
+    eligible = [(last_attempt, day) for day, last_attempt, deadline in pending
+                if deadline <= now and (day not in count_candidates
+                                        or count_failures.get(day, 0) <= MAX_COUNT_RETRIES)]
+    for day in sorted(day for day in count_candidates if count_failures.get(day, 0) > MAX_COUNT_RETRIES):
         print(f'Count mismatch retry limit reached for {day}; manual investigation required.')
-    return min(eligible) if eligible else None
+    # Least recently attempted first: one stubborn date cannot consume both
+    # retry slots every day while another recoverable date waits indefinitely.
+    return min(eligible)[1] if eligible else None
 
 
 def plan(event, requested_date, artifacts=None, now=None):
     schedule = event.get('schedule')
-    if schedule not in RETRY_SCHEDULES:
-        return requested_date
     if artifacts is None:
         repository = os.environ['GITHUB_REPOSITORY']
         pages = json.loads(subprocess.check_output([
             'gh', 'api', '--paginate', '--slurp',
             f'repos/{repository}/actions/artifacts?per_page=100'], text=True))
         artifacts = [artifact for page in pages for artifact in page['artifacts']]
-    return choose_retry(artifacts, read_audits, time.time() if now is None else now)
+    return choose_retry(artifacts, read_audits, time.time() if now is None else now,
+                        requested_date=None if schedule in RETRY_SCHEDULES else requested_date)
 
 
 def main():

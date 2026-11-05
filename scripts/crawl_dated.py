@@ -16,6 +16,7 @@ import time
 from datetime import date, datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
+from urllib.parse import parse_qs, urljoin, urlparse
 
 import requests
 from parsel import Selector
@@ -83,6 +84,7 @@ class Client:
     def get(self, url, **kwargs):
         started = time.monotonic()
         self.current_url = url
+        transport_failures = 0
         for attempt in range(self.max_attempts):
             time.sleep(max(0, 15.1 - (time.monotonic() - self.last_request)))
             self.last_request = time.monotonic()
@@ -94,21 +96,27 @@ class Client:
             except (requests.Timeout, requests.ConnectionError, requests.HTTPError) as exc:
                 status = getattr(getattr(exc, "response", None), "status_code", None)
                 transient = status is None or status == 429 or 500 <= status < 600
+                if status is None:
+                    transport_failures += 1
                 delay = max(60 * 2 ** attempt + random.uniform(0, 10),
                             retry_after_seconds(getattr(getattr(exc, "response", None), "headers", {}).get("Retry-After", "")))
                 remaining = self.retry_budget - (time.monotonic() - started)
                 # Never shorten the server's cooldown to fit our budget. Leave
                 # room for the next connection/read timeout, then fail cleanly.
-                if not transient or attempt + 1 == self.max_attempts or delay + 110 > remaining:
+                # A 429 calls for a later run, rather than repeated requests from
+                # the same runner. Stop transport retries after two failures.
+                exhausted = status == 429 or transport_failures >= 2
+                if not transient or exhausted or attempt + 1 == self.max_attempts or delay + 110 > remaining:
                     if transient:
                         # Persist the server cooldown for a later workflow, too.
-                        self.retry_not_before = time.time() + max(1800, delay)
+                        self.retry_not_before = time.time() + max(3600, delay)
                     print(f"arXiv fetch failed: {url}; {status or type(exc).__name__}; "
                           f"attempts={attempt + 1}, elapsed={time.monotonic() - started:.0f}s; "
                           "no further retries within policy/budget", flush=True)
                     raise
                 print(f"Transient arXiv failure ({status or type(exc).__name__}) at {url}; "
                       f"retry {attempt + 1}/{self.max_attempts - 1} in {delay:.1f}s", flush=True)
+                self.session.close()  # Discard failed pooled connections before retrying.
                 time.sleep(delay)
         raise RuntimeError("Unreachable")
 
@@ -160,9 +168,9 @@ class PageCache:
         print(f"Reusing verified crawl page: {url}", flush=True)
         return parsed
 
-    def save(self, number, url, html):
+    def save(self, number, url, html, retrieved_at=None):
         entry = dict(schema_version=1, day=self.day, category=self.category,
-                     page=number, url=url, retrieved_at=time.time(), html=html,
+                     page=number, url=url, retrieved_at=time.time() if retrieved_at is None else retrieved_at, html=html,
                      sha256=hashlib.sha256(html.encode()).hexdigest())
         atomic_write(self.directory / f"page-{number}.json", json.dumps(entry, ensure_ascii=False) + "\n")
 
@@ -205,11 +213,11 @@ def parse_catchup(html, day, category):
                 announcement_categories=[category])
         if len(ids) != len(set(ids)) or kind in groups:
             raise ValueError("Catchup section count mismatch")
-        if shown != len(ids):
+        if shown != len(ids) and kind != 'Replacement':
             raise CountMismatchError("Catchup section count mismatch",
                                      dict(section=kind, declared_shown=shown,
                                           declared_expected=expected, actual=len(ids), total=total))
-        groups[kind] = dict(expected=expected, ids=ids)
+        groups[kind] = dict(expected=expected, ids=ids, shown=shown)
     if sum(len(group['ids']) for group in groups.values()) != len(page.css("dl dt")):
         raise CountMismatchError("Unaccounted catchup entries", dict(
             grouped=sum(len(group['ids']) for group in groups.values()),
@@ -255,7 +263,8 @@ def category_catchup(client, category, day, cache_directory=None, diagnostic_dir
 
 def _category_catchup(client, category, day, cache, observations=None):
     merged, papers, urls, page_number, count, total = {}, {}, [], 1, 0, None
-    while total is None or count < total:
+    warnings = []
+    while True:
         url = f"https://arxiv.org/catchup/{category}/{day}?abs=True&page={page_number}"
         parsed = cache.load(page_number, url) if cache else None
         html = None
@@ -266,6 +275,7 @@ def _category_catchup(client, category, day, cache, observations=None):
                                      html=html if html is not None else cache.last_html))
         if parsed is None:
             parsed = parse_catchup(html, day, category)
+        page_html = html if html is not None else cache.last_html
         current_total, groups, page_papers = parsed
         if observations is not None:
             observations[-1]['counts'] = dict(total=current_total, sections={
@@ -278,6 +288,9 @@ def _category_catchup(client, category, day, cache, observations=None):
         urls.append(url)
         page_count = 0
         for kind, group in groups.items():
+            if kind == 'Replacement' and group['shown'] != len(group['ids']):
+                warnings.append(dict(reason='Replacement shown count mismatch', page=page_number,
+                                     shown=group['shown'], actual=len(group['ids'])))
             existing = merged.setdefault(kind, dict(expected=group['expected'], ids=[]))
             if existing['expected'] != group['expected']:
                 raise CountMismatchError("Inconsistent catchup pagination", dict(
@@ -292,13 +305,34 @@ def _category_catchup(client, category, day, cache, observations=None):
             cache.save(page_number, url, html)
         papers.update(page_papers)
         count += page_count
+        # Follow explicit pagination even if extra Replacement entries exceed
+        # the declared total. Never confuse the next-day link with a next page.
+        next_page = any(
+            urlparse(urljoin(url, link)).path == urlparse(url).path
+            and parse_qs(urlparse(urljoin(url, link)).query).get('page') == [str(page_number + 1)]
+            for link in Selector(text=page_html).css('a::attr(href)').getall())
+        relevant_complete = all(len(g['ids']) == g['expected'] for kind, g in merged.items()
+                                if kind != 'Replacement')
+        declared_total = sum(g['expected'] for g in merged.values())
+        if not next_page and (count >= total or (declared_total == total and relevant_complete)):
+            break
         page_number += 1
-    if count != total or sum(g['expected'] for g in merged.values()) != total or any(len(g['ids']) != g['expected'] for g in merged.values()):
+        if page_number > 100:
+            raise ValueError('Catchup pagination exceeds 100 pages')
+    if sum(g['expected'] for g in merged.values()) != total or any(
+            len(g['ids']) != g['expected'] for kind, g in merged.items() if kind != 'Replacement'):
         raise CountMismatchError("Incomplete catchup day", dict(total=total, actual=count,
             expected_sum=sum(g['expected'] for g in merged.values()), sections={
                 kind: dict(expected=group['expected'], actual=len(group['ids']))
                 for kind, group in merged.items()}))
-    return papers, dict(count=len(papers), listing_urls=urls,
+    replacements = merged.get('Replacement', dict(expected=0, ids=[]))
+    if len(replacements['ids']) != replacements['expected']:
+        warnings.append(dict(reason='Replacement total count mismatch',
+                             expected=replacements['expected'], actual=len(replacements['ids']),
+                             declared_total=total, actual_total=count))
+    for warning in warnings:
+        print(f'WARNING {day} {category}: {json.dumps(warning, sort_keys=True)}', flush=True)
+    return papers, dict(count=len(papers), listing_urls=urls, warnings=warnings,
                         replacements_excluded=len(merged.get('Replacement', {}).get('ids', [])))
 
 
@@ -384,6 +418,7 @@ def crawl(day, directory, audit_directory, client=None):
                         failed_url=getattr(client, "current_url", None) if isinstance(client, Client) else None,
                         error_type=type(exc).__name__, error=str(exc),
                         http_status=status, retryable=retryable,
+                        cooldown_scope='date' if isinstance(exc, CountMismatchError) else 'host',
                         count_details=getattr(exc, 'counts', None),
                         diagnostic_path=getattr(exc, 'diagnostic_path', None),
                         retry_not_before=retry_not_before if retryable else None,
@@ -413,6 +448,8 @@ def crawl(day, directory, audit_directory, client=None):
             summary.write(f"\n### Date-verified crawl\nAnnouncement date: **{day}**; {audit['unique_papers']} unique full abstracts. Metadata: current available versions.\n")
             for category, details in audit["category_counts"].items():
                 summary.write(f"- {category}: {details['count']}\n")
+                for warning in details.get('warnings', []):
+                    summary.write(f"  - Replacement warning: {json.dumps(warning, sort_keys=True)}\n")
     print(json.dumps({"date": day, "papers": audit["unique_papers"], "date_basis": audit["date_basis"]}), flush=True)
     return audit
 

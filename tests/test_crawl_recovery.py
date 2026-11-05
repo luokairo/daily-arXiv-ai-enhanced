@@ -40,21 +40,40 @@ class RetryTests(unittest.TestCase):
     def advance(self, seconds):
         self.now += seconds
 
-    def test_backoff_recovers_429_timeout_and_503(self):
+    def test_backoff_recovers_timeout_and_server_errors(self):
         client = crawl.Client()
-        client.session.get = Mock(side_effect=[response(429), crawl.requests.ReadTimeout('slow'),
-                                               response(503), response()])
+        client.session.get = Mock(side_effect=[response(503), response(503), response()])
+        client.session.close = Mock()
         self.assertEqual(client.get(URL), 'ok')
-        self.assertEqual(client.session.get.call_count, 4)
-        for seconds in (60, 120, 240):
+        self.assertEqual(client.session.get.call_count, 3)
+        self.assertEqual(client.session.close.call_count, 2)
+        for seconds in (60, 120):
             self.assertIn(unittest.mock.call(seconds), self.sleep.call_args_list)
+        client.session.get = Mock(side_effect=[crawl.requests.ReadTimeout('slow'), response()])
+        self.assertEqual(client.get(URL), 'ok')
+
+    def test_429_defers_without_repeating_requests_and_cools_for_one_hour(self):
+        client = crawl.Client()
+        client.session.get = Mock(return_value=response(429))
+        before = crawl.time.time()
+        with self.assertRaises(crawl.requests.HTTPError):
+            client.get(URL)
+        self.assertEqual(client.session.get.call_count, 1)
+        self.assertGreaterEqual(client.retry_not_before, before + 3600)
+
+    def test_repeated_transport_failures_are_bounded_even_without_budget_pressure(self):
+        client = crawl.Client()
+        client.session.get = Mock(side_effect=crawl.requests.ConnectionError('disconnected'))
+        with self.assertRaises(crawl.requests.ConnectionError):
+            client.get(URL)
+        self.assertEqual(client.session.get.call_count, 2)
 
     def test_retry_after_seconds_and_http_date_are_respected(self):
         now = datetime(2026, 10, 7, 0, 0, tzinfo=timezone.utc).timestamp()
         for header in ('180', 'Wed, 07 Oct 2026 00:03:00 GMT'):
             with self.subTest(header=header), patch.object(crawl.time, 'time', return_value=now):
                 client = crawl.Client()
-                client.session.get = Mock(side_effect=[response(429, header), response()])
+                client.session.get = Mock(side_effect=[response(503, header), response()])
                 self.assertEqual(client.get(URL), 'ok')
                 self.assertIn(unittest.mock.call(180), self.sleep.call_args_list)
         for header in ('nonsense', '-1', 'Tue, 06 Oct 2026 00:00:00 GMT', ''):

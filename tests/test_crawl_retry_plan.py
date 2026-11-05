@@ -82,10 +82,28 @@ class RetryPlanTests(unittest.TestCase):
                                     {1: [failed(None)], 2: [dict(status='complete', target_date='2026-10-30')]}))
 
     def test_daily_and_manual_runs_are_unaffected_and_empty_retry_skips(self):
-        self.assertEqual(plan({'schedule': DAILY_SCHEDULE}, ''), '')
-        self.assertEqual(plan({}, '2026-10-30'), '2026-10-30')
+        self.assertEqual(plan({'schedule': DAILY_SCHEDULE}, '', artifacts=[], now=NOW), '')
+        self.assertEqual(plan({}, '2026-10-30', artifacts=[], now=NOW), '2026-10-30')
         for schedule in RETRY_SCHEDULES:
             self.assertIsNone(plan({'schedule': schedule}, '', artifacts=[], now=NOW))
+
+    def test_primary_and_manual_runs_honor_host_cooldown(self):
+        audits = {1: [failed(retryable=True, retry_not_before=NOW + 7200)]}
+        for requested in ('', '2026-10-31'):
+            self.assertIsNone(choose_retry([artifact(1)], lambda a: audits[a['id']], NOW,
+                                          requested_date=requested))
+
+    def test_count_cooldown_is_per_date_and_retry_slots_rotate(self):
+        artifacts = [artifact(1, '2026-10-31'), artifact(2)]
+        audits = {1: [failed('2026-10-31')],
+                  2: [dict(status='failed', target_date='2026-10-30', error_type='CountMismatchError',
+                           retry_not_before=NOW + 7200, cooldown_scope='date')]}
+        self.assertEqual(self.select(artifacts, audits), '2026-10-31')
+        audits[2][0]['retry_not_before'] = NOW - 1
+        # The older announcement was tried more recently; give the other date a turn.
+        self.assertEqual(self.select(artifacts, audits), '2026-10-31')
+        self.assertEqual(choose_retry(artifacts, lambda a: audits[a['id']], NOW,
+                                     requested_date='2026-10-30'), '2026-10-30')
 
     def test_unreadable_audit_must_not_revive_an_older_failure(self):
         def broken(_):

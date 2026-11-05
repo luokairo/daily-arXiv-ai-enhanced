@@ -66,8 +66,8 @@ class DatedCrawlTests(unittest.TestCase):
         client.session.get = Mock(return_value=response)
         with self.assertRaises(crawl.requests.HTTPError):
             client.get('https://arxiv.org/catchup/cs.CV/2026-09-30')
-        self.assertEqual(client.session.get.call_count, 5)
-        self.assertTrue(any(call.args[0] >= 60 for call in sleep.call_args_list))
+        self.assertEqual(client.session.get.call_count, 1)
+        self.assertGreater(client.retry_not_before, crawl.time.time() + 3500)
         response.status_code = 404
         client.session.get.reset_mock()
         with self.assertRaises(crawl.requests.HTTPError):
