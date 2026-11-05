@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "target_date": "2026-11-04",
+  "date_basis": "arxiv_announcement_listing",
+  "metadata_basis": "current_available_version",
+  "retrieved_at": "2026-11-05T04:26:52.638580+00:00",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "category_counts": {
+    "cs.AI": {
+      "count": 252,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.AI/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 162
+    },
+    "cs.CL": {
+      "count": 85,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CL/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 77
+    },
+    "cs.CV": {
+      "count": 160,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CV/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 100
+    },
+    "cs.LG": {
+      "count": 252,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.LG/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 193
+    },
+    "cs.MM": {
+      "count": 5,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.MM/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 3
+    },
+    "cs.RO": {
+      "count": 72,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.RO/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 53
+    },
+    "cs.SD": {
+      "count": 13,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.SD/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 7
+    },
+    "eess.AS": {
+      "count": 6,
+      "listing_urls": [
+        "https://arxiv.org/catchup/eess.AS/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 6
+    }
+  },
+  "unique_papers": 643,
+  "metadata_reconciliations": {
+    "2611.05355": {
+      "id": "2611.05355",
+      "title": "Reading Why: Born-Measured Attention with Exact Word Evidence on Light and Qubits",
+      "summary": "When a language model answers, we can usually only estimate why. We build a transformer in which every step is a Born measurement - attention $|\\langle q|k\\rangle|^4$ normalised over each row, a measured product in place of the feed-forward nonlinearity, and a Born readout. With its denominators held at their values for the input, each class probability is a polynomial in the word amplitudes, so its integrated-gradient evidence is computed by a finite quadrature with no quadrature error: the words' contributions sum to the class probability above its no-information share, to $10^{-11}$ or better. On e-SNLI natural language inference, with about 98k parameters outside the embedding, the model reaches $76.98 \\pm 0.17$% test accuracy, level with a softmax transformer of the same size ($76.62 \\pm 0.36$%). Deleting the word its evidence ranks first changes the answer in 45% of test pairs, out of the 53% any single deletion can change, against 32% for the softmax model explained the same way and 40% by its attention x gradient. Attention can look as much like the words annotators highlighted as the evidence does, yet accounts for the answer less well: deleting the word it ranks first changes the Born Transformer's answer in 32% of pairs. The same weights compile exactly to optoelectronic optics and to qubits, and a coherent attention layer becomes one circuit equal to the model (852 CNOTs on 23 qubits). On IBM's ibm_kingston, reading only the attention overlaps by Hadamard tests, the device gave the model's answers, also when a word was deleted. With calibration circuits as deep as the overlaps, each word's evidence with the device's attention row sums followed the exact evidence (correlations 0.997 and 0.932 on two pairs chosen in advance); where a pair's evidence is a small total of large opposite terms the earlier runs say it does not, and we say why.",
+      "source": "https://arxiv.org/abs/2611.05355",
+      "retrieved_at": "2026-11-05T04:25:50.185172+00:00",
+      "html_sha256": "a1b3387c19efb8c9c76295bb1fc94136678c84084042c9560b4009374a117689"
+    }
+  },
+  "raw_sha256": "3a81a5373abef22b2388e13d4c73ff5c65daf48a665ef3dea5d49c9c2b164168"
+}

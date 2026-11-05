@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "研究微调数据中元数据标注导致模型依赖线索的行为，与视频世界模型及表征学习无关。", "reason": "Studies metadata cue-following in LLM fine-tuning and DPO; no contribution to video/multimodal world models, representation learning, or generation.", "personal_relevance_score": 6.0, "research_value_score": 30.0}}

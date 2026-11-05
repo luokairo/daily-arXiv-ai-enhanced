@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "target_date": "2026-11-04",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "completed_categories": {
+    "cs.AI": {
+      "count": 252,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.AI/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 162
+    },
+    "cs.CL": {
+      "count": 85,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CL/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 77
+    },
+    "cs.CV": {
+      "count": 160,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CV/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 100
+    },
+    "cs.LG": {
+      "count": 252,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.LG/2026-11-04?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 193
+    }
+  },
+  "failed_url": "https://arxiv.org/catchup/cs.LG/2026-11-04?abs=True&page=1",
+  "error_type": "MetadataConflictError",
+  "error": "Metadata changed across category snapshots: 2611.05355",
+  "http_status": null,
+  "retryable": false,
+  "cooldown_scope": "date",
+  "require_fresh_after": 1793851757.3124127,
+  "metadata_refresh_attempts": 2,
+  "count_details": null,
+  "diagnostic_path": null,
+  "retry_not_before": null,
+  "recorded_at": "2026-11-05T04:09:17.312827+00:00"
+}

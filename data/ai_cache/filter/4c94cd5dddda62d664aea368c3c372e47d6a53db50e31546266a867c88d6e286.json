@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出图变分自编码器结合不确定性主动学习，在量子纳米制冷器参数空间中搜索吸能构型。", "reason": "Graph VAE for quantum nanodevice property search; latent space is for molecular/graph design, not visual/video representation, generation, or world modeling.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}
