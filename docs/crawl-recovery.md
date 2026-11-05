@@ -33,6 +33,14 @@ the entire archived category passes current validation and has a Replacement-onl
 count warning. The original retrieval time is preserved. Incomplete categories,
 wrong dates and invalid metadata are never promoted or published.
 
+If overlapping categories disagree on a paper's title or abstract, both versions
+are saved in `metadata-conflict.json`. The failure audit records a freshness
+boundary; subsequent recovery drops older HTML and cannot re-promote stale
+diagnostics. Pages fetched after that boundary remain reusable through network
+interruptions. Failure audits themselves are restored newest-first by recorded
+time. One delayed fresh metadata attempt is allowed; a conflict persisting on
+fresh pages remains fatal. Paper metadata equality is never relaxed.
+
 HTTP 5xx retries remain bounded to five attempts and a 15-minute request budget.
 A 429 stops the current fetch immediately. Two transport failures also stop it,
 discarding failed pooled connections before retrying. Such failures record a

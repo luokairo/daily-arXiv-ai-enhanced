@@ -127,6 +127,61 @@ class RetryTests(unittest.TestCase):
 
 @patch.object(crawl, 'recall_categories', return_value=['cs.CV'])
 class CrawlRecoveryTests(unittest.TestCase):
+    def test_metadata_conflict_requires_fresh_pages_then_recovers(self, _):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            with patch.object(crawl, 'recall_categories', return_value=['cs.AI', 'cs.CV']):
+                client = Mock(get=Mock(side_effect=[catchup(summary='old'), catchup(summary='new')]))
+                with self.assertRaises(crawl.MetadataConflictError):
+                    crawl.crawl(DAY, root, root / 'run_metrics', client)
+                progress = json.loads((root / f'run_metrics/{DAY}-crawl-progress.json').read_text())
+                self.assertTrue(progress['retryable'])
+                self.assertEqual(progress['cooldown_scope'], 'date')
+                self.assertEqual(progress['metadata_refresh_attempts'], 1)
+                self.assertTrue((root / f'crawl_diagnostics/{DAY}/metadata-conflict.json').exists())
+                # An older bundle must not reintroduce a known stale category.
+                cache = crawl.PageCache(root / 'crawl_cache', DAY, 'cs.AI')
+                cache.save(1, URL.replace('cs.CV', 'cs.AI'), catchup(summary='old'),
+                           retrieved_at=progress['require_fresh_after'] - 100)
+                client = Mock(get=Mock(side_effect=[catchup(summary='new'), catchup(summary='new')]))
+                result = crawl.crawl(DAY, root, root / 'run_metrics', client)
+                self.assertEqual(result['unique_papers'], 1)
+                self.assertEqual(client.get.call_count, 2)
+
+    def test_persistent_fresh_metadata_conflict_stops_after_one_refresh(self, _):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            with patch.object(crawl, 'recall_categories', return_value=['cs.AI', 'cs.CV']):
+                for attempt in (1, 2):
+                    client = Mock(get=Mock(side_effect=[catchup(summary='one'), catchup(summary='two')]))
+                    with self.assertRaises(crawl.MetadataConflictError):
+                        crawl.crawl(DAY, root, root / 'run_metrics', client)
+                    progress = json.loads((root / f'run_metrics/{DAY}-crawl-progress.json').read_text())
+                    self.assertEqual(progress['metadata_refresh_attempts'], attempt)
+                    self.assertEqual(progress['retryable'], attempt == 1)
+
+    def test_newest_progress_audit_wins_across_recovery_bundles(self, _):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            archives = []
+            for index, recorded_at in enumerate(('2026-11-03T00:00:00+00:00', '2026-11-05T00:00:00+00:00')):
+                data = root / f'data-{index}'
+                path = data / f'run_metrics/{DAY}-crawl-progress.json'
+                path.parent.mkdir(parents=True)
+                path.write_text(json.dumps(dict(target_date=DAY, recorded_at=recorded_at, version=index)))
+                bundle = root / f'bundle-{index}'
+                save_bundle(data, root / 'stage', bundle, DAY)
+                archive = root / f'bundle-{index}.zip'
+                with zipfile.ZipFile(archive, 'w') as stream:
+                    for file in bundle.rglob('*'):
+                        if file.is_file():
+                            stream.write(file, str(file.relative_to(bundle)))
+                archives.append(archive)
+            for archive in (archives[0], archives[1], archives[0]):
+                restore_zip(archive, root / 'restored')
+            progress = json.loads((root / f'restored/run_metrics/{DAY}-crawl-progress.json').read_text())
+            self.assertEqual(progress['version'], 1)
+
     def test_count_failure_preserves_html_counts_and_requires_delayed_retry(self, _):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

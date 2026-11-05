@@ -63,6 +63,16 @@ def restore_zip(archive, data):
             if name.startswith(('data/ai_cache/', 'data/crawl_cache/', 'data/run_metrics/')) or re.fullmatch(r'data/\d{4}-\d{2}-\d{2}\.jsonl', name):
                 destination = data / path.relative_to('data')
                 if destination.exists():
+                    if name.startswith('data/run_metrics/') and name.endswith('-crawl-progress.json'):
+                        incoming = json.loads(content)
+                        try:
+                            existing = json.loads(destination.read_text())
+                            if existing.get('recorded_at', '') >= incoming.get('recorded_at', ''):
+                                continue
+                        except (ValueError, AttributeError):
+                            pass
+                        destination.write_bytes(content)
+                        continue
                     if not name.startswith('data/crawl_cache/'):
                         continue
                     # The data directory or an earlier bundle may contain an
@@ -84,7 +94,8 @@ def restore_zip(archive, data):
 def restore_diagnostic_zip(archive, data, day):
     # Only a fully revalidated category with a Replacement-only warning can be
     # promoted. Raw diagnostic HTML is otherwise never treated as recovery data.
-    from scripts.crawl_dated import CACHE_MAX_AGE, PageCache, category_catchup
+    from scripts.crawl_dated import CACHE_MAX_AGE, PageCache, category_catchup, refresh_requirement
+    fresh_after = refresh_requirement(data, day).get('require_fresh_after', 0)
     restored = 0
     with zipfile.ZipFile(archive) as bundle:
         for name in bundle.namelist():
@@ -96,6 +107,8 @@ def restore_diagnostic_zip(archive, data, day):
                     or not re.fullmatch(r'[a-z]+\.[A-Za-z]+', category)):
                 continue
             retrieved_at = datetime.fromisoformat(report['recorded_at']).timestamp()
+            if retrieved_at < fresh_after:
+                continue
             if not 0 <= time.time() - retrieved_at <= CACHE_MAX_AGE:
                 continue
             pages = {}
@@ -155,6 +168,11 @@ def restore_remote(data, repository, date=''):
         except (ValueError, KeyError, OSError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
             print(f'Skipped unusable recovery artifact: {type(error).__name__}', flush=True)
     print(f'Recovery artifacts restored: {restored}', flush=True)
+    from scripts.crawl_dated import discard_stale_pages, refresh_requirement
+    for recovered_date in set(recovered_runs.values()):
+        refresh = refresh_requirement(data, recovered_date)
+        if refresh:
+            discard_stale_pages(data, recovered_date, refresh['require_fresh_after'])
     for artifact in all_artifacts:
         recovered_date = recovered_runs.get(artifact.get('workflow_run', {}).get('id'))
         if not recovered_date or not artifact['name'].startswith('crawl-diagnostics-'):

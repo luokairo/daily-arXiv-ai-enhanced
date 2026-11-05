@@ -36,6 +36,44 @@ class CountMismatchError(ValueError):
         super().__init__(f"{message}: {json.dumps(counts, sort_keys=True)}")
 
 
+class MetadataConflictError(ValueError):
+    def __init__(self, previous, current):
+        self.versions = dict(previous=previous, current=current)
+        super().__init__(f"Metadata changed across category snapshots: {current['id']}")
+
+
+def refresh_requirement(directory, day, audit_directory=None):
+    candidates = [directory / 'run_metrics' / f'{day}-crawl-progress.json']
+    if audit_directory is not None:
+        candidates.append(audit_directory / f'{day}-crawl-progress.json')
+    rows = []
+    for path in candidates:
+        try:
+            row = json.loads(path.read_text())
+            if row.get('target_date') == day:
+                rows.append(row)
+        except (OSError, ValueError, AttributeError):
+            pass
+    if not rows:
+        return {}
+    row = max(rows, key=lambda item: item.get('recorded_at', ''))
+    deadline = row.get('require_fresh_after')
+    if not deadline and row.get('error', '').startswith('Metadata changed across category snapshots: '):
+        deadline = datetime.fromisoformat(row['recorded_at']).timestamp()
+    return dict(require_fresh_after=deadline,
+                metadata_refresh_attempts=row.get('metadata_refresh_attempts', 1 if deadline else 0)) if deadline else {}
+
+
+def discard_stale_pages(directory, day, fresh_after):
+    for path in (directory / 'crawl_cache' / day).rglob('page-*.json'):
+        try:
+            if json.loads(path.read_text()).get('retrieved_at', 0) >= fresh_after:
+                continue
+        except (OSError, ValueError, AttributeError):
+            pass
+        path.unlink(missing_ok=True)
+
+
 def text(value):
     return re.sub(r"\s+", " ", value or "").strip()
 
@@ -379,6 +417,7 @@ def crawl(day, directory, audit_directory, client=None):
         raise ValueError("No configured categories")
     client = client or Client()
     counts = {}
+    refresh = {}
     cache_directory = directory / "crawl_cache"
     try:
         if not day:
@@ -386,6 +425,10 @@ def crawl(day, directory, audit_directory, client=None):
             _, groups = parse_listing(client.get(f"https://arxiv.org/list/{categories[0]}/pastweek?skip=0&show=25"))
             day = max(groups)
         print(f"Selected announcement date: {day}; categories: {', '.join(categories)}", flush=True)
+        refresh = refresh_requirement(directory, day, audit_directory)
+        if refresh:
+            discard_stale_pages(directory, day, refresh['require_fresh_after'])
+            print(f'Metadata conflict recovery: using only pages fetched after {refresh["require_fresh_after"]}', flush=True)
         # Date selection enables recovery on failure; paper_count remains unset
         # until all categories have been verified. This is not a success signal.
         if os.getenv("GITHUB_OUTPUT"):
@@ -400,7 +443,7 @@ def crawl(day, directory, audit_directory, client=None):
                 for pid, paper in category_papers.items():
                     if pid in papers:
                         if papers[pid]['title'] != paper['title'] or papers[pid]['summary'] != paper['summary']:
-                            raise ValueError(f"Metadata changed across category snapshots: {pid}")
+                            raise MetadataConflictError(papers[pid], paper)
                         papers[pid]['announcement_categories'].append(category)
                     else:
                         papers[pid] = paper
@@ -409,7 +452,13 @@ def crawl(day, directory, audit_directory, client=None):
         if isinstance(exc, ValueError) and not isinstance(exc, CountMismatchError) and day:
             shutil.rmtree(cache_directory / day, ignore_errors=True)
         status = getattr(getattr(exc, "response", None), "status_code", None)
+        if isinstance(exc, MetadataConflictError):
+            refresh = dict(require_fresh_after=time.time(),
+                           metadata_refresh_attempts=refresh.get('metadata_refresh_attempts', 0) + 1)
+            atomic_write(audit_directory.parent / 'crawl_diagnostics' / day / 'metadata-conflict.json',
+                         json.dumps(exc.versions, ensure_ascii=False, indent=2) + '\n')
         retryable = (isinstance(exc, (CountMismatchError, requests.Timeout, requests.ConnectionError)) or
+                     (isinstance(exc, MetadataConflictError) and refresh['metadata_refresh_attempts'] <= 1) or
                      status == 429 or (status is not None and 500 <= status < 600))
         retry_not_before = max(time.time() + 1800,
                                client.retry_not_before if isinstance(client, Client) else 0)
@@ -418,7 +467,8 @@ def crawl(day, directory, audit_directory, client=None):
                         failed_url=getattr(client, "current_url", None) if isinstance(client, Client) else None,
                         error_type=type(exc).__name__, error=str(exc),
                         http_status=status, retryable=retryable,
-                        cooldown_scope='date' if isinstance(exc, CountMismatchError) else 'host',
+                        cooldown_scope='date' if isinstance(exc, (CountMismatchError, MetadataConflictError)) else 'host',
+                        **refresh,
                         count_details=getattr(exc, 'counts', None),
                         diagnostic_path=getattr(exc, 'diagnostic_path', None),
                         retry_not_before=retry_not_before if retryable else None,

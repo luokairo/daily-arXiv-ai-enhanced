@@ -75,6 +75,19 @@ class ReplacementCountTests(unittest.TestCase):
 
 
 class DiagnosticRestoreTests(unittest.TestCase):
+    def test_known_metadata_conflict_blocks_old_diagnostic_promotion(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            html = page([catchup(), catchup(kind='Replacement', ids=('2601.10001', '2601.10002'), expected=1)], 2)
+            archive, _ = self.archive(root, html)
+            progress = root / 'data/run_metrics/2026-09-30-crawl-progress.json'
+            progress.parent.mkdir(parents=True)
+            progress.write_text(json.dumps(dict(target_date='2026-09-30',
+                recorded_at=datetime.now(timezone.utc).isoformat(),
+                error='Metadata changed across category snapshots: 2609.10001')))
+            self.assertEqual(restore_diagnostic_zip(archive, root / 'data', '2026-09-30'), 0)
+            self.assertFalse((root / 'data/crawl_cache').exists())
+
     def archive(self, root, html, age=2):
         retrieved = datetime.now(timezone.utc) - timedelta(days=age)
         url = 'https://arxiv.org/catchup/cs.CV/2026-09-30?abs=True&page=1'
