@@ -10,8 +10,8 @@ on:
     # Refresh the cron entry after scheduled runs stopped appearing in October 2026.
     # Process the latest published announcement, retaining its actual date.
     - cron: "37 17 * * *"
-    # Retry only unresolved transient crawl failures, at 03:17 and 05:17 Beijing.
-    # The planner honors Retry-After and skips these slots after a complete crawl.
+    # Retry unresolved crawl or publication failures at 03:17 and 05:17 Beijing.
+    # The planner honors Retry-After and checks for published reports.
     - cron: "17 19 * * *"
     - cron: "17 21 * * *"
   workflow_dispatch:
@@ -257,6 +257,8 @@ jobs:
       if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
         .venv/bin/python scripts/publish_staged.py --source "$AI_OUTPUT_DIR" --destination data
+        # Remove diagnostics inherited from older data publications before staging.
+        rm -rf data/crawl_diagnostics
 
     - name: Update file list
       if: steps.dedup_check.outputs.has_new_content == 'true'
@@ -448,6 +450,8 @@ jobs:
         mkdir -p data assets
         cp -r /tmp/data_files/data/* data/ 2>/dev/null || true
         cp /tmp/data_files/assets/file-list.txt assets/ 2>/dev/null || true
+        # The data checkout may contain legacy diagnostics. Stage their removal.
+        rm -rf data/crawl_diagnostics
         
         # 只添加数据文件 / Only add data files
         git add data 2>/dev/null || true

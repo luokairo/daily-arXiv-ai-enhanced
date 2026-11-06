@@ -2,18 +2,21 @@
 
 The daily workflow still selects the latest actual arXiv announcement at
 01:37 Asia/Shanghai. Additional retry checks run at 03:17 and 05:17. GitHub may
-delay scheduled runs. Each retry check selects the oldest unresolved transient
-crawl failure from the last 14 days; when none is eligible, the build is skipped.
+delay scheduled runs. Each retry check selects an unresolved transient crawl
+failure or a completed crawl with an unpublished report from the last 14 days.
+When none is eligible, the build is skipped.
 Eligible dates are ordered by their last attempt time, then announcement date,
 so a repeatedly failing date cannot monopolize all retry slots.
 
-The planner reads the small `selection-audit-*` artifacts from `main`. A newer
-complete crawl closes that date's pending retry. Timeouts, connection failures,
+The planner reads the small `selection-audit-*` artifacts from `main` and checks
+the `data` branch for both the dated Markdown and enhanced JSONL. A completed
+crawl with papers remains eligible until both files are published. A verified
+empty announcement needs no report. Timeouts, connection failures,
 HTTP 429 and HTTP 5xx are eligible. Authentication, parsing, date and
 metadata validation failures require investigation instead of automatic retries.
-Failed date discovery can retry latest-date discovery. AI-stage failures are
-outside this crawl retry policy. Both scheduled retry slots retain the existing
-DeepSeek off-peak guard.
+Failed date discovery can retry latest-date discovery. Runs that fail after
+crawling can restore the verified snapshot and completed AI calls. Both scheduled
+retry slots retain the existing DeepSeek off-peak guard.
 
 Declared-versus-actual count mismatches are eligible for at most three delayed
 retries per announcement after the initial failure. The planner counts failed
@@ -32,6 +35,8 @@ artifact for 14 days. Diagnostic pages can be restored as dated cache only when
 the entire archived category passes current validation and has a Replacement-only
 count warning. The original retrieval time is preserved. Incomplete categories,
 wrong dates and invalid metadata are never promoted or published.
+Raw diagnostics stay in Actions artifacts. Publication excludes `crawl_diagnostics/`
+and removes older copies from the `data` branch.
 
 If overlapping categories disagree on a paper's title or abstract, both versions
 are saved under `metadata/<id>.json`. The crawler requests the paper's official

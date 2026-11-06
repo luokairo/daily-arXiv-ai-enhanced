@@ -1,8 +1,8 @@
-"""Select an unresolved transient crawl failure for the delayed schedules.
+"""Select an unresolved crawl or publication failure for the delayed schedules.
 
 Read the small selection-audit artifacts, not the multi-megabyte recovery bundles.
 Two daily retry slots bound traffic and runner usage; no runner sleeps for hours.
-The newest audit for each announcement wins, so a complete crawl closes its retry.
+Use the newest audit and the published files to determine whether a date is done.
 """
 import io
 import json
@@ -32,6 +32,25 @@ def read_audits(artifact):
                 if re.fullmatch(r'(?:run_metrics/)?(?:\d{4}-\d{2}-\d{2}|latest)-crawl(?:-progress)?\.json', name)]
 
 
+def read_published_dates():
+    ref = 'refs/heads/data'
+    if not subprocess.check_output(['git', 'ls-remote', '--heads', 'origin', ref]):
+        return set()
+    # Fetch tree metadata only. The planner does not need report or cache blobs.
+    subprocess.run(['git', 'fetch', '--no-tags', '--depth=1', '--filter=blob:none', 'origin', ref], check=True)
+    if not subprocess.check_output(['git', 'ls-tree', '-d', 'FETCH_HEAD', '--', 'data']):
+        return set()
+    entries = subprocess.check_output(['git', 'ls-tree', '-z', 'FETCH_HEAD:data'], text=True)
+    files = set()
+    for entry in entries.split('\0')[:-1]:
+        attributes, name = entry.split('\t', 1)
+        if attributes.split()[1] == 'blob':
+            files.add(name)
+    return {match[1] for name in files
+            if (match := re.fullmatch(r'(\d{4}-\d{2}-\d{2})_AI_enhanced_.+\.jsonl', name))
+            and f'{match[1]}.md' in files}
+
+
 def count_mismatch(audit):
     return (audit.get('error_type') == 'CountMismatchError' or
             (audit.get('error_type') == 'ValueError'
@@ -49,7 +68,7 @@ def transient(audit):
                 and re.search(r'\b(?:429|5\d\d)\b', audit.get('error', '')) is not None))
 
 
-def choose_retry(artifacts, load_audits, now, requested_date=None):
+def choose_retry(artifacts, load_audits, now, requested_date=None, published_dates=()):
     seen, pending = set(), []
     count_failures, closed, count_candidates = {}, set(), set()
     cooldown = 0
@@ -79,15 +98,20 @@ def choose_retry(artifacts, load_audits, now, requested_date=None):
             seen.add(day)
             if audit.get('status') == 'complete':
                 seen.add('')  # A later dated crawl also resolves discovery failures.
+                if day and day not in published_dates and audit.get('unique_papers') != 0:
+                    # The crawl audit precedes report publication. A failed
+                    # later step leaves a recoverable, unpublished date.
+                    pending.append((day, timestamp(artifact['created_at']), 0))
                 continue
             if audit.get('status') != 'failed' or not transient(audit):
                 continue
             deadline = audit.get('retry_not_before') or timestamp(artifact['created_at']) + 1800
             if audit.get('cooldown_scope', 'date' if count_mismatch(audit) else 'host') == 'host':
                 cooldown = max(cooldown, deadline)
-            pending.append((day, timestamp(artifact['created_at']), deadline))
-            if count_mismatch(audit):
-                count_candidates.add(day)
+            if day not in published_dates:
+                pending.append((day, timestamp(artifact['created_at']), deadline))
+                if count_mismatch(audit):
+                    count_candidates.add(day)
     # A server cooldown applies to the host, including retries for other dates.
     if cooldown > now:
         print(f'arXiv host cooldown active until {datetime.fromtimestamp(cooldown, timezone.utc).isoformat()}; deferring crawl.')
@@ -107,7 +131,7 @@ def choose_retry(artifacts, load_audits, now, requested_date=None):
     return min(eligible)[1] if eligible else None
 
 
-def plan(event, requested_date, artifacts=None, now=None):
+def plan(event, requested_date, artifacts=None, now=None, published_dates=()):
     schedule = event.get('schedule')
     if artifacts is None:
         repository = os.environ['GITHUB_REPOSITORY']
@@ -115,8 +139,11 @@ def plan(event, requested_date, artifacts=None, now=None):
             'gh', 'api', '--paginate', '--slurp',
             f'repos/{repository}/actions/artifacts?per_page=100'], text=True))
         artifacts = [artifact for page in pages for artifact in page['artifacts']]
+        if schedule in RETRY_SCHEDULES:
+            published_dates = read_published_dates()
     return choose_retry(artifacts, read_audits, time.time() if now is None else now,
-                        requested_date=None if schedule in RETRY_SCHEDULES else requested_date)
+                        requested_date=None if schedule in RETRY_SCHEDULES else requested_date,
+                        published_dates=published_dates)
 
 
 def main():

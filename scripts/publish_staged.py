@@ -16,6 +16,8 @@ def publish(source, destination):
         if not path.is_file():
             continue
         relative = path.relative_to(source)
+        if relative.parts[0] == 'crawl_diagnostics':
+            continue
         content = path.read_text(encoding="utf-8")
         if path.suffix == ".json":
             json.loads(content)

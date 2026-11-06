@@ -1,7 +1,8 @@
 import unittest
 from datetime import datetime, timezone
+from unittest.mock import patch
 
-from scripts.plan_crawl_retry import DAILY_SCHEDULE, RETRY_SCHEDULES, choose_retry, plan
+from scripts.plan_crawl_retry import DAILY_SCHEDULE, RETRY_SCHEDULES, choose_retry, plan, read_published_dates
 
 
 NOW = datetime(2026, 11, 2, tzinfo=timezone.utc).timestamp()
@@ -17,18 +18,34 @@ def failed(day='2026-10-30', **extra):
 
 
 class RetryPlanTests(unittest.TestCase):
-    def select(self, artifacts, audits, now=NOW):
-        return choose_retry(artifacts, lambda item: audits[item['id']], now)
+    def select(self, artifacts, audits, now=NOW, published_dates=()):
+        return choose_retry(artifacts, lambda item: audits[item['id']], now, published_dates=published_dates)
 
     def test_retries_legacy_timeout_and_rate_limit(self):
         for audit in (failed(), dict(status='failed', target_date='2026-10-30',
                                     error_type='HTTPError', error='429 Client Error')):
             self.assertEqual(self.select([artifact(1)], {1: [audit]}), '2026-10-30')
 
-    def test_success_closes_failure_even_when_snapshot_retrieved_earlier(self):
+    def test_published_report_closes_failure_even_when_snapshot_retrieved_earlier(self):
         audits = {1: [failed()], 2: [dict(status='complete', target_date='2026-10-30',
                                          retrieved_at='2026-10-30T00:00:00Z')]}
-        self.assertIsNone(self.select([artifact(1, '2026-10-31'), artifact(2)], audits))
+        self.assertIsNone(self.select([artifact(1, '2026-10-31'), artifact(2)], audits,
+                                      published_dates={'2026-10-30'}))
+
+    def test_completed_crawl_without_published_report_stays_eligible(self):
+        audits = {1: [dict(status='complete', target_date='2026-10-30', unique_papers=557)]}
+        self.assertEqual(self.select([artifact(1)], audits), '2026-10-30')
+        self.assertIsNone(self.select([artifact(1)], audits, published_dates={'2026-10-30'}))
+        audits[1][0]['unique_papers'] = 0
+        self.assertIsNone(self.select([artifact(1)], audits))
+
+    def test_published_dates_require_markdown_and_enhanced_jsonl(self):
+        files = ['2026-10-28.md', '2026-10-29_AI_enhanced_Chinese.jsonl',
+                 '2026-10-30.md', '2026-10-30_AI_enhanced_Chinese.jsonl', '2026-10-29.jsonl']
+        tree = ''.join(f'100644 blob oid\t{name}\0' for name in files)
+        with patch('scripts.plan_crawl_retry.subprocess.run'), patch(
+                'scripts.plan_crawl_retry.subprocess.check_output', side_effect=[b'data ref', b'data tree', tree]):
+            self.assertEqual(read_published_dates(), {'2026-10-30'})
 
     def test_count_mismatch_allows_three_delayed_retries_then_stops(self):
         artifacts = [dict(artifact(i), created_at=f'2026-11-01T0{i}:00:00Z') for i in range(1, 5)]
@@ -79,7 +96,8 @@ class RetryPlanTests(unittest.TestCase):
     def test_discovery_failure_retries_latest_until_dated_success(self):
         self.assertEqual(self.select([artifact(1)], {1: [failed(None)]}), '')
         self.assertIsNone(self.select([artifact(1, '2026-10-31'), artifact(2)],
-                                    {1: [failed(None)], 2: [dict(status='complete', target_date='2026-10-30')]}))
+                                    {1: [failed(None)], 2: [dict(status='complete', target_date='2026-10-30')]},
+                                    published_dates={'2026-10-30'}))
 
     def test_daily_and_manual_runs_are_unaffected_and_empty_retry_skips(self):
         self.assertEqual(plan({'schedule': DAILY_SCHEDULE}, '', artifacts=[], now=NOW), '')

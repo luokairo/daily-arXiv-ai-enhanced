@@ -510,8 +510,13 @@ class DeepReadTests(IsolatedTest):
             module.publish(stage, target)
         self.assertEqual((target / "taxonomy.json").read_text(), "old")
         (stage / "2026-10-01_AI_enhanced_Chinese.jsonl").write_text("")
+        diagnostics = stage / "crawl_diagnostics" / "2026-10-01" / "metadata"
+        diagnostics.mkdir(parents=True)
+        (diagnostics / "diagnostic.json").write_text("diagnostic data outside the publication batch")
+        (diagnostics / "page.html").write_text("<html>arXiv source</html>")
         module.publish(stage, target)
         self.assertEqual((target / "taxonomy.json").read_text(), "{}")
+        self.assertFalse((target / "crawl_diagnostics").exists())
 
 
 class SDKIntegrationTests(IsolatedTest):
