@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "研究三角网格地形上的RRT*路径规划，修正弦边代价偏差以获得精确测地线长度路径。", "reason": "Motion planning algorithm (RRT*) on triangle-mesh terrain; no world model, video, or visual representation contribution.", "personal_relevance_score": 4.0, "research_value_score": 12.0}}

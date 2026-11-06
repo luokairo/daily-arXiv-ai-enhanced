@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "target_date": "2026-11-05",
+  "date_basis": "arxiv_announcement_listing",
+  "metadata_basis": "current_available_version",
+  "retrieved_at": "2026-11-05T22:50:46.523902+00:00",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "category_counts": {
+    "cs.AI": {
+      "count": 219,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.AI/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 142
+    },
+    "cs.CL": {
+      "count": 91,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CL/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 69
+    },
+    "cs.CV": {
+      "count": 149,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.CV/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 93
+    },
+    "cs.LG": {
+      "count": 214,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.LG/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 188
+    },
+    "cs.MM": {
+      "count": 6,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.MM/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 1
+    },
+    "cs.RO": {
+      "count": 62,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.RO/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 40
+    },
+    "cs.SD": {
+      "count": 11,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.SD/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 8
+    },
+    "eess.AS": {
+      "count": 7,
+      "listing_urls": [
+        "https://arxiv.org/catchup/eess.AS/2026-11-05?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 6
+    }
+  },
+  "unique_papers": 557,
+  "metadata_reconciliations": {},
+  "raw_sha256": "cfc42c3f4c55373dd9432f54e70ddd452453b6a4f245dc62de8c3e07f4bdf28c"
+}

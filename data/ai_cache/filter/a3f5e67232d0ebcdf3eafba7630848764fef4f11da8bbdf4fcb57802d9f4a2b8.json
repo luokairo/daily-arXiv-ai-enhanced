@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出基于骨架几何与物理约束的天文引力弧检测框架，与所列方向无关。", "reason": "Astronomical arc detection via skeleton geometry and circle fitting; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 10.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "构建临床试验结果模拟器的干预盲测基准，评估模型是否真正利用干预信息。", "reason": "Clinical trial outcome simulation benchmark; no video/multimodal world model, representation learning, or generation contribution despite \"world model\" framing.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向风电场的全局时序融合Transformer短期功率预测，与视频/多模态表征及生成方向无关。", "reason": "Wind power time-series forecasting with TFT; no video/multimodal world model, visual representation, generation, or audio-video contribution.", "personal_relevance_score": 3.0, "research_value_score": 10.0}}
