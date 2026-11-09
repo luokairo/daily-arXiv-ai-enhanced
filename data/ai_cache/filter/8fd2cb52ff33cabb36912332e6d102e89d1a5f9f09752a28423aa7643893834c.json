@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "M/EEG 贝叶斯源成像的后验不确定性校准框架，与视频/多模态世界模型及表征学习无直接关联。", "reason": "Bayesian M/EEG source imaging uncertainty calibration; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 4.0, "research_value_score": 12.0}}

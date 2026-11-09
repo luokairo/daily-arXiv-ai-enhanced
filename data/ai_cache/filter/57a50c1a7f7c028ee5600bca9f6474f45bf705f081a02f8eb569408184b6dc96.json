@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出交互感知的多智能体编排策略优化，分解并优化决策间高阶交互项。", "reason": "LLM multi-agent orchestration policy optimization; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 5.0, "research_value_score": 25.0}}

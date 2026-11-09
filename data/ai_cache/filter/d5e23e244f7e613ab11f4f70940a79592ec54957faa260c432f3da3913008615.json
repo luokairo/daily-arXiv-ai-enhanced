@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出无验证器的测试时自博弈方法，通过非对称自博弈在代码任务上扩展推理算力。", "reason": "Test-time self-play for LLM code reasoning without a verifier; no video, multimodal, representation, or continuous-language contribution.", "personal_relevance_score": 8.0, "research_value_score": 30.0}}

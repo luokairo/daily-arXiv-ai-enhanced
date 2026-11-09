@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出局部切片Wasserstein失真与光流残差约束，改进过拟合神经视频编码的感知质量与时间一致性。", "reason": "Neural video coding with perceptual distortion metrics; no contribution to world models, video generation, or visual representation learning.", "personal_relevance_score": 12.0, "research_value_score": 25.0}}

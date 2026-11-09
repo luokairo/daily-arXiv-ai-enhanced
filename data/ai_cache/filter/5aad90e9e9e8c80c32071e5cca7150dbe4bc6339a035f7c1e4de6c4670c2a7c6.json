@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出共享 KV 状态 DAG 的多智能体强化学习框架，与视觉表征或世界模型无关。", "reason": "Multi-agent LLM RL with shared KV cache and DAG-GRPO training; no visual/video representation, world model, or generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 30.0}}

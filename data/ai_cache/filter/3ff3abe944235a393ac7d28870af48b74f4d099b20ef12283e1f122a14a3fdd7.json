@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出有界递归自我改进框架，用于长程角色扮演对话的记忆与提示策略修订，属纯文本对话系统。", "reason": "Text-only role-playing dialogue prompt/memory policy framework; no visual, video, world-model, or multimodal representation contribution.", "personal_relevance_score": 6.0, "research_value_score": 18.0}}

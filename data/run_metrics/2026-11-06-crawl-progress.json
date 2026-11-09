@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "target_date": "2026-11-06",
+  "categories": [
+    "cs.AI",
+    "cs.CL",
+    "cs.CV",
+    "cs.LG",
+    "cs.MM",
+    "cs.RO",
+    "cs.SD",
+    "eess.AS"
+  ],
+  "completed_categories": {
+    "cs.AI": {
+      "count": 198,
+      "listing_urls": [
+        "https://arxiv.org/catchup/cs.AI/2026-11-06?abs=True&page=1"
+      ],
+      "warnings": [],
+      "replacements_excluded": 163
+    }
+  },
+  "failed_url": "https://arxiv.org/catchup/cs.CL/2026-11-06?abs=True&page=1",
+  "error_type": "ReadTimeout",
+  "error": "HTTPSConnectionPool(host='arxiv.org', port=443): Read timed out. (read timeout=90)",
+  "http_status": null,
+  "retryable": true,
+  "cooldown_scope": "host",
+  "count_details": null,
+  "diagnostic_path": null,
+  "retry_not_before": 1794182324.4442647,
+  "recorded_at": "2026-11-08T22:58:44.444318+00:00"
+}

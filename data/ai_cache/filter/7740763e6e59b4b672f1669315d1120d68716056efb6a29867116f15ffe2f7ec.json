@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出单调有限时域集合递归的离线安全强化学习可行性核学习方法，用于动作认证。", "reason": "Offline safe RL learning Hamilton-Jacobi viability sets; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 30.0}}
