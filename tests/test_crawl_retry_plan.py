@@ -141,12 +141,27 @@ class RetryPlanTests(unittest.TestCase):
                 at_peak = datetime(2026, 11, 2, 1, tzinfo=timezone.utc).timestamp()
                 at_noon = datetime(2026, 11, 2, 4, tzinfo=timezone.utc).timestamp()
                 self.assertIsNone(plan(event, '', artifacts=[artifact(1)], now=at_peak, decision=decision))
-                load.assert_not_called()
+                load.assert_called_once()
                 self.assertEqual(decision['reason'], 'off_peak_window')
                 self.assertEqual(decision['retry_not_before'], at_noon)
                 self.assertEqual(plan(event, '', artifacts=[artifact(1)], now=at_noon), '2026-10-30')
                 self.assertIsNone(plan(event, '', artifacts=[artifact(1)], now=at_noon,
                                        published_dates={'2026-10-30'}))
+
+    def test_fractional_allowed_start_never_becomes_a_false_deferral(self):
+        environment = dict(ENFORCE_DEEPSEEK_OFF_PEAK='true', OPENAI_BASE_URL='https://api.deepseek.com')
+        # Real timestamp from the first production closure check. Conversion to
+        # datetime rounds upward, but this is still well inside the noon window.
+        started = 1794203066.0502079
+        audit = dict(status='complete', target_date='2026-10-30', unique_papers=1)
+        attempt = dict(artifact(1), created_at='2026-11-09T05:00:00Z')
+        with patch.dict(os.environ, environment), patch('scripts.plan_crawl_retry.read_audits', return_value=[audit]):
+            self.assertEqual(plan({'workflow_run': {}}, '', [attempt], started), '2026-10-30')
+            # Already-published work is resolved even after the window closes.
+            decision = {}
+            self.assertIsNone(plan({'workflow_run': {}}, '', [attempt], started + 3600,
+                                   published_dates={'2026-10-30'}, decision=decision))
+            self.assertEqual(decision['reason'], 'no_pending_report')
 
     def test_pipeline_deferral_overrides_complete_crawl_until_next_window(self):
         deferred = dict(audit_type='pipeline', status='deferred', target_date='2026-10-30',
@@ -157,6 +172,17 @@ class RetryPlanTests(unittest.TestCase):
         self.assertEqual(self.select([artifact(1)], {1: rows}, now=NOW + 3600), '2026-10-30')
         deferred.update(status='failed', retryable=False, error_type='ProcessingError')
         self.assertIsNone(self.select([artifact(1)], {1: rows}, now=NOW + 3600))
+
+    def test_audit_download_crossing_peak_rechecks_time_before_build(self):
+        environment = dict(ENFORCE_DEEPSEEK_OFF_PEAK='true', OPENAI_BASE_URL='https://api.deepseek.com')
+        before = datetime(2026, 11, 2, 0, 44, tzinfo=timezone.utc).timestamp()
+        after = datetime(2026, 11, 2, 0, 46, tzinfo=timezone.utc).timestamp()
+        row = dict(status='complete', target_date='2026-10-30', unique_papers=1)
+        decision = {}
+        with patch.dict(os.environ, environment), patch('scripts.plan_crawl_retry.read_audits', return_value=[row]), \
+                patch('scripts.plan_crawl_retry.time.time', side_effect=[before, after]):
+            self.assertIsNone(plan({'workflow_run': {}}, '', [artifact(1)], decision=decision))
+        self.assertEqual(decision['reason'], 'off_peak_window')
 
     def test_daily_discovery_skipped_at_peak_survives_until_hourly_window(self):
         environment = dict(ENFORCE_DEEPSEEK_OFF_PEAK='true', OPENAI_BASE_URL='https://api.deepseek.com')

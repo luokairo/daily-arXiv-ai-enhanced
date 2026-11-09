@@ -16,7 +16,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from scripts.run_policy import next_off_peak, scheduled_guard_enabled
+from scripts.run_policy import next_off_peak, off_peak_allowed, scheduled_guard_enabled
 
 
 DAILY_SCHEDULE = '37 17 * * *'
@@ -168,17 +168,8 @@ def plan(event, requested_date, artifacts=None, now=None, published_dates=(), de
     schedule = event.get('schedule')
     automated = bool(schedule or 'workflow_run' in event)
     retry = schedule in RETRY_SCHEDULES or 'workflow_run' in event
+    live_clock = now is None
     now = time.time() if now is None else now
-    # Check the real start time, not the cron's nominal hour. No arXiv requests
-    # or audit downloads are needed while the paid-request window is closed.
-    if automated and scheduled_guard_enabled():
-        allowed_at = next_off_peak(datetime.fromtimestamp(now, timezone.utc)).timestamp()
-        if allowed_at > now:
-            if decision is not None:
-                decision.update(reason='off_peak_window', retry_not_before=allowed_at,
-                                discovery_pending=schedule == DAILY_SCHEDULE)
-            print(f'Automatic processing deferred until {datetime.fromtimestamp(allowed_at, timezone.utc).isoformat()}')
-            return None
     if artifacts is None:
         repository = os.environ['GITHUB_REPOSITORY']
         pages = json.loads(subprocess.check_output([
@@ -187,9 +178,21 @@ def plan(event, requested_date, artifacts=None, now=None, published_dates=(), de
         artifacts = [artifact for page in pages for artifact in page['artifacts']]
         if retry:
             published_dates = read_published_dates()
-    return choose_retry(artifacts, read_audits, now,
-                        requested_date=None if retry else requested_date,
-                        published_dates=published_dates, decision=decision)
+    selected = choose_retry(artifacts, read_audits, now,
+                            requested_date=None if retry else requested_date,
+                            published_dates=published_dates, decision=decision)
+    # Resolve published dates even during peak hours. The remaining work checks
+    # the actual start time, using a boolean policy rather than round-tripping
+    # floating timestamps (which can spuriously move time forward a microsecond).
+    started = datetime.fromtimestamp(time.time() if live_clock else now, timezone.utc)
+    if selected is not None and automated and scheduled_guard_enabled() and not off_peak_allowed(started):
+        allowed_at = next_off_peak(started).timestamp()
+        if decision is not None:
+            decision.update(reason='off_peak_window', retry_not_before=allowed_at,
+                            discovery_pending=schedule == DAILY_SCHEDULE)
+        print(f'Automatic processing deferred until {datetime.fromtimestamp(allowed_at, timezone.utc).isoformat()}')
+        return None
+    return selected
 
 
 def main():
