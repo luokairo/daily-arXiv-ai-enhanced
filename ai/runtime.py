@@ -16,6 +16,9 @@ from langchain_openai import ChatOpenAI
 from openai import APIConnectionError, APITimeoutError
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from scripts.run_policy import off_peak_allowed, next_off_peak
 _LOCK = Lock()
 _METRICS_WRITE_LOCK = Lock()
 _METRICS = {}
@@ -35,14 +38,7 @@ def deepseek_off_peak_allowed(now=None):
     Peak hours are Mon-Fri 01:00-04:00 and 06:00-10:00 UTC. Holidays are
     deliberately treated as ordinary weekdays to avoid calendar dependencies.
     """
-    now = now or datetime.now(timezone.utc)
-    if now.tzinfo is None:
-        raise ValueError("Off-peak checks require a timezone-aware datetime")
-    now = now.astimezone(timezone.utc)
-    if now.weekday() >= 5:
-        return True
-    minute = now.hour * 60 + now.minute
-    return not (45 <= minute < 240 or 345 <= minute < 600)
+    return off_peak_allowed(now or datetime.now(timezone.utc))
 
 
 def check_deepseek_off_peak(stage):
@@ -55,6 +51,12 @@ def check_deepseek_off_peak(stage):
                "Weekday blocked windows: 08:45-12:00 and 13:45-18:00 Asia/Shanghai. "
                "Successful caches are retained; incomplete reports will not be published.")
     print(message, file=sys.stderr, flush=True)
+    state_path = env_value('PIPELINE_STATE_PATH')
+    if state_path:
+        atomic_write(state_path, json.dumps(dict(audit_type='pipeline', status='deferred',
+            target_date=env_value('TARGET_DATE'), phase=env_value('PIPELINE_PHASE'), ai_stage=stage,
+            error_type='OffPeakWindowClosed', retryable=True, cooldown_scope='date',
+            retry_not_before=next_off_peak(now).timestamp(), recorded_at=now.isoformat()), indent=2) + '\n')
     summary = env_value("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as stream:

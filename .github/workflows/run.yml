@@ -10,10 +10,13 @@ on:
     # Refresh the cron entry after scheduled runs stopped appearing in October 2026.
     # Process the latest published announcement, retaining its actual date.
     - cron: "37 17 * * *"
-    # Retry unresolved crawl or publication failures at 03:17 and 05:17 Beijing.
-    # The planner honors Retry-After and checks for published reports.
-    - cron: "17 19 * * *"
-    - cron: "17 21 * * *"
+    # Hourly lightweight checks resume pending dates in the next allowed window.
+    # The planner checks actual start time, publication and host cooldown first.
+    - cron: "17 * * * *"
+  workflow_run:
+    workflows: ["Verify automatic recovery"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       target_date:
@@ -32,6 +35,7 @@ concurrency:
 
 jobs:
   plan:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
     outputs:
       should_run: ${{ steps.plan.outputs.should_run }}
@@ -42,7 +46,31 @@ jobs:
       id: plan
       env:
         GH_TOKEN: ${{ github.token }}
+        ENFORCE_DEEPSEEK_OFF_PEAK: ${{ github.event_name != 'workflow_dispatch' && 'true' || 'false' }}
+        OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+        MODEL_NAME: ${{ vars.MODEL_NAME || 'deepseek-flash' }}
+        DETAIL_MODEL_NAME: ${{ vars.DETAIL_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+        FILTER_MODEL_NAME: ${{ vars.FILTER_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+        IMPORTANCE_MODEL_NAME: ${{ vars.IMPORTANCE_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+        DEEP_READ_MODEL_NAME: ${{ vars.DEEP_READ_MODEL_NAME || vars.MODEL_NAME || 'deepseek-flash' }}
+        SELECTION_MODE: ${{ vars.SELECTION_MODE || 'semantic' }}
+        USE_MODEL_FILTER: ${{ vars.USE_MODEL_FILTER || 'false' }}
+        USE_MODEL_IMPORTANCE: ${{ vars.USE_MODEL_IMPORTANCE || 'false' }}
+        ENABLE_DEEP_READ: ${{ vars.ENABLE_DEEP_READ || 'true' }}
       run: python3 scripts/plan_crawl_retry.py
+    - name: Save automatic resume decision
+      uses: actions/upload-artifact@v4
+      with:
+        name: resume-plan-${{ github.run_id }}
+        path: resume-plan.json
+        retention-days: 14
+    - name: Retain deferred daily discovery for the next hourly check
+      if: steps.plan.outputs.discovery_pending == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: discovery-audit-${{ github.run_id }}
+        path: resume-plan.json
+        retention-days: 14
 
   build:
     needs: plan
@@ -83,7 +111,7 @@ jobs:
       AI_OUTPUT_DIR: /tmp/arxiv-stage
       # Scheduled runs stop new paid requests outside the guarded off-peak window.
       # Manual runs and diagnostics remain unrestricted unless explicitly enabled.
-      ENFORCE_DEEPSEEK_OFF_PEAK: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
+      ENFORCE_DEEPSEEK_OFF_PEAK: ${{ github.event_name != 'workflow_dispatch' && 'true' || 'false' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -134,27 +162,13 @@ jobs:
           echo "skip_reason=no_new_content" >> "$GITHUB_OUTPUT"
         fi
 
-    - name: AI Enhancement Processing
+    - name: Process report or checkpoint low-peak deferral
+      id: processing
       if: steps.dedup_check.outputs.has_new_content == 'true'
-      run: |
-        source .venv/bin/activate
-        today=${{ steps.crawl_step.outputs.crawl_date }}
-        mkdir -p "$AI_OUTPUT_DIR"
-        export AI_METRICS_PATH="$AI_OUTPUT_DIR/enhance-usage.json"
-        echo "开始AI增强处理... / Starting AI enhancement processing..."
-        
-        cd ai
-        export TARGET_DATE="$today"
-        
-        python enhance.py --data ../data/${today}.jsonl
-        
-        # 检查AI处理是否成功 / Check if AI processing was successful
-        if [ $? -ne 0 ]; then
-            echo "AI处理失败 / AI processing failed"
-            exit 1
-        fi
-        echo "AI增强处理完成 / AI enhancement processing completed"
-        
+      env:
+        REPORT_DATE: ${{ steps.crawl_step.outputs.crawl_date }}
+      run: .venv/bin/python scripts/process_report.py --date "$REPORT_DATE"
+
     - name: Save selection audit and usage
       if: always()
       uses: actions/upload-artifact@v4
@@ -164,7 +178,9 @@ jobs:
           /tmp/arxiv-stage/run_metrics/*-selection.json
           /tmp/arxiv-stage/run_metrics/*-crawl.json
           /tmp/arxiv-stage/run_metrics/*-crawl-progress.json
+          /tmp/arxiv-stage/run_metrics/*-pipeline.json
           /tmp/arxiv-stage/enhance-usage.json
+          /tmp/arxiv-stage/deep-read-usage.json
         if-no-files-found: ignore
 
     - name: Save failed crawl pages and count diagnostics
@@ -176,65 +192,6 @@ jobs:
         if-no-files-found: ignore
         retention-days: 14
 
-    - name: Convert to Markdown
-      if: steps.dedup_check.outputs.has_new_content == 'true'
-      run: |
-        source .venv/bin/activate
-        today=${{ steps.crawl_step.outputs.crawl_date }}
-        echo "转换为Markdown格式... / Converting to Markdown format..."
-        
-        # 设置环境变量 / Set environment variables
-        export TARGET_DATE="$today"
-        
-        cd to_md
-        
-        # 使用AI增强文件进行转换 / Use AI enhanced file for conversion
-        AI_FILE="$AI_OUTPUT_DIR/${today}_AI_enhanced_${LANGUAGE}.jsonl"
-        
-        if [ -f "$AI_FILE" ]; then
-            echo "使用AI增强文件进行转换... / Using AI enhanced file for conversion..."
-            python convert.py --data "$AI_FILE"
-        else
-            echo "错误：未找到AI增强文件 / Error: AI enhanced file not found"
-            echo "AI文件: $AI_FILE"
-            exit 1
-        fi
-        
-        # 检查转换是否成功 / Check if conversion was successful
-        if [ $? -ne 0 ]; then
-            echo "Markdown转换失败 / Markdown conversion failed"
-            exit 1
-        fi
-        echo "Markdown转换完成 / Markdown conversion completed"
-
-    - name: Deep Read Top Papers
-      if: steps.dedup_check.outputs.has_new_content == 'true'
-      run: |
-        if [[ ! "${ENABLE_DEEP_READ,,}" =~ ^(1|true|yes)$ ]]; then
-          echo "全文精读已关闭，跳过模型调用 / Deep read disabled, skipping model calls."
-          exit 0
-        fi
-        source .venv/bin/activate
-        today=${{ steps.crawl_step.outputs.crawl_date }}
-        echo "生成重要论文全文精读... / Generating deep reads for top papers..."
-
-        cd ai
-
-        export AI_METRICS_PATH="$AI_OUTPUT_DIR/deep-read-usage.json"
-        AI_FILE="$AI_OUTPUT_DIR/${today}_AI_enhanced_${LANGUAGE}.jsonl"
-        if [ -f "$AI_FILE" ]; then
-          python deep_read.py \
-            --data "$AI_FILE" \
-            --output "$AI_OUTPUT_DIR/deep_reads/${today}.md" \
-            --output-json "$AI_OUTPUT_DIR/deep_reads/${today}.json"
-        else
-          echo "错误：未找到AI增强文件，无法生成精读 / Error: AI enhanced file not found for deep reading"
-          echo "AI文件: $AI_FILE"
-          exit 1
-        fi
-
-        echo "全文精读生成完成 / Deep reads completed"
-        
     # Runner executes always() on normal cancellation; force-killed runners may lose unsent files.
     - name: Prepare recovery bundle
       continue-on-error: true
@@ -254,21 +211,21 @@ jobs:
         retention-days: 14
 
     - name: Publish validated local artifacts
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         .venv/bin/python scripts/publish_staged.py --source "$AI_OUTPUT_DIR" --destination data
         # Remove diagnostics inherited from older data publications before staging.
         rm -rf data/crawl_diagnostics
 
     - name: Update file list
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         echo "更新文件列表... / Updating file list..."
         find data -type f -not -path 'data/ai_cache/*' -not -path 'data/crawl_cache/*' -not -path 'data/run_metrics/*' | sed 's|^data/||' | sort > assets/file-list.txt
         echo "文件列表更新完成 / File list updated"
 
     - name: Generate password hash and inject into config
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         echo "🔐 Generating password hash for authentication..."
 
@@ -303,8 +260,10 @@ jobs:
 
     - name: Summary
       run: |
-        if [ "${{ steps.dedup_check.outputs.has_new_content }}" = "true" ]; then
-          echo "✅ 工作流完成：去重发现新内容并成功处理 / Workflow completed: Smart deduplication found new content and processed successfully"
+        if [ "${{ steps.processing.outputs.report_ready }}" = "true" ]; then
+          echo "Report validated and staged; data-branch publication follows."
+        elif [ "${{ steps.dedup_check.outputs.has_new_content }}" = "true" ]; then
+          echo "Report deferred to the next off-peak window; no report published."
         else
           case "${{ steps.dedup_check.outputs.skip_reason }}" in
             "no_new_content")
@@ -323,7 +282,7 @@ jobs:
         fi
         
     - name: Inject repository info into data-config.js
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         echo "注入仓库信息到 data-config.js... / Injecting repository info into data-config.js..."
         
@@ -345,7 +304,7 @@ jobs:
         fi
 
     - name: Commit code changes to main branch
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         git config --global user.email "${{ vars.EMAIL }}"
         git config --global user.name "${{ vars.NAME || github.repository_owner }}"
@@ -367,7 +326,7 @@ jobs:
         fi
 
     - name: Push code changes to main branch
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         # 设置Git配置以处理自动合并 / Set Git config for automatic merging
         git config pull.rebase true
@@ -390,7 +349,7 @@ jobs:
         done
 
     - name: Prepare data files for data branch
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         echo "准备数据文件... / Preparing data files..."
         today=${{ steps.crawl_step.outputs.crawl_date }}
@@ -408,7 +367,7 @@ jobs:
         echo "数据文件已保存到临时目录 / Data files saved to temporary directory"
 
     - name: Setup and commit to data branch
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         git config --global user.email "${{ vars.EMAIL }}"
         git config --global user.name "${{ vars.NAME || github.repository_owner }}"
@@ -466,7 +425,7 @@ jobs:
         fi
 
     - name: Push data changes to data branch
-      if: steps.dedup_check.outputs.has_new_content == 'true'
+      if: steps.processing.outputs.report_ready == 'true'
       run: |
         # 设置Git配置以处理自动合并 / Set Git config for automatic merging
         git config pull.rebase true

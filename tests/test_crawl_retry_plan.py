@@ -1,4 +1,5 @@
 import unittest
+import os
 from datetime import datetime, timezone
 from unittest.mock import patch
 
@@ -128,6 +129,69 @@ class RetryPlanTests(unittest.TestCase):
             raise ValueError('corrupt audit')
         with self.assertRaises(ValueError):
             choose_retry([artifact(1)], broken, NOW)
+
+    def test_delayed_schedules_and_workflow_completion_wait_then_resume(self):
+        environment = dict(ENFORCE_DEEPSEEK_OFF_PEAK='true', OPENAI_BASE_URL='https://api.deepseek.com',
+                           MODEL_NAME='deepseek-flash')
+        audits = {1: [dict(status='complete', target_date='2026-10-30', unique_papers=553)]}
+        for event in ({'schedule': '17 * * * *'}, {'workflow_run': {'conclusion': 'success'}}):
+            with self.subTest(event=event), patch.dict(os.environ, environment), \
+                    patch('scripts.plan_crawl_retry.read_audits', side_effect=lambda a: audits[a['id']]) as load:
+                decision = {}
+                at_peak = datetime(2026, 11, 2, 1, tzinfo=timezone.utc).timestamp()
+                at_noon = datetime(2026, 11, 2, 4, tzinfo=timezone.utc).timestamp()
+                self.assertIsNone(plan(event, '', artifacts=[artifact(1)], now=at_peak, decision=decision))
+                load.assert_not_called()
+                self.assertEqual(decision['reason'], 'off_peak_window')
+                self.assertEqual(decision['retry_not_before'], at_noon)
+                self.assertEqual(plan(event, '', artifacts=[artifact(1)], now=at_noon), '2026-10-30')
+                self.assertIsNone(plan(event, '', artifacts=[artifact(1)], now=at_noon,
+                                       published_dates={'2026-10-30'}))
+
+    def test_pipeline_deferral_overrides_complete_crawl_until_next_window(self):
+        deferred = dict(audit_type='pipeline', status='deferred', target_date='2026-10-30',
+                        error_type='OffPeakWindowClosed', retryable=True, cooldown_scope='date',
+                        retry_not_before=NOW + 3600)
+        rows = [dict(status='complete', target_date='2026-10-30', unique_papers=553), deferred]
+        self.assertIsNone(self.select([artifact(1)], {1: rows}))
+        self.assertEqual(self.select([artifact(1)], {1: rows}, now=NOW + 3600), '2026-10-30')
+        deferred.update(status='failed', retryable=False, error_type='ProcessingError')
+        self.assertIsNone(self.select([artifact(1)], {1: rows}, now=NOW + 3600))
+
+    def test_daily_discovery_skipped_at_peak_survives_until_hourly_window(self):
+        environment = dict(ENFORCE_DEEPSEEK_OFF_PEAK='true', OPENAI_BASE_URL='https://api.deepseek.com')
+        peak = datetime(2026, 11, 2, 1, tzinfo=timezone.utc).timestamp()
+        noon = datetime(2026, 11, 2, 4, tzinfo=timezone.utc).timestamp()
+        decision = {}
+        with patch.dict(os.environ, environment):
+            self.assertIsNone(plan({'schedule': DAILY_SCHEDULE}, '', artifacts=[], now=peak, decision=decision))
+        self.assertTrue(decision['discovery_pending'])
+        deferred = dict(artifact(1), name='discovery-audit-1', created_at='2026-11-02T01:00:00Z')
+        backfill = dict(artifact(2), created_at='2026-11-02T02:00:00Z')
+        rows = {1: [dict(status='deferred', target_date='', retryable=True, cooldown_scope='date',
+                         retry_not_before=noon)],
+                2: [dict(status='complete', target_date='2026-10-30', unique_papers=1, discovered_latest=False)]}
+        self.assertEqual(self.select([deferred, backfill], rows, noon, published_dates={'2026-10-30'}), '')
+        rows[2][0]['discovered_latest'] = True
+        self.assertIsNone(self.select([deferred, backfill], rows, noon, published_dates={'2026-10-30'}))
+
+    def test_network_backoff_grows_across_runs_and_respects_server_deadline(self):
+        attempts = [dict(artifact(i), created_at=f'2026-11-01T{20+i:02}:00:00Z') for i in range(1, 4)]
+        audits = {i: [failed(retryable=True, cooldown_scope='host', retry_not_before=NOW)] for i in range(1, 4)}
+        decision = {}
+        self.assertIsNone(choose_retry(attempts, lambda a: audits[a['id']], NOW + 7200,
+                                      requested_date='2026-10-30', decision=decision))
+        self.assertEqual(decision['network_failure_streak'], 3)
+        self.assertEqual(decision['retry_not_before'], NOW + 10800)
+        self.assertEqual(self.select(attempts, audits, NOW + 10800), '2026-10-30')
+        audits[3][0]['retry_not_before'] = NOW + 86400
+        self.assertIsNone(self.select(attempts, audits, NOW + 10800))
+
+    def test_complete_crawl_resets_network_streak_for_later_failure(self):
+        attempts = [dict(artifact(i), created_at=f'2026-11-01T{20+i:02}:00:00Z') for i in range(1, 4)]
+        audits = {1: [failed()], 2: [dict(status='complete', target_date='2026-10-30', unique_papers=1)],
+                  3: [failed()]}
+        self.assertEqual(self.select(attempts, audits, NOW), '2026-10-30')
 
 
 if __name__ == '__main__':

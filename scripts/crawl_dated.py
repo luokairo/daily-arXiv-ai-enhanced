@@ -455,6 +455,7 @@ def _verified_snapshot(raw, manifest, day, categories):
 
 
 def crawl(day, directory, audit_directory, client=None):
+    discovered_latest = not day
     if day and (not re.fullmatch(r"\d{4}-\d{2}-\d{2}", day) or date.fromisoformat(day) > datetime.now(timezone.utc).date()):
         raise ValueError("Target must be a valid non-future YYYY-MM-DD announcement date")
     categories = sorted(set(recall_categories(load_directions(os.getenv("DIRECTIONS_CONFIG")))))
@@ -525,12 +526,13 @@ def crawl(day, directory, audit_directory, client=None):
         raise
     if cached:
         content, audit = cached
+        audit = {**audit, 'discovered_latest': discovered_latest}
         print(f"Reusing verified announcement snapshot for {day}", flush=True)
     else:
         ids = sorted(papers)
         print(f"Announcement {day}: {len(ids)} unique papers", flush=True)
         content = "".join(json.dumps(papers[pid], ensure_ascii=False) + "\n" for pid in ids)
-        audit = dict(schema_version=1, status="complete", target_date=day,
+        audit = dict(schema_version=1, status="complete", target_date=day, discovered_latest=discovered_latest,
             date_basis="arxiv_announcement_listing", metadata_basis="current_available_version",
             retrieved_at=datetime.now(timezone.utc).isoformat(), categories=categories,
             category_counts=counts, unique_papers=len(ids),

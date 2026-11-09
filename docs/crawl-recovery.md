@@ -1,10 +1,19 @@
 # Crawl recovery
 
 The daily workflow still selects the latest actual arXiv announcement at
-01:37 Asia/Shanghai. Additional retry checks run at 03:17 and 05:17. GitHub may
+01:37 Asia/Shanghai. Lightweight retry checks run hourly at minute 17. GitHub may
 delay scheduled runs. Each retry check selects an unresolved transient crawl
 failure or a completed crawl with an unpublished report from the last 14 days.
 When none is eligible, the build is skipped.
+The planner checks its actual start time against the same policy used before
+each paid request. Weekday blocked windows remain 08:45–12:00 and 13:45–18:00
+Asia/Shanghai. A delayed automatic run in a blocked window skips the build and
+records `reason=off_peak_window` and `retry_not_before` in `resume-plan-<run_id>`.
+The hourly checks cover the noon and evening windows as well as overnight.
+If the main daily check is delayed into a blocked window before it can discover
+the latest announcement date, a small `discovery-audit-<run_id>` retains that
+intent. An hourly run performs that discovery later; completing an unrelated
+dated backfill does not silently close the discovery task.
 Eligible dates are ordered by their last attempt time, then announcement date,
 so a repeatedly failing date cannot monopolize all retry slots.
 
@@ -16,7 +25,28 @@ HTTP 429 and HTTP 5xx are eligible. Authentication, parsing, date and
 metadata validation failures require investigation instead of automatic retries.
 Failed date discovery can retry latest-date discovery. Runs that fail after
 crawling can restore the verified snapshot and completed AI calls. Both scheduled
-retry slots retain the existing DeepSeek off-peak guard.
+automatic runs retain the existing DeepSeek off-peak guard.
+
+If the window closes during enhancement or deep reading, successful calls remain
+cached. `process_report.py` records the processing phase, AI stage, and next
+allowed time in `<date>-pipeline.json`, returns `report_ready=false`, and skips
+all publication steps. This is a deferral, not a published report or a hard
+failure. The pipeline audit is retained in both the selection audit and recovery
+bundle. It takes precedence over the same run's completed crawl audit when
+planning the next attempt. Configuration, validation, and other unclassified
+processing failures remain red and do not enter an endless automatic retry loop.
+A ready pipeline is closed only when both Markdown and enhanced JSONL appear
+on the remote `data` branch.
+
+`Verify automatic recovery` runs the isolated regression suite on relevant main
+branch changes. Its successful completion automatically triggers this production
+workflow through `workflow_run`, selecting pending dates without a manually
+specified target. This event uses the same guard as scheduled runs. It does not
+trigger itself, and failed or foreign-repository verification runs cannot start
+the build. The regression suite exercises an automatic run crossing into peak
+hours, refusing partial publication, restoring the verified raw snapshot and AI
+cache on a fresh runner, resuming in the next window, and closing the pending
+date only after report publication. Providers and network are isolated in tests.
 
 Declared-versus-actual count mismatches are eligible for at most three delayed
 retries per announcement after the initial failure. The planner counts failed
@@ -58,7 +88,11 @@ fresh pages remains fatal. Paper metadata equality is never relaxed.
 HTTP 5xx retries remain bounded to five attempts and a 15-minute request budget.
 A 429 stops the current fetch immediately. Two transport failures also stop it,
 discarding failed pooled connections before retrying. Such failures record a
-host cooldown of at least one hour, extended to respect `Retry-After`. Count
+host cooldown of at least one hour, extended to respect `Retry-After`. The planner
+uses consecutive failed crawl audits to extend the wait across runs to 1, 2, 4,
+then 8 hours; a verified complete crawl resets the streak. The effective deadline
+and streak are saved in the resume decision artifact. A server deadline is never
+shortened. Count
 failures have a per-date cooldown of at least 30 minutes. All workflow plans,
 including normal daily and manual runs, honor active host cooldowns. The
 workflow does not hold a runner open waiting for a later slot.
