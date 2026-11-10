@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出涂鸦监督分割的扰动鲁棒性基准，与所列方向无关。", "reason": "Benchmark on scribble-annotation robustness for weakly supervised segmentation; no video/multimodal world model, representation learning, or generation contribution.", "personal_relevance_score": 8.0, "research_value_score": 20.0}}

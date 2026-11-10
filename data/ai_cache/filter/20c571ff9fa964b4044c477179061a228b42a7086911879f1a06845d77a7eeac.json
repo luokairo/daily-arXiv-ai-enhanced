@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "医学影像分类基准评测，与视频/多模态世界模型及表征学习目标无直接贡献。", "reason": "Benchmark of CNN/ViT/foundation-model classifiers for brain tumor MRI; uses DINOv2 only as a baseline, no representation or generative contribution.", "personal_relevance_score": 10.0, "research_value_score": 18.0}}

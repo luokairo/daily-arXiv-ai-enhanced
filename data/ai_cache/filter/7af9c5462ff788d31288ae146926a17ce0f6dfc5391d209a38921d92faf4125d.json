@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向EEG的脑基础模型，提出基于图卷积的条件位置编码与自适应掩码预训练策略。", "reason": "EEG foundation model with GCN positional encoding and adaptive masking; no video, visual representation, world model, or audio-video contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}
