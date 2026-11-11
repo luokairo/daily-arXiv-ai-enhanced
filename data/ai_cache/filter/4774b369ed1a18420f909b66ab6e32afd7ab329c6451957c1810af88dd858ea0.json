@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向催化剂的物理约束模块化AI框架，与视频/多模态世界模型及表征学习无关。", "reason": "Catalyst discovery framework with physicochemical encoders; no video, multimodal world model, generative latent, or visual representation contribution.", "personal_relevance_score": 3.0, "research_value_score": 8.0}}

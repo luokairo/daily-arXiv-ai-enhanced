@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "用冻结大模型按固定评分规则对视频流播放事件日志打分，实现跨研究QoE量表等值化。", "reason": "Frozen LLM scoring of streaming QoE logs for cross-study scale equating; no video representation, generation, or world-model contribution.", "personal_relevance_score": 8.0, "research_value_score": 12.0}}

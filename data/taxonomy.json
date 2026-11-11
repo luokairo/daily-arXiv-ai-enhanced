@@ -9,10 +9,6 @@
           "description": "连续 embedding/latent 空间中的语言建模，包括 ELF、CoLa、扩散语言模型与 flow matching language model。",
           "examples": [
             {
-              "id": "2611.08362",
-              "title": "SpecCTMC: Exact Speculative Simulation of Diffusion Language Model Continuous-Time Markov Chains"
-            },
-            {
               "id": "2611.07783",
               "title": "PBPO: Prefix-Block Policy Optimization for Diffusion Language Models"
             },
@@ -27,6 +23,10 @@
             {
               "id": "2611.10369",
               "title": "FEROM: Frontier Endogenous Reveal-Order Marginal Policy Optimization for Masked Diffusion LMs"
+            },
+            {
+              "id": "2611.14387",
+              "title": "Blurring the Block Boundaries: Overlapping Block Denoising for Efficient Diffusion Language Models"
             }
           ],
           "id": "continuous_language_flow",
@@ -41,8 +41,8 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 253,
-          "updated_at": "2026-11-10"
+          "paper_count": 254,
+          "updated_at": "2026-11-11"
         },
         {
           "created_at": null,
@@ -87,10 +87,6 @@
           "description": "多模态模型在连续 latent 中进行 reasoning、planning、visual thought 或 chain-of-continuous-thought。",
           "examples": [
             {
-              "id": "2608.13570",
-              "title": "Think in Latent, Explain in Language: Self-Explainable Latent Reasoning"
-            },
-            {
               "id": "2610.07175",
               "title": "CALR: Continuous Anchored Latent Reasoning via Render-of-Thought Compression"
             },
@@ -105,6 +101,10 @@
             {
               "id": "2611.10423",
               "title": "Mental Imagery That Matters: Curing Latent Collapse in Multimodal Reasoning"
+            },
+            {
+              "id": "2611.12901",
+              "title": "Rethinking in Spikes: Mitigating Hallucinations in MDLMs with Step-Aware Decoding"
             }
           ],
           "id": "continuous_multimodal_reasoning",
@@ -118,8 +118,8 @@
             "visual thought"
           ],
           "name": "连续多模态推理与潜空间思维",
-          "paper_count": 30,
-          "updated_at": "2026-11-10"
+          "paper_count": 31,
+          "updated_at": "2026-11-11"
         }
       ],
       "scope_digest": "c7924258b7b98c277fb6352c2d3bb62d06ac1b9fe26affbc321823d4865123c7"
@@ -132,10 +132,6 @@
           "created_at": null,
           "description": "理解与生成一体化、统一 token 表征、Any-to-Any 多模态模型。",
           "examples": [
-            {
-              "id": "2611.05280",
-              "title": "YANAMI: A Large-Scale Multimodal Dataset and Benchmark for Multiturn Stateful Interaction"
-            },
             {
               "id": "2611.04467",
               "title": "Is Forgetting Unified? Exploring Concept Unlearning in Unified Multimodal Models"
@@ -151,6 +147,10 @@
             {
               "id": "2611.07392",
               "title": "WeLM-Image: A Unified Image Generation Model towards Visual Intelligence"
+            },
+            {
+              "id": "2611.13530",
+              "title": "UniWeaver: Harnessing Unified Multimodal Models for Interleaved Text-Image Generation"
             }
           ],
           "id": "unified_multimodal_model",
@@ -162,8 +162,8 @@
             "native multimodal"
           ],
           "name": "统一多模态模型",
-          "paper_count": 113,
-          "updated_at": "2026-11-06"
+          "paper_count": 114,
+          "updated_at": "2026-11-11"
         },
         {
           "created_at": null,
@@ -259,10 +259,6 @@
           ],
           "examples": [
             {
-              "id": "2610.30657",
-              "title": "Anticipating Social Consequences with Distributional World Models"
-            },
-            {
               "id": "2610.37437",
               "title": "Representing the Unseen: Rethinking Visual Imagination for Spatial Reasoning"
             },
@@ -277,11 +273,15 @@
             {
               "id": "2611.10151",
               "title": "WorldMind: Test-Time Scaling for Visual Spatial Reasoning through Latent World Simulation"
+            },
+            {
+              "id": "2611.14440",
+              "title": "UGG: Unified Generative Geometry Model"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-11-10",
-          "paper_count": 40,
+          "updated_at": "2026-11-11",
+          "paper_count": 41,
           "is_canonical": true
         },
         {
@@ -301,10 +301,6 @@
           ],
           "examples": [
             {
-              "id": "2611.02941",
-              "title": "RouteREPA: Routed Representation Alignment for Just Image Transformers"
-            },
-            {
               "id": "2611.04028",
               "title": "Compression Forcing: Hierarchical History Tokenization Enables Flexible World Models"
             },
@@ -319,11 +315,15 @@
             {
               "id": "2611.12426",
               "title": "dNaViT: Discrete Codes are General-Purpose Visual Representations"
+            },
+            {
+              "id": "2611.13504",
+              "title": "Dark Matters: VAE-Aware HDR Encoding for SDR-to-HDR Video Reconstruction"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-11-10",
-          "paper_count": 72,
+          "updated_at": "2026-11-11",
+          "paper_count": 73,
           "is_canonical": true
         },
         {
@@ -342,29 +342,29 @@
           ],
           "examples": [
             {
-              "id": "2611.11379",
-              "title": "Self-Supervised Collapse Prevention with Score-Based Entropy Maximization"
-            },
-            {
-              "id": "2611.12334",
-              "title": "Rethinking Radar 3D Perception: Representation Learning from Raw Spectra"
-            },
-            {
-              "id": "2611.11147",
-              "title": "Not All Layers Are Equal in Image-to-Video Transfer"
-            },
-            {
               "id": "2611.11674",
               "title": "Brain-Aligned Latent Actions: Imposing Premotor Cortex Geometry on a Robot's Action Vocabulary"
             },
             {
               "id": "2611.10770",
               "title": "How reliable is an embedding of the seabed? Repeat-look measurement of frozen encoders on synthetic aperture sonar"
+            },
+            {
+              "id": "2611.14420",
+              "title": "OnlyAct: Extracting Action Representations from Foundation Models for World Models"
+            },
+            {
+              "id": "2611.14496",
+              "title": "RS-JEPA: Remote Sensing Joint-Embedding Predictive Architecture with Scan-Path Views for Cross-Sensor Image Retrieval"
+            },
+            {
+              "id": "2611.14124",
+              "title": "CroCoMAE: Cross-modal self-supervised collaborative representation learning for SAR-optical remote sensing data"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-11-10",
-          "paper_count": 203,
+          "updated_at": "2026-11-11",
+          "paper_count": 206,
           "is_canonical": true
         },
         {
@@ -504,10 +504,6 @@
           ],
           "examples": [
             {
-              "id": "2611.03674",
-              "title": "ReVi: Recursive Recap Video Generation"
-            },
-            {
               "id": "2611.05825",
               "title": "DualCast: Dual-Image Conditioned Diffusion Transformers for Digital Human E-Commerce Video Generation"
             },
@@ -522,11 +518,15 @@
             {
               "id": "2611.12445",
               "title": "LongSCOP: Semantically Consistent Long Video Outpainting"
+            },
+            {
+              "id": "2611.14307",
+              "title": "TaoMate-R1: Temporal Role Specialization for Streaming Multi-Reference Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-11-10",
-          "paper_count": 117,
+          "updated_at": "2026-11-11",
+          "paper_count": 118,
           "is_canonical": true
         },
         {
@@ -575,14 +575,6 @@
           ],
           "examples": [
             {
-              "id": "2611.07551",
-              "title": "Training-Free Predictive Spatio-Temporal Token Pruning for Few-Step Autoregressive Video Diffusion"
-            },
-            {
-              "id": "2611.11452",
-              "title": "Semantically Aligned KV Cache Compression for Efficient Agentic Autoregressive Video Generation"
-            },
-            {
               "id": "2611.09973",
               "title": "ReelCache: An Efficient KV Cache Compression and Management System for Multi-Round Video Generation"
             },
@@ -593,11 +585,19 @@
             {
               "id": "2611.10448",
               "title": "ESTRA: Enabling Extreme Attention Sparsity for Training-Free Video Diffusion Acceleration"
+            },
+            {
+              "id": "2611.14033",
+              "title": "Few-Step Streaming Video Generation via Condition Shifting"
+            },
+            {
+              "id": "2611.13620",
+              "title": "When to Start Denoising? Adaptive Denoising Entry for Generative Video Compression"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-11-10",
-          "paper_count": 90,
+          "updated_at": "2026-11-11",
+          "paper_count": 92,
           "is_canonical": true
         },
         {
@@ -609,10 +609,6 @@
             "video generation alignment"
           ],
           "examples": [
-            {
-              "id": "2610.42002",
-              "title": "GeoFlip: Benchmarking Geometry-Sensitive Physics in Video Generation"
-            },
             {
               "id": "2611.00293",
               "title": "Seeing the Unseen: Unified Visible--Invisible Motion for Physically Consistent Video Generation"
@@ -628,11 +624,15 @@
             {
               "id": "2611.07301",
               "title": "ArtiVidRM: Verifiable Artifact-as-Rubric Reward Modeling for Explicit Quality Articulation in Video Generation"
+            },
+            {
+              "id": "2611.13576",
+              "title": "PhyRubric: Rubric-Grounded Diagnostic Evaluation of Physical Commonsense in Text-to-Video Generation"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-11-06",
-          "paper_count": 70,
+          "updated_at": "2026-11-11",
+          "paper_count": 71,
           "is_canonical": true
         },
         {
@@ -841,29 +841,29 @@
           ],
           "examples": [
             {
-              "id": "2611.11798",
-              "title": "PAIR: Proprioception-Aligned Image-Ray Representations for Viewpoint-Robust Manipulation"
+              "id": "2611.13610",
+              "title": "From Egocentric Human Video to Robot Manipulation in the Era of Embodied Intelligence"
             },
             {
-              "id": "2611.12200",
-              "title": "Learning to Act with World Models by Valuing What Comes Next"
+              "id": "2611.14257",
+              "title": "Elastic-WAM: Adaptive Spatiotemporal Imagination for Efficient Robot Control"
             },
             {
-              "id": "2611.10435",
-              "title": "Multi-Objective Adaptation After Deployment: A Position on World Models for Remote Robot Teams"
+              "id": "2611.13499",
+              "title": "DeRep: Learning Depth Representations for End-to-End Navigation in Cluttered Environments"
             },
             {
-              "id": "2611.11605",
-              "title": "ScanDreamer: A Map-Grounded World Model for Quadrotor Navigation"
+              "id": "2611.13592",
+              "title": "Few-Shot Residual Adaptation of Pretrained Latent World Models"
             },
             {
-              "id": "2611.11554",
-              "title": "Kimodo-Policy: Learning Kinematic Action Models for Humanoid Loco-Manipulation"
+              "id": "2611.13818",
+              "title": "WAM is capable in BEHAVIOR-1K: the 2nd-place solution to the 2026 BEHAVIOR Challenge"
             }
           ],
           "created_at": null,
-          "updated_at": "2026-11-10",
-          "paper_count": 416,
+          "updated_at": "2026-11-11",
+          "paper_count": 424,
           "is_canonical": true
         },
         {
@@ -953,6 +953,6 @@
       "scope_digest": "4451eb36d7e3d29acecb41b1fdc06c479a8df74e993f0dd600c26be3632f05ee"
     }
   },
-  "updated_at": "2026-11-10",
+  "updated_at": "2026-11-11",
   "version": 2
 }

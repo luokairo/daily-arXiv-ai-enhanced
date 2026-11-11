@@ -1,0 +1,8 @@
+{
+  "audit_type": "pipeline",
+  "target_date": "2026-11-11",
+  "recorded_at": "2026-11-11T23:44:17.996953+00:00",
+  "status": "ready",
+  "phase": "publish",
+  "retryable": true
+}
