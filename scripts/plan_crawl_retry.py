@@ -19,8 +19,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.run_policy import next_off_peak, off_peak_allowed, scheduled_guard_enabled
 
 
-DAILY_SCHEDULE = '37 17 * * *'
-RETRY_SCHEDULES = {'17 * * * *', '17 19 * * *', '17 21 * * *'}
+DAILY_SCHEDULE = '43 17 * * *'
+RETRY_SCHEDULES = {'29 * * * *', '17 19 * * *', '17 21 * * *'}
 RETENTION_SECONDS = 14 * 24 * 3600
 MAX_COUNT_RETRIES = 3
 

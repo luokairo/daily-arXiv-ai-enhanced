@@ -1,7 +1,10 @@
 import unittest
 import os
 from datetime import datetime, timezone
+from pathlib import Path
 from unittest.mock import patch
+
+import yaml
 
 from scripts.plan_crawl_retry import DAILY_SCHEDULE, RETRY_SCHEDULES, choose_retry, plan, read_published_dates
 
@@ -106,6 +109,15 @@ class RetryPlanTests(unittest.TestCase):
         for schedule in RETRY_SCHEDULES:
             self.assertIsNone(plan({'schedule': schedule}, '', artifacts=[], now=NOW))
 
+    def test_workflow_schedules_match_planner(self):
+        path = Path(__file__).resolve().parents[1] / '.github/workflows/run.yml'
+        workflow = yaml.load(path.read_text(), Loader=yaml.BaseLoader)
+        schedules = {entry['cron'] for entry in workflow['on']['schedule']}
+        self.assertIn(DAILY_SCHEDULE, schedules)
+        retry_schedules = schedules - {DAILY_SCHEDULE}
+        self.assertTrue(retry_schedules)
+        self.assertLessEqual(retry_schedules, RETRY_SCHEDULES)
+
     def test_primary_and_manual_runs_honor_host_cooldown(self):
         audits = {1: [failed(retryable=True, retry_not_before=NOW + 7200)]}
         for requested in ('', '2026-10-31'):
@@ -134,7 +146,7 @@ class RetryPlanTests(unittest.TestCase):
         environment = dict(ENFORCE_DEEPSEEK_OFF_PEAK='true', OPENAI_BASE_URL='https://api.deepseek.com',
                            MODEL_NAME='deepseek-flash')
         audits = {1: [dict(status='complete', target_date='2026-10-30', unique_papers=553)]}
-        for event in ({'schedule': '17 * * * *'}, {'workflow_run': {'conclusion': 'success'}}):
+        for event in ({'schedule': '29 * * * *'}, {'workflow_run': {'conclusion': 'success'}}):
             with self.subTest(event=event), patch.dict(os.environ, environment), \
                     patch('scripts.plan_crawl_retry.read_audits', side_effect=lambda a: audits[a['id']]) as load:
                 decision = {}

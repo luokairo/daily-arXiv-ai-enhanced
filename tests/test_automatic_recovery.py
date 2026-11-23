@@ -92,8 +92,8 @@ class AutomaticRecoveryTests(IsolatedTest):
             with patch.object(planner, 'read_audits', return_value=rows):
                 peak = datetime(2026, 11, 9, 1, tzinfo=timezone.utc).timestamp()
                 noon = datetime(2026, 11, 9, 4, tzinfo=timezone.utc).timestamp()
-                self.assertIsNone(planner.plan({'schedule': '17 * * * *'}, '', [attempt], peak))
-                self.assertEqual(planner.plan({'schedule': '17 * * * *'}, '', [attempt], noon), DAY)
+                self.assertIsNone(planner.plan({'schedule': '29 * * * *'}, '', [attempt], peak))
+                self.assertEqual(planner.plan({'schedule': '29 * * * *'}, '', [attempt], noon), DAY)
             # A new runner restores only verified input/cache, then runs the
             # scheduled policy again. A network call here is a test failure.
             restored, resumed = self.root / 'second/data', self.root / 'second/stage'
@@ -112,7 +112,7 @@ class AutomaticRecoveryTests(IsolatedTest):
             self.assertTrue((restored / f'{DAY}.md').exists())
             self.assertEqual(len((restored / f'{DAY}_AI_enhanced_Chinese.jsonl').read_text().splitlines()), 1)
             with patch.object(planner, 'read_audits', return_value=rows):
-                self.assertIsNone(planner.plan({'schedule': '17 * * * *'}, '', [attempt], noon,
+                self.assertIsNone(planner.plan({'schedule': '29 * * * *'}, '', [attempt], noon,
                                               published_dates={DAY}))
 
     def test_terminal_processing_failure_stays_red_and_is_not_deferred(self):
