@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出将MPPI轨迹优化嵌入MCTS树搜索的运动规划框架，属于机器人规划控制，与表征学习或世界模型无关。", "reason": "Robot kinodynamic motion planning combining MCTS with MPPI; no world model learning, representation, or generative modeling contribution.", "personal_relevance_score": 6.0, "research_value_score": 10.0}}

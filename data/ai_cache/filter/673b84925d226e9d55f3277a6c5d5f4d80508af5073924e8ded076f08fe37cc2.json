@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向 ROS 2 应用的确定性协调与乱序并行仿真，属系统级仿真调度，与视觉/视频表征及世界模型无关。", "reason": "ROS 2 middleware determinism and parallel simulation scheduling; no world model, learned representation, or generative modeling contribution.", "personal_relevance_score": 6.0, "research_value_score": 10.0}}

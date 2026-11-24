@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出全景无人机视觉跟踪基准与几何感知跟踪器，与视频世界模型及表征学习目标无直接关联。", "reason": "Benchmark and tracker for UAV panoramic visual target tracking; no world-model, representation-learning, or generation contribution despite video data.", "personal_relevance_score": 12.0, "research_value_score": 20.0}}
