@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出以类别特定线性混合模型为潜先验的VAE，用于纵向健康轨迹聚类与缺失轨迹重建。", "reason": "Latent-class mixed-model VAE for clustering longitudinal health records; no video/multimodal world model, visual representation, or generation contribution.", "personal_relevance_score": 6.0, "research_value_score": 12.0}}
