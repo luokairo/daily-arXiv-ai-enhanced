@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "面向RNA二级结构精确逆设计的推理时搜索框架，与所列方向无关。", "reason": "RNA inverse design with verifier-feedback search; no video/multimodal world model, visual representation, generation, or audio-video contribution.", "personal_relevance_score": 4.0, "research_value_score": 12.0}}

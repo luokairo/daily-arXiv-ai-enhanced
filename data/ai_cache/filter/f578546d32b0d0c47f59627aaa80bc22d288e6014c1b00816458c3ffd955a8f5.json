@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": ["world_model"], "primary_direction_id": "", "brief": "提出免训练开放词汇变化检测框架，统一在DINOv3表征空间中完成区域分组、概念识别与时序比较。", "reason": "Training-free change detection using DINOv3 features as a tool; no contribution to representation learning, world models, or generation.", "personal_relevance_score": 18.0, "research_value_score": 25.0}}

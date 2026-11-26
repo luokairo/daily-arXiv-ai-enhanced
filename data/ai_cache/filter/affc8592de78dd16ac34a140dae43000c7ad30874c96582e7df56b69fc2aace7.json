@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出统一的真实到仿真迁移评测平台，整合多基准与编码智能体，并提供训练数据与奖励标注流水线。", "reason": "Benchmark/platform infrastructure for real-to-sim program generation and scoring; no world model, representation, or generative modeling contribution.", "personal_relevance_score": 12.0, "research_value_score": 20.0}}

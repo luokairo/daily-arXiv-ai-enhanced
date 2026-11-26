@@ -1,0 +1,1 @@
+{"result": {"decision": "irrelevant", "matched_direction_ids": [], "primary_direction_id": "", "brief": "提出多尺度协同记忆框架用于文本到人体动作生成，融合语义检索、潜动力学与因果工作记忆。", "reason": "Text-to-motion (human skeletal motion) generation with memory modules; no video, visual representation, world model, or audio-video contribution.", "personal_relevance_score": 8.0, "research_value_score": 25.0}}
