@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 261,
+          "paper_count": 264,
           "updated_at": "2026-11-26"
         },
         {
@@ -200,7 +200,7 @@
             "quantization"
           ],
           "name": "统一多模态模型高效化",
-          "paper_count": 161,
+          "paper_count": 162,
           "updated_at": "2026-11-26"
         }
       ],
@@ -245,7 +245,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 476,
+          "paper_count": 485,
           "updated_at": "2026-11-26"
         },
         {
@@ -323,7 +323,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 82,
+          "paper_count": 88,
           "is_canonical": true
         },
         {
@@ -364,7 +364,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 216,
+          "paper_count": 221,
           "is_canonical": true
         },
         {
@@ -425,7 +425,7 @@
           ],
           "created_at": "2026-10-30",
           "updated_at": "2026-11-26",
-          "paper_count": 7
+          "paper_count": 9
         },
         {
           "id": "interactive_physical_world",
@@ -485,7 +485,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 19,
+          "paper_count": 20,
           "is_canonical": true
         },
         {
@@ -556,7 +556,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 132,
+          "paper_count": 141,
           "is_canonical": true
         },
         {
@@ -591,7 +591,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 37,
+          "paper_count": 38,
           "is_canonical": true
         },
         {
@@ -627,7 +627,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 103,
+          "paper_count": 106,
           "is_canonical": true
         },
         {
@@ -662,7 +662,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 76,
+          "paper_count": 77,
           "is_canonical": true
         },
         {
@@ -854,7 +854,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 86,
+          "paper_count": 89,
           "is_canonical": true
         },
         {
@@ -893,7 +893,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 466,
+          "paper_count": 478,
           "is_canonical": true
         },
         {
@@ -932,7 +932,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 50,
+          "paper_count": 53,
           "is_canonical": true
         }
       ],
