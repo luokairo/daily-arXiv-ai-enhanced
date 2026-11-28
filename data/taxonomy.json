@@ -41,7 +41,7 @@
             "elf"
           ],
           "name": "连续语言模型与语言流",
-          "paper_count": 264,
+          "paper_count": 267,
           "updated_at": "2026-11-26"
         },
         {
@@ -200,7 +200,7 @@
             "quantization"
           ],
           "name": "统一多模态模型高效化",
-          "paper_count": 162,
+          "paper_count": 163,
           "updated_at": "2026-11-26"
         }
       ],
@@ -215,24 +215,24 @@
           "description": "视频生成式世界模型、未来预测、长时序视频建模与动作条件视频生成。",
           "examples": [
             {
-              "id": "2611.33378",
-              "title": "DreamTour: Layout Steering for Training-Free World Exploration"
+              "id": "2611.34739",
+              "title": "Was the Model Given the Right Action? Auditing and Repairing Action Interfaces in Navigation World Models"
             },
             {
-              "id": "2611.33925",
-              "title": "Beyond the Happy Path: Generalizing Robot World Models from Simulated Failures"
+              "id": "2611.33591",
+              "title": "VivaWorld: Long-Horizon Video World Model With Compositional 3D Priors"
+            },
+            {
+              "id": "2611.33779",
+              "title": "DuoWM:Integrating Dual 6-DoF Visual Flows into Action-Conditioned Drone World Model"
+            },
+            {
+              "id": "2611.34435",
+              "title": "Most of the Way There: Turning a Strong Video Prior into an Action-Conditioned World Model"
             },
             {
               "id": "2611.34693",
               "title": "ShowNow: Fine-Grained Speculative Streaming for Responsive World Models"
-            },
-            {
-              "id": "2611.33872",
-              "title": "Normalizing Flows are Capable World Models"
-            },
-            {
-              "id": "2611.34739",
-              "title": "Was the Model Given the Right Action? Auditing and Repairing Action Interfaces in Navigation World Models"
             }
           ],
           "id": "video_world_model",
@@ -245,7 +245,7 @@
             "long-horizon video"
           ],
           "name": "视频世界模型",
-          "paper_count": 485,
+          "paper_count": 490,
           "updated_at": "2026-11-26"
         },
         {
@@ -323,7 +323,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 88,
+          "paper_count": 94,
           "is_canonical": true
         },
         {
@@ -342,10 +342,6 @@
           ],
           "examples": [
             {
-              "id": "2611.34644",
-              "title": "Motion Beyond Pixels: Learning Future Visual Representations for Object-Centric Dynamics"
-            },
-            {
               "id": "2611.34220",
               "title": "Variation-aware Temporal Correspondence for Self-Supervised Video Representation Learning"
             },
@@ -360,11 +356,15 @@
             {
               "id": "2611.34422",
               "title": "Can Visual World Models See Force?"
+            },
+            {
+              "id": "2611.34830",
+              "title": "Not all world models can doubt: how training objective and architecture shape epistemic uncertainty in JEPA and RSSM world models"
             }
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 221,
+          "paper_count": 227,
           "is_canonical": true
         },
         {
@@ -403,10 +403,6 @@
           "description": "面向机器人、具身智能、动作规划和控制的世界模型，包括潜空间结构设计与规划成功率为导向的世界模型训练。",
           "examples": [
             {
-              "id": "2611.12870",
-              "title": "SWAM: Scaling World Action Models with Cross-Modal Alignment"
-            },
-            {
               "id": "2611.26825",
               "title": "Skill-JEPA: Learning Planner-Aligned Action Spaces for World Models"
             },
@@ -421,11 +417,15 @@
             {
               "id": "2611.33797",
               "title": "DriftWAM: Faster World-Action Models via Action-Aware Video Drifting"
+            },
+            {
+              "id": "2611.33872",
+              "title": "Normalizing Flows are Capable World Models"
             }
           ],
           "created_at": "2026-10-30",
           "updated_at": "2026-11-26",
-          "paper_count": 9
+          "paper_count": 11
         },
         {
           "id": "interactive_physical_world",
@@ -439,11 +439,15 @@
             {
               "id": "2611.32811",
               "title": "Interactive Neural Computers"
+            },
+            {
+              "id": "2611.34730",
+              "title": "WorldInteract: Controllable Streaming Video Generation for Multi-Material Interactions"
             }
           ],
           "created_at": "2026-11-23",
-          "updated_at": "2026-11-25",
-          "paper_count": 2
+          "updated_at": "2026-11-26",
+          "paper_count": 3
         }
       ],
       "scope_digest": "8d8198c16fd23692d5579e40705bee6ade67a9f9a8c639d1a4f660d15cb7ddca"
@@ -485,7 +489,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 20,
+          "paper_count": 21,
           "is_canonical": true
         },
         {
@@ -556,7 +560,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 141,
+          "paper_count": 151,
           "is_canonical": true
         },
         {
@@ -591,7 +595,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 38,
+          "paper_count": 39,
           "is_canonical": true
         },
         {
@@ -627,7 +631,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 106,
+          "paper_count": 109,
           "is_canonical": true
         },
         {
@@ -662,7 +666,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 77,
+          "paper_count": 78,
           "is_canonical": true
         },
         {
@@ -854,7 +858,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 89,
+          "paper_count": 92,
           "is_canonical": true
         },
         {
@@ -893,7 +897,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 478,
+          "paper_count": 491,
           "is_canonical": true
         },
         {
@@ -932,7 +936,7 @@
           ],
           "created_at": null,
           "updated_at": "2026-11-26",
-          "paper_count": 53,
+          "paper_count": 56,
           "is_canonical": true
         }
       ],
